@@ -1,0 +1,340 @@
+<!doctype html>
+<html>
+    	<!-- THE LOADER -->
+	
+
+  <head>
+      <% include ../partials/header.ejs  %>
+      <% include ../partials/footer.ejs  %> 
+  </head>
+
+
+ <style type="text/css">
+        
+        h2, #login, .centro {
+                margin: 0 auto; 
+                width: 50%;
+            }
+
+         .contenedor{
+                    background-color: #e8e9eb;
+                    border-radius: 20px;
+                }
+        .text-overflow {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 500px;
+              } 
+
+
+               h1, p, h4, h3 {
+                    text-align: center;
+                    color:#313638;
+                }
+
+        
+    body {
+        background-image: url("/img/background.jpg");
+        background-size: cover;
+        background-attachment: cover;
+        background-repeat: no-repeat;
+        }    
+      #login, #loggedin {
+        display: none;
+      }
+      
+        .popup {
+	-moz-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #637aad), color-stop(1, #5972a7));
+	background:-moz-linear-gradient(top, #637aad 5%, #5972a7 100%);
+	background:-webkit-linear-gradient(top, #637aad 5%, #5972a7 100%);
+	background:-o-linear-gradient(top, #637aad 5%, #5972a7 100%);
+	background:-ms-linear-gradient(top, #637aad 5%, #5972a7 100%);
+	background:linear-gradient(to bottom, #637aad 5%, #5972a7 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#637aad', endColorstr='#5972a7',GradientType=0);
+	background-color:#637aad;
+	border:1px solid #314179;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:12px 28px;
+	text-decoration:none;
+            
+}
+.popup:hover {
+	-moz-box-shadow:inset 0px 1px 0px 0px #3dc21b;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #3dc21b;
+	box-shadow:inset 0px 1px 0px 0px #3dc21b;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #44c767), color-stop(1, #5cbf2a));
+	background:-moz-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:-webkit-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:-o-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:-ms-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#44c767', endColorstr='#5cbf2a',GradientType=0);
+	background-color:#44c767;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:12px 28px;
+	text-decoration:none;
+}
+.popup:active {
+	position:relative;
+	top:1px;
+}
+        
+    </style>    
+    
+  <body class="page-login">
+    
+      
+      
+      <header></header>
+      <% include ../pages/navbar.ejs %>
+  
+           
+      <div id="login" class="contenedor row hidden-xs" style="margin-top:200px; font-family: 'Josefin Slab', serif; margin-bottom:300px;">
+          <br>
+          <div class="col-lg-12">
+                <h1>IDGN <em>Beta</em></h1>
+          </div> 
+          <br>
+          <!-- <h4> 
+            Social media feeds you. 
+            And you feed them. 
+            You give them what they want.
+            They give you what you want. 
+          <br>    
+          </h4> -->
+          <div class="col-lg-12">
+          <h2 style="text-align: center; color:#313633; width: 100%;">INteractive Deep Immersion into non-GENeric Audio. </h2>
+          </div>
+          <hr>
+          <div class="col-lg-12">
+            <h3>An opportunity to break our <em>Echo Chamber</em>. </h3>
+          </div>
+          <br>
+          <div class="col-lg-12">
+          <div class="number-counters">  
+          <div class="counter-entry">
+                <div class="stat-number" data-to="<%=totalUsers%>" data-speed="3000">0</div> <div class="counter-label">Users</div>
+            </div>
+          </div>
+          </div>      
+          <div class="centro" >
+               <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="margin-bottom:25px;">
+                    <a href="/login" >
+                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
+                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:200%;">
+                              Go ON 
+                          </span> 
+                      </div>
+                    </a>
+              </div>
+              <div class=" hidden-lg col-md-12 hidden-xs" style="margin-bottom:25px;">
+                    <a href="/login" >
+                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
+                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:150%;">
+                              Go ON
+                          </span>
+                      </div>
+                    </a>
+              </div>
+               <div class=" hidden-lg hidden-md hidden-sm col-lg-12" style="margin-bottom:25px;">
+                    <a href="/login" >
+                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
+                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:100%;">
+                              Go ON
+                          </span>
+                      </div>
+                    </a>
+              </div>
+          </div>
+      </div>
+        
+         
+      <div id="login" class="contenedor row visible-xs centro" style="font-family: 'Josefin Slab', serif; margin-top:200px; margin-bottom:200px; max-width:500px; min-width:300px !important;">
+          <br>
+          <div class="col-lg-12">
+                <h1>IDGN <em>Beta</em></h1>
+          </div> 
+          <br>
+          <!-- <h4> 
+            Social media feeds you. 
+            And you feed them. 
+            You give them what they want.
+            They give you what you want. 
+          <br>    
+          </h4> -->
+          <div class="col-lg-12">
+          <h2 style="text-align: center; color:#313633; width: 100%;">INteractive Deep Immersion into non-GENeric Audio. </h2>
+          </div>
+          <hr>
+          <div class="col-lg-12">
+            <h3>An opportunity to break our <em>Echo Chamber</em>. </h3>
+          </div>
+          <br>
+          <div class="centro" >
+               <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="margin-bottom:25px;">
+                    <a href="/login" >
+                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
+                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:200%;">
+                              Go ON
+                          </span>
+                      </div>
+                    </a>
+              </div>
+              <div class=" hidden-lg col-md-12 hidden-xs" style="margin-bottom:25px;">
+                    <a href="/login" >
+                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
+                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:150%;">
+                              Go ON
+                          </span>
+                      </div>
+                    </a>
+              </div>
+               <div class=" hidden-lg hidden-md hidden-sm col-lg-12" style="margin-bottom:25px;">
+                    <a href="/login" >
+                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
+                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:100%;">
+                              Go ON
+                          </span>
+                      </div>
+                    </a>
+              </div>
+          </div>
+      </div>    
+        
+      <div id="loggedin">
+        <div id="user-profile">
+        </div>
+        <div id="oauth">
+        </div>
+        <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+      </div>
+    
+    
+      
+    <script id="user-profile-template" type="text/x-handlebars-template">
+      <h1>Logged in as {{display_name}}</h1>
+      <div class="media">
+        <div class="pull-left">
+          <img class="media-object" width="150" src="{{images.0.url}}" />
+        </div>
+        <div class="media-body">
+          <dl class="dl-horizontal">
+            <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
+            <dt>Id</dt><dd>{{id}}</dd>
+            <dt>Email</dt><dd>{{email}}</dd>
+            <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+            <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
+            <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
+            <dt>Country</dt><dd>{{country}}</dd>
+          </dl>
+        </div>
+      </div>
+    </script>
+
+    <script id="oauth-template" type="text/x-handlebars-template">
+      <h2>oAuth info</h2>
+      <dl class="dl-horizontal">
+        <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
+        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}></dd>
+      </dl>
+    </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+    <script>
+      (function() {
+
+        /**
+         * Obtains parameters from the hash of the URL
+         * @return Object
+         */
+        function getHashParams() {
+          var hashParams = {};
+          var e, r = /([^&;=]+)=?([^&;]*)/g,
+              q = window.location.hash.substring(1);
+          while ( e = r.exec(q)) {
+             hashParams[e[1]] = decodeURIComponent(e[2]);
+          }
+          return hashParams;
+        }
+
+        var userProfileSource = document.getElementById('user-profile-template').innerHTML,
+            userProfileTemplate = Handlebars.compile(userProfileSource),
+            userProfilePlaceholder = document.getElementById('user-profile');
+
+        var oauthSource = document.getElementById('oauth-template').innerHTML,
+            oauthTemplate = Handlebars.compile(oauthSource),
+            oauthPlaceholder = document.getElementById('oauth');
+
+        var params = getHashParams();
+
+        var access_token = params.access_token,
+            refresh_token = params.refresh_token,
+            error = params.error;
+
+        if (error) {
+          alert('There was an error during the authentication');
+        } else {
+          if (access_token) {
+            // render oauth info
+            oauthPlaceholder.innerHTML = oauthTemplate({
+              access_token: access_token,
+              refresh_token: refresh_token
+            });
+
+            $.ajax({
+                url: 'https://api.spotify.com/v1/me',
+                headers: {
+                  'Authorization': 'Bearer ' + access_token
+                },
+                success: function(response) {
+                  userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+
+                  $('#login').hide();
+                  $('#loggedin').show();
+                }
+            });
+          } else {
+              // render initial screen
+              $('#login').show();
+              $('#loggedin').hide();
+          }
+
+          document.getElementById('obtain-new-token').addEventListener('click', function() {
+            $.ajax({
+              url: '/refresh_token',
+              data: {
+                'refresh_token': refresh_token
+              }
+            }).done(function(data) {
+              access_token = data.access_token;
+              oauthPlaceholder.innerHTML = oauthTemplate({
+                access_token: access_token,
+                refresh_token: refresh_token
+              });
+            });
+          }, false);
+        }
+      })();
+    </script>
+      
+      <% include ../partials/foot.ejs %>
+  </body>
+    
+
+</html>
+

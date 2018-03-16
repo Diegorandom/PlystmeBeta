@@ -1,0 +1,266 @@
+  <header>
+		<div class="container-fluid custom-container">
+			<div class="row no_row row-header">
+
+                
+<div class=" col-sm-1 hidden-sm hidden-xs">
+	<a href="/">
+    
+        <h2 class="hidden-sm" style=" margin-left: 20px; margin-top:22px; color:silver; text-align: left; font-family: 'Orbitron', sans-serif; font-size:300%;">IDGN </h2>
+           
+		<!-- <img class=" be_logo logo-c active"  src="img/logo.png" alt="logo" >
+		<img class="logo-c be_logo" src="img/logo-green.png" alt="logo" >
+		<img  class="logo-c be_logo" src="img/logo-orang.png" alt="logo" >
+		<img class="logo-c be_logo" src="img/logo-red.png" alt="logo"> -->
+	</a>
+   
+</div>
+    <% if(nombre != ""){ %>            
+    <a href="/environment" target="_blank" >                
+    <div class="btn color-1 size-2 hover-2 hidden-sm hidden-xs" style=" color:white; margin-left: 50px; margin-top:22px; text-align: left; ">
+        Creative Environment <em>Beta</em>
+
+    </div>
+      </a>  
+    <% } %>           
+                
+<% if(ref){ %>
+                
+<a class="btn color-1 size-2 hover-2 hidden-lg hidden-md hidden-sm visble-xs" href="/" style="color:white;  margin-left: 20px; margin-top:22px; color:silver; text-align: left; "><i class="fa fa-info-circle"></i>
+Try it!</a>  
+ 
+                
+<% }else{ %>
+                
+   <a class="btn color-1 size-2 hover-2 hidden-sm hidden-md hidden-lg" href="/about-us.ejs" style="color:white; margin-left: 20px; margin-top:22px; color:white; text-align: right; "><i class="fa fa-info-circle"></i>
+						      How even</a>            
+    
+                    
+<% } %>
+				<!-- <div class="header-menu-block">
+					<button class="cmn-toggle-switch cmn-toggle-switch__htx"><span></span></button>
+					<ul class="header-menu" id="one">
+						<li><a href="activity.ejs">Activity</a></li>
+						<li><a href="search.ejs">Discover</a>
+							<ul>
+								<li><a href="search.ejs">Explore</a></li>
+								<li><a href="people.ejs">People</a></li>
+								<li><a href="gallery.ejs">Galleries</a></li>
+							</ul>
+						</li>
+						<li><a href="author-login.ejs">My Portfolio</a></li>
+						<li><a href="site-map.ejs">Site Map</a></li>
+						<li id="ad-work-li"><a id="add-work-btn" class="btn color-1" href="work.ejs">Add Work </a></li>
+					</ul>
+				</div> -->
+				
+                        <% if(nombre != ""){ %>
+                <div class="login-header-block" style="margin-right:10px;">
+					<div class="login_block" style="margin-top:9px;" >
+                        <a href="/profile" style="color:white; " > 
+                        <img class="login-user" src="<%=imagen_url%>" alt="" style="border-radius:5px; height:30px; ">
+                        <span class="be-dropdown-content" style="">
+                            <span style="margin-top:40px;"><%= nombre %></span>
+                        </span>
+                        </a>
+                  </div>	
+				</div>
+                        <% }else{ %><!--
+                           <div class="login-header-block" style="margin-right:10px;">
+                                <div class="login_block" style="margin-top:9px;">
+                                    <a class="be-register btn color-1 size-2 hover-2" style="color:white;"><i class="fa fa-lock"></i>sign up now</a>
+                                </div>	
+                            </div> -->
+                        <%}%>
+                        
+                  
+                        
+                <div class="login-header-block" style="margin-left: 20px; margin-top:22px; color:silver; text-align: right;">
+					<div class="login_block" >
+                        <% if(ref){ %> 
+                             <a class="btn color-1 size-2 hover-2 hidden-xs" href="/login"  style="color:white;"><i class="fa fa-info-circle"></i>
+						      Try it!</a>
+                        
+                           
+                        <% }else{ %>
+                            <a class="btn color-1 size-2 hover-2 hidden-xs" href="/about-us.ejs" style="color:white; "><i class="fa fa-info-circle"></i>
+						      How even</a>
+                        
+                       <%  } %>
+                    </div>
+                </div>
+                        
+						  
+					
+			</div>
+		</div>
+	</header> 
+
+    <div class="large-popup register">
+		<div class="large-popup-fixed"></div>
+		<div class="container large-popup-container">
+			<div class="row">
+				<div class="col-md-10 col-md-push-1 col-lg-8 col-lg-push-2 large-popup-content">
+					<div class="row">
+						<div class="col-md-12">
+							<i class="fa fa-times close-button"></i>
+							<h5 class="large-popup-title">Register</h5>
+						</div>
+						<form action="/registro/datos" class="popup-input-search" method="post">
+						<div class="col-md-12">
+							<input class="input-signtype" type="text" name="nombre" required placeholder="Name">
+						</div>
+						<div class="col-md-6">
+							<div class="be-custom-select-block">
+							<select class="be-custom-select" name="pais">
+								<option value="" disabled selected>
+									Country
+								</option>
+								<option value="">México</option>
+							</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<input class="input-signtype" type="text" required placeholder="Email" name="email">
+						</div>
+						<div class="col-md-6">
+							<input class="input-signtype" type="text" required placeholder="Password" name="pass">
+						</div>
+						<div class="col-md-6">
+							<input class="input-signtype" type="text" required placeholder="Repeat Password" name="pass2">
+						</div>
+						<div class="col-md-12 be-date-block">
+							<span class="large-popup-text">
+								Date of birth
+							</span>
+							<div class="be-custom-select-block mounth">
+								<select class="be-custom-select" name="mes">
+									<option value="" disabled selected>
+										Mounth
+									</option>
+									<option value="">January</option>	
+									<option value="">February</option>	
+									<option value="">March</option>	
+									<option value="">April</option>	
+									<option value="">May</option>	
+									<option value="">June</option>	
+									<option value="">July</option>	
+									<option value="">August</option>	
+									<option value="">September</option>	
+									<option value="">October</option>	
+									<option value="">November</option>	
+									<option value="">December</option>
+								</select>
+							</div>
+							<div class="be-custom-select-block">
+								<select class="be-custom-select" name="dia">
+									<option value="" disabled selected>
+										Day
+									</option>
+									<option value="">1</option>
+									<option value="">2</option>
+									<option value="">3</option>
+									<option value="">4</option>
+									<option value="">5</option>
+									<option value="">6</option>
+									<option value="">7</option>
+									<option value="">8</option>
+									<option value="">9</option>
+									<option value="">10</option>
+									<option value="">11</option>
+									<option value="">12</option>
+									<option value="">13</option>
+									<option value="">14</option>
+									<option value="">15</option>
+									<option value="">16</option>
+									<option value="">17</option>
+									<option value="">18</option>
+									<option value="">19</option>
+									<option value="">20</option>
+									<option value="">21</option>
+									<option value="">22</option>
+									<option value="">23</option>
+									<option value="">24</option>
+									<option value="">25</option>
+									<option value="">26</option>
+									<option value="">27</option>
+									<option value="">28</option>
+									<option value="">29</option>
+									<option value="">30</option>
+									<option value="">31</option>
+								</select>
+							</div>
+							<div class="be-custom-select-block">
+								<select class="be-custom-select" name="año"> 
+									<option value="" disabled selected>
+										Year
+									</option>
+									<option value="">1969</option>
+									<option value="">1970</option>
+									<option value="">1971</option>
+									<option value="">1972</option>
+									<option value="">1973</option>
+									<option value="">1974</option>
+									<option value="">1975</option>
+									<option value="">1976</option>
+									<option value="">1977</option>
+									<option value="">1978</option>
+									<option value="">1979</option>
+									<option value="">1980</option>
+									<option value="">1981</option>
+									<option value="">1982</option>
+									<option value="">1983</option>
+									<option value="">1984</option>
+									<option value="">1985</option>
+									<option value="">1986</option>
+									<option value="">1987</option>
+									<option value="">1988</option>
+									<option value="">1989</option>
+									<option value="">1990</option>
+									<option value="">1991</option>
+									<option value="">1992</option>
+									<option value="">1993</option>
+									<option value="">1994</option>
+									<option value="">1995</option>
+									<option value="">1996</option>
+									<option value="">1997</option>
+									<option value="">1998</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<!--<div class="be-checkbox">
+								<label class="check-box">
+								    <input class="checkbox-input" type="checkbox" required="" name=""/> <span class="check-box-sign"></span>
+								</label>
+								<span class="large-popup-text">
+									I have read and agree to the <a class="be-popup-terms" href="blog-detail-2.ejs">Terms of Use</a> and <a class="be-popup-terms" href="blog-detail-2.ejs">Privacy Policy</a>.
+								</span>
+							</div> -->
+							<div class="be-checkbox">
+								<label class="check-box">
+								    <input class="checkbox-input" type="checkbox" name="noticias"/> <span class="check-box-sign"></span>
+								</label>
+								<span class="large-popup-text">
+									Send me notifications
+								</span>
+							</div>
+						</div>
+						<div class="col-md-6 for-signin">
+							<input type="submit" class="be-popup-sign-button" value="SIGN IN">
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+
+
+
+
+
+
+
+
