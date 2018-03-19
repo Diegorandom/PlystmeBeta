@@ -16,7 +16,7 @@ var neo4j = require('neo4j-driver').v1;
 
 //INICIALIZACIÓN DE GLOBAL VARIABLES
 
-var nombre = "", ref=true, email, external_urls, seguidores, imagen_url, pais, access_token = null, track_uri, track_uri_ref, num=50, bailongo = 0, energia = 0, fundamental=0, amplitud=0, modo=0, dialogo=0, acustica=0, instrumental=0, audiencia=0, positivismo=0, tempo=0, firma_tiempo=0, duracion=0, bailongo2 = 0, energia2 = 0, fundamental2=0, amplitud2=0, modo2=0, dialogo2=0, acustica2=0, instrumental2=0, audiencia2=0, positivismo2=0, tempo2=0, firma_tiempo2=0, duracion2=0, followers, anti_playlist = [], bailongoS, energiaS, fundamentalS, amplitudS, modoS, dialogoS, acusticaS, positivismoS, instrumentalS, audienciaS, tempoS, firma_tiempoS, duracionS, urlS, imagenS, nombreAS,  popS, nombreS ,trackid ,artist_data = [], uri_S, track_uri_ref2 = [], seedTracks = [], userids = [], position, seed_shuffled, totalUsers = 0, pass, pass2, mes, dia, año, noticias, Userdata = [], mensaje, add;
+var nombre = "", ref=true, email, external_urls, seguidores, imagen_url, pais, access_token = null, track_uri, track_uri_ref, num=50, bailongo = 0, energia = 0, fundamental=0, amplitud=0, modo=0, dialogo=0, acustica=0, instrumental=0, audiencia=0, positivismo=0, tempo=0, firma_tiempo=0, duracion=0, bailongo2 = 0, energia2 = 0, fundamental2=0, amplitud2=0, modo2=0, dialogo2=0, acustica2=0, instrumental2=0, audiencia2=0, positivismo2=0, tempo2=0, firma_tiempo2=0, duracion2=0, followers, anti_playlist = [], bailongoS, energiaS, fundamentalS, amplitudS, modoS, dialogoS, acusticaS, positivismoS, instrumentalS, audienciaS, tempoS, firma_tiempoS, duracionS, urlS, imagenS, nombreAS,  popS, nombreS ,trackid ,artist_data = [], uri_S, track_uri_ref2 = [], seedTracks = [], userids = [], position, seed_shuffled, totalUsers = 0, pass, pass2, mes, dia, año, noticias, Userdata = [], mensaje, add, spotifyid;
 
 var objetosGlobales = {nombre:nombre, ref:ref, email:email, external_urls:external_urls, seguidores:seguidores, imagen_url:imagen_url, pais:pais, access_token:access_token, track_uri:track_uri, track_uri_ref:track_uri_ref, num:num, bailongo:bailongo, energia:energia, fundamental:fundamental, amplitud:amplitud, modo:modo, dialogo:dialogo, acustica:acustica, instrumental:instrumental, audiencia:audiencia, positivismo:positivismo, tempo:tempo, firma_tiempo:firma_tiempo, duracion:duracion, bailongo2:bailongo2, energia2:energia2, fundamental2:fundamental2, amplitud2:amplitud2, modo2:modo2, dialogo2:dialogo2, acustica2:acustica2, instrumental2:instrumental2, audiencia2:audiencia2, positivismo2:positivismo2, tempo2:tempo2, firma_tiempo2:firma_tiempo2, duracion2:duracion2, followers:followers, anti_playlist:anti_playlist, bailongoS:bailongoS, energiaS:energiaS, fundamentalS:fundamentalS, amplitudS:amplitudS, modoS:modoS, dialogoS:dialogoS, acusticaS:acusticaS, positivismoS:positivismoS, instrumentalS:instrumentalS, audienciaS:audienciaS, tempoS:tempoS, firma_tiempoS:firma_tiempoS, duracionS:duracionS, urlS:urlS, imagenS:imagenS, nombreAS: nombreAS,  popS:popS, nombreS:nombreS ,trackid:trackid ,artist_data:artist_data, uri_S:uri_S, track_uri_ref2:track_uri_ref2, seedTracks:seedTracks , userids:userids, position:position, seed_shuffled:seed_shuffled, totalUsers:totalUsers, pass:pass, pass2:pass2, mes:mes, dia:dia, año:año, noticias:noticias, Userdata:Userdata, mensaje:mensaje, add:add};
 
@@ -253,7 +253,7 @@ app.get('/callback', function(req, res, error) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, bodyS) {
-            var spotifyid;
+            
             console.log("Datos:");
             console.log(bodyS);
             
@@ -347,9 +347,9 @@ app.get('/callback', function(req, res, error) {
                  session
                     .run('MATCH (n:track {spotifyid:{id}}) RETURN n', {id:record.id})
                     .then(function(checktrack){
+                     var artistas = [];
                      
                      for(var i = 0; i < record.artists.length; i++){
-                        var artistas = [];
                         artistas.push(record.artists[i].name)
                     }
                      
@@ -382,7 +382,7 @@ app.get('/callback', function(req, res, error) {
                        
                             
                             session
-                            .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {nombre:{nombreUsuario}}) CREATE (n)<-[:Escuchado]-(m)', {nombreUsuario:nombre, spotifyid:record.id})
+                            .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado]-(m)', {spotifyidUsuario:spotifyid, spotifyid:record.id })
                             .then(function(resultado){
                                 console.log("Se conecto exitosamente el track con el usuario")
                             })
