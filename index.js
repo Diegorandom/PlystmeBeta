@@ -379,6 +379,17 @@ app.get('/callback', function(req, res, error) {
                         .then(function(resultado_create){
                             console.log('Se Guardo con éxito la información de este track');
                             console.log(resultado_create)
+                       
+                            
+                            session
+                            .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {nombre:{nombreUsuario}}) CREATE (n)<-[:Escuchado]-(m)', {nombreUsuario:nombre, spotifyid:record.id})
+                            .then(function(resultado){
+                                console.log("Se conecto exitosamente el track con el usuario")
+                            })
+                             .catch(function(err){
+                            console.log(err);
+                            })
+                            
                         })
                         .catch(function(err){
                         console.log(err);
@@ -387,7 +398,7 @@ app.get('/callback', function(req, res, error) {
                  
                     
                 }else if(checktrack.records.length>=1){
-                    console.log('Este usuario ya está registrado (no debería ser más de 1)')
+                    console.log('Este track ya está registrado (no debería ser más de 1)')
                     mensaje = "nuevo_login";
                 }
                  })
