@@ -965,8 +965,7 @@ app.post('/track/profile', function(req, res, error){
     console.log("Index de cancion elegida " + trackid);
     console.log('anti_playlist: ');
     console.log(anti_playlist.length);
-    console.log('error');
-    console.log(error);
+  
     console.log(anti_playlist.tracks);
     console.log('anti_playlist.tracks');
     
@@ -984,6 +983,8 @@ app.post('/track/profile', function(req, res, error){
                
                 artist_data = data.body;
                 console.log('Artist_data', data.body);
+                
+                 objetosGlobales = {nombre:nombre, ref:ref, email:email, external_urls:external_urls, seguidores:seguidores, imagen_url:imagen_url, pais:pais, access_token:access_token, track_uri:track_uri, track_uri_ref:track_uri_ref, num:num, bailongo:bailongo, energia:energia, fundamental:fundamental, amplitud:amplitud, modo:modo, dialogo:dialogo, acustica:acustica, instrumental:instrumental, audiencia:audiencia, positivismo:positivismo, tempo:tempo, firma_tiempo:firma_tiempo, duracion:duracion, bailongo2:bailongo2, energia2:energia2, fundamental2:fundamental2, amplitud2:amplitud2, modo2:modo2, dialogo2:dialogo2, acustica2:acustica2, instrumental2:instrumental2, audiencia2:audiencia2, positivismo2:positivismo2, tempo2:tempo2, firma_tiempo2:firma_tiempo2, duracion2:duracion2, followers:followers, anti_playlist:anti_playlist, bailongoS:bailongoS, energiaS:energiaS, fundamentalS:fundamentalS, amplitudS:amplitudS, modoS:modoS, dialogoS:dialogoS, acusticaS:acusticaS, positivismoS:positivismoS, instrumentalS:instrumentalS, audienciaS:audienciaS, tempoS:tempoS, firma_tiempoS:firma_tiempoS, duracionS:duracionS, urlS:urlS, imagenS:imagenS, nombreAS: nombreAS,  popS:popS, nombreS:nombreS ,trackid:trackid ,artist_data:artist_data, uri_S:uri_S, track_uri_ref2:track_uri_ref2, seedTracks:seedTracks , userids:userids, position:position, seed_shuffled:seed_shuffled, totalUsers:totalUsers, pass:pass, pass2:pass2, mes:mes, dia:dia, año:año, noticias:noticias, Userdata:Userdata, mensaje:mensaje, add:add}
                 
              res.render('pages/page3', objetosGlobales, function(err, html){
                     if(err == true){res.redirect('/error')}else{res.send(html)} 
