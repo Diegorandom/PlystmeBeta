@@ -333,12 +333,67 @@ app.get('/callback', function(req, res, error) {
  
         request.get(options2, function(error, response, body){
             
+            console.log("50 tracks principales")
+            console.log(body);
+            
             var i = 0;
             
             bailongo = 0, energia = 0, fundamental=0, amplitud=0, modo=0, dialogo=0, acustica=0, instrumental=0, audiencia=0, positivismo=0, tempo=0, firma_tiempo=0, duracion=0, bailongo2 = 0, energia2 = 0, fundamental2=0, amplitud2=0, modo2=0, dialogo2=0, acustica2=0, instrumental2=0, audiencia2=0, positivismo2=0, tempo2=0, firma_tiempo2=0, duracion2=0;
     
             body.items.forEach(function(record, index){
                 
+                console.log(record)
+                
+                 session
+                    .run('MATCH (n:track {spotifyid:{id}}) RETURN n', {id:record.id})
+                    .then(function(checktrack){
+                     
+                     for(var i = 0; i < record.artists.length; i++){
+                        var artistas = [];
+                        artistas.push(record.artists[i].name)
+                    }
+                     
+                    console.log('')
+                    console.log('se realizó la consulta a la base de datos')
+
+                    console.log(checktrack)
+                    
+                 console.log('checktrack');
+                 console.log(checktrack.records.length)
+                 
+                 console.log("index.album")
+                 console.log(record.album.images[2].url)
+
+                console.log('');
+
+                if(checktrack.records.length<1){
+                    
+                    
+                    
+                        console.log(' \n Es la primera vez que se analiza este track \n');
+                        console.log('')
+                        console.log('Se creará nuevo record en base de datos');
+                        mensaje = "nuevo_track";
+                        session
+                        .run('CREATE (n:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, reproducible:{reproducible}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen} })', { album:record.album.name, nombre:record.name, artistas:artistas, duracion:record.duration_ms, Cont_explicito:record.explicit, externalurls:record.external_urls.spotify, href:record.href, spotifyid:record.id, reproducible:record.is_playable, popularidad:record.popularity, previewUrl:record.preview_url, uri:record.uri, albumImagen:record.album.images[2].url })
+                        .then(function(resultado_create){
+                            console.log('Se Guardo con éxito la información de este track');
+                            console.log(resultado_create)
+                        })
+                        .catch(function(err){
+                        console.log(err);
+                        })
+                        
+                 
+                    
+                }else if(checktrack.records.length>=1){
+                    console.log('Este usuario ya está registrado (no debería ser más de 1)')
+                    mensaje = "nuevo_login";
+                }
+                 })
+                 .catch(function(err){
+                            console.log(err);
+                            }) 
                 
                 track_uri = record.uri;
                 track_uri = track_uri.substring(14);
@@ -346,6 +401,38 @@ app.get('/callback', function(req, res, error) {
                 
                 if(index < 5){
                     track_uri_ref2[index] = track_uri;
+                }else if(index == 5 ){
+                    //Request por información de la semilla
+                         
+                       var options4 = {
+                          url: 'https://api.spotify.com/v1/tracks/?ids=' + track_uri_ref2, 
+                          headers: { 'Authorization': 'Bearer ' + access_token },
+                          json: true
+                        };  
+                        
+                        console.log(options4);
+                     
+                     
+                        //use the access token to access the Spotify Web API
+                         
+                        request.get(options4, function(error, response, bodyS) {
+                        if(error){console.log('Error al momento de pedir información de la semillas: ', error)}
+                            
+                            console.log('seedTracks info');
+                            console.log(bodyS);
+                            
+                            console.log('response de info del seed');
+                            console.log(response.statusCode);
+                            
+                            bodyS.tracks.forEach(function(records, index){
+                                seedTracks[index] = bodyS.tracks[index].uri;
+                                console.log('seedTracks ', [index]);
+                                console.log(seedTracks); 
+                                
+                            });
+                             
+                        });
+                         //Fin de Request
                 };
                    
                 
@@ -368,71 +455,11 @@ app.get('/callback', function(req, res, error) {
                      tempo = tempo + parseFloat(data.body.tempo);
                      firma_tiempo = firma_tiempo + parseFloat(data.body.time_signature);
                      duracion = duracion + parseFloat(data.body.duration_ms);
-                     
-                     if(i == 1){
-                         
-                         track_uri_ref = track_uri;
-                         
-                         console.log('data of track ' + i);
-                        console.log( data);
-                         
-                         
-                         console.log("TRACK SEMILLA: " + track_uri_ref);
-                         
-                            bailongoS = bailongo;
-                            energiaS = energia; 
-                            fundamentalS = fundamental;
-                            amplitudS = amplitud; 
-                            modoS =modo;
-                            dialogoS= dialogo;
-                            acusticaS = acustica; 
-                            positivismoS = positivismo;
-                            instrumentalS = instrumental;
-                            audienciaS = audiencia;
-                            tempoS = tempo; 
-                            firma_tiempoS = firma_tiempo; 
-                            duracionS = duracion;
-                            
-                          //Request por información de la semilla
-                         
-                       var options4 = {
-                          url: 'https://api.spotify.com/v1/tracks/?ids=' + track_uri_ref2, 
-                          headers: { 'Authorization': 'Bearer ' + access_token },
-                          json: true
-                        };  
-                        
-                        console.log(options4);
-                     
-                     
-                        // use the access token to access the Spotify Web API
-                         
-                        request.get(options4, function(error, response, bodyS) {
-                        if(error){console.log('Error al momento de pedir información de la semillas: ', error)}
-                            
-                            console.log('seedTracks info');
-                            console.log(bodyS);
-                            
-                            
-                            console.log('response de info del seed');
-                            console.log(response.statusCode);
-                            
-                            bodyS.tracks.forEach(function(records, index){
-                                seedTracks[index] = bodyS.tracks[index].uri;
-                                console.log('seedTracks ', [index]);
-                                console.log(seedTracks); 
-                                
-                            });
-                             
-                        });
-                         
-                         //Fin de Request
-                        
-                         
-                        }
-                     
                     
                         
                     if(i == num){
+                        
+                        
                         bailongo = (bailongo/num)*100;
                         energia = (energia/num)*100; 
                         fundamental = fundamental/num;
