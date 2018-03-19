@@ -75,26 +75,26 @@ app.set('port', (process.env.PORT || 5000));
 if( app.get('port') == 5000 ){
     console.log("Corriendo en servidor local con uri de redireccionamiento: ");
  
-    var client_id = '381fa9402ef049efab1c1a801beef662'; // Your client id
+    var client_id = 'b590c1e14afd46a69891549457267135'; // Your client id
     var client_secret = config.sessionSecret; // Your secret
-    var redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
+    var redirect_uri = 'https://proyecto-techclub.herokuapp.com/callback'; // Your redirect uri
 
     var spotifyApi = new SpotifyWebApi({
-        clientId: '381fa9402ef049efab1c1a801beef662',
+        clientId: 'b590c1e14afd46a69891549457267135',
         clientSecret: config.sessionSecret,
-        redirectUri: 'http://localhost:5000/callback' 
+        redirectUri: 'https://proyecto-techclub.herokuapp.com/callback' 
     }); 
     console.log(redirect_uri);
 }else{
     console.log("Corriendo en servidor web con uri de redireccionamiento: ");
-    var client_id = '381fa9402ef049efab1c1a801beef662'; // Your client id
+    var client_id = 'b590c1e14afd46a69891549457267135'; // Your client id
     var client_secret = config.sessionSecret; // Your secret
-    var redirect_uri = 'https://idgn.herokuapp.com/callback'; // Your redirect uri
+    var redirect_uri = 'https://proyecto-techclub.herokuapp.com/callback'; // Your redirect uri
 
     var spotifyApi = new SpotifyWebApi({
-        clientId: '381fa9402ef049efab1c1a801beef662',
+        clientId: 'b590c1e14afd46a69891549457267135',
         clientSecret: config.sessionSecret,
-        redirectUri: 'https://idgn.herokuapp.com/callback' 
+        redirectUri: 'https://proyecto-techclub.herokuapp.com/callback' 
     });
     console.log(redirect_uri);
 };
@@ -322,7 +322,6 @@ app.get('/callback', function(req, res, error) {
             
              })
      
-          
         var options2 = {
           url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + num,
           headers: { 'Authorization': 'Bearer ' + access_token },
