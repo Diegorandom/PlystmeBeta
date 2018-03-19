@@ -358,11 +358,6 @@ app.get('/callback', function(req, res, error) {
 
                     console.log(checktrack)
                     
-                 console.log('checktrack');
-                 console.log(checktrack.records.length)
-                 
-                 console.log("index.album")
-                 console.log(record.album.images[2].url)
 
                 console.log('');
 
@@ -385,6 +380,7 @@ app.get('/callback', function(req, res, error) {
                             .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado]-(m)', {spotifyidUsuario:spotifyid, spotifyid:record.id })
                             .then(function(resultado){
                                 console.log("Se conecto exitosamente el track con el usuario")
+                                console.log(resultado)
                             })
                              .catch(function(err){
                             console.log(err);
@@ -403,48 +399,17 @@ app.get('/callback', function(req, res, error) {
                 }
                  })
                  .catch(function(err){
-                            console.log(err);
-                            }) 
+                console.log(err);
+                }) 
                 
                 track_uri = record.uri;
                 track_uri = track_uri.substring(14);
                 console.log(track_uri);
                 
                 if(index < 5){
+                    seedTracks[index] = record.uri;
                     track_uri_ref2[index] = track_uri;
-                }else if(index == 5 ){
-                    //Request por información de la semilla
-                         
-                       var options4 = {
-                          url: 'https://api.spotify.com/v1/tracks/?ids=' + track_uri_ref2, 
-                          headers: { 'Authorization': 'Bearer ' + access_token },
-                          json: true
-                        };  
-                        
-                        console.log(options4);
-                     
-                     
-                        //use the access token to access the Spotify Web API
-                         
-                        request.get(options4, function(error, response, bodyS) {
-                        if(error){console.log('Error al momento de pedir información de la semillas: ', error)}
-                            
-                            console.log('seedTracks info');
-                            console.log(bodyS);
-                            
-                            console.log('response de info del seed');
-                            console.log(response.statusCode);
-                            
-                            bodyS.tracks.forEach(function(records, index){
-                                seedTracks[index] = bodyS.tracks[index].uri;
-                                console.log('seedTracks ', [index]);
-                                console.log(seedTracks); 
-                                
-                            });
-                             
-                        });
-                         //Fin de Request
-                };
+                }
                    
                 
                  spotifyApi.getAudioFeaturesForTrack(track_uri)
