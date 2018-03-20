@@ -415,9 +415,51 @@ app.get('/callback', function(req, res, error) {
                  spotifyApi.getAudioFeaturesForTrack(track_uri)
                   .then(function(data) {
                      
+                     var bailongo_bd = parseFloat(data.body.danceability);
+                     var energia_bd = parseFloat(data.body.energy);
+                     var fundamental_bd = parseFloat(data.body.key); 
+                     var amplitud_bd = parseFloat(data.body.loudness);
+                     var modo_bd = parseFloat(data.body.mode);
+                     var dialogo_bd =parseFloat(data.body.speechiness);
+                     var acustica_bd = parseFloat(data.body.acousticness);
+                     var instrumental_bd = parseFloat(data.body.instrumentalness);
+                     var audiencia_bd = parseFloat(data.body.liveness);
+                     var positivismo_bd = parseFloat(data.body.valence);
+                     var tempo_bd = parseFloat(data.body.tempo);
+                     var firma_tiempo_bd = parseFloat(data.body.time_signature);
+                     var duracion_bd =  parseFloat(data.body.duration_ms);
+                     
+                     session
+                        .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.bailongo) RETURN n', {track_uri:record.uri})
+                        .then(function(resultado){
+                            console.log("1 = Debe guardarse la info, 0 = no pasa nada")
+                            console.log(resultado.records)
+                            
+                            if(resultado.records.length>=1){
+                                
+                                
+                                 session
+                                    .run('MATCH (n:track {uri:{track_uri}}) SET n.bailongo={bailongo}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {bailongo:bailongo_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:record.uri })
+                                    .then(function(resultado){
+                                        console.log(resultado)
+                                        console.log('Se guardaron las caracteristicas del track')
+                                    })
+                                     .catch(function(err){
+                                        console.log(err);
+                                    })
+                            }
+                        })
+                         .catch(function(err){
+                            console.log(err);
+                        })
+                     
+                    
+
                      i = i + 1;
                     console.log('i: ' + i);
                     
+                     
+                     //Suma para luego sacar promedio
                      bailongo = bailongo + parseFloat(data.body.danceability);
                      energia = energia + parseFloat(data.body.energy);
                      fundamental = fundamental + parseFloat(data.body.key); 
