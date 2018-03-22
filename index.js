@@ -293,7 +293,7 @@ app.get('/callback', function(req, res, error) {
                  
                         console.log('');
                  
-                        if(checkid_result.records.length< 1){
+                        if(checkid_result.records.length< 1){ 
                             console.log(' \n el usuario es nuevo \n');
                             console.log('')
                             console.log('Se creará nuevo record en base de datos');
@@ -303,322 +303,452 @@ app.get('/callback', function(req, res, error) {
                             .then(function(resultado_create){
                                 console.log('Se creó con éxito el nodo del usuario');
                                 console.log(resultado_create)
-                            })
+                                 })
                             .catch(function(err){
                             console.log(err);
-                            })    
-                            
+                            }) 
                         }else if(checkid_result.records.length >= 1){
                             console.log('Este usuario ya está registrado (no debería ser más de 1)')
                             mensaje = "nuevo_login";
+                
+                            
                         }else{
                             console.log('No se pudo determinar si es un usuario nuevo o registrado')
                         }
+                            
+                    if(mensaje == "nuevo_usuario"){
+                         //PROCESO DE HARVESTING DE INFORMACIÓN DE USUARIO
+                                    var options2 = {
+                                      url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + num,
+                                      headers: { 'Authorization': 'Bearer ' + access_token },
+                                      json: true
+                                    };
+                                    console.log('Request de informacion de canciones: ', options2);
+                                    request.get(options2, function(error, response, body){     
+            
+                                console.log("50 tracks principales")
+                                console.log(body);
+
+                                var i = 0;
+
+                                bailongo = 0, energia = 0, fundamental=0, amplitud=0, modo=0, dialogo=0, acustica=0, instrumental=0, audiencia=0, positivismo=0, tempo=0, firma_tiempo=0, duracion=0, bailongo2 = 0, energia2 = 0, fundamental2=0, amplitud2=0, modo2=0, dialogo2=0, acustica2=0, instrumental2=0, audiencia2=0, positivismo2=0, tempo2=0, firma_tiempo2=0, duracion2=0;
+
+                                body.items.forEach(function(record, index){
+
+                                    console.log(record)
+
+                                     session
+                                        .run('MATCH (n:track {spotifyid:{id}}) RETURN n', {id:record.id})
+                                        .then(function(checktrack){
+                                         var artistas = [];
+
+                                         for(var i = 0; i < record.artists.length; i++){
+                                            artistas.push(record.artists[i].name)
+                                        }
+
+                                        console.log('')
+                                        console.log('se realizó la consulta a la base de datos')
+
+                                        console.log(checktrack)
+
+
+                                    console.log('');
+
+                                    if(checktrack.records.length<1){
+
+
+
+                                            console.log(' \n Es la primera vez que se analiza este track \n');
+                                            console.log('')
+                                            console.log('Se creará nuevo record en base de datos');
+                                          
+                                            session
+                                            .run('CREATE (n:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, reproducible:{reproducible}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen}})', { album:record.album.name, nombre:record.name, artistas:artistas, duracion:record.duration_ms, Cont_explicito:record.explicit, externalurls:record.external_urls.spotify, href:record.href, spotifyid:record.id, reproducible:record.is_playable, popularidad:record.popularity, previewUrl:record.preview_url, uri:record.uri, albumImagen:record.album.images[2].url })
+                                            .then(function(resultado_create){
+                                                console.log('Se Guardo con éxito la información de este track');
+                                                console.log(resultado_create)
+
+
+                                                session
+                                                .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:spotifyid, spotifyid:record.id, index:index+1 })
+                                                .then(function(resultado){
+                                                    console.log("Se conecto exitosamente el track con el usuario")
+                                                    console.log(resultado)
+                                                })
+                                                 .catch(function(err){
+                                                console.log(err);
+                                                })
+
+                                            })
+                                            .catch(function(err){
+                                            console.log(err);
+                                            })
+
+
+
+                                    }else if(checktrack.records.length>=1){
+                                        console.log('Este track ya está registrado (no debería ser más de 1)')
+                                       
+                                    }
+                                     })
+                                     .catch(function(err){
+                                    console.log(err);
+                                    }) 
+
+                                    track_uri = record.uri;
+                                    track_uri = track_uri.substring(14);
+                                    console.log(track_uri);
+
+                                    if(index < 5){
+                                        seedTracks[index] = record.uri;
+                                        track_uri_ref2[index] = track_uri;
+                                    }
+
+
+                                     spotifyApi.getAudioFeaturesForTrack(track_uri)
+                                      .then(function(data) {
+
+                                         var bailongo_bd = parseFloat(data.body.danceability);
+                                         var energia_bd = parseFloat(data.body.energy);
+                                         var fundamental_bd = parseFloat(data.body.key); 
+                                         var amplitud_bd = parseFloat(data.body.loudness);
+                                         var modo_bd = parseFloat(data.body.mode);
+                                         var dialogo_bd =parseFloat(data.body.speechiness);
+                                         var acustica_bd = parseFloat(data.body.acousticness);
+                                         var instrumental_bd = parseFloat(data.body.instrumentalness);
+                                         var audiencia_bd = parseFloat(data.body.liveness);
+                                         var positivismo_bd = parseFloat(data.body.valence);
+                                         var tempo_bd = parseFloat(data.body.tempo);
+                                         var firma_tiempo_bd = parseFloat(data.body.time_signature);
+                                         var duracion_bd =  parseFloat(data.body.duration_ms);
+
+                                         session
+                                            .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.bailongo) RETURN n', {track_uri:record.uri})
+                                            .then(function(resultado){
+                                                console.log("1 = Debe guardarse la info, 0 = no pasa nada")
+                                                console.log(resultado.records)
+
+                                                if(resultado.records.length>=1){
+
+
+                                                     session
+                                                        .run('MATCH (n:track {uri:{track_uri}}) SET n.bailongo={bailongo}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {bailongo:bailongo_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:record.uri })
+                                                        .then(function(resultado){
+                                                            console.log(resultado)
+                                                            console.log('Se guardaron las caracteristicas del track')
+                                                        })
+                                                         .catch(function(err){
+                                                            console.log(err);
+                                                        })
+                                                }
+                                            })
+                                             .catch(function(err){
+                                                console.log(err);
+                                            })
+
+
+
+                                         i = i + 1;
+                                        console.log('i: ' + i);
+
+
+                                         //Suma para luego sacar promedio
+                                         bailongo = bailongo + parseFloat(data.body.danceability);
+                                         energia = energia + parseFloat(data.body.energy);
+                                         fundamental = fundamental + parseFloat(data.body.key); 
+                                         amplitud = amplitud + parseFloat(data.body.loudness);
+                                         modo = modo + parseFloat(data.body.mode);
+                                         dialogo = dialogo + parseFloat(data.body.speechiness);
+                                         acustica = acustica + parseFloat(data.body.acousticness);
+                                         instrumental = instrumental + parseFloat(data.body.instrumentalness);
+                                         audiencia = audiencia + parseFloat(data.body.liveness);
+                                         positivismo = positivismo + parseFloat(data.body.valence);
+                                         tempo = tempo + parseFloat(data.body.tempo);
+                                         firma_tiempo = firma_tiempo + parseFloat(data.body.time_signature);
+                                         duracion = duracion + parseFloat(data.body.duration_ms);
+
+
+                                        if(i == num){
+                                            bailongo = (bailongo/num)*100;
+                                            energia = (energia/num)*100; 
+                                            fundamental = fundamental/num;
+                                            amplitud = amplitud/num;
+                                            modo = modo/num;
+                                            dialogo = (dialogo/num)*100;
+                                            acustica = (acustica/num)*100;
+                                            positivismo = (positivismo/num)*100;
+                                            instrumental = (instrumental/num)*100;
+                                            audiencia = (audiencia/num)*100;
+                                            tempo = tempo/num;
+                                            firma_tiempo = firma_tiempo/num;
+                                            duracion = Math.round(duracion/num);
+
+                                            console.log('bailongo: ' + bailongo);
+                                            console.log('energia: ' + energia);
+                                            console.log('fundamental: ' + fundamental);
+                                            console.log('amplitud: ' + amplitud);
+                                            console.log('modo: ' + modo);
+                                            console.log('dialogo: ' + dialogo);
+                                            console.log('acustica: ' + acustica);
+                                            console.log('instrumental: ' + instrumental);
+                                            console.log('audiencia: ' + audiencia);
+                                            console.log('positivismo: ' + positivismo);
+                                            console.log('tempo: ' + tempo);
+                                            console.log('firma_tiempo:' + firma_tiempo);
+                                            console.log('duracion: ' + duracion);
+                                            
+                                            //Algoritmo 
+                        
+                                            bailongo2 = Math.abs(bailongo-50);
+                                            energia2 = Math.abs(energia-50);
+                                            fundamental2 = Math.round(Math.abs(fundamental-5));
+                                            amplitud2 = (-Math.abs(amplitud+30));
+                                            acustica2 = Math.abs(acustica-50);
+                                            dialogo2 = Math.abs(dialogo-50);
+                                            positivismo2 = Math.abs(positivismo-50);
+                                            instrumental2 = Math.abs(instrumental-50);
+                                            audiencia2 = Math.abs(audiencia-50);
+
+                                            if(Math.random() > 0.5){
+                                              duracion2 = 'min_';  
+                                            }else{
+                                              duracion2 = 'max_';   
+                                            }
+
+
+                                            if(modo == 1){
+                                                modo2 = 0;    
+                                            }else if(modo == 0){
+                                                modo2 = 1;
+                                            };
+                                            tempo2 = Math.floor(Math.random() * 201) + 30;
+
+                                            var test = false;
+
+                                            while(test == false){
+                                                firma_tiempo2 = Math.floor(Math.random() * 8) + 2;
+                                                if(firma_tiempo2 != firma_tiempo){
+                                                    test = true;
+                                                    console.log('firma_tiempo2 = ' + firma_tiempo2);
+                                                }
+                                            }
+
+                                            shuffle(track_uri_ref2);
+
+                                            var options3 = {
+                                              url: 'https://api.spotify.com/v1/recommendations?'+'seed_tracks=' + 
+                                              track_uri_ref2 + '&limit=100&target_acousticness='+ acustica2 + '&target_danceability=' + 
+                                              bailongo2 + '&target_energy=' + energia2 + '&target_key=' + fundamental2 + '&target_loudness=' + amplitud +
+                                              '&target_mode=' + modo2 + '&target_speechiness=' + dialogo2 + '&target_acousticness=' + acustica2 + 
+                                              '&target_instrumentalness=' + instrumental2 + '&target_liveness=' + audiencia2 + '&target_valence=' + positivismo2 
+                                              + '&target_tempo=' + tempo2 + '&target_time_signature=' + firma_tiempo2 + '&target_loudness=' + amplitud2 + '&' + duracion2 + 'duration_ms=' + duracion ,
+                                              headers: { 'Authorization': 'Bearer ' + access_token },
+                                              json: true
+                                            };  
+                        
+
+                                            console.log('Resquest de Recomendaciones: ',  options3);
+
+
+                                            // use the access token to access the Spotify Web API
+                                            request.get(options3, function(error, response, bodyS) {
+                                            if(error){
+                                                console.log("Error al momento de pedir recomendaciones a Spotify: ",error)
+                                                res.render("pages/error"); 
+                                            }else{
+                                                anti_playlist = [];
+                                                console.log("Datos:");
+                                                console.log("bodyS")
+                                                console.log(bodyS)
+                                                console.log(bodyS.tracks[0].name);
+                                                console.log(bodyS.tracks[0].artists);
+                                                console.log(bodyS.tracks[0].album.images[0].url);
+
+                                                console.log("BodyS: " + bodyS.length);
+
+                                                console.log('anti_playlist');
+                                                console.log(anti_playlist);
+
+                                                anti_playlist = bodyS;
+
+                                                objetosGlobales.anti_playlist = bodyS;
+
+                                                console.log('anti_playlist # de elementos');
+                                                console.log(anti_playlist.length);
+
+                                                duracion = (duracion/1000/60);
+
+                                                // we can also pass the token to the browser to make requests from there
+                                                res.redirect('/perfil#' +
+                                                  querystring.stringify({
+                                                    access_token: access_token,
+                                                    refresh_token: refresh_token
+                                                  }));
+
+                                            };
+                                            });
+
+                                        };
+
+                                      }, function(err) {
+                                        done(err);
+                                         console.log("err: " + err );
+                                         res.render('pages/error');
+                                      });
+                                    console.log('');    
+                                 });
+                            }); 
+                                
+                              
+                    }else if(mensaje == "nuevo_login"){
+                         session
+                                .run('MATCH (n:track)-[r:Escuchado]-(m:usuario {spotifyid:{spotifyid}}) RETURN n, r.importanciaIndex', {spotifyid:spotifyid})
+                                .then(function(tracks){
+                                   console.log(tracks);
+                                    seedTracks = [];
+                                    var contador = 0;
+                                    tracks.records.forEach(function(records,index){
+                                         console.log("Index de importancia")
+                                        console.log(records._fields[1])
+                                        
+                                         //Index de importancia
+                                            if(records._fields[1] < 6){
+                                                seedTracks[records._fields[1]-1] = records._fields[0].properties.uri;
+                                                track_uri_ref2[records._fields[1]-1]= records._fields[0].properties.spotifyid;
+                                                
+                                                contador = contador + 1;
+                                                console.log("contador")
+                                                console.log(contador)
+                                                
+                                            }
+                                        
+                                        //Suma para luego sacar promedio
+                                         bailongo = bailongo + parseFloat(records._fields[0].properties.bailongo);
+                                         energia = energia + parseFloat(records._fields[0].properties.energia);
+                                         fundamental = fundamental + parseFloat(records._fields[0].properties.fundamental); 
+                                         amplitud = amplitud + parseFloat(records._fields[0].properties.amplitud);
+                                         modo = modo + parseFloat(records._fields[0].properties.modo);
+                                         dialogo = dialogo + parseFloat(records._fields[0].properties.speechiness);
+                                         acustica = acustica + parseFloat(records._fields[0].properties.acousticness);
+                                         instrumental = instrumental + parseFloat(records._fields[0].properties.instrumentalness);
+                                         audiencia = audiencia + parseFloat(records._fields[0].properties.liveness);
+                                         positivismo = positivismo + parseFloat(records._fields[0].properties.positivismo);
+                                         tempo = tempo + parseFloat(records._fields[0].properties.tempo);
+                                         firma_tiempo = firma_tiempo + parseFloat(records._fields[0].properties.firma_tiempo);
+                                         duracion = duracion + parseFloat(records._fields[0].properties.duracion);
+                                        
+                                        console.log("seedTracks.length")
+                                        console.log(seedTracks.length)
+                                        
+                                         if(contador == 5){
+                                             //Algoritmo 
+                        
+                                            bailongo2 = Math.abs(bailongo-50);
+                                            energia2 = Math.abs(energia-50);
+                                            fundamental2 = Math.round(Math.abs(fundamental-5));
+                                            amplitud2 = (-Math.abs(amplitud+30));
+                                            acustica2 = Math.abs(acustica-50);
+                                            dialogo2 = Math.abs(dialogo-50);
+                                            positivismo2 = Math.abs(positivismo-50);
+                                            instrumental2 = Math.abs(instrumental-50);
+                                            audiencia2 = Math.abs(audiencia-50);
+
+                                            if(Math.random() > 0.5){
+                                              duracion2 = 'min_';  
+                                            }else{
+                                              duracion2 = 'max_';   
+                                            }
+
+
+                                            if(modo == 1){
+                                                modo2 = 0;    
+                                            }else if(modo == 0){
+                                                modo2 = 1;
+                                            };
+                                            tempo2 = Math.floor(Math.random() * 201) + 30;
+
+                                            var test = false;
+
+                                            while(test == false){
+                                                firma_tiempo2 = Math.floor(Math.random() * 8) + 2;
+                                                if(firma_tiempo2 != firma_tiempo){
+                                                    test = true;
+                                                    console.log('firma_tiempo2 = ' + firma_tiempo2);
+                                                }
+                                            }
+
+                                            shuffle(track_uri_ref2);
+
+                                            var options3 = {
+                                              url: 'https://api.spotify.com/v1/recommendations?'+'seed_tracks=' + 
+                                              track_uri_ref2 + '&limit=100&target_acousticness='+ acustica2 + '&target_danceability=' + 
+                                              bailongo2 + '&target_energy=' + energia2 + '&target_key=' + fundamental2 + '&target_loudness=' + amplitud +
+                                              '&target_mode=' + modo2 + '&target_speechiness=' + dialogo2 + '&target_acousticness=' + acustica2 + 
+                                              '&target_instrumentalness=' + instrumental2 + '&target_liveness=' + audiencia2 + '&target_valence=' + positivismo2 
+                                              + '&target_tempo=' + tempo2 + '&target_time_signature=' + firma_tiempo2 + '&target_loudness=' + amplitud2 + '&' + duracion2 + 'duration_ms=' + duracion ,
+                                              headers: { 'Authorization': 'Bearer ' + access_token },
+                                              json: true
+                                            };  
+                        
+
+                                            console.log('Resquest de Recomendaciones: ',  options3);
+
+
+                                            // use the access token to access the Spotify Web API
+                                            request.get(options3, function(error, response, bodyS) {
+                                            if(error){
+                                                console.log("Error al momento de pedir recomendaciones a Spotify: ",error)
+                                                res.render("pages/error"); 
+                                            }else{
+                                                anti_playlist = [];
+                                                console.log("Datos:");
+                                                console.log("bodyS")
+                                                console.log(bodyS)
+                                                console.log(bodyS.tracks[0].name);
+                                                console.log(bodyS.tracks[0].artists);
+                                                console.log(bodyS.tracks[0].album.images[0].url);
+
+                                                console.log("BodyS: " + bodyS.length);
+
+                                                console.log('anti_playlist');
+                                                console.log(anti_playlist);
+
+                                                anti_playlist = bodyS;
+
+                                                objetosGlobales.anti_playlist = bodyS;
+
+                                                console.log('anti_playlist # de elementos');
+                                                console.log(anti_playlist.length);
+
+                                                duracion = (duracion/1000/60);
+
+                                                // we can also pass the token to the browser to make requests from there
+                                                res.redirect('/perfil#' +
+                                                  querystring.stringify({
+                                                    access_token: access_token,
+                                                    refresh_token: refresh_token
+                                                  }));
+
+                                            };
+                                            });
+                                         }
+                                        
+                                    })
+
                  
                 })
                 .catch(function(err){
                     console.log(err);
                 })
             
-             })
-     
-        var options2 = {
-          url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + num,
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
-          
-          
-          console.log('Request de informacion de canciones: ', options2);
- 
-        request.get(options2, function(error, response, body){
-            
-            console.log("50 tracks principales")
-            console.log(body);
-            
-            var i = 0;
-            
-            bailongo = 0, energia = 0, fundamental=0, amplitud=0, modo=0, dialogo=0, acustica=0, instrumental=0, audiencia=0, positivismo=0, tempo=0, firma_tiempo=0, duracion=0, bailongo2 = 0, energia2 = 0, fundamental2=0, amplitud2=0, modo2=0, dialogo2=0, acustica2=0, instrumental2=0, audiencia2=0, positivismo2=0, tempo2=0, firma_tiempo2=0, duracion2=0;
-    
-            body.items.forEach(function(record, index){
-                
-                console.log(record)
-                
-                 session
-                    .run('MATCH (n:track {spotifyid:{id}}) RETURN n', {id:record.id})
-                    .then(function(checktrack){
-                     var artistas = [];
-                     
-                     for(var i = 0; i < record.artists.length; i++){
-                        artistas.push(record.artists[i].name)
-                    }
-                     
-                    console.log('')
-                    console.log('se realizó la consulta a la base de datos')
+             }
 
-                    console.log(checktrack)
-                    
-
-                console.log('');
-
-                if(checktrack.records.length<1){
-                    
-                    
-                    
-                        console.log(' \n Es la primera vez que se analiza este track \n');
-                        console.log('')
-                        console.log('Se creará nuevo record en base de datos');
-                        mensaje = "nuevo_track";
-                        session
-                        .run('CREATE (n:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, reproducible:{reproducible}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen} })', { album:record.album.name, nombre:record.name, artistas:artistas, duracion:record.duration_ms, Cont_explicito:record.explicit, externalurls:record.external_urls.spotify, href:record.href, spotifyid:record.id, reproducible:record.is_playable, popularidad:record.popularity, previewUrl:record.preview_url, uri:record.uri, albumImagen:record.album.images[2].url })
-                        .then(function(resultado_create){
-                            console.log('Se Guardo con éxito la información de este track');
-                            console.log(resultado_create)
-                       
-                            
-                            session
-                            .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado]-(m)', {spotifyidUsuario:spotifyid, spotifyid:record.id })
-                            .then(function(resultado){
-                                console.log("Se conecto exitosamente el track con el usuario")
-                                console.log(resultado)
-                            })
-                             .catch(function(err){
-                            console.log(err);
-                            })
-                            
-                        })
-                        .catch(function(err){
-                        console.log(err);
-                        })
-                        
-                 
-                    
-                }else if(checktrack.records.length>=1){
-                    console.log('Este track ya está registrado (no debería ser más de 1)')
-                    mensaje = "nuevo_login";
-                }
-                 })
-                 .catch(function(err){
-                console.log(err);
-                }) 
-                
-                track_uri = record.uri;
-                track_uri = track_uri.substring(14);
-                console.log(track_uri);
-                
-                if(index < 5){
-                    seedTracks[index] = record.uri;
-                    track_uri_ref2[index] = track_uri;
-                }
-                   
-                
-                 spotifyApi.getAudioFeaturesForTrack(track_uri)
-                  .then(function(data) {
-                     
-                     var bailongo_bd = parseFloat(data.body.danceability);
-                     var energia_bd = parseFloat(data.body.energy);
-                     var fundamental_bd = parseFloat(data.body.key); 
-                     var amplitud_bd = parseFloat(data.body.loudness);
-                     var modo_bd = parseFloat(data.body.mode);
-                     var dialogo_bd =parseFloat(data.body.speechiness);
-                     var acustica_bd = parseFloat(data.body.acousticness);
-                     var instrumental_bd = parseFloat(data.body.instrumentalness);
-                     var audiencia_bd = parseFloat(data.body.liveness);
-                     var positivismo_bd = parseFloat(data.body.valence);
-                     var tempo_bd = parseFloat(data.body.tempo);
-                     var firma_tiempo_bd = parseFloat(data.body.time_signature);
-                     var duracion_bd =  parseFloat(data.body.duration_ms);
-                     
-                     session
-                        .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.bailongo) RETURN n', {track_uri:record.uri})
-                        .then(function(resultado){
-                            console.log("1 = Debe guardarse la info, 0 = no pasa nada")
-                            console.log(resultado.records)
-                            
-                            if(resultado.records.length>=1){
-                                
-                                
-                                 session
-                                    .run('MATCH (n:track {uri:{track_uri}}) SET n.bailongo={bailongo}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {bailongo:bailongo_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:record.uri })
-                                    .then(function(resultado){
-                                        console.log(resultado)
-                                        console.log('Se guardaron las caracteristicas del track')
-                                    })
-                                     .catch(function(err){
-                                        console.log(err);
-                                    })
-                            }
-                        })
-                         .catch(function(err){
-                            console.log(err);
-                        })
-                     
-                    
-
-                     i = i + 1;
-                    console.log('i: ' + i);
-                    
-                     
-                     //Suma para luego sacar promedio
-                     bailongo = bailongo + parseFloat(data.body.danceability);
-                     energia = energia + parseFloat(data.body.energy);
-                     fundamental = fundamental + parseFloat(data.body.key); 
-                     amplitud = amplitud + parseFloat(data.body.loudness);
-                     modo = modo + parseFloat(data.body.mode);
-                     dialogo = dialogo + parseFloat(data.body.speechiness);
-                     acustica = acustica + parseFloat(data.body.acousticness);
-                     instrumental = instrumental + parseFloat(data.body.instrumentalness);
-                     audiencia = audiencia + parseFloat(data.body.liveness);
-                     positivismo = positivismo + parseFloat(data.body.valence);
-                     tempo = tempo + parseFloat(data.body.tempo);
-                     firma_tiempo = firma_tiempo + parseFloat(data.body.time_signature);
-                     duracion = duracion + parseFloat(data.body.duration_ms);
-                    
-                        
-                    if(i == num){
-                        
-                        
-                        bailongo = (bailongo/num)*100;
-                        energia = (energia/num)*100; 
-                        fundamental = fundamental/num;
-                        amplitud = amplitud/num;
-                        modo = modo/num;
-                        dialogo = (dialogo/num)*100;
-                        acustica = (acustica/num)*100;
-                        positivismo = (positivismo/num)*100;
-                        instrumental = (instrumental/num)*100;
-                        audiencia = (audiencia/num)*100;
-                        tempo = tempo/num;
-                        firma_tiempo = firma_tiempo/num;
-                        duracion = Math.round(duracion/num);
-                        
-                        console.log('bailongo: ' + bailongo);
-                        console.log('energia: ' + energia);
-                        console.log('fundamental: ' + fundamental);
-                        console.log('amplitud: ' + amplitud);
-                        console.log('modo: ' + modo);
-                        console.log('dialogo: ' + dialogo);
-                        console.log('acustica: ' + acustica);
-                        console.log('instrumental: ' + instrumental);
-                        console.log('audiencia: ' + audiencia);
-                        console.log('positivismo: ' + positivismo);
-                        console.log('tempo: ' + tempo);
-                        console.log('firma_tiempo:' + firma_tiempo);
-                        console.log('duracion: ' + duracion);
-                        
-                        //Algoritmo 
-                        
-                        bailongo2 = Math.abs(bailongo-50);
-                        energia2 = Math.abs(energia-50);
-                        fundamental2 = Math.round(Math.abs(fundamental-5));
-                        amplitud2 = (-Math.abs(amplitud+30));
-                        acustica2 = Math.abs(acustica-50);
-                        dialogo2 = Math.abs(dialogo-50);
-                        positivismo2 = Math.abs(positivismo-50);
-                        instrumental2 = Math.abs(instrumental-50);
-                        audiencia2 = Math.abs(audiencia-50);
-                        
-                        if(Math.random() > 0.5){
-                          duracion2 = 'min_';  
-                        }else{
-                          duracion2 = 'max_';   
-                        }
-                        
-                        
-                        if(modo == 1){
-                            modo2 = 0;    
-                        }else if(modo == 0){
-                            modo2 = 1;
-                        };
-                        tempo2 = Math.floor(Math.random() * 201) + 30;
-                        
-                        var test = false;
-                        
-                        while(test == false){
-                            firma_tiempo2 = Math.floor(Math.random() * 8) + 2;
-                            if(firma_tiempo2 != firma_tiempo){
-                                test = true;
-                                console.log('firma_tiempo2 = ' + firma_tiempo2);
-                            }
-                        }
-                           
-                        shuffle(track_uri_ref2);
-                     
-                        var options3 = {
-                          url: 'https://api.spotify.com/v1/recommendations?'+'seed_tracks=' + 
-                          track_uri_ref2 + '&limit=100&target_acousticness='+ acustica2 + '&target_danceability=' + 
-                          bailongo2 + '&target_energy=' + energia2 + '&target_key=' + fundamental2 + '&target_loudness=' + amplitud +
-                          '&target_mode=' + modo2 + '&target_speechiness=' + dialogo2 + '&target_acousticness=' + acustica2 + 
-                          '&target_instrumentalness=' + instrumental2 + '&target_liveness=' + audiencia2 + '&target_valence=' + positivismo2 
-                          + '&target_tempo=' + tempo2 + '&target_time_signature=' + firma_tiempo2 + '&target_loudness=' + amplitud2 + '&' + duracion2 + 'duration_ms=' + duracion ,
-                          headers: { 'Authorization': 'Bearer ' + access_token },
-                          json: true
-                        };  
-                        
-                        
-                        
-                        console.log('Resquest de Recomendaciones: ',  options3);
-                     
-                     
-                        // use the access token to access the Spotify Web API
-                        request.get(options3, function(error, response, bodyS) {
-                        if(error){
-                            console.log("Error al momento de pedir recomendaciones a Spotify: ",error)
-                            res.render("pages/error"); 
-                        }else{
-                            anti_playlist = [];
-                            console.log("Datos:");
-                            console.log("bodyS")
-                            console.log(bodyS)
-                            console.log(bodyS.tracks[0].name);
-                            console.log(bodyS.tracks[0].artists);
-                            console.log(bodyS.tracks[0].album.images[0].url);
-                            
-                            console.log("BodyS: " + bodyS.length);
-                            
-                            console.log('anti_playlist');
-                            console.log(anti_playlist);
-                             
-                            anti_playlist = bodyS;
-                            
-                            objetosGlobales.anti_playlist = bodyS;
-                            
-                            console.log('anti_playlist # de elementos');
-                            console.log(anti_playlist.length);
-                            
-                            duracion = (duracion/1000/60);
-                            
-                            // we can also pass the token to the browser to make requests from there
-                            res.redirect('/perfil#' +
-                              querystring.stringify({
-                                access_token: access_token,
-                                refresh_token: refresh_token
-                              }));
-
-                        };
-                        });
-                        
-                    };
-                   
-                  }, function(err) {
-                    done(err);
-                     console.log("err: " + err );
-                     res.render('pages/error');
-                  });
-                console.log('');    
-            }); 
-        });        
-          
-      } else {
-        res.redirect('/error#' +
-          querystring.stringify({
-            error: 'invalid_token'
-          }));
-      }
-    });
+      });
+})
   }
-
-};
+    })
+}
+    }
 });
 
 //Finaliza proceso

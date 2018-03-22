@@ -199,12 +199,12 @@
                             <tr>
                                 <th>Danceability</th>
                                 <td><%=bailongo.toFixed(1)%>/100</td>
-                                <td><%=bailongo2.toFixed(1)%>/100</td>
+                              
                             </tr>
                             <tr>
                                 <th>Energy</th>
                                 <td><%=energia.toFixed(1)%>/100</td>
-                                <td><%=energia2.toFixed(1)%>/100</td>
+                                
                             </tr>
                             <tr>
                                 <th>Key</th>
@@ -247,52 +247,15 @@
                                         fundamental = 'B';
                                         break;
                                 };
-                                switch(Math.round(fundamental2)) {
-                                    case 0:
-                                        fundamental2 = 'C';
-                                        break;
-                                    case 1:
-                                        fundamental2 = 'C#/Db';
-                                        break;
-                                    case 2:
-                                        fundamental2 = 'D';
-                                        break;
-                                    case 3:
-                                        fundamental2 = 'D#/Eb';
-                                        break;
-                                    case 4:
-                                        fundamental2 = 'E';
-                                        break;
-                                    case 5:
-                                        fundamental2 = 'F';
-                                        break;
-                                    case 6:
-                                        fundamental2 = 'F#/Gb';
-                                        break;
-                                    case 7:
-                                        fundamental2 = 'G';
-                                        break;
-                                    case 8: 
-                                        fundamental2 = 'G#/Ab';
-                                        break;
-                                    case 9: 
-                                        fundamental2 = 'A';
-                                        break;
-                                    case 10: 
-                                        fundamental2 = 'A#/Bb';
-                                        break;
-                                    case 11: 
-                                        fundamental2 = 'B';
-                                        break;
-                                } 
+                               
                                 %>
                                 <td><%=fundamental%></td>
-                                <td><%= fundamental2 %></td>
+                               
                             </tr>
                             <tr>
                                 <th>Loudness</th>
                                 <td><%=amplitud.toFixed(1)%> dB</td>
-                                <td><%= amplitud2.toFixed(1) %> dB </td>
+                                
                             </tr>
                             <tr>
                                 <th>Mode</th>
@@ -305,63 +268,45 @@
                                         modo = 'Major';
                                         break;
                                 };
-                                switch(Math.round(modo2)){
-                                    case 0:
-                                        modo2 = 'Minor';
-                                        break;
-                                    case 1:
-                                        modo2 = 'Major';
-                                        break;
-                                };
+                                
                                 %>
                                 <td><%=modo%></td>
-                                <td><%= modo2 %></td>
+                                
                             </tr>
                             <tr>
                                 <th>Speechiness</th>
                                 <td><%=dialogo.toFixed(1)%>/100</td>
-                                <td><%=dialogo2.toFixed(1)%>/100</td>
+                                
                             </tr>
                             <tr>
                                 <th>Acousticness</th>
                                 <td><%=acustica.toFixed(1)%>/100</td>
-                                <td><%=acustica2.toFixed(1)%>/100</td>
+                                
                             </tr>
                             <tr>
                                 <th>Instrumentalness</th>
                                 <td><%=instrumental.toFixed(1)%>/100</td>
-                                <td><%=instrumental2.toFixed(1)%>/100</td>
                             </tr>
                             <tr>
                                 <th>Liveness</th>
                                 <td><%=audiencia.toFixed(1)%>/100</td>
-                                <td><%=audiencia2.toFixed(1)%>/100</td>
                             </tr>
                             <tr>
                                 <th>Valence</th>
                                 <td><%=positivismo.toFixed(1)%>/100</td>
-                                <td><%=positivismo2.toFixed(1)%>/100</td>
                             </tr>
                             <tr>
                                 <th>Tempo</th>
                                 <td><%=tempo.toFixed(1)%> BPM</td>
-                                <td><%=tempo2.toFixed(1)%> BPM</td>
                             </tr>
                             <tr>
                                 <th>Duration</th>
                                 <td><%=duracion.toFixed(1)%> Minutes Average</td>
-                                <td>
-                                    <% if(duracion2 == 'min_'){ %>
-                                        More than <%=duracion.toFixed(1)%> Minutes Average
-                                    <% }else if(duracion2 == 'max_'){ %>
-                                        Less than <%=duracion.toFixed(1)%> Minutes Average
-                                    <% } %>
-                                </td>
+                                
                             </tr>
                             <tr>
                                 <th>Beats per bar</th>
                                 <td><%=Math.round(firma_tiempo)%></td>
-                                <td><%= Math.round(firma_tiempo2) %></td>
                             </tr>
                         </tbody>
                     </table>							
