@@ -356,8 +356,6 @@ app.get('/callback', function(req, res, error) {
 
                                     if(checktrack.records.length<1){
 
-
-
                                             console.log(' \n Es la primera vez que se analiza este track \n');
                                             console.log('')
                                             console.log('Se creará nuevo record en base de datos');
