@@ -319,7 +319,7 @@ app.get('/callback', function(req, res, error) {
                     if(mensaje == "nuevo_usuario"){
                          //PROCESO DE HARVESTING DE INFORMACIÓN DE USUARIO
                                     var options2 = {
-                                      url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + num,
+                                      url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + num +"&time_range=long_term",
                                       headers: { 'Authorization': 'Bearer ' + access_token },
                                       json: true
                                     };
