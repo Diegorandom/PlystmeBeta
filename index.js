@@ -1138,39 +1138,83 @@ app.post('/track/profile', function(req, res, error){
     trackid = req.body.index; 
     
     console.log("Index de cancion elegida " + trackid);
-    console.log('anti_playlist: ');
-    console.log(anti_playlist.length);
-  
-    console.log(anti_playlist.tracks);
-    console.log('anti_playlist.tracks');
     
     if( anti_playlist.length > 1 || error == false || anti_playlist.tracks != undefined){
         
-    anti_playlist.tracks.forEach(function(records, index, error){
+    objetosGlobales.anti_playlist.tracks.forEach(function(records, index, error){
         
         if(error == true){
             console.error(error);
             res.render('pages/error');
         }else if(index == trackid){
             add = records.id;
-            spotifyApi.getArtist(records.artists[0].id)
-              .then(function(data) {
-               
-                artist_data = data.body;
-                console.log('Artist_data', data.body);
-                
-                 objetosGlobales = {nombre:nombre, ref:ref, email:email, external_urls:external_urls, seguidores:seguidores, imagen_url:imagen_url, pais:pais, access_token:access_token, track_uri:track_uri, track_uri_ref:track_uri_ref, num:num, bailongo:bailongo, energia:energia, fundamental:fundamental, amplitud:amplitud, modo:modo, dialogo:dialogo, acustica:acustica, instrumental:instrumental, audiencia:audiencia, positivismo:positivismo, tempo:tempo, firma_tiempo:firma_tiempo, duracion:duracion, bailongo2:bailongo2, energia2:energia2, fundamental2:fundamental2, amplitud2:amplitud2, modo2:modo2, dialogo2:dialogo2, acustica2:acustica2, instrumental2:instrumental2, audiencia2:audiencia2, positivismo2:positivismo2, tempo2:tempo2, firma_tiempo2:firma_tiempo2, duracion2:duracion2, followers:followers, anti_playlist:anti_playlist, bailongoS:bailongoS, energiaS:energiaS, fundamentalS:fundamentalS, amplitudS:amplitudS, modoS:modoS, dialogoS:dialogoS, acusticaS:acusticaS, positivismoS:positivismoS, instrumentalS:instrumentalS, audienciaS:audienciaS, tempoS:tempoS, firma_tiempoS:firma_tiempoS, duracionS:duracionS, urlS:urlS, imagenS:imagenS, nombreAS: nombreAS,  popS:popS, nombreS:nombreS ,trackid:trackid ,artist_data:artist_data, uri_S:uri_S, track_uri_ref2:track_uri_ref2, seedTracks:seedTracks , userids:userids, position:position, seed_shuffled:seed_shuffled, totalUsers:totalUsers, pass:pass, pass2:pass2, mes:mes, dia:dia, año:año, noticias:noticias, Userdata:Userdata, mensaje:mensaje, add:add}
-                
-             res.render('pages/page3', objetosGlobales, function(err, html){
-                    if(err == true){res.redirect('/error')}else{res.send(html)} 
-                });
-        
-    
-              }, function(err) {
-                console.error(err);
-               res.render('pages/error');   
-              });
             
+            console.log("records")
+            console.log(records)
+            
+            var artistas = [];
+
+             for(var i = 0; i < records.artists.length; i++){
+                artistas.push(records.artists[i].name)
+            }
+            
+             session
+                    .run('MATCH (n:artista {artistaId: {artistaid}}) RETURN n', {artistaId: records.artists[0].id })
+                    .then(function(artista){
+                        if(artista.records.length>=1){
+                            console.log('Artista ya analizado y guardado');
+                            
+                            spotifyApi.getArtist(records.artists[0].id)
+                              .then(function(data) {
+
+                                artist_data = data.body;
+                                console.log('Artist_data', data.body);
+                               
+                                 objetosGlobales = {nombre:nombre, ref:ref, email:email, external_urls:external_urls, seguidores:seguidores, imagen_url:imagen_url, pais:pais, access_token:access_token, track_uri:track_uri, track_uri_ref:track_uri_ref, num:num, bailongo:bailongo, energia:energia, fundamental:fundamental, amplitud:amplitud, modo:modo, dialogo:dialogo, acustica:acustica, instrumental:instrumental, audiencia:audiencia, positivismo:positivismo, tempo:tempo, firma_tiempo:firma_tiempo, duracion:duracion, bailongo2:bailongo2, energia2:energia2, fundamental2:fundamental2, amplitud2:amplitud2, modo2:modo2, dialogo2:dialogo2, acustica2:acustica2, instrumental2:instrumental2, audiencia2:audiencia2, positivismo2:positivismo2, tempo2:tempo2, firma_tiempo2:firma_tiempo2, duracion2:duracion2, followers:followers, anti_playlist:anti_playlist, bailongoS:bailongoS, energiaS:energiaS, fundamentalS:fundamentalS, amplitudS:amplitudS, modoS:modoS, dialogoS:dialogoS, acusticaS:acusticaS, positivismoS:positivismoS, instrumentalS:instrumentalS, audienciaS:audienciaS, tempoS:tempoS, firma_tiempoS:firma_tiempoS, duracionS:duracionS, urlS:urlS, imagenS:imagenS, nombreAS: nombreAS,  popS:popS, nombreS:nombreS ,trackid:trackid ,artist_data:artist_data, uri_S:uri_S, track_uri_ref2:track_uri_ref2, seedTracks:seedTracks , userids:userids, position:position, seed_shuffled:seed_shuffled, totalUsers:totalUsers, pass:pass, pass2:pass2, mes:mes, dia:dia, año:año, noticias:noticias, Userdata:Userdata, mensaje:mensaje, add:add}
+
+                                 res.render('pages/page3', objetosGlobales);
+                            
+                                }, function(err) {
+                                console.error(err);
+                               res.render('pages/error');   
+                              });
+
+                                
+                        }else if(artista.records.length<1){
+                            console.log('Artista NUEVO');
+                            
+                            spotifyApi.getArtist(records.artists[0].id)
+                              .then(function(data) {
+
+                                artist_data = data.body;
+                                console.log('Artist_data', artist_data);
+                          
+                                
+                                session
+                                    .run('CREATE (n:artista {external_urls:{external_urls}, seguidores:{seguidores}, generos:{generos}, herf:{href}, artistaId:{artistaId}, imagenes:{imagenes}, nombre_artista:{nombre}, popularidad:{popularidad}, uri:{uri} })-[:interpreta]->(m:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen}})', {external_urls: artist_data.external_urls.spotify, seguidores:artist_data.followers.total, generos:artist_data.genres, href:artist_data.href, artistaId:artist_data.id, imagenes:artist_data.images[0].url, nombre_artista:artist_data.name, popularidad:artist_data.popularity, uri:artist_data.uri, album:records.album.name, nombre:records.name, artistas:artistas, duracion:records.duration_ms, Cont_explicito:records.explicit, externalurls:records.external_urls.spotify, href:records.href, spotifyid:records.id, popularidad:records.popularity, previewUrl:records.preview_url, uri:records.uri, albumImagen:records.album.images[2].url  })
+                                    .then(function(resultado){
+                                    
+                                    })
+                                    .catch(function(error){
+                                        console.log(error);
+                                    })
+                                
+                                 objetosGlobales = {nombre:nombre, ref:ref, email:email, external_urls:external_urls, seguidores:seguidores, imagen_url:imagen_url, pais:pais, access_token:access_token, track_uri:track_uri, track_uri_ref:track_uri_ref, num:num, bailongo:bailongo, energia:energia, fundamental:fundamental, amplitud:amplitud, modo:modo, dialogo:dialogo, acustica:acustica, instrumental:instrumental, audiencia:audiencia, positivismo:positivismo, tempo:tempo, firma_tiempo:firma_tiempo, duracion:duracion, bailongo2:bailongo2, energia2:energia2, fundamental2:fundamental2, amplitud2:amplitud2, modo2:modo2, dialogo2:dialogo2, acustica2:acustica2, instrumental2:instrumental2, audiencia2:audiencia2, positivismo2:positivismo2, tempo2:tempo2, firma_tiempo2:firma_tiempo2, duracion2:duracion2, followers:followers, anti_playlist:anti_playlist, bailongoS:bailongoS, energiaS:energiaS, fundamentalS:fundamentalS, amplitudS:amplitudS, modoS:modoS, dialogoS:dialogoS, acusticaS:acusticaS, positivismoS:positivismoS, instrumentalS:instrumentalS, audienciaS:audienciaS, tempoS:tempoS, firma_tiempoS:firma_tiempoS, duracionS:duracionS, urlS:urlS, imagenS:imagenS, nombreAS: nombreAS,  popS:popS, nombreS:nombreS ,trackid:trackid ,artist_data:artist_data, uri_S:uri_S, track_uri_ref2:track_uri_ref2, seedTracks:seedTracks , userids:userids, position:position, seed_shuffled:seed_shuffled, totalUsers:totalUsers, pass:pass, pass2:pass2, mes:mes, dia:dia, año:año, noticias:noticias, Userdata:Userdata, mensaje:mensaje, add:add}
+
+                             res.render('pages/page3', objetosGlobales);
+
+
+                              }, function(err) {
+                                console.error(err);
+                               res.render('pages/error');   
+                              });
+
+                            }
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                        })
+
         };
         
     });
