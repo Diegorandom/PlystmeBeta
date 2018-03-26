@@ -14,14 +14,13 @@ var sanitize = require('sanitize-html');
 var shuffle = require('shuffle-array');
 var neo4j = require('neo4j-driver').v1;
 
-var jsonDatos = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:null, track_uri_ref:null, num:50, bailongo:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, bailongo2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:0, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, spotifyid:null, totalUsers:0}
+var jsonDatos = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:null, track_uri_ref:null, num:50, bailongo:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, bailongo2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, spotifyid:null, totalUsers:0}
 
 var objetosGlobales={
-    usuarios: {}
+    usuarios: {
+        'Default': jsonDatos
+    }
 };
-
-objetosGlobales.usuarios[jsonDatos.userid] = jsonDatos;
-
 
 // Conexión con base de datos remota
 var graphenedbURL = process.env.GRAPHENEDB_BOLT_URL;
@@ -139,10 +138,11 @@ if(error == true){
     .run('MATCH (n:usuario) RETURN COUNT(n)')
     .then(function(response){
         response.records.forEach(function(record){
-            objetosGlobales.usuarios[jsonDatos.userid].totalUsers = record._fields[[0]].low; 
+            objetosGlobales.usuarios["Default"].totalUsers = record._fields[[0]].low; 
         });
         
-        res.render('pages/autorizacion',  objetosGlobales.usuarios[jsonDatos.userid]);
+        console.log(objetosGlobales)
+        res.render('pages/autorizacion',  objetosGlobales.usuarios["Default"]);
         
     })
     .catch(function(err){
@@ -229,28 +229,33 @@ app.get('/callback', function(req, res, error) {
            
           spotifyApi.setAccessToken(bodyS.access_token);
           
-          objetosGlobales.usuarios[jsonDatos.userid].access_token = bodyS.access_token;
+          objetosGlobales.usuarios["Default"].access_token=bodyS.access_token;
           
         var options = {
           url: 'https://api.spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + objetosGlobales.usuarios[jsonDatos.userid].access_token },
+          headers: { 'Authorization': 'Bearer ' + bodyS.access_token },
           json: true
         };
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, bodyS) {
-            
+            jsonDatos.userid = bodyS.id;
             console.log("Datos:");
             console.log(bodyS);
+            jsonDatos.followers = bodyS.followers.total;    
+            console.log("userid:" + jsonDatos.userid + '\n');
             
-            jsonDatos.userid = bodyS.id;
-            objetosGlobales.usuarios[jsonDatos.userid] = jsonDatos;
-            objetosGlobales.usuarios[jsonDatos.userid].access_token = objetosGlobales.usuarios[0].access_token;
+            objetosGlobales.usuarios[bodyS.id] = jsonDatos;
+            
+            objetosGlobales.usuarios[jsonDatos.userid].access_token = objetosGlobales.usuarios["Default"].access_token;
             objetosGlobales.usuarios[jsonDatos.userid].pais = bodyS.country;
             objetosGlobales.usuarios[jsonDatos.userid].nombre = bodyS.display_name;
-            console.log(bodyS.display_name);
             objetosGlobales.usuarios[jsonDatos.userid].email = bodyS.email;
             objetosGlobales.usuarios[jsonDatos.userid].external_urls = bodyS.external_urls;
+            
+            console.log(objetosGlobales.usuarios)
+            console.log(jsonDatos.userid)
+            
             imagen_url = "";
             
             //EN CASO DE QUE EL USUARIO NO TENGA FOTORGRAÍA DEFINIDA #BUG el pendejo de jona
@@ -262,8 +267,7 @@ app.get('/callback', function(req, res, error) {
                 console.log(imagen_url);
             };
              
-            jsonDatos.followers = bodyS.followers.total;    
-            console.log("userid:" + jsonDatos.userid + '\n');
+            
             
             objetosGlobales.usuarios[jsonDatos.userid].refresh_token = bodyS.refresh_token;
             
@@ -1124,8 +1128,9 @@ app.get('/messages.ejs', function(request, response) {
 
 app.get('/perfil', function(request, response, error) {
       
-        if(anti_playlist.length > 0 || error != true ){
+        if(objetosGlobales.usuarios[jsonDatos.userid].anti_playlist.length > 0 || error != true ){
             console.log(objetosGlobales);
+            console.log(jsonDatos);
             response.render('pages/author-login.ejs', objetosGlobales.usuarios[jsonDatos.userid]);
         
         }else{
@@ -1257,7 +1262,7 @@ app.get('/error', function(request, response) {
     response.render('pages/error', objetosGlobales);
 });
 
-app.post('/registro/datos', function(req, res, error){
+/*app.post('/registro/datos', function(req, res, error){
     if(error == true){
        res.render('pages/error');
     }
@@ -1324,7 +1329,7 @@ if(pass == pass2){
     });
 };  
     
-});
+});*/
 
 app.post('/save/track', function(req, res, error){
    if(error == true){ res.redirect('/error') }
