@@ -1124,7 +1124,7 @@ app.get('/messages.ejs', function(request, response) {
 app.get('/perfil', function(request, response, error) {
       
         if(anti_playlist.length > 0 || error != true ){
-
+            console.log(objetosGlobales);
             response.render('pages/author-login.ejs', objetosGlobales.usuarios[jsonDatos.userid]);
         
         }else{
