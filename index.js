@@ -245,8 +245,7 @@ app.get('/callback', function(req, res, error) {
             
             jsonDatos.userid = bodyS.id;
             objetosGlobales.usuarios[jsonDatos.userid] = jsonDatos;
-            
-             objetosGlobales.usuarios[jsonDatos.userid].access_token = bodyS.access_token;
+            objetosGlobales.usuarios[jsonDatos.userid].access_token = objetosGlobales.usuarios[0].access_token;
             objetosGlobales.usuarios[jsonDatos.userid].pais = bodyS.country;
             objetosGlobales.usuarios[jsonDatos.userid].nombre = bodyS.display_name;
             console.log(bodyS.display_name);
