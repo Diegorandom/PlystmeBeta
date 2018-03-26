@@ -1,0 +1,5 @@
+var objetosGlobales={
+    usuarios: [
+                {nombre, ref, email, external_urls, seguidores, imagen_url, pais, access_token, track_uri, track_uri_ref, num, bailongo, energia, fundamental, amplitud, modo, dialogo, acustica, instrumental, audiencia, positivismo, tempo, firma_tiempo, duracion, bailongo2, energia2, fundamental2, amplitud2, modo2, dialogo2, acustica2, instrumental2, audiencia2, positivismo2, tempo2, firma_tiempo2, duracion2, followers, anti_playlist, bailongoS, energiaS, fundamentalS, amplitudS, modoS, dialogoS, acusticaS, positivismoS, instrumentalS, audienciaS, tempoS, firma_tiempoS, duracionS, urlS, imagenS, nombreAS,  popS, nombreS,trackid ,artist_data, uri_S, track_uri_ref2, seedTracks, userids, position, seed_shuffled, totalUsers, pass, pass2, mes, dia, año, noticias, Userdata, mensaje, add}
+            ]
+};

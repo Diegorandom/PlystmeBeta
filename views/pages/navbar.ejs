@@ -15,7 +15,7 @@
 	</a>
    
 </div>
-    <% if(nombre != ""){ %>            
+    <% if(nombre != undefined){ %>            
     <a href="/environment" target="_blank" >                
     <div class="btn color-1 size-2 hover-2 hidden-sm hidden-xs" style=" color:white; margin-left: 50px; margin-top:22px; text-align: left; ">
         Creative Environment <em>Beta</em>
@@ -37,27 +37,11 @@ Try it!</a>
     
                     
 <% } %>
-				<!-- <div class="header-menu-block">
-					<button class="cmn-toggle-switch cmn-toggle-switch__htx"><span></span></button>
-					<ul class="header-menu" id="one">
-						<li><a href="activity.ejs">Activity</a></li>
-						<li><a href="search.ejs">Discover</a>
-							<ul>
-								<li><a href="search.ejs">Explore</a></li>
-								<li><a href="people.ejs">People</a></li>
-								<li><a href="gallery.ejs">Galleries</a></li>
-							</ul>
-						</li>
-						<li><a href="author-login.ejs">My Portfolio</a></li>
-						<li><a href="site-map.ejs">Site Map</a></li>
-						<li id="ad-work-li"><a id="add-work-btn" class="btn color-1" href="work.ejs">Add Work </a></li>
-					</ul>
-				</div> -->
 				
-                        <% if(nombre != ""){ %>
+                        <% if(nombre != undefined){ %>
                 <div class="login-header-block" style="margin-right:10px;">
 					<div class="login_block" style="margin-top:9px;" >
-                        <a href="/profile" style="color:white; " > 
+                        <a href="/perfil" style="color:white; " > 
                         <img class="login-user" src="<%=imagen_url%>" alt="" style="border-radius:5px; height:30px; ">
                         <span class="be-dropdown-content" style="">
                             <span style="margin-top:40px;"><%= nombre %></span>

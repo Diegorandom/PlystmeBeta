@@ -14,11 +14,14 @@ var sanitize = require('sanitize-html');
 var shuffle = require('shuffle-array');
 var neo4j = require('neo4j-driver').v1;
 
-//INICIALIZACIÓN DE GLOBAL VARIABLES
+var jsonDatos = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:null, track_uri_ref:null, num:50, bailongo:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, bailongo2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], bailongoS:null, energiaS:null, fundamentalS:null, amplitudS:null, modoS:null, dialogoS:null, acusticaS:null, positivismoS:null, instrumentalS:null, audienciaS:null, tempoS:null, firma_tiempoS:null, duracionS:null, urlS:null, imagenS:null, nombreAS:null,  popS:null, nombreS:null,trackid:null ,artist_data:[], uri_S:null, track_uri_ref2:[], seedTracks:[], userid:0, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, spotifyid:null, totalUsers:0}
 
-var nombre = "", ref=true, email, external_urls, seguidores, imagen_url, pais, access_token = null, track_uri, track_uri_ref, num=50, bailongo = 0, energia = 0, fundamental=0, amplitud=0, modo=0, dialogo=0, acustica=0, instrumental=0, audiencia=0, positivismo=0, tempo=0, firma_tiempo=0, duracion=0, bailongo2 = 0, energia2 = 0, fundamental2=0, amplitud2=0, modo2=0, dialogo2=0, acustica2=0, instrumental2=0, audiencia2=0, positivismo2=0, tempo2=0, firma_tiempo2=0, duracion2=0, followers, anti_playlist = [], bailongoS, energiaS, fundamentalS, amplitudS, modoS, dialogoS, acusticaS, positivismoS, instrumentalS, audienciaS, tempoS, firma_tiempoS, duracionS, urlS, imagenS, nombreAS,  popS, nombreS ,trackid ,artist_data = [], uri_S, track_uri_ref2 = [], seedTracks = [], userids = [], position, seed_shuffled, totalUsers = 0, pass, pass2, mes, dia, año, noticias, Userdata = [], mensaje, add, spotifyid;
+var objetosGlobales={
+    usuarios: {}
+};
 
-var objetosGlobales = {nombre:nombre, ref:ref, email:email, external_urls:external_urls, seguidores:seguidores, imagen_url:imagen_url, pais:pais, access_token:access_token, track_uri:track_uri, track_uri_ref:track_uri_ref, num:num, bailongo:bailongo, energia:energia, fundamental:fundamental, amplitud:amplitud, modo:modo, dialogo:dialogo, acustica:acustica, instrumental:instrumental, audiencia:audiencia, positivismo:positivismo, tempo:tempo, firma_tiempo:firma_tiempo, duracion:duracion, bailongo2:bailongo2, energia2:energia2, fundamental2:fundamental2, amplitud2:amplitud2, modo2:modo2, dialogo2:dialogo2, acustica2:acustica2, instrumental2:instrumental2, audiencia2:audiencia2, positivismo2:positivismo2, tempo2:tempo2, firma_tiempo2:firma_tiempo2, duracion2:duracion2, followers:followers, anti_playlist:anti_playlist, bailongoS:bailongoS, energiaS:energiaS, fundamentalS:fundamentalS, amplitudS:amplitudS, modoS:modoS, dialogoS:dialogoS, acusticaS:acusticaS, positivismoS:positivismoS, instrumentalS:instrumentalS, audienciaS:audienciaS, tempoS:tempoS, firma_tiempoS:firma_tiempoS, duracionS:duracionS, urlS:urlS, imagenS:imagenS, nombreAS: nombreAS,  popS:popS, nombreS:nombreS ,trackid:trackid ,artist_data:artist_data, uri_S:uri_S, track_uri_ref2:track_uri_ref2, seedTracks:seedTracks , userids:userids, position:position, seed_shuffled:seed_shuffled, totalUsers:totalUsers, pass:pass, pass2:pass2, mes:mes, dia:dia, año:año, noticias:noticias, Userdata:Userdata, mensaje:mensaje, add:add};
+objetosGlobales.usuarios[jsonDatos.userid] = jsonDatos;
+
 
 // Conexión con base de datos remota
 var graphenedbURL = process.env.GRAPHENEDB_BOLT_URL;
@@ -34,8 +37,6 @@ if(graphenedbURL == undefined){
 	var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass));
 	var session = driver.session();
 };
-
-
 
 //PROTOCOLO DE SEGURIDAD CON CLAVE SPOTIFY
 
@@ -138,24 +139,15 @@ if(error == true){
     .run('MATCH (n:usuario) RETURN COUNT(n)')
     .then(function(response){
         response.records.forEach(function(record){
-            objetosGlobales.totalUsers = record._fields[[0]].low; 
+            objetosGlobales.usuarios[jsonDatos.userid].totalUsers = record._fields[[0]].low; 
         });
-    
-//Reinicio de variables
-nombre = "", email, external_urls, seguidores, imagen_url, pais, access_token = null, track_uri, track_uri_ref, num=50, bailongo = 0, energia = 0, fundamental=0, amplitud=0, modo=0, dialogo=0, acustica=0, instrumental=0, audiencia=0, positivismo=0, tempo=0, firma_tiempo=0, duracion=0, bailongo2 = 0, energia2 = 0, fundamental2=0, amplitud2=0, modo2=0, dialogo2=0, acustica2=0, instrumental2=0, audiencia2=0, positivismo2=0, tempo2=0, firma_tiempo2=0, duracion2=0, followers, anti_playlist = [], bailongoS, energiaS, fundamentalS, amplitudS, modoS, dialogoS, acusticaS, positivismoS, instrumentalS, audienciaS, tempoS, firma_tiempoS, duracionS, urlS, imagenS, nombreAS,  popS, nombreS ,trackid ,artist_data = [], uri_S, track_uri_ref2 = [], seedTracks = []; 
         
-        var objetosGlobales = {nombre:nombre, ref:ref, email:email, external_urls:external_urls, seguidores:seguidores, imagen_url:imagen_url, pais:pais, access_token:access_token, track_uri:track_uri, track_uri_ref:track_uri_ref, num:num, bailongo:bailongo, energia:energia, fundamental:fundamental, amplitud:amplitud, modo:modo, dialogo:dialogo, acustica:acustica, instrumental:instrumental, audiencia:audiencia, positivismo:positivismo, tempo:tempo, firma_tiempo:firma_tiempo, duracion:duracion, bailongo2:bailongo2, energia2:energia2, fundamental2:fundamental2, amplitud2:amplitud2, modo2:modo2, dialogo2:dialogo2, acustica2:acustica2, instrumental2:instrumental2, audiencia2:audiencia2, positivismo2:positivismo2, tempo2:tempo2, firma_tiempo2:firma_tiempo2, duracion2:duracion2, followers:followers, anti_playlist:anti_playlist, bailongoS:bailongoS, energiaS:energiaS, fundamentalS:fundamentalS, amplitudS:amplitudS, modoS:modoS, dialogoS:dialogoS, acusticaS:acusticaS, positivismoS:positivismoS, instrumentalS:instrumentalS, audienciaS:audienciaS, tempoS:tempoS, firma_tiempoS:firma_tiempoS, duracionS:duracionS, urlS:urlS, imagenS:imagenS, nombreAS: nombreAS,  popS:popS, nombreS:nombreS ,trackid:trackid ,artist_data:artist_data, uri_S:uri_S, track_uri_ref2:track_uri_ref2, seedTracks:seedTracks , userids:userids, position:position, seed_shuffled:seed_shuffled, totalUsers:totalUsers, pass:pass, pass2:pass2, mes:mes, dia:dia, año:año, noticias:noticias, Userdata:Userdata, mensaje:mensaje, add:add};
-        
-    
-                res.render('pages/autorizacion', objetosGlobales);
+        res.render('pages/autorizacion',  objetosGlobales.usuarios[jsonDatos.userid]);
         
     })
     .catch(function(err){
 		console.log(err);
 		})
-    
-    
-
 }
 });
 
@@ -164,9 +156,6 @@ nombre = "", email, external_urls, seguidores, imagen_url, pais, access_token = 
 app.get('/login', function(req, res, error) {
 if(error == true){ res.render('pages/error')}else{
     
-//VARIABLES SE RESSETEAN PARA EVITAR FILTRADO DE OTROS PROCESOS    
-var nombre = "", ref=true, email, external_urls, seguidores, imagen_url, pais, access_token = null, track_uri, track_uri_ref, num=50, bailongo = 0, energia = 0, fundamental=0, amplitud=0, modo=0, dialogo=0, acustica=0, instrumental=0, audiencia=0, positivismo=0, tempo=0, firma_tiempo=0, duracion=0, bailongo2 = 0, energia2 = 0, fundamental2=0, amplitud2=0, modo2=0, dialogo2=0, acustica2=0, instrumental2=0, audiencia2=0, positivismo2=0, tempo2=0, firma_tiempo2=0, duracion2=0, followers, anti_playlist = [], bailongoS, energiaS, fundamentalS, amplitudS, modoS, dialogoS, acusticaS, positivismoS, instrumentalS, audienciaS, tempoS, firma_tiempoS, duracionS, urlS, imagenS, nombreAS,  popS, nombreS ,trackid ,artist_data = [], uri_S, track_uri_ref2 = [], seedTracks = [], userids = [], position, seed_shuffled, totalUsers = 0, pass, pass2, mes, dia, año, noticias, Userdata = [], mensaje, add, spotifyid;
-
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -238,17 +227,13 @@ app.get('/callback', function(req, res, error) {
         
       if (!error && response.statusCode === 200) {
            
-            access_token = bodyS.access_token,
-            refresh_token = bodyS.refresh_token;
+          spotifyApi.setAccessToken(bodyS.access_token);
           
-          console.log('access_token');
-          console.log(access_token);
+          objetosGlobales.usuarios[jsonDatos.userid].access_token = bodyS.access_token;
           
-          spotifyApi.setAccessToken(access_token);
-
         var options = {
           url: 'https://api.spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + access_token },
+          headers: { 'Authorization': 'Bearer ' + objetosGlobales.usuarios[jsonDatos.userid].access_token },
           json: true
         };
 
@@ -258,33 +243,34 @@ app.get('/callback', function(req, res, error) {
             console.log("Datos:");
             console.log(bodyS);
             
-            pais = bodyS.country;
-            nombre = bodyS.display_name;
+            jsonDatos.userid = bodyS.id
+            objetosGlobales.usuarios[jsonDatos.userid] = jsonDatos;
+            objetosGlobales.usuarios[jsonDatos.userid].pais = bodyS.country;
+            objetosGlobales.usuarios[jsonDatos.userid].nombre = bodyS.display_name;
             console.log(bodyS.display_name);
-            email = bodyS.email;
-            external_urls = bodyS.external_urls;
-            seguidores =  bodyS.followers;
+            objetosGlobales.usuarios[jsonDatos.userid].email = bodyS.email;
+            objetosGlobales.usuarios[jsonDatos.userid].external_urls = bodyS.external_urls;
             imagen_url = "";
-            spotifyid = bodyS.id;
             
             //EN CASO DE QUE EL USUARIO NO TENGA FOTORGRAÍA DEFINIDA #BUG el pendejo de jona
             if(bodyS.images[0] != undefined){
                 console.log('imagen_url');
                 console.log(imagen_url);
-                imagen_url =  bodyS.images[0].url;
+                objetosGlobales.usuarios[jsonDatos.userid].imagen_url =  bodyS.images[0].url;
                 console.log('imagen_url');
                 console.log(imagen_url);
             };
              
-            followers = bodyS.followers.total;    
-            position = userids.length + 1;
-            userids[position] = bodyS.id;
-            console.log("userid:" + userids[position] + '\n');
+            jsonDatos.followers = bodyS.followers.total;    
+            console.log("userid:" + jsonDatos.userid + '\n');
+            
+            objetosGlobales.usuarios[jsonDatos.userid].refresh_token = bodyS.refresh_token;
+            
             console.log('Comienza proceso de revisión en base de datos para verificar si es un usuario nuevo o ya está regitrado \n');
             console.log('');
             
              session
-            .run('MATCH (n:usuario) WHERE n.spotifyid={spotifyid} RETURN n', {spotifyid:spotifyid})
+            .run('MATCH (n:usuario) WHERE n.spotifyid={spotifyid} RETURN n', {spotifyid:jsonDatos.userid})
             .then(function(checkid_result){ 
                  console.log('')
                  console.log('se realizó la consulta a la base de datos')
@@ -298,9 +284,10 @@ app.get('/callback', function(req, res, error) {
                             console.log(' \n el usuario es nuevo \n');
                             console.log('')
                             console.log('Se creará nuevo record en base de datos');
-                            mensaje = "nuevo_usuario";
+                            objetosGlobales.usuarios[jsonDatos.userid].mensaje = "nuevo_usuario";
+                            
                             session
-                            .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, followers:{followers}, imagen_url: {imagen_url} })', { pais:pais, nombre:nombre, email:email, external_urls:external_urls.spotify, spotifyid:spotifyid, followers:followers, imagen_url: imagen_url })
+                            .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, followers:{followers}, imagen_url: {imagen_url} })', { pais:objetosGlobales.usuarios[jsonDatos.userid].pais, nombre:objetosGlobales.usuarios[jsonDatos.userid].nombre, email:objetosGlobales.usuarios[jsonDatos.userid].email, external_urls:objetosGlobales.usuarios[jsonDatos.userid].external_urls.spotify, spotifyid:jsonDatos.userid, followers:objetosGlobales.usuarios[jsonDatos.userid].followers, imagen_url:objetosGlobales.usuarios[jsonDatos.userid].imagen_url })
                             .then(function(resultado_create){
                                 console.log('Se creó con éxito el nodo del usuario');
                                 console.log(resultado_create)
@@ -308,20 +295,12 @@ app.get('/callback', function(req, res, error) {
                             .catch(function(err){
                             console.log(err);
                             }) 
-                        }else if(checkid_result.records.length >= 1){
-                            console.log('Este usuario ya está registrado (no debería ser más de 1)')
-                            mensaje = "nuevo_login";
-                
                             
-                        }else{
-                            console.log('No se pudo determinar si es un usuario nuevo o registrado')
-                        }
                             
-                    if(mensaje == "nuevo_usuario"){
-                         //PROCESO DE HARVESTING DE INFORMACIÓN DE USUARIO
+                             //PROCESO DE HARVESTING DE INFORMACIÓN DE USUARIO
                                     var options2 = {
-                                      url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + num +"&time_range=long_term",
-                                      headers: { 'Authorization': 'Bearer ' + access_token },
+                                      url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + objetosGlobales.usuarios[jsonDatos.userid].num +"&time_range=long_term",
+                                      headers: { 'Authorization': 'Bearer ' + objetosGlobales.usuarios[jsonDatos.userid].access_token },
                                       json: true
                                     };
                                     console.log('Request de informacion de canciones: ', options2);
@@ -331,8 +310,6 @@ app.get('/callback', function(req, res, error) {
                                 console.log(body);
 
                                 var i = 0;
-
-                                bailongo = 0, energia = 0, fundamental=0, amplitud=0, modo=0, dialogo=0, acustica=0, instrumental=0, audiencia=0, positivismo=0, tempo=0, firma_tiempo=0, duracion=0, bailongo2 = 0, energia2 = 0, fundamental2=0, amplitud2=0, modo2=0, dialogo2=0, acustica2=0, instrumental2=0, audiencia2=0, positivismo2=0, tempo2=0, firma_tiempo2=0, duracion2=0;
 
                                 body.items.forEach(function(record, index){
 
@@ -357,6 +334,8 @@ app.get('/callback', function(req, res, error) {
 
                                     if(checktrack.records.length<1){
 
+                                        // SE GUARDA LA INFORMACIÓN DEL TRACK EN LA BASE DE DATOS
+                                        
                                             console.log(' \n Es la primera vez que se analiza este track \n');
                                             console.log('')
                                             console.log('Se creará nuevo record en base de datos');
@@ -393,18 +372,21 @@ app.get('/callback', function(req, res, error) {
                                      .catch(function(err){
                                     console.log(err);
                                     }) 
+                                     
+                                     //TERMINA DE GUARDARSE INFORMACIÓN DEL TRACK Y COMIENZA A PROCRESARCE EL ALGORITMO
 
-                                    track_uri = record.uri;
-                                    track_uri = track_uri.substring(14);
-                                    console.log(track_uri);
+                                     objetosGlobales.usuarios[jsonDatos.userid].track_uri = record.uri.substring(14);
+                                    
 
+                                    //PROCESO PARA GUARDAR LOS PRIMEROS 5 TOP TRACKS
                                     if(index < 5){
-                                        seedTracks[index] = record.uri;
-                                        track_uri_ref2[index] = track_uri;
+                                        objetosGlobales.usuarios[jsonDatos.userid].seedTracks[index] = record.uri;
+                                        objetosGlobales.usuarios[jsonDatos.userid].track_uri_ref2[index] = record.uri.substring(14);
                                     }
 
 
-                                     spotifyApi.getAudioFeaturesForTrack(track_uri)
+                                    //SEG GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
+                                     spotifyApi.getAudioFeaturesForTrack(record.uri.substring(14))
                                       .then(function(data) {
 
                                          var bailongo_bd = parseFloat(data.body.danceability);
@@ -446,102 +428,102 @@ app.get('/callback', function(req, res, error) {
                                             })
 
 
-
+                                         //ALGORITMO
                                          i = i + 1;
                                         console.log('i: ' + i);
 
 
                                          //Suma para luego sacar promedio
-                                         bailongo = bailongo + parseFloat(data.body.danceability);
-                                         energia = energia + parseFloat(data.body.energy);
-                                         fundamental = fundamental + parseFloat(data.body.key); 
-                                         amplitud = amplitud + parseFloat(data.body.loudness);
-                                         modo = modo + parseFloat(data.body.mode);
-                                         dialogo = dialogo + parseFloat(data.body.speechiness);
-                                         acustica = acustica + parseFloat(data.body.acousticness);
-                                         instrumental = instrumental + parseFloat(data.body.instrumentalness);
-                                         audiencia = audiencia + parseFloat(data.body.liveness);
-                                         positivismo = positivismo + parseFloat(data.body.valence);
-                                         tempo = tempo + parseFloat(data.body.tempo);
-                                         firma_tiempo = firma_tiempo + parseFloat(data.body.time_signature);
-                                         duracion = duracion + parseFloat(data.body.duration_ms);
+                                         objetosGlobales.usuarios[jsonDatos.userid].bailongo = objetosGlobales.usuarios[jsonDatos.userid].bailongo + parseFloat(data.body.danceability);
+                                         objetosGlobales.usuarios[jsonDatos.userid].energia = objetosGlobales.usuarios[jsonDatos.userid].energia + parseFloat(data.body.energy);
+                                         objetosGlobales.usuarios[jsonDatos.userid].fundamental = objetosGlobales.usuarios[jsonDatos.userid].fundamental + parseFloat(data.body.key); 
+                                         objetosGlobales.usuarios[jsonDatos.userid].amplitud = objetosGlobales.usuarios[jsonDatos.userid].amplitud + parseFloat(data.body.loudness);
+                                         objetosGlobales.usuarios[jsonDatos.userid].modo = objetosGlobales.usuarios[jsonDatos.userid].modo + parseFloat(data.body.mode);
+                                         objetosGlobales.usuarios[jsonDatos.userid].dialogo = objetosGlobales.usuarios[jsonDatos.userid].dialogo + parseFloat(data.body.speechiness);
+                                         objetosGlobales.usuarios[jsonDatos.userid].acustica = objetosGlobales.usuarios[jsonDatos.userid].acustica + parseFloat(data.body.acousticness);
+                                         objetosGlobales.usuarios[jsonDatos.userid].instrumental = objetosGlobales.usuarios[jsonDatos.userid].instrumental + parseFloat(data.body.instrumentalness);
+                                         objetosGlobales.usuarios[jsonDatos.userid].audiencia = objetosGlobales.usuarios[jsonDatos.userid].audiencia + parseFloat(data.body.liveness);
+                                         objetosGlobales.usuarios[jsonDatos.userid].positivismo = objetosGlobales.usuarios[jsonDatos.userid].positivismo + parseFloat(data.body.valence);
+                                         objetosGlobales.usuarios[jsonDatos.userid].tempo = objetosGlobales.usuarios[jsonDatos.userid].tempo + parseFloat(data.body.tempo);
+                                         objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo = objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo + parseFloat(data.body.time_signature);
+                                         objetosGlobales.usuarios[jsonDatos.userid].duracion = objetosGlobales.usuarios[jsonDatos.userid].duracion + parseFloat(data.body.duration_ms);
 
 
-                                        if(i == num){
-                                            bailongo = (bailongo/num)*100;
-                                            energia = (energia/num)*100; 
-                                            fundamental = fundamental/num;
-                                            amplitud = amplitud/num;
-                                            modo = modo/num;
-                                            dialogo = (dialogo/num)*100;
-                                            acustica = (acustica/num)*100;
-                                            positivismo = (positivismo/num)*100;
-                                            instrumental = (instrumental/num)*100;
-                                            audiencia = (audiencia/num)*100;
-                                            tempo = tempo/num;
-                                            firma_tiempo = firma_tiempo/num;
-                                            duracion = Math.round(duracion/num);
+                                        if(i == objetosGlobales.usuarios[jsonDatos.userid].num){
+                                            objetosGlobales.usuarios[jsonDatos.userid].bailongo = (objetosGlobales.usuarios[jsonDatos.userid].bailongo/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].energia = (objetosGlobales.usuarios[jsonDatos.userid].energia/objetosGlobales.usuarios[jsonDatos.userid].num)*100; 
+                                            objetosGlobales.usuarios[jsonDatos.userid].fundamental = objetosGlobales.usuarios[jsonDatos.userid].fundamental/objetosGlobales.usuarios[jsonDatos.userid].num;
+                                            objetosGlobales.usuarios[jsonDatos.userid].amplitud = objetosGlobales.usuarios[jsonDatos.userid].amplitud/objetosGlobales.usuarios[jsonDatos.userid].num;
+                                            objetosGlobales.usuarios[jsonDatos.userid].modo = objetosGlobales.usuarios[jsonDatos.userid].modo/objetosGlobales.usuarios[jsonDatos.userid].num;
+                                            objetosGlobales.usuarios[jsonDatos.userid].dialogo = (objetosGlobales.usuarios[jsonDatos.userid].dialogo/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].acustica = (objetosGlobales.usuarios[jsonDatos.userid].acustica/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].positivismo = (objetosGlobales.usuarios[jsonDatos.userid].positivismo/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].instrumental = (objetosGlobales.usuarios[jsonDatos.userid].instrumental/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].audiencia = (objetosGlobales.usuarios[jsonDatos.userid].audiencia/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].tempo = objetosGlobales.usuarios[jsonDatos.userid].tempo/objetosGlobales.usuarios[jsonDatos.userid].num;
+                                            objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo = objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo/objetosGlobales.usuarios[jsonDatos.userid].num;
+                                            objetosGlobales.usuarios[jsonDatos.userid].duracion = Math.round(objetosGlobales.usuarios[jsonDatos.userid].duracion/objetosGlobales.usuarios[jsonDatos.userid].num);
 
-                                            console.log('bailongo: ' + bailongo);
-                                            console.log('energia: ' + energia);
-                                            console.log('fundamental: ' + fundamental);
-                                            console.log('amplitud: ' + amplitud);
-                                            console.log('modo: ' + modo);
-                                            console.log('dialogo: ' + dialogo);
-                                            console.log('acustica: ' + acustica);
-                                            console.log('instrumental: ' + instrumental);
-                                            console.log('audiencia: ' + audiencia);
-                                            console.log('positivismo: ' + positivismo);
-                                            console.log('tempo: ' + tempo);
-                                            console.log('firma_tiempo:' + firma_tiempo);
-                                            console.log('duracion: ' + duracion);
+                                            console.log('bailongo: ' + objetosGlobales.usuarios[jsonDatos.userid].bailongo);
+                                            console.log('energia: ' + objetosGlobales.usuarios[jsonDatos.userid].energia);
+                                            console.log('fundamental: ' + objetosGlobales.usuarios[jsonDatos.userid].fundamental);
+                                            console.log('amplitud: ' + objetosGlobales.usuarios[jsonDatos.userid].amplitud);
+                                            console.log('modo: ' + objetosGlobales.usuarios[jsonDatos.userid].modo);
+                                            console.log('dialogo: ' + objetosGlobales.usuarios[jsonDatos.userid].dialogo);
+                                            console.log('acustica: ' + objetosGlobales.usuarios[jsonDatos.userid].acustica);
+                                            console.log('instrumental: ' + objetosGlobales.usuarios[jsonDatos.userid].instrumental);
+                                            console.log('audiencia: ' + objetosGlobales.usuarios[jsonDatos.userid].audiencia);
+                                            console.log('positivismo: ' + objetosGlobales.usuarios[jsonDatos.userid].positivismo);
+                                            console.log('tempo: ' + objetosGlobales.usuarios[jsonDatos.userid].tempo);
+                                            console.log('firma_tiempo:' + objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo);
+                                            console.log('duracion: ' + objetosGlobales.usuarios[jsonDatos.userid].duracion);
                                             
                                             //Algoritmo 
                         
-                                            bailongo2 = Math.abs(bailongo-50);
-                                            energia2 = Math.abs(energia-50);
-                                            fundamental2 = Math.round(Math.abs(fundamental-5));
-                                            amplitud2 = (-Math.abs(amplitud+30));
-                                            acustica2 = Math.abs(acustica-50);
-                                            dialogo2 = Math.abs(dialogo-50);
-                                            positivismo2 = Math.abs(positivismo-50);
-                                            instrumental2 = Math.abs(instrumental-50);
-                                            audiencia2 = Math.abs(audiencia-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].bailongo2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].bailongo-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].energia2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].energia-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].fundamental2 = Math.round(Math.abs(objetosGlobales.usuarios[jsonDatos.userid].fundamental-5));
+                                            objetosGlobales.usuarios[jsonDatos.userid].amplitud2 = (-Math.abs(objetosGlobales.usuarios[jsonDatos.userid].amplitud+30));
+                                            objetosGlobales.usuarios[jsonDatos.userid].acustica2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].acustica-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].dialogo2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].dialogo-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].positivismo2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].positivismo-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].instrumental2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].instrumental-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].audiencia2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].audiencia-50);
 
                                             if(Math.random() > 0.5){
-                                              duracion2 = 'min_';  
+                                              objetosGlobales.usuarios[jsonDatos.userid].duracion2 = 'min_';  
                                             }else{
-                                              duracion2 = 'max_';   
+                                              objetosGlobales.usuarios[jsonDatos.userid].duracion2 = 'max_';   
                                             }
 
 
-                                            if(modo == 1){
-                                                modo2 = 0;    
-                                            }else if(modo == 0){
-                                                modo2 = 1;
+                                            if(objetosGlobales.usuarios[jsonDatos.userid].modo == 1){
+                                                objetosGlobales.usuarios[jsonDatos.userid].modo2 = 0;    
+                                            }else if(objetosGlobales.usuarios[jsonDatos.userid].modo == 0){
+                                               objetosGlobales.usuarios[jsonDatos.userid].modo2 = 1;
                                             };
-                                            tempo2 = Math.floor(Math.random() * 201) + 30;
+                                            objetosGlobales.usuarios[jsonDatos.userid].tempo2 = Math.floor(Math.random() * 201) + 30;
 
                                             var test = false;
 
                                             while(test == false){
-                                                firma_tiempo2 = Math.floor(Math.random() * 8) + 2;
-                                                if(firma_tiempo2 != firma_tiempo){
+                                                objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo2 = Math.floor(Math.random() * 8) + 2;
+                                                if(objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo2 != objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo){
                                                     test = true;
-                                                    console.log('firma_tiempo2 = ' + firma_tiempo2);
+                                                    console.log('firma_tiempo2 = ' + objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo2);
                                                 }
                                             }
 
-                                            shuffle(track_uri_ref2);
+                                            shuffle(objetosGlobales.usuarios[jsonDatos.userid].track_uri_ref2);
 
                                             var options3 = {
                                               url: 'https://api.spotify.com/v1/recommendations?'+'seed_tracks=' + 
-                                              track_uri_ref2 + '&limit=100&target_acousticness='+ acustica2 + '&target_danceability=' + 
-                                              bailongo2 + '&target_energy=' + energia2 + '&target_key=' + fundamental2 + '&target_loudness=' + amplitud +
-                                              '&target_mode=' + modo2 + '&target_speechiness=' + dialogo2 + '&target_acousticness=' + acustica2 + 
-                                              '&target_instrumentalness=' + instrumental2 + '&target_liveness=' + audiencia2 + '&target_valence=' + positivismo2 
-                                              + '&target_tempo=' + tempo2 + '&target_time_signature=' + firma_tiempo2 + '&target_loudness=' + amplitud2 + '&' + duracion2 + 'duration_ms=' + duracion ,
-                                              headers: { 'Authorization': 'Bearer ' + access_token },
+                                              objetosGlobales.usuarios[jsonDatos.userid].track_uri_ref2 + '&limit=100&target_acousticness='+ objetosGlobales.usuarios[jsonDatos.userid].acustica2 + '&target_danceability=' + 
+                                              objetosGlobales.usuarios[jsonDatos.userid].bailongo2 + '&target_energy=' + objetosGlobales.usuarios[jsonDatos.userid].energia2 + '&target_key=' + objetosGlobales.usuarios[jsonDatos.userid].fundamental2 + '&target_loudness=' + objetosGlobales.usuarios[jsonDatos.userid].amplitud +
+                                              '&target_mode=' + objetosGlobales.usuarios[jsonDatos.userid].modo2 + '&target_speechiness=' + objetosGlobales.usuarios[jsonDatos.userid].dialogo2 + '&target_acousticness=' + objetosGlobales.usuarios[jsonDatos.userid].acustica2 + 
+                                              '&target_instrumentalness=' + objetosGlobales.usuarios[jsonDatos.userid].instrumental2 + '&target_liveness=' + objetosGlobales.usuarios[jsonDatos.userid].audiencia2 + '&target_valence=' + objetosGlobales.usuarios[jsonDatos.userid].positivismo2 
+                                              + '&target_tempo=' + objetosGlobales.usuarios[jsonDatos.userid].tempo2 + '&target_time_signature=' + objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo2 + '&target_loudness=' + objetosGlobales.usuarios[jsonDatos.userid].amplitud2 + '&' + objetosGlobales.usuarios[jsonDatos.userid].duracion2 + 'duration_ms=' + objetosGlobales.usuarios[jsonDatos.userid].duracion ,
+                                              headers: { 'Authorization': 'Bearer ' + objetosGlobales.usuarios[jsonDatos.userid].access_token },
                                               json: true
                                             };  
                         
@@ -566,22 +548,20 @@ app.get('/callback', function(req, res, error) {
                                                 console.log("BodyS: " + bodyS.length);
 
                                                 console.log('anti_playlist');
-                                                console.log(anti_playlist);
+                                                console.log(objetosGlobales.usuarios[jsonDatos.userid].anti_playlist);
 
-                                                anti_playlist = bodyS;
-
-                                                objetosGlobales.anti_playlist = bodyS;
+                                                objetosGlobales.usuarios[jsonDatos.userid].anti_playlist = bodyS;
 
                                                 console.log('anti_playlist # de elementos');
-                                                console.log(anti_playlist.length);
+                                                console.log(objetosGlobales.usuarios[jsonDatos.userid].anti_playlist.length);
 
-                                                duracion = (duracion/1000/60);
+                                                objetosGlobales.usuarios[jsonDatos.userid].duracion = (objetosGlobales.usuarios[jsonDatos.userid].duracion/1000/60);
 
                                                 // we can also pass the token to the browser to make requests from there
                                                 res.redirect('/perfil#' +
                                                   querystring.stringify({
-                                                    access_token: access_token,
-                                                    refresh_token: refresh_token
+                                                    access_token: objetosGlobales.usuarios[jsonDatos.userid].access_token,
+                                                    refresh_token: objetosGlobales.usuarios[jsonDatos.userid].refresh_token
                                                   }));
 
                                             };
@@ -599,21 +579,31 @@ app.get('/callback', function(req, res, error) {
                             }); 
                                 
                               
-                    }else if(mensaje == "nuevo_login"){
-                         session
-                                .run('MATCH (n:track)-[r:Escuchado]-(m:usuario {spotifyid:{spotifyid}}) RETURN n, r.importanciaIndex', {spotifyid:spotifyid})
+                    
+                            
+                            
+                        }else if(checkid_result.records.length >= 1){
+                            console.log('Este usuario ya está registrado (no debería ser más de 1)')
+                            
+                            objetosGlobales.usuarios[jsonDatos.userid].mensaje = "nuevo_login";
+                
+                              session
+                                .run('MATCH (n:track)-[r:Escuchado]-(m:usuario {spotifyid:{spotifyid}}) RETURN n, r.importanciaIndex', {spotifyid:jsonDatos.userid})
                                 .then(function(tracks){
                                    console.log(tracks);
-                                    seedTracks = [];
+                                  objetosGlobales.usuarios[jsonDatos.userid].seedTracks = [];
+                                  
                                     var contador = 0;
+                                  
+                                  
                                     tracks.records.forEach(function(records,index){
                                          console.log("Index de importancia")
                                         console.log(records._fields[1])
                                         
                                          //Index de importancia
                                             if(records._fields[1] < 6){
-                                                seedTracks[records._fields[1]-1] = records._fields[0].properties.uri;
-                                                track_uri_ref2[records._fields[1]-1]= records._fields[0].properties.spotifyid;
+                                                objetosGlobales.usuarios[jsonDatos.userid].seedTracks[records._fields[1]-1] = records._fields[0].properties.uri;
+                                                objetosGlobales.usuarios[jsonDatos.userid].track_uri_ref2[records._fields[1]-1]= records._fields[0].properties.spotifyid;
                                                 
                                                 contador = contador + 1;
                                                 console.log("contador")
@@ -622,70 +612,101 @@ app.get('/callback', function(req, res, error) {
                                             }
                                         
                                         //Suma para luego sacar promedio
-                                         bailongo = bailongo + parseFloat(records._fields[0].properties.bailongo);
-                                         energia = energia + parseFloat(records._fields[0].properties.energia);
-                                         fundamental = fundamental + parseFloat(records._fields[0].properties.fundamental); 
-                                         amplitud = amplitud + parseFloat(records._fields[0].properties.amplitud);
-                                         modo = modo + parseFloat(records._fields[0].properties.modo);
-                                         dialogo = dialogo + parseFloat(records._fields[0].properties.speechiness);
-                                         acustica = acustica + parseFloat(records._fields[0].properties.acousticness);
-                                         instrumental = instrumental + parseFloat(records._fields[0].properties.instrumentalness);
-                                         audiencia = audiencia + parseFloat(records._fields[0].properties.liveness);
-                                         positivismo = positivismo + parseFloat(records._fields[0].properties.positivismo);
-                                         tempo = tempo + parseFloat(records._fields[0].properties.tempo);
-                                         firma_tiempo = firma_tiempo + parseFloat(records._fields[0].properties.firma_tiempo);
-                                         duracion = duracion + parseFloat(records._fields[0].properties.duracion);
+                                         objetosGlobales.usuarios[jsonDatos.userid].bailongo = objetosGlobales.usuarios[jsonDatos.userid].bailongo + parseFloat(records._fields[0].properties.bailongo);
+                                         objetosGlobales.usuarios[jsonDatos.userid].energia = objetosGlobales.usuarios[jsonDatos.userid].energia + parseFloat(records._fields[0].properties.energia);
+                                         objetosGlobales.usuarios[jsonDatos.userid].fundamental = objetosGlobales.usuarios[jsonDatos.userid].fundamental + parseFloat(records._fields[0].properties.fundamental); 
+                                         objetosGlobales.usuarios[jsonDatos.userid].amplitud = objetosGlobales.usuarios[jsonDatos.userid].amplitud + parseFloat(records._fields[0].properties.amplitud);
+                                         objetosGlobales.usuarios[jsonDatos.userid].modo = objetosGlobales.usuarios[jsonDatos.userid].modo + parseFloat(records._fields[0].properties.modo);
+                                         objetosGlobales.usuarios[jsonDatos.userid].dialogo = objetosGlobales.usuarios[jsonDatos.userid].dialogo + parseFloat(records._fields[0].properties.speechiness);
+                                         objetosGlobales.usuarios[jsonDatos.userid].acustica = objetosGlobales.usuarios[jsonDatos.userid].acustica + parseFloat(records._fields[0].properties.acousticness);
+                                         objetosGlobales.usuarios[jsonDatos.userid].instrumental = objetosGlobales.usuarios[jsonDatos.userid].instrumental + parseFloat(records._fields[0].properties.instrumentalness);
+                                         objetosGlobales.usuarios[jsonDatos.userid].audiencia = objetosGlobales.usuarios[jsonDatos.userid].audiencia + parseFloat(records._fields[0].properties.liveness);
+                                         objetosGlobales.usuarios[jsonDatos.userid].positivismo = objetosGlobales.usuarios[jsonDatos.userid].positivismo + parseFloat(records._fields[0].properties.positivismo);
+                                         objetosGlobales.usuarios[jsonDatos.userid].tempo = objetosGlobales.usuarios[jsonDatos.userid].tempo + parseFloat(records._fields[0].properties.tempo);
+                                         objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo = objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo + parseFloat(records._fields[0].properties.firma_tiempo);
+                                         objetosGlobales.usuarios[jsonDatos.userid].duracion = objetosGlobales.usuarios[jsonDatos.userid].duracion + parseFloat(records._fields[0].properties.duracion);
                                         
                                         console.log("seedTracks.length")
-                                        console.log(seedTracks.length)
+                                        console.log(objetosGlobales.usuarios[jsonDatos.userid].seedTracks.length)
                                         
                                          if(contador == 5){
                                              //Algoritmo 
                         
-                                            bailongo2 = Math.abs(bailongo-50);
-                                            energia2 = Math.abs(energia-50);
-                                            fundamental2 = Math.round(Math.abs(fundamental-5));
-                                            amplitud2 = (-Math.abs(amplitud+30));
-                                            acustica2 = Math.abs(acustica-50);
-                                            dialogo2 = Math.abs(dialogo-50);
-                                            positivismo2 = Math.abs(positivismo-50);
-                                            instrumental2 = Math.abs(instrumental-50);
-                                            audiencia2 = Math.abs(audiencia-50);
+                                            
+                                            objetosGlobales.usuarios[jsonDatos.userid].bailongo = (objetosGlobales.usuarios[jsonDatos.userid].bailongo/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].energia = (objetosGlobales.usuarios[jsonDatos.userid].energia/objetosGlobales.usuarios[jsonDatos.userid].num)*100; 
+                                            objetosGlobales.usuarios[jsonDatos.userid].fundamental = objetosGlobales.usuarios[jsonDatos.userid].fundamental/objetosGlobales.usuarios[jsonDatos.userid].num;
+                                            objetosGlobales.usuarios[jsonDatos.userid].amplitud = objetosGlobales.usuarios[jsonDatos.userid].amplitud/objetosGlobales.usuarios[jsonDatos.userid].num;
+                                            objetosGlobales.usuarios[jsonDatos.userid].modo = objetosGlobales.usuarios[jsonDatos.userid].modo/objetosGlobales.usuarios[jsonDatos.userid].num;
+                                            objetosGlobales.usuarios[jsonDatos.userid].dialogo = (objetosGlobales.usuarios[jsonDatos.userid].dialogo/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            acustica = (objetosGlobales.usuarios[jsonDatos.userid].acustica/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].positivismo = (objetosGlobales.usuarios[jsonDatos.userid].positivismo/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].instrumental = (objetosGlobales.usuarios[jsonDatos.userid].instrumental/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].audiencia = (objetosGlobales.usuarios[jsonDatos.userid].audiencia/objetosGlobales.usuarios[jsonDatos.userid].num)*100;
+                                            objetosGlobales.usuarios[jsonDatos.userid].tempo = objetosGlobales.usuarios[jsonDatos.userid].tempo/objetosGlobales.usuarios[jsonDatos.userid].num;
+                                            objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo = objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo/objetosGlobales.usuarios[jsonDatos.userid].num;
+                                            objetosGlobales.usuarios[jsonDatos.userid].duracion = Math.round(objetosGlobales.usuarios[jsonDatos.userid].duracion/objetosGlobales.usuarios[jsonDatos.userid].num);
+
+                                            console.log('bailongo: ' + objetosGlobales.usuarios[jsonDatos.userid].bailongo);
+                                            console.log('energia: ' + objetosGlobales.usuarios[jsonDatos.userid].energia);
+                                            console.log('fundamental: ' + objetosGlobales.usuarios[jsonDatos.userid].fundamental);
+                                            console.log('amplitud: ' + objetosGlobales.usuarios[jsonDatos.userid].amplitud);
+                                            console.log('modo: ' + objetosGlobales.usuarios[jsonDatos.userid].modo);
+                                            console.log('dialogo: ' + objetosGlobales.usuarios[jsonDatos.userid].dialogo);
+                                            console.log('acustica: ' + objetosGlobales.usuarios[jsonDatos.userid].acustica);
+                                            console.log('instrumental: ' + objetosGlobales.usuarios[jsonDatos.userid].instrumental);
+                                            console.log('audiencia: ' + objetosGlobales.usuarios[jsonDatos.userid].audiencia);
+                                            console.log('positivismo: ' + objetosGlobales.usuarios[jsonDatos.userid].positivismo);
+                                            console.log('tempo: ' + objetosGlobales.usuarios[jsonDatos.userid].tempo);
+                                            console.log('firma_tiempo:' + objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo);
+                                            console.log('duracion: ' + objetosGlobales.usuarios[jsonDatos.userid].duracion);
+                                            
+                                            //Algoritmo 
+                        
+                                            objetosGlobales.usuarios[jsonDatos.userid].bailongo2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].bailongo-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].energia2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].energia-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].fundamental2 = Math.round(Math.abs(objetosGlobales.usuarios[jsonDatos.userid].fundamental-5));
+                                            objetosGlobales.usuarios[jsonDatos.userid].amplitud2 = (-Math.abs(objetosGlobales.usuarios[jsonDatos.userid].amplitud+30));
+                                            objetosGlobales.usuarios[jsonDatos.userid].acustica2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].acustica-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].dialogo2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].dialogo-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].positivismo2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].positivismo-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].instrumental2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].instrumental-50);
+                                            objetosGlobales.usuarios[jsonDatos.userid].audiencia2 = Math.abs(objetosGlobales.usuarios[jsonDatos.userid].audiencia-50);
 
                                             if(Math.random() > 0.5){
-                                              duracion2 = 'min_';  
+                                              objetosGlobales.usuarios[jsonDatos.userid].duracion2 = 'min_';  
                                             }else{
-                                              duracion2 = 'max_';   
+                                              objetosGlobales.usuarios[jsonDatos.userid].duracion2 = 'max_';   
                                             }
 
 
-                                            if(modo == 1){
-                                                modo2 = 0;    
-                                            }else if(modo == 0){
-                                                modo2 = 1;
+                                            if(objetosGlobales.usuarios[jsonDatos.userid].modo == 1){
+                                                objetosGlobales.usuarios[jsonDatos.userid].modo2 = 0;    
+                                            }else if(objetosGlobales.usuarios[jsonDatos.userid].modo == 0){
+                                               objetosGlobales.usuarios[jsonDatos.userid].modo2 = 1;
                                             };
-                                            tempo2 = Math.floor(Math.random() * 201) + 30;
+                                            objetosGlobales.usuarios[jsonDatos.userid].tempo2 = Math.floor(Math.random() * 201) + 30;
 
                                             var test = false;
 
                                             while(test == false){
-                                                firma_tiempo2 = Math.floor(Math.random() * 8) + 2;
-                                                if(firma_tiempo2 != firma_tiempo){
+                                                objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo2 = Math.floor(Math.random() * 8) + 2;
+                                                if(objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo2 != objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo){
                                                     test = true;
-                                                    console.log('firma_tiempo2 = ' + firma_tiempo2);
+                                                    console.log('firma_tiempo2 = ' + objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo2);
                                                 }
                                             }
 
-                                            shuffle(track_uri_ref2);
+                                            shuffle(objetosGlobales.usuarios[jsonDatos.userid].track_uri_ref2);
 
                                             var options3 = {
                                               url: 'https://api.spotify.com/v1/recommendations?'+'seed_tracks=' + 
-                                              track_uri_ref2 + '&limit=100&target_acousticness='+ acustica2 + '&target_danceability=' + 
-                                              bailongo2 + '&target_energy=' + energia2 + '&target_key=' + fundamental2 + '&target_loudness=' + amplitud +
-                                              '&target_mode=' + modo2 + '&target_speechiness=' + dialogo2 + '&target_acousticness=' + acustica2 + 
-                                              '&target_instrumentalness=' + instrumental2 + '&target_liveness=' + audiencia2 + '&target_valence=' + positivismo2 
-                                              + '&target_tempo=' + tempo2 + '&target_time_signature=' + firma_tiempo2 + '&target_loudness=' + amplitud2 + '&' + duracion2 + 'duration_ms=' + duracion ,
-                                              headers: { 'Authorization': 'Bearer ' + access_token },
+                                              objetosGlobales.usuarios[jsonDatos.userid].track_uri_ref2 + '&limit=100&target_acousticness='+ objetosGlobales.usuarios[jsonDatos.userid].acustica2 + '&target_danceability=' + 
+                                              objetosGlobales.usuarios[jsonDatos.userid].bailongo2 + '&target_energy=' + objetosGlobales.usuarios[jsonDatos.userid].energia2 + '&target_key=' + objetosGlobales.usuarios[jsonDatos.userid].fundamental2 + '&target_loudness=' + objetosGlobales.usuarios[jsonDatos.userid].amplitud +
+                                              '&target_mode=' + objetosGlobales.usuarios[jsonDatos.userid].modo2 + '&target_speechiness=' + objetosGlobales.usuarios[jsonDatos.userid].dialogo2 + '&target_acousticness=' + objetosGlobales.usuarios[jsonDatos.userid].acustica2 + 
+                                              '&target_instrumentalness=' + objetosGlobales.usuarios[jsonDatos.userid].instrumental2 + '&target_liveness=' + objetosGlobales.usuarios[jsonDatos.userid].audiencia2 + '&target_valence=' + objetosGlobales.usuarios[jsonDatos.userid].positivismo2 
+                                              + '&target_tempo=' + objetosGlobales.usuarios[jsonDatos.userid].tempo2 + '&target_time_signature=' + objetosGlobales.usuarios[jsonDatos.userid].firma_tiempo2 + '&target_loudness=' + objetosGlobales.usuarios[jsonDatos.userid].amplitud2 + '&' + objetosGlobales.usuarios[jsonDatos.userid].duracion2 + 'duration_ms=' + objetosGlobales.usuarios[jsonDatos.userid].duracion ,
+                                              headers: { 'Authorization': 'Bearer ' + objetosGlobales.usuarios[jsonDatos.userid].access_token },
                                               json: true
                                             };  
                         
@@ -710,26 +731,25 @@ app.get('/callback', function(req, res, error) {
                                                 console.log("BodyS: " + bodyS.length);
 
                                                 console.log('anti_playlist');
-                                                console.log(anti_playlist);
+                                                console.log(objetosGlobales.usuarios[jsonDatos.userid].anti_playlist);
 
-                                                anti_playlist = bodyS;
-
-                                                objetosGlobales.anti_playlist = bodyS;
+                                                objetosGlobales.usuarios[jsonDatos.userid].anti_playlist = bodyS;
 
                                                 console.log('anti_playlist # de elementos');
-                                                console.log(anti_playlist.length);
+                                                console.log(objetosGlobales.usuarios[jsonDatos.userid].anti_playlist.length);
 
-                                                duracion = (duracion/1000/60);
+                                                objetosGlobales.usuarios[jsonDatos.userid].duracion = (objetosGlobales.usuarios[jsonDatos.userid].duracion/1000/60);
 
                                                 // we can also pass the token to the browser to make requests from there
                                                 res.redirect('/perfil#' +
                                                   querystring.stringify({
-                                                    access_token: access_token,
-                                                    refresh_token: refresh_token
+                                                    access_token: objetosGlobales.usuarios[jsonDatos.userid].access_token,
+                                                    refresh_token: objetosGlobales.usuarios[jsonDatos.userid].refresh_token
                                                   }));
 
                                             };
                                             });
+
                                          }
                                         
                                     })
@@ -738,16 +758,17 @@ app.get('/callback', function(req, res, error) {
                 })
                 .catch(function(err){
                     console.log(err);
-                })
-            
-             }
-
-      });
-})
-  }
+                })                
+                            
+                        }else{
+                            console.log('No se pudo determinar si es un usuario nuevo o registrado')
+                        }
+             });
+        })
+      }
     })
-}
-    }
+  }
+    }    
 });
 
 //Finaliza proceso
@@ -792,14 +813,7 @@ app.get('/index.ejs', function(request, response) {
 
 app.get('/about-us.ejs', function(request, response) { 
     
-    nombre = "", email, external_urls, seguidores, imagen_url, pais, access_token = null, track_uri, track_uri_ref, num=50, bailongo = 0, energia = 0, fundamental=0, amplitud=0, modo=0, dialogo=0, acustica=0, instrumental=0, audiencia=0, positivismo=0, tempo=0, firma_tiempo=0, duracion=0, bailongo2 = 0, energia2 = 0, fundamental2=0, amplitud2=0, modo2=0, dialogo2=0, acustica2=0, instrumental2=0, audiencia2=0, positivismo2=0, tempo2=0, firma_tiempo2=0, duracion2=0, followers, anti_playlist = [], bailongoS, energiaS, fundamentalS, amplitudS, modoS, dialogoS, acusticaS, positivismoS, instrumentalS, audienciaS, tempoS, firma_tiempoS, duracionS, urlS, imagenS, nombreAS,  popS, nombreS ,trackid ,artist_data = [], uri_S, track_uri_ref2 = [], seedTracks = [];
-    
-    
-  response.render('pages/about-us', {
-      ref: true,
-      imagen_url: imagen_url,
-      nombre: nombre
-  });
+  response.render('pages/about-us', objetosGlobales.usuarios[jsonDatos.userid]);
 });
 
 app.get('/activity.ejs', function(request, response) {
@@ -814,23 +828,12 @@ app.get('/author-edit.ejs', function(request, response) {
   response.render('pages/author-edit');
 });
 
-app.get('/profile', function(request, response) {
-  response.render('pages/author-login', objetosGlobales, function(error, html){
-      if(error == true){
-        response.redirect('/error')
-      }else{
-        response.send(html)
-      }
-  });
-    
-});
-
 app.post('/create/playlist', function(req, res){
 var playlistname = req.body.playlistname;
 console.log('playlistname = ' + playlistname);
-console.log('userids = ' + userids[position]);
+console.log('userids = ' + jsonDatos.userid);
     
-mensaje = "nuevo_playlist";    
+objetosGlobales.usuarios[jsonDatos.userid].mensaje = "nuevo_playlist";    
   
 var uris1 = [], uris2 = [];     
     
@@ -840,11 +843,11 @@ var obj1 = JSON.parse(uris1);
 var obj2 = JSON.parse(uris2); */
     
     // Create a private playlist
-    spotifyApi.createPlaylist(userids[position], playlistname, { 'public' : false })
+    spotifyApi.createPlaylist(jsonDatos.userid, playlistname, { 'public' : false })
         .then(function(data) {
             console.log('Created playlist!');
             console.log('data', data);
-            anti_playlist.tracks.forEach(function(records, index){
+            objetosGlobales.usuarios[jsonDatos.userid].anti_playlist.tracks.forEach(function(records, index){
                 //uris[index] = records.uri;
                 if(index < 50){
                  uris1[index] = records.uri    
@@ -864,42 +867,42 @@ var obj2 = JSON.parse(uris2); */
         
              var playlist_id = data.body.id; 
         
-             console.log("info para agregar tracks a playlist: \n", "userids: ", userids[position],  "\n",
+             console.log("info para agregar tracks a playlist: \n", "userids: ", jsonDatos.userid,  "\n",
                 "data.body.id: ", data.body.id, "\n", 
                 "uris2: ", uris1 )
             
             // Add tracks to a playlist
-            spotifyApi.addTracksToPlaylist(userids[position], data.body.id, uris1)
+            spotifyApi.addTracksToPlaylist(jsonDatos.userid, data.body.id, uris1)
               .then(function(data) {
                  console.log('Added tracks to playlist ! paso #1');
                  console.log('data', data);
                     
-                     console.log("info para agregar tracks a playlist: \n", "userids: ", userids[position],  "\n",
+                     console.log("info para agregar tracks a playlist: \n", "userids: ", jsonDatos.userid,  "\n",
                         "data.body.id: ", playlist_id, "\n", 
                         "uris2: ", uris2 )
                                       
-                     spotifyApi.addTracksToPlaylist(userids[position], playlist_id, uris2)
+                     spotifyApi.addTracksToPlaylist(jsonDatos.userid, playlist_id, uris2)
                           .then(function(data) {
                             console.log('Added tracks to playlist paso #2!');
                             console.log('data', data);
-                            res.redirect('/profile');
+                            res.redirect('/perfil');
                           }, function(err) {
                             console.log('Error al momento de agregar tracks a playlist paso #2', err);
-                            res.render('pages/author-login', objetosGlobales);
+                            res.render('pages/author-login', objetosGlobales.usuarios[jsonDatos.userid]);
                           });
                     
                   }, function(err) {
                     console.log('Error al momento de agregar tracks a playlist paso #1', err);
-                    res.render('pages/author-login', objetosGlobales);    
+                    res.render('pages/author-login', objetosGlobales.usuarios[jsonDatos.userid]);    
        
         },function(error){
             console.log(error);
-            res.render('pages/autorizacion', {nombre: "", ref:false});  
+            res.render('pages/autorizacion', objetosGlobales.usuarios[jsonDatos.userid]);  
         });
            
           }, function(err) {
             console.log('Error a ', err);
-            res.render('pages/author-login', objetosGlobales);
+            res.render('pages/author-login', objetosGlobales.usuarios[jsonDatos.userid]);
           });
           });
         
@@ -1119,12 +1122,10 @@ app.get('/messages.ejs', function(request, response) {
 });
 
 app.get('/perfil', function(request, response, error) {
-    
-    objetosGlobales = {nombre:nombre, ref:ref, email:email, external_urls:external_urls, seguidores:seguidores, imagen_url:imagen_url, pais:pais, access_token:access_token, track_uri:track_uri, track_uri_ref:track_uri_ref, num:num, bailongo:bailongo, energia:energia, fundamental:fundamental, amplitud:amplitud, modo:modo, dialogo:dialogo, acustica:acustica, instrumental:instrumental, audiencia:audiencia, positivismo:positivismo, tempo:tempo, firma_tiempo:firma_tiempo, duracion:duracion, bailongo2:bailongo2, energia2:energia2, fundamental2:fundamental2, amplitud2:amplitud2, modo2:modo2, dialogo2:dialogo2, acustica2:acustica2, instrumental2:instrumental2, audiencia2:audiencia2, positivismo2:positivismo2, tempo2:tempo2, firma_tiempo2:firma_tiempo2, duracion2:duracion2, followers:followers, anti_playlist:anti_playlist, bailongoS:bailongoS, energiaS:energiaS, fundamentalS:fundamentalS, amplitudS:amplitudS, modoS:modoS, dialogoS:dialogoS, acusticaS:acusticaS, positivismoS:positivismoS, instrumentalS:instrumentalS, audienciaS:audienciaS, tempoS:tempoS, firma_tiempoS:firma_tiempoS, duracionS:duracionS, urlS:urlS, imagenS:imagenS, nombreAS: nombreAS,  popS:popS, nombreS:nombreS ,trackid:trackid ,artist_data:artist_data, uri_S:uri_S, track_uri_ref2:track_uri_ref2, seedTracks:seedTracks , userids:userids, position:position, seed_shuffled:seed_shuffled, totalUsers:totalUsers, pass:pass, pass2:pass2, mes:mes, dia:dia, año:año, noticias:noticias, Userdata:Userdata, mensaje:mensaje, add:add}
-    
+      
         if(anti_playlist.length > 0 || error != true ){
 
-            response.render('pages/author-login.ejs', objetosGlobales);
+            response.render('pages/author-login.ejs', objetosGlobales.usuarios[jsonDatos.userid]);
         
         }else{
             console.log('Error en /perfil #2');
@@ -1134,19 +1135,19 @@ app.get('/perfil', function(request, response, error) {
 
 app.post('/track/profile', function(req, res, error){
     
-    trackid = req.body.index; 
+    objetosGlobales.usuarios[jsonDatos.userid].trackid = req.body.index; 
     
-    console.log("Index de cancion elegida " + trackid);
+    console.log("Index de cancion elegida " + objetosGlobales.usuarios[jsonDatos.userid].trackid);
     
-    if( anti_playlist.length > 1 || error == false || anti_playlist.tracks != undefined){
+    if( objetosGlobales.usuarios[jsonDatos.userid].anti_playlist.length > 1 || error == false || objetosGlobales.usuarios[jsonDatos.userid].anti_playlist.tracks != undefined){
         
-    objetosGlobales.anti_playlist.tracks.forEach(function(records, index, error){
+    objetosGlobales.usuarios[jsonDatos.userid].anti_playlist.tracks.forEach(function(records, index, error){
         
         if(error == true){
             console.error(error);
             res.render('pages/error');
-        }else if(index == trackid){
-            add = records.id;
+        }else if(index == objetosGlobales.usuarios[jsonDatos.userid].trackid){
+            objetosGlobales.usuarios[jsonDatos.userid].add = records.id;
             
             console.log("records")
             console.log(records)
@@ -1166,12 +1167,10 @@ app.post('/track/profile', function(req, res, error){
                             spotifyApi.getArtist(records.artists[0].id)
                               .then(function(data) {
 
-                                artist_data = data.body;
+                                objetosGlobales.usuarios[jsonDatos.userid].artist_data = data.body;
                                 console.log('Artist_data', data.body);
                                
-                                 objetosGlobales = {nombre:nombre, ref:ref, email:email, external_urls:external_urls, seguidores:seguidores, imagen_url:imagen_url, pais:pais, access_token:access_token, track_uri:track_uri, track_uri_ref:track_uri_ref, num:num, bailongo:bailongo, energia:energia, fundamental:fundamental, amplitud:amplitud, modo:modo, dialogo:dialogo, acustica:acustica, instrumental:instrumental, audiencia:audiencia, positivismo:positivismo, tempo:tempo, firma_tiempo:firma_tiempo, duracion:duracion, bailongo2:bailongo2, energia2:energia2, fundamental2:fundamental2, amplitud2:amplitud2, modo2:modo2, dialogo2:dialogo2, acustica2:acustica2, instrumental2:instrumental2, audiencia2:audiencia2, positivismo2:positivismo2, tempo2:tempo2, firma_tiempo2:firma_tiempo2, duracion2:duracion2, followers:followers, anti_playlist:anti_playlist, bailongoS:bailongoS, energiaS:energiaS, fundamentalS:fundamentalS, amplitudS:amplitudS, modoS:modoS, dialogoS:dialogoS, acusticaS:acusticaS, positivismoS:positivismoS, instrumentalS:instrumentalS, audienciaS:audienciaS, tempoS:tempoS, firma_tiempoS:firma_tiempoS, duracionS:duracionS, urlS:urlS, imagenS:imagenS, nombreAS: nombreAS,  popS:popS, nombreS:nombreS ,trackid:trackid ,artist_data:artist_data, uri_S:uri_S, track_uri_ref2:track_uri_ref2, seedTracks:seedTracks , userids:userids, position:position, seed_shuffled:seed_shuffled, totalUsers:totalUsers, pass:pass, pass2:pass2, mes:mes, dia:dia, año:año, noticias:noticias, Userdata:Userdata, mensaje:mensaje, add:add}
-
-                                 res.render('pages/page3', objetosGlobales);
+                                 res.render('pages/page3', objetosGlobales.usuarios[jsonDatos.userid]);
                             
                                 }, function(err) {
                                 console.error(err);
@@ -1185,12 +1184,12 @@ app.post('/track/profile', function(req, res, error){
                             spotifyApi.getArtist(records.artists[0].id)
                               .then(function(data) {
 
-                                artist_data = data.body;
-                                console.log('Artist_data', artist_data);
+                                objetosGlobales.usuarios[jsonDatos.userid].artist_data = data.body;
+                                console.log('Artist_data', objetosGlobales.usuarios[jsonDatos.userid].artist_data);
                           
                                 
                                 session
-                                    .run('CREATE (n:artista {external_urls:{external_urls}, seguidores:{seguidores}, generos:{generos}, herf:{href}, artistaId:{artistaId}, imagenes:{imagenes}, nombre:{nombre}, popularidad:{popularidad}, uri:{uri} })-[:interpreta]->(m:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen}})', {external_urls: artist_data.external_urls.spotify, seguidores:artist_data.followers.total, generos:artist_data.genres, href:artist_data.href, artistaId:artist_data.id, imagenes:artist_data.images[0].url, nombre_artista:artist_data.name, popularidad:artist_data.popularity, uri:artist_data.uri, album:records.album.name, nombre:records.name, artistas:artistas, duracion:records.duration_ms, Cont_explicito:records.explicit, externalurls:records.external_urls.spotify, href:records.href, spotifyid:records.id, popularidad:records.popularity, previewUrl:records.preview_url, uri:records.uri, albumImagen:records.album.images[2].url  })
+                                    .run('CREATE (n:artista {external_urls:{external_urls}, seguidores:{seguidores}, generos:{generos}, herf:{href}, artistaId:{artistaId}, imagenes:{imagenes}, nombre:{nombre}, popularidad:{popularidad}, uri:{uri} })-[:interpreta]->(m:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen}})', {external_urls: objetosGlobales.usuarios[jsonDatos.userid].artist_data.external_urls.spotify, seguidores:objetosGlobales.usuarios[jsonDatos.userid].artist_data.followers.total, generos:objetosGlobales.usuarios[jsonDatos.userid].artist_data.genres, href:objetosGlobales.usuarios[jsonDatos.userid].artist_data.href, artistaId:objetosGlobales.usuarios[jsonDatos.userid].artist_data.id, imagenes:objetosGlobales.usuarios[jsonDatos.userid].artist_data.images[0].url, nombre_artista:objetosGlobales.usuarios[jsonDatos.userid].artist_data.name, popularidad:objetosGlobales.usuarios[jsonDatos.userid].artist_data.popularity, uri:objetosGlobales.usuarios[jsonDatos.userid].artist_data.uri, album:records.album.name, nombre:records.name, artistas:artistas, duracion:records.duration_ms, Cont_explicito:records.explicit, externalurls:records.external_urls.spotify, href:records.href, spotifyid:records.id, popularidad:records.popularity, previewUrl:records.preview_url, uri:records.uri, albumImagen:records.album.images[2].url  })
                                     .then(function(resultado){
                                     
                                     })
@@ -1198,9 +1197,7 @@ app.post('/track/profile', function(req, res, error){
                                         console.log(error);
                                     })
                                 
-                                 objetosGlobales = {nombre:nombre, ref:ref, email:email, external_urls:external_urls, seguidores:seguidores, imagen_url:imagen_url, pais:pais, access_token:access_token, track_uri:track_uri, track_uri_ref:track_uri_ref, num:num, bailongo:bailongo, energia:energia, fundamental:fundamental, amplitud:amplitud, modo:modo, dialogo:dialogo, acustica:acustica, instrumental:instrumental, audiencia:audiencia, positivismo:positivismo, tempo:tempo, firma_tiempo:firma_tiempo, duracion:duracion, bailongo2:bailongo2, energia2:energia2, fundamental2:fundamental2, amplitud2:amplitud2, modo2:modo2, dialogo2:dialogo2, acustica2:acustica2, instrumental2:instrumental2, audiencia2:audiencia2, positivismo2:positivismo2, tempo2:tempo2, firma_tiempo2:firma_tiempo2, duracion2:duracion2, followers:followers, anti_playlist:anti_playlist, bailongoS:bailongoS, energiaS:energiaS, fundamentalS:fundamentalS, amplitudS:amplitudS, modoS:modoS, dialogoS:dialogoS, acusticaS:acusticaS, positivismoS:positivismoS, instrumentalS:instrumentalS, audienciaS:audienciaS, tempoS:tempoS, firma_tiempoS:firma_tiempoS, duracionS:duracionS, urlS:urlS, imagenS:imagenS, nombreAS: nombreAS,  popS:popS, nombreS:nombreS ,trackid:trackid ,artist_data:artist_data, uri_S:uri_S, track_uri_ref2:track_uri_ref2, seedTracks:seedTracks , userids:userids, position:position, seed_shuffled:seed_shuffled, totalUsers:totalUsers, pass:pass, pass2:pass2, mes:mes, dia:dia, año:año, noticias:noticias, Userdata:Userdata, mensaje:mensaje, add:add}
-
-                             res.render('pages/page3', objetosGlobales);
+                             res.render('pages/page3', objetosGlobales.usuarios[jsonDatos.userid]);
 
 
                               }, function(err) {
