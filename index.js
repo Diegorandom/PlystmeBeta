@@ -131,7 +131,7 @@ var sessionSecreto = generateRandomString(16);
 app.use(sessions({
   cookieName: 'sessions',
   secret: sessionSecreto,
-  duration: 2* 60 * 60 * 1000,
+  duration: 24* 60 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
     ephemeral: true
 }));
@@ -409,7 +409,7 @@ app.get('/callback', function(req, res, error) {
 
 
                                                 session
-                                                .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:spotifyid, spotifyid:record.id, index:index+1 })
+                                                .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1 })
                                                 .then(function(resultado){
                                                     console.log("Se conecto exitosamente el track con el usuario")
                                                     console.log(resultado)
