@@ -11,19 +11,20 @@
   },
   "dependencies": {
     "body-parser": "*",
+    "client-sessions": "^0.8.0",
+    "cookie-parser": "*",
     "ejs": "2.4.1",
     "express": "4.13.3",
+    "fs": "*",
+    "logger": "*",
     "method-override": "^2.3.8",
     "morgan": "*",
+    "neo4j-driver": "*",
+    "request": "*",
     "sanitize-html": "^1.14.1",
     "shuffle-array": "^1.0.1",
     "spotify-web-api-node": "^2.3.6",
-    "neo4j-driver": "*",
-      "request": "*",
-      "cookie-parser": "*",
-      "fs": "*",
-      "logger": "*",
-      "supercolliderjs":"*"
+    "supercolliderjs": "*"
   },
   "repository": {
     "type": "git",

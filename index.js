@@ -13,6 +13,7 @@ var sc = require('supercolliderjs');
 var sanitize = require('sanitize-html');
 var shuffle = require('shuffle-array');
 var neo4j = require('neo4j-driver').v1;
+var sessions = require("client-sessions");
 
 var jsonDatosInit = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:null, track_uri_ref:null, num:50, bailongo:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, bailongo2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0}
 
@@ -123,6 +124,15 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 // Finaliza creacion de llaves
+
+var sessionSecreto = generateRandomString(16);
+
+app.use(sessions({
+  cookieName: 'sessions',
+  secret: sessionSecreto,
+  duration: 2* 60 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));
 
 /*
 Pieza de middleware que dirije los links a la carpeta donde se alojan los recursos
@@ -567,6 +577,8 @@ app.get('/callback', function(req, res, error) {
 
                                                 objetosGlobales[position].duracion = (objetosGlobales[position].duracion/1000/60);
 
+                                                req.sessions.position = position;
+                                                
                                                 // we can also pass the token to the browser to make requests from there
                                                 res.redirect('/perfil#' +
                                                   querystring.stringify({
@@ -642,7 +654,6 @@ app.get('/callback', function(req, res, error) {
                                          if(contador == 5){
                                              //Algoritmo 
                         
-                                            
                                             objetosGlobales[position].bailongo = (objetosGlobales[position].bailongo/objetosGlobales[position].num)*100;
                                             objetosGlobales[position].energia = (objetosGlobales[position].energia/objetosGlobales[position].num)*100; 
                                             objetosGlobales[position].fundamental = objetosGlobales[position].fundamental/objetosGlobales[position].num;
@@ -750,6 +761,8 @@ app.get('/callback', function(req, res, error) {
 
                                                 objetosGlobales[position].duracion = (objetosGlobales[position].duracion/1000/60);
 
+                                                  req.sessions.position = position;
+                                                
                                                 // we can also pass the token to the browser to make requests from there
                                                 res.redirect('/perfil#' +
                                                   querystring.stringify({
@@ -1127,6 +1140,9 @@ app.get('/messages.ejs', function(request, response) {
 });
 
 app.get('/perfil', function(request, response, error) {
+    
+        position = request.sessions.position;
+    
         console.log("objetosGlobales.position")
         console.log(objetosGlobales[position])
         if(objetosGlobales[position].anti_playlist.length > 0 || error != true ){
