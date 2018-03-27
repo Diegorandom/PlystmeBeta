@@ -14,15 +14,16 @@ var sanitize = require('sanitize-html');
 var shuffle = require('shuffle-array');
 var neo4j = require('neo4j-driver').v1;
 var sessions = require("client-sessions");
+var idleTimer = require("idle-timer");
+
 
 var jsonDatosInit = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:null, track_uri_ref:null, num:50, bailongo:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, bailongo2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0}
 
 var position = 0;
 
-var objetosGlobales = [];
-objetosGlobales[0]= jsonDatosInit;
+var objetosGlobales=[];
 
-console.log(objetosGlobales)
+objetosGlobales[0] = jsonDatosInit;
 
 // Conexión con base de datos remota
 var graphenedbURL = process.env.GRAPHENEDB_BOLT_URL;
@@ -132,6 +133,7 @@ app.use(sessions({
   secret: sessionSecreto,
   duration: 2* 60 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
+    ephemeral: true
 }));
 
 /*
@@ -139,8 +141,44 @@ Pieza de middleware que dirije los links a la carpeta donde se alojan los recurs
 */
 app.use(express.static(__dirname + '/public'))
 
+app.get('/heartbeat', function(req,res){
+    console.log('heartbeat');
+    
+    resetTimer;
+    
+     var timeoutID;
+
+    function startTimer() {
+        // wait 2 seconds before calling goInactive
+        timeoutID = setTimeout(goInactive, 1000*60*2);
+    }
+
+    function resetTimer(e) {
+        
+        window.clearTimeout(timeoutID);
+        goActive();
+    }
+
+    function goInactive() {
+        // do something
+        position = req.sessions.position;
+        objetosGlobales.splice(position, 1);
+        console.log('Depuracion de datos no utilizados')
+        console.log(objetosGlobales)
+    }
+
+    function goActive() {
+        // do something
+        startTimer();
+    }
+    
+    startTimer();
+    
+})
+
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
 app.get('/', function(req, res, error){ 
+    
 if(error == true){
     res.render('pages/error')
 }else{    
@@ -166,7 +204,8 @@ if(error == true){
 //Login procesa el REQUEST de la API de Spotify para autorizacion
 app.get('/login', function(req, res, error) {
 if(error == true){ res.render('pages/error')}else{
-    
+   
+   
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -197,6 +236,8 @@ if(error == true){ res.render('pages/error')}else{
 
 app.get('/callback', function(req, res, error) {
     if(error == true){ res.render('pages/error')}else{ 
+        
+        
     
   res.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
     
@@ -836,6 +877,7 @@ app.get('/index.ejs', function(request, response) {
 
 app.get('/about-us.ejs', function(request, response) { 
     
+    position = request.sessions.position;
   response.render('pages/about-us', objetosGlobales[position]);
 });
 
@@ -852,6 +894,7 @@ app.get('/author-edit.ejs', function(request, response) {
 });
 
 app.post('/create/playlist', function(req, res){
+    position = req.sessions.position;
 var playlistname = req.body.playlistname;
 console.log('playlistname = ' + playlistname);
 console.log('userids = ' + objetosGlobales[position].userid);
@@ -1140,11 +1183,9 @@ app.get('/messages.ejs', function(request, response) {
 });
 
 app.get('/perfil', function(request, response, error) {
-    
+ 
         position = request.sessions.position;
-    
-        console.log("objetosGlobales.position")
-        console.log(objetosGlobales[position])
+        
         if(objetosGlobales[position].anti_playlist.length > 0 || error != true ){
             console.log("objetosGlobales");
             console.log(objetosGlobales);
@@ -1159,6 +1200,7 @@ app.get('/perfil', function(request, response, error) {
 
 app.post('/track/profile', function(req, res, error){
     
+    position = req.sessions.position;
     objetosGlobales[position].trackid = req.body.index; 
     
     console.log("Index de cancion elegida " + objetosGlobales[position].trackid);
@@ -1378,6 +1420,13 @@ app.post('/save/track', function(req, res, error){
     
     
 });
+
+app.get('/idle', function(req,res){
+    objetosGlobales.splice(req.sessions.position, 1);
+    console.log('redirecting')
+    res.send("success");
+    req.sessions.position = 0;
+})
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
