@@ -17,7 +17,7 @@ var sessions = require("client-sessions");
 var idleTimer = require("idle-timer");
 
 
-var jsonDatosInit = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:null, track_uri_ref:null, num:50, bailongo:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, bailongo2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0}
+var jsonDatosInit = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:null, track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0}
 
 var position = 0;
 
@@ -141,43 +141,29 @@ Pieza de middleware que dirije los links a la carpeta donde se alojan los recurs
 */
 app.use(express.static(__dirname + '/public'))
 
+var timeoutID; 
+
 app.get('/heartbeat', function(req,res){
-    console.log('heartbeat');
+     console.log('heartbeat');
     
-    resetTimer;
+    clearTimeout(timeoutID);
     
-     var timeoutID;
-
-    function startTimer() {
-        // wait 2 seconds before calling goInactive
-        timeoutID = setTimeout(goInactive, 1000*60*2);
-    }
-
-    function resetTimer(e) {
-        
-        window.clearTimeout(timeoutID);
-        goActive();
-    }
-
+    timeoutID = setTimeout(goInactive, 1000*60*2);
+    
     function goInactive() {
         // do something
-        position = req.sessions.position;
-        objetosGlobales.splice(position, 1);
-        console.log('Depuracion de datos no utilizados')
-        console.log(objetosGlobales)
-    }
-
-    function goActive() {
-        // do something
-        startTimer();
-    }
-    
-    startTimer();
-    
+        if(objetosGlobales.length>1){
+            position = req.sessions.position;
+            objetosGlobales.splice(position, 1);
+            console.log('Depuracion de datos no utilizados')
+            console.log(objetosGlobales)
+        }
+    } 
 })
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
 app.get('/', function(req, res, error){ 
+    objetosGlobales[0].ref=false;
     
 if(error == true){
     res.render('pages/error')
@@ -275,7 +261,7 @@ app.get('/callback', function(req, res, error) {
       json: true
     };
       
-      var jsonDatos = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:null, track_uri_ref:null, num:50, bailongo:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, bailongo2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, spotifyid:null, totalUsers:0}
+      var jsonDatos = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:null, track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, spotifyid:null, totalUsers:0}
 
     request.post(authOptions, function(error, response, bodyS) {
         
@@ -373,6 +359,12 @@ app.get('/callback', function(req, res, error) {
                                 var i = 0;
 
                                 body.items.forEach(function(record, index){
+                                    
+                                    //PROCESO PARA GUARDAR LOS PRIMEROS 5 TOP TRACKS
+                                    if(index < 5){
+                                        objetosGlobales[position].seedTracks[index] = record.uri;
+                                        objetosGlobales[position].track_uri_ref2[index] = record.uri.substring(14);
+                                    }
 
                                     console.log(record)
 
@@ -407,7 +399,7 @@ app.get('/callback', function(req, res, error) {
                                                 console.log('Se Guardo con éxito la información de este track');
                                                 console.log(resultado_create)
 
-
+                                                
                                                 session
                                                 .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1 })
                                                 .then(function(resultado){
@@ -439,18 +431,11 @@ app.get('/callback', function(req, res, error) {
                                      objetosGlobales[position].track_uri = record.uri.substring(14);
                                     
 
-                                    //PROCESO PARA GUARDAR LOS PRIMEROS 5 TOP TRACKS
-                                    if(index < 5){
-                                        objetosGlobales[position].seedTracks[index] = record.uri;
-                                        objetosGlobales[position].track_uri_ref2[index] = record.uri.substring(14);
-                                    }
-
-
                                     //SEG GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
                                      spotifyApi.getAudioFeaturesForTrack(record.uri.substring(14))
                                       .then(function(data) {
 
-                                         var bailongo_bd = parseFloat(data.body.danceability);
+                                         var danceability_bd = parseFloat(data.body.danceability);
                                          var energia_bd = parseFloat(data.body.energy);
                                          var fundamental_bd = parseFloat(data.body.key); 
                                          var amplitud_bd = parseFloat(data.body.loudness);
@@ -465,7 +450,7 @@ app.get('/callback', function(req, res, error) {
                                          var duracion_bd =  parseFloat(data.body.duration_ms);
 
                                          session
-                                            .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.bailongo) RETURN n', {track_uri:record.uri})
+                                            .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) RETURN n', {track_uri:record.uri})
                                             .then(function(resultado){
                                                 console.log("1 = Debe guardarse la info, 0 = no pasa nada")
                                                 console.log(resultado.records)
@@ -474,7 +459,7 @@ app.get('/callback', function(req, res, error) {
 
 
                                                      session
-                                                        .run('MATCH (n:track {uri:{track_uri}}) SET n.bailongo={bailongo}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {bailongo:bailongo_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:record.uri })
+                                                        .run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:record.uri })
                                                         .then(function(resultado){
                                                             console.log(resultado)
                                                             console.log('Se guardaron las caracteristicas del track')
@@ -495,7 +480,7 @@ app.get('/callback', function(req, res, error) {
 
 
                                          //Suma para luego sacar promedio
-                                         objetosGlobales[position].bailongo = objetosGlobales[position].bailongo + parseFloat(data.body.danceability);
+                                         objetosGlobales[position].danceability = objetosGlobales[position].danceability + parseFloat(data.body.danceability);
                                          objetosGlobales[position].energia = objetosGlobales[position].energia + parseFloat(data.body.energy);
                                          objetosGlobales[position].fundamental = objetosGlobales[position].fundamental + parseFloat(data.body.key); 
                                          objetosGlobales[position].amplitud = objetosGlobales[position].amplitud + parseFloat(data.body.loudness);
@@ -511,7 +496,7 @@ app.get('/callback', function(req, res, error) {
 
 
                                         if(i == objetosGlobales[position].num){
-                                            objetosGlobales[position].bailongo = (objetosGlobales[position].bailongo/objetosGlobales[position].num)*100;
+                                            objetosGlobales[position].danceability = (objetosGlobales[position].danceability/objetosGlobales[position].num)*100;
                                             objetosGlobales[position].energia = (objetosGlobales[position].energia/objetosGlobales[position].num)*100; 
                                             objetosGlobales[position].fundamental = objetosGlobales[position].fundamental/objetosGlobales[position].num;
                                             objetosGlobales[position].amplitud = objetosGlobales[position].amplitud/objetosGlobales[position].num;
@@ -525,7 +510,7 @@ app.get('/callback', function(req, res, error) {
                                             objetosGlobales[position].firma_tiempo = objetosGlobales[position].firma_tiempo/objetosGlobales[position].num;
                                             objetosGlobales[position].duracion = Math.round(objetosGlobales[position].duracion/objetosGlobales[position].num);
 
-                                            console.log('bailongo: ' + objetosGlobales[position].bailongo);
+                                            console.log('danceability: ' + objetosGlobales[position].danceability);
                                             console.log('energia: ' + objetosGlobales[position].energia);
                                             console.log('fundamental: ' + objetosGlobales[position].fundamental);
                                             console.log('amplitud: ' + objetosGlobales[position].amplitud);
@@ -541,7 +526,7 @@ app.get('/callback', function(req, res, error) {
                                             
                                             //Algoritmo 
                         
-                                            objetosGlobales[position].bailongo2 = Math.abs(objetosGlobales[position].bailongo-50);
+                                            objetosGlobales[position].danceability2 = Math.abs(objetosGlobales[position].danceability-50);
                                             objetosGlobales[position].energia2 = Math.abs(objetosGlobales[position].energia-50);
                                             objetosGlobales[position].fundamental2 = Math.round(Math.abs(objetosGlobales[position].fundamental-5));
                                             objetosGlobales[position].amplitud2 = (-Math.abs(objetosGlobales[position].amplitud+30));
@@ -580,7 +565,7 @@ app.get('/callback', function(req, res, error) {
                                             var options3 = {
                                               url: 'https://api.spotify.com/v1/recommendations?'+'seed_tracks=' + 
                                               objetosGlobales[position].track_uri_ref2 + '&limit=100&target_acousticness='+ objetosGlobales[position].acustica2 + '&target_danceability=' + 
-                                              objetosGlobales[position].bailongo2 + '&target_energy=' + objetosGlobales[position].energia2 + '&target_key=' + objetosGlobales[position].fundamental2 + '&target_loudness=' + objetosGlobales[position].amplitud +
+                                              objetosGlobales[position].danceability2 + '&target_energy=' + objetosGlobales[position].energia2 + '&target_key=' + objetosGlobales[position].fundamental2 + '&target_loudness=' + objetosGlobales[position].amplitud +
                                               '&target_mode=' + objetosGlobales[position].modo2 + '&target_speechiness=' + objetosGlobales[position].dialogo2 + '&target_acousticness=' + objetosGlobales[position].acustica2 + 
                                               '&target_instrumentalness=' + objetosGlobales[position].instrumental2 + '&target_liveness=' + objetosGlobales[position].audiencia2 + '&target_valence=' + objetosGlobales[position].positivismo2 
                                               + '&target_tempo=' + objetosGlobales[position].tempo2 + '&target_time_signature=' + objetosGlobales[position].firma_tiempo2 + '&target_loudness=' + objetosGlobales[position].amplitud2 + '&' + objetosGlobales[position].duracion2 + 'duration_ms=' + objetosGlobales[position].duracion ,
@@ -621,6 +606,9 @@ app.get('/callback', function(req, res, error) {
                                                 req.sessions.position = position;
                                                 
                                                 // we can also pass the token to the browser to make requests from there
+                                                
+                                                
+                                                
                                                 res.redirect('/perfil#' +
                                                   querystring.stringify({
                                                     access_token: objetosGlobales[position].access_token,
@@ -656,10 +644,9 @@ app.get('/callback', function(req, res, error) {
                                    console.log(tracks);
                                   objetosGlobales[position].seedTracks = [];
                                   
-                                    var contador = 0;
-                                  
-                                  
                                     tracks.records.forEach(function(records,index){
+                                        
+                                        
                                          console.log("Index de importancia")
                                         console.log(records._fields[1])
                                         
@@ -667,15 +654,10 @@ app.get('/callback', function(req, res, error) {
                                             if(records._fields[1] < 6){
                                                 objetosGlobales[position].seedTracks[records._fields[1]-1] = records._fields[0].properties.uri;
                                                 objetosGlobales[position].track_uri_ref2[records._fields[1]-1]= records._fields[0].properties.spotifyid;
-                                                
-                                                contador = contador + 1;
-                                                console.log("contador")
-                                                console.log(contador)
-                                                
                                             }
                                         
                                         //Suma para luego sacar promedio
-                                         objetosGlobales[position].bailongo = objetosGlobales[position].bailongo + parseFloat(records._fields[0].properties.bailongo);
+                                         objetosGlobales[position].danceability = objetosGlobales[position].danceability + parseFloat(records._fields[0].properties.danceability);
                                          objetosGlobales[position].energia = objetosGlobales[position].energia + parseFloat(records._fields[0].properties.energia);
                                          objetosGlobales[position].fundamental = objetosGlobales[position].fundamental + parseFloat(records._fields[0].properties.fundamental); 
                                          objetosGlobales[position].amplitud = objetosGlobales[position].amplitud + parseFloat(records._fields[0].properties.amplitud);
@@ -686,30 +668,35 @@ app.get('/callback', function(req, res, error) {
                                          objetosGlobales[position].audiencia = objetosGlobales[position].audiencia + parseFloat(records._fields[0].properties.liveness);
                                          objetosGlobales[position].positivismo = objetosGlobales[position].positivismo + parseFloat(records._fields[0].properties.positivismo);
                                          objetosGlobales[position].tempo = objetosGlobales[position].tempo + parseFloat(records._fields[0].properties.tempo);
-                                         objetosGlobales[position].firma_tiempo = objetosGlobales[position].firma_tiempo + parseFloat(records._fields[0].properties.firma_tiempo);
+                                         objetosGlobales[position].firma_tiempo = objetosGlobales[position].firma_tiempo + parseFloat(records._fields[0].properties.compas);
                                          objetosGlobales[position].duracion = objetosGlobales[position].duracion + parseFloat(records._fields[0].properties.duracion);
                                         
                                         console.log("seedTracks.length")
                                         console.log(objetosGlobales[position].seedTracks.length)
                                         
-                                         if(contador == 5){
+                                        console.log("index")
+                                        console.log(index)
+                                        
+                                         if(index == tracks.records.length-1){
+                                             
+                                           
                                              //Algoritmo 
                         
-                                            objetosGlobales[position].bailongo = (objetosGlobales[position].bailongo/objetosGlobales[position].num)*100;
-                                            objetosGlobales[position].energia = (objetosGlobales[position].energia/objetosGlobales[position].num)*100; 
-                                            objetosGlobales[position].fundamental = objetosGlobales[position].fundamental/objetosGlobales[position].num;
-                                            objetosGlobales[position].amplitud = objetosGlobales[position].amplitud/objetosGlobales[position].num;
-                                            objetosGlobales[position].modo = objetosGlobales[position].modo/objetosGlobales[position].num;
-                                            objetosGlobales[position].dialogo = (objetosGlobales[position].dialogo/objetosGlobales[position].num)*100;
-                                            acustica = (objetosGlobales[position].acustica/objetosGlobales[position].num)*100;
-                                            objetosGlobales[position].positivismo = (objetosGlobales[position].positivismo/objetosGlobales[position].num)*100;
-                                            objetosGlobales[position].instrumental = (objetosGlobales[position].instrumental/objetosGlobales[position].num)*100;
-                                            objetosGlobales[position].audiencia = (objetosGlobales[position].audiencia/objetosGlobales[position].num)*100;
-                                            objetosGlobales[position].tempo = objetosGlobales[position].tempo/objetosGlobales[position].num;
-                                            objetosGlobales[position].firma_tiempo = objetosGlobales[position].firma_tiempo/objetosGlobales[position].num;
-                                            objetosGlobales[position].duracion = Math.round(objetosGlobales[position].duracion/objetosGlobales[position].num);
+                                            objetosGlobales[position].danceability = (objetosGlobales[position].danceability/tracks.records.length)*100;
+                                            objetosGlobales[position].energia = (objetosGlobales[position].energia/tracks.records.length)*100; 
+                                            objetosGlobales[position].fundamental = objetosGlobales[position].fundamental/tracks.records.length;
+                                            objetosGlobales[position].amplitud = objetosGlobales[position].amplitud/tracks.records.length;
+                                            objetosGlobales[position].modo = objetosGlobales[position].modo/tracks.records.length;
+                                            objetosGlobales[position].dialogo = (objetosGlobales[position].dialogo/tracks.records.length)*100;
+                                            acustica = (objetosGlobales[position].acustica/tracks.records.length-1)*100;
+                                            objetosGlobales[position].positivismo = (objetosGlobales[position].positivismo/tracks.records.length)*100;
+                                            objetosGlobales[position].instrumental = (objetosGlobales[position].instrumental/tracks.records.length)*100;
+                                            objetosGlobales[position].audiencia = (objetosGlobales[position].audiencia/tracks.records.length)*100;
+                                            objetosGlobales[position].tempo = objetosGlobales[position].tempo/tracks.records.length;
+                                            objetosGlobales[position].firma_tiempo = objetosGlobales[position].firma_tiempo/tracks.records.length;
+                                            objetosGlobales[position].duracion = Math.round(objetosGlobales[position].duracion/tracks.records.length);
 
-                                            console.log('bailongo: ' + objetosGlobales[position].bailongo);
+                                            console.log('danceability: ' + objetosGlobales[position].danceability);
                                             console.log('energia: ' + objetosGlobales[position].energia);
                                             console.log('fundamental: ' + objetosGlobales[position].fundamental);
                                             console.log('amplitud: ' + objetosGlobales[position].amplitud);
@@ -725,9 +712,11 @@ app.get('/callback', function(req, res, error) {
                                             
                                             //Algoritmo 
                         
-                                            objetosGlobales[position].bailongo2 = Math.abs(objetosGlobales[position].bailongo-50);
+                                            objetosGlobales[position].danceability2 = Math.abs(objetosGlobales[position].danceability-50);
                                             objetosGlobales[position].energia2 = Math.abs(objetosGlobales[position].energia-50);
+                                             
                                             objetosGlobales[position].fundamental2 = Math.round(Math.abs(objetosGlobales[position].fundamental-5));
+                                             
                                             objetosGlobales[position].amplitud2 = (-Math.abs(objetosGlobales[position].amplitud+30));
                                             objetosGlobales[position].acustica2 = Math.abs(objetosGlobales[position].acustica-50);
                                             objetosGlobales[position].dialogo2 = Math.abs(objetosGlobales[position].dialogo-50);
@@ -764,13 +753,14 @@ app.get('/callback', function(req, res, error) {
                                             var options3 = {
                                               url: 'https://api.spotify.com/v1/recommendations?'+'seed_tracks=' + 
                                               objetosGlobales[position].track_uri_ref2 + '&limit=100&target_acousticness='+ objetosGlobales[position].acustica2 + '&target_danceability=' + 
-                                              objetosGlobales[position].bailongo2 + '&target_energy=' + objetosGlobales[position].energia2 + '&target_key=' + objetosGlobales[position].fundamental2 + '&target_loudness=' + objetosGlobales[position].amplitud +
+                                              objetosGlobales[position].danceability2 + '&target_energy=' + objetosGlobales[position].energia2 + '&target_key=' + objetosGlobales[position].fundamental2 + '&target_loudness=' + objetosGlobales[position].amplitud +
                                               '&target_mode=' + objetosGlobales[position].modo2 + '&target_speechiness=' + objetosGlobales[position].dialogo2 + '&target_acousticness=' + objetosGlobales[position].acustica2 + 
                                               '&target_instrumentalness=' + objetosGlobales[position].instrumental2 + '&target_liveness=' + objetosGlobales[position].audiencia2 + '&target_valence=' + objetosGlobales[position].positivismo2 
                                               + '&target_tempo=' + objetosGlobales[position].tempo2 + '&target_time_signature=' + objetosGlobales[position].firma_tiempo2 + '&target_loudness=' + objetosGlobales[position].amplitud2 + '&' + objetosGlobales[position].duracion2 + 'duration_ms=' + objetosGlobales[position].duracion ,
                                               headers: { 'Authorization': 'Bearer ' + objetosGlobales[position].access_token },
                                               json: true
                                             };  
+                         
                         
 
                                             console.log('Resquest de Recomendaciones: ',  options3);
@@ -878,7 +868,8 @@ app.get('/index.ejs', function(request, response) {
 app.get('/about-us.ejs', function(request, response) { 
     
     position = request.sessions.position;
-  response.render('pages/about-us', objetosGlobales[position]);
+    objetosGlobales[0].ref=true;
+  response.render('pages/about-us', objetosGlobales[0]);
 });
 
 app.get('/activity.ejs', function(request, response) {
@@ -985,8 +976,8 @@ sc.server.boot().then((server) => {
     
   let freqBase = Math.round(fundamental) + Math.floor(Math.random() * 30) + 30;    
   let freqBase2 = Math.round(fundamental2) + Math.floor(Math.random() * 100);
-  let baileBase = (bailongo/100)*5;
-  let baileBase2 = (bailongo2/100)*5;
+  let baileBase = (danceability/100)*5;
+  let baileBase2 = (danceability2/100)*5;
   let energiaBase = (energia/100)*baileBase;
   let energiaBase2 = (energia2/100)*baileBase2;
   let acusticaBase = (acustica/100)*baileBase;
@@ -1183,8 +1174,8 @@ app.get('/messages.ejs', function(request, response) {
 });
 
 app.get('/perfil', function(request, response, error) {
- 
         position = request.sessions.position;
+        objetosGlobales[position].ref=false;
         
         if(objetosGlobales[position].anti_playlist.length > 0 || error != true ){
             console.log("objetosGlobales");
@@ -1252,10 +1243,57 @@ app.post('/track/profile', function(req, res, error){
                                                 .run('MATCH (a:artista {artistaId: {artistaId}}), (u:usuario {spotifyid:{userid}}) CREATE (a)-[:interpreta]->(m:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen}})<-[:Escuchado]-(u)', {artistaId: objetosGlobales[position].artist_data.id, userid:objetosGlobales[position].userid,nalbum:records.album.name, nombre:records.name, artistas:artistas, duracion:records.duration_ms, Cont_explicito:records.explicit, externalurls:records.external_urls.spotify, href:records.href, spotifyid:records.id, popularidad:records.popularity, previewUrl:records.preview_url, uri:records.uri, albumImagen:records.album.images[2].url })
                                                 .then(function(resultado){
                                                     console.log(records.name + ' Guardadx en la BD')
+                                                    
+                                                    //SEG GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
+                                                     spotifyApi.getAudioFeaturesForTrack(records.uri.substring(14))
+                                                      .then(function(data) {
+
+                                                         var danceability_bd = parseFloat(data.body.danceability);
+                                                         var energia_bd = parseFloat(data.body.energy);
+                                                         var fundamental_bd = parseFloat(data.body.key); 
+                                                         var amplitud_bd = parseFloat(data.body.loudness);
+                                                         var modo_bd = parseFloat(data.body.mode);
+                                                         var dialogo_bd =parseFloat(data.body.speechiness);
+                                                         var acustica_bd = parseFloat(data.body.acousticness);
+                                                         var instrumental_bd = parseFloat(data.body.instrumentalness);
+                                                         var audiencia_bd = parseFloat(data.body.liveness);
+                                                         var positivismo_bd = parseFloat(data.body.valence);
+                                                         var tempo_bd = parseFloat(data.body.tempo);
+                                                         var firma_tiempo_bd = parseFloat(data.body.time_signature);
+                                                         var duracion_bd =  parseFloat(data.body.duration_ms);
+
+                                                         session
+                                                            .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) RETURN n', {track_uri:records.uri})
+                                                            .then(function(resultado){
+                                                                console.log("1 = Debe guardarse la info, 0 = no pasa nada")
+                                                                console.log(resultado.records)
+
+                                                                if(resultado.records.length>=1){
+
+
+                                                                     session
+                                                                        .run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:records.uri })
+                                                                        .then(function(resultado){
+                                                                            console.log(resultado)
+                                                                            console.log('Se guardaron las caracteristicas del track')
+                                                                        })
+                                                                         .catch(function(err){
+                                                                            console.log(err);
+                                                                        })
+                                                                }
+                                                            })
+                                                             .catch(function(err){
+                                                                console.log(err);
+                                                            })
+
+                                                     })
+                                                    
                                                 })
                                                 .catch(function(error){
                                                     console.log(error);
                                                 })
+                                            
+                                                
                                             
                                         }
                                
@@ -1300,6 +1338,51 @@ app.post('/track/profile', function(req, res, error){
                                                 .run('MATCH (u:usuario {spotifyid:{userid}}) CREATE (n:artista {external_urls:{external_urls}, seguidores:{seguidores}, generos:{generos}, herf:{href}, artistaId:{artistaId}, imagenes:{imagenes}, nombre:{nombre_artista}, popularidad:{popularidad}, uri:{uri} })-[:interpreta]->(m:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen}})<-[:Escuchado]-(u)', {external_urls: objetosGlobales[position].artist_data.external_urls.spotify, seguidores:objetosGlobales[position].artist_data.followers.total, generos:objetosGlobales[position].artist_data.genres, href:objetosGlobales[position].artist_data.href, artistaId:objetosGlobales[position].artist_data.id, imagenes:objetosGlobales[position].artist_data.images[0].url, nombre_artista:objetosGlobales[position].artist_data.name, popularidad:objetosGlobales[position].artist_data.popularity, uri:objetosGlobales[position].artist_data.uri, album:records.album.name, nombre:records.name, artistas:artistas, duracion:records.duration_ms, Cont_explicito:records.explicit, externalurls:records.external_urls.spotify, href:records.href, spotifyid:records.id, popularidad:records.popularity, previewUrl:records.preview_url, uri:records.uri, albumImagen:records.album.images[2].url, userid:objetosGlobales[position].userid  })
                                                 .then(function(resultado){
                                                     console.log(records.name + ' Guardado en la BD')
+                                                    
+                                                    //SEG GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
+                                                     spotifyApi.getAudioFeaturesForTrack(records.uri.substring(14))
+                                                      .then(function(data) {
+
+                                                         var danceability_bd = parseFloat(data.body.danceability);
+                                                         var energia_bd = parseFloat(data.body.energy);
+                                                         var fundamental_bd = parseFloat(data.body.key); 
+                                                         var amplitud_bd = parseFloat(data.body.loudness);
+                                                         var modo_bd = parseFloat(data.body.mode);
+                                                         var dialogo_bd =parseFloat(data.body.speechiness);
+                                                         var acustica_bd = parseFloat(data.body.acousticness);
+                                                         var instrumental_bd = parseFloat(data.body.instrumentalness);
+                                                         var audiencia_bd = parseFloat(data.body.liveness);
+                                                         var positivismo_bd = parseFloat(data.body.valence);
+                                                         var tempo_bd = parseFloat(data.body.tempo);
+                                                         var firma_tiempo_bd = parseFloat(data.body.time_signature);
+                                                         var duracion_bd =  parseFloat(data.body.duration_ms);
+
+                                                         session
+                                                            .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) RETURN n', {track_uri:records.uri})
+                                                            .then(function(resultado){
+                                                                console.log("1 = Debe guardarse la info, 0 = no pasa nada")
+                                                                console.log(resultado.records)
+
+                                                                if(resultado.records.length>=1){
+
+
+                                                                     session
+                                                                        .run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:records.uri })
+                                                                        .then(function(resultado){
+                                                                            console.log(resultado)
+                                                                            console.log('Se guardaron las caracteristicas del track')
+                                                                        })
+                                                                         .catch(function(err){
+                                                                            console.log(err);
+                                                                        })
+                                                                }
+                                                            })
+                                                             .catch(function(err){
+                                                                console.log(err);
+                                                            })
+
+                                                     })
+                                                    
                                                 })
                                                 .catch(function(error){
                                                     console.log(error);
