@@ -1,4 +1,4 @@
-var express = require('express');
+ /**var express = require('express');
 var router = new express.Router();
 var sc = require('supercolliderjs');
 
@@ -8,7 +8,7 @@ router.get('/environment', function(request, response) {
     
   'use strict';
 sc.server.boot().then((server) => {
-  /**
+ 
    * This will return a Promise that will resolve with an instance of the
    * javascript SynthDef class.
    *
@@ -18,7 +18,7 @@ sc.server.boot().then((server) => {
    *
    * If there is an error in your SynthDef then it will fail and post the error:
    * Failed to compile SynthDef  Interpret error: ERROR: Message 'quacks' not understood.
-   */
+  
     
   let freqBase = Math.round(objetosGlobales[position].fundamental) + Math.floor(Math.random() * 30) + 30;    
   let freqBase2 = Math.round(objetosGlobales[position].fundamental2) + Math.floor(Math.random() * 100);
@@ -27,7 +27,7 @@ sc.server.boot().then((server) => {
   let energiaBase = (objetosGlobales[position].energia/100)*baileBase;
   let energiaBase2 = (objetosGlobales[position].energia2/100)*baileBase2;
   let acusticaBase = (objetosGlobales[position].acustica/100)*baileBase;
-  let acusticaBase2 = (objetosGlobales[position].acustica2/100)*baileBase2;
+  let acusticaBase2 = (objetosGlobales[position].acustica2/100)*baileBase2; 
   
   console.log('freqBase', freqBase);    
   console.log('freqBase2', freqBase2);    
@@ -173,4 +173,4 @@ sc.server.boot().then((server) => {
 
 //Finaliza proceso
 
-module.exports = router;
+module.exports = router;  */
