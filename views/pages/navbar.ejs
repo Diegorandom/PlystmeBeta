@@ -1,27 +1,33 @@
   <header>
 		<div class="container-fluid custom-container">
-			<div class="row no_row row-header">
+			<div class="row">
 
                 
-<div class=" col-sm-1 hidden-sm hidden-xs">
+<div class="col-lg-6 col-md-6 col-sm-6 hidden-xs">
 	<a href="/">
     
-        <h2 class="hidden-sm" style=" margin-left: 20px; margin-top:22px; color:silver; text-align: left; font-family: 'Orbitron', sans-serif; font-size:300%;">IDGN </h2>
-           
-		<!-- <img class=" be_logo logo-c active"  src="img/logo.png" alt="logo" >
-		<img class="logo-c be_logo" src="img/logo-green.png" alt="logo" >
-		<img  class="logo-c be_logo" src="img/logo-orang.png" alt="logo" >
-		<img class="logo-c be_logo" src="img/logo-red.png" alt="logo"> -->
+        <h2   style="margin-top:22px; color:silver; text-align: left; font-family: 'Orbitron', sans-serif; font-size:300%;">atmos</h2>
+        
 	</a>
    
 </div>
+                
+    <div class="hidden-lg hidden-md hidden-sm col-xs-6" >
+	<a href="/">
+        <h3   style=" margin-top:22px; color:silver; text-align: left; font-family: 'Orbitron', sans-serif;">atmos</h3>
+	</a>
+   
+</div>
+                
+                
+                 
     <% if(nombre != undefined){ %>            
-    <a href="/environment" target="_blank" >                
+    <!-- <a href="/environment" target="_blank" >                
     <div class="btn color-1 size-2 hover-2 hidden-sm hidden-xs" style=" color:white; margin-left: 50px; margin-top:22px; text-align: left; ">
         Creative Environment <em>Beta</em>
 
     </div>
-      </a>  
+      </a>  -->
     <% } %>           
                 
 <% if(ref){ %>
@@ -32,23 +38,46 @@ Try it!</a>
                 
 <% }else{ %>
                 
-   <a class="btn color-1 size-2 hover-2 hidden-sm hidden-md hidden-lg" href="/about-us.ejs" style="color:white; margin-left: 20px; margin-top:22px; color:white; text-align: right; "><i class="fa fa-info-circle"></i>
-						      How even</a>            
+   <!-- <a class="btn color-1 size-2 hover-2 hidden-sm hidden-md hidden-lg" href="/about-us.ejs" style="color:white; margin-left: 20px; margin-top:22px; color:white; text-align: right; "><i class="fa fa-info-circle"></i>
+						      How even</a>            -->
     
                     
 <% } %>
 				
-                        <% if(nombre != undefined){ %>
-                <div class="login-header-block" style="margin-right:10px;">
-					<div class="login_block" style="margin-top:9px;" >
-                        <a href="/perfil" style="color:white; " > 
-                        <img class="login-user" src="<%=imagen_url%>" alt="" style="border-radius:5px; height:30px; ">
-                        <span class="be-dropdown-content" style="">
-                            <span style="margin-top:40px;"><%= nombre %></span>
-                        </span>
-                        </a>
-                  </div>	
-				</div>
+                        <% if(nombre != undefined && nombre != ''){ %>
+                    
+                <div class="col-lg-6 col-md-6 col-sm-6 hidden-xs">
+                            <div class="login-header-block" style="margin-right:10px;">
+                                <div class="login_block" style="margin-top:9px;" >
+                                    <a href="/perfil" style="color:white; " > 
+                                    <img class="login-user" src="<%=imagen_url%>" alt="" style="border-radius:5px; height:35px; ">
+                                    <span class="be-dropdown-content" style="">
+                                        <span style="margin-top:40px; margin-right:30px;"><%= nombre %>  </span>
+                                    </span>
+                                    </a>
+                                    <a class="btn color-1 size-2 hover-2 hidden-xs" href="/logOut"  style="color:white;"><i class="fa fa-sign-out"></i>
+						                  Salir
+                                    </a>
+                              </div>
+                                
+                            </div>
+                        
+                        </div>  
+                
+                <div class="hidden-lg hidden-md hidden-sm col-xs-6">
+                    <div class="login-header-block">
+                                <div class="login_block" style="margin-top:9px;" >
+                                    <a href="/perfil" style="color:white; " > 
+                                        <img class="login-user" src="<%=imagen_url%>" alt="" style="border-radius:5px; height:35px; ">
+                                    </a>
+                                    <a class="btn color-1 size-2 hover-2" href="/logOut"  style="color:white;"><i class="fa fa-sign-out"></i>
+						                  Salir
+                                    </a>
+                              </div>
+                                
+                            </div>
+                </div>
+                    
                         <% }else{ %><!--
                            <div class="login-header-block" style="margin-right:10px;">
                                 <div class="login_block" style="margin-top:9px;">
@@ -67,8 +96,8 @@ Try it!</a>
                         
                            
                         <% }else{ %>
-                            <a class="btn color-1 size-2 hover-2 hidden-xs" href="/about-us.ejs" style="color:white; "><i class="fa fa-info-circle"></i>
-						      How even</a>
+                           <!-- <a class="btn color-1 size-2 hover-2 hidden-xs" href="/about-us.ejs" style="color:white; "><i class="fa fa-info-circle"></i>
+						      How even</a> -->
                         
                        <%  } %>
                     </div>
@@ -80,7 +109,7 @@ Try it!</a>
 		</div>
 	</header> 
 
-    <div class="large-popup register">
+    <!--<div class="large-popup register">
 		<div class="large-popup-fixed"></div>
 		<div class="container large-popup-container">
 			<div class="row">
@@ -213,14 +242,14 @@ Try it!</a>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<!--<div class="be-checkbox">
+							<div class="be-checkbox">
 								<label class="check-box">
 								    <input class="checkbox-input" type="checkbox" required="" name=""/> <span class="check-box-sign"></span>
 								</label>
 								<span class="large-popup-text">
 									I have read and agree to the <a class="be-popup-terms" href="blog-detail-2.ejs">Terms of Use</a> and <a class="be-popup-terms" href="blog-detail-2.ejs">Privacy Policy</a>.
 								</span>
-							</div> -->
+							</div> 
 							<div class="be-checkbox">
 								<label class="check-box">
 								    <input class="checkbox-input" type="checkbox" name="noticias"/> <span class="check-box-sign"></span>
@@ -238,7 +267,7 @@ Try it!</a>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
     
 
 

@@ -104,11 +104,15 @@
       <% include ../pages/navbar.ejs %>
   
            
-      <div id="login" class="contenedor row hidden-xs" style="margin-top:200px; font-family: 'Josefin Slab', serif; margin-bottom:300px;">
+      <div id="login" class="contenedor row" style="margin-top:200px; font-family: 'Josefin Slab', serif; margin-bottom:300px;">
           <br>
-          <div class="col-lg-12">
-                <h1>IDGN <em>Beta</em></h1>
+          <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
+                <h1>atmosphaera <em>Beta</em></h1>
           </div> 
+          
+          <div class="hidden-lg hidden-md col-sm-12 col-xs-12">
+                <h3>atmosphaera <em>Beta</em></h3>
+          </div>
           <br>
           <!-- <h4> 
             Social media feeds you. 
@@ -118,102 +122,63 @@
           <br>    
           </h4> -->
           <div class="col-lg-12">
-          <h2 style="text-align: center; color:#313633; width: 100%;">INteractive Deep Immersion into non-GENeric Audio. </h2>
-          </div>
-          <hr>
-          <div class="col-lg-12">
-            <h3>An opportunity to break our <em>Echo Chamber</em>. </h3>
-          </div>
-          <br>
-          <div class="col-lg-12">
           <div class="number-counters">  
           <div class="counter-entry">
-                <div class="stat-number" data-to="<%=totalUsers%>" data-speed="3000">0</div> <div class="counter-label">Users</div>
+                <div class="stat-number" data-to="<%=totalUsers%>" data-speed="3000">0</div> <div class="counter-label">Usuarios</div>
             </div>
           </div>
           </div>      
-          <div class="centro" >
+          <div class="centro">
                <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="margin-bottom:25px;">
                     <a href="/login" >
                       <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
                           <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:200%;">
-                              Go ON 
+                              Entrar 
                           </span> 
                       </div>
                     </a>
               </div>
-              <div class=" hidden-lg col-md-12 hidden-xs" style="margin-bottom:25px;">
-                    <a href="/login" >
-                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
-                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:150%;">
-                              Go ON
-                          </span>
-                      </div>
-                    </a>
-              </div>
-               <div class=" hidden-lg hidden-md hidden-sm col-lg-12" style="margin-bottom:25px;">
-                    <a href="/login" >
-                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
-                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:100%;">
-                              Go ON
-                          </span>
-                      </div>
-                    </a>
-              </div>
-          </div>
-      </div>
-        
-         
-      <div id="login" class="contenedor row visible-xs centro" style="font-family: 'Josefin Slab', serif; margin-top:200px; margin-bottom:200px; max-width:500px; min-width:300px !important;">
-          <br>
-          <div class="col-lg-12">
-                <h1>IDGN <em>Beta</em></h1>
-          </div> 
-          <br>
-          <!-- <h4> 
-            Social media feeds you. 
-            And you feed them. 
-            You give them what they want.
-            They give you what you want. 
-          <br>    
-          </h4> -->
-          <div class="col-lg-12">
-          <h2 style="text-align: center; color:#313633; width: 100%;">INteractive Deep Immersion into non-GENeric Audio. </h2>
-          </div>
-          <hr>
-          <div class="col-lg-12">
-            <h3>An opportunity to break our <em>Echo Chamber</em>. </h3>
-          </div>
-          <br>
-          <div class="centro" >
-               <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="margin-bottom:25px;">
-                    <a href="/login" >
-                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
-                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:200%;">
-                              Go ON
-                          </span>
-                      </div>
-                    </a>
+              <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="text-align: center;">
+                <a href="https://www.spotify.com/mx/account/apps/" target="_blank" >
+                      <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center;">
+                          Revocar permisos para Entrar con otro usuario
+                      </span> 
+                </a>
               </div>
               <div class=" hidden-lg col-md-12 hidden-xs" style="margin-bottom:25px;">
                     <a href="/login" >
                       <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
                           <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:150%;">
-                              Go ON
+                              Entrar
                           </span>
                       </div>
                     </a>
               </div>
-               <div class=" hidden-lg hidden-md hidden-sm col-lg-12" style="margin-bottom:25px;">
+              <div class="hidden-lg col-md-12 hidden-xs" style="text-align: center;">
+                <a href="https://www.spotify.com/mx/account/apps/" target="_blank" >
+                      <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center;">
+                          Revocar permisos para Entrar con otro usuario
+                      </span> 
+                </a>
+              </div>
+               <div class=" hidden-lg hidden-md hidden-sm col-xs-12" style="margin-bottom:25px;">
                     <a href="/login" >
-                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
-                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:100%;">
-                              Go ON
+                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%; padding-left:0; padding-right:0; ">
+                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:70%;">
+                              Entrar
                           </span>
                       </div>
                     </a>
+              </div>
+              <div class="  hidden-lg hidden-md hidden-sm col-xs-12" style="text-align: center; margin:0 auto;">
+                <a  href="https://www.spotify.com/mx/account/apps/" target="_blank" >
+                      <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; margin:0 auto; font-size:75%;">
+                          Revocar permisos para Entrar con otro usuario
+                      </span> 
+                </a>
               </div>
           </div>
+      
       </div>    
         
       <div id="loggedin">

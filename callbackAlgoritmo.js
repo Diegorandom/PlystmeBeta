@@ -53,7 +53,7 @@ router.get('/callback', function(req, res, error) {
       json: true
     };
       
-      var jsonDatos = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:null, track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, spotifyid:null, totalUsers:0}
+      var jsonDatos = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:[], track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, spotifyid:null, totalUsers:0}
 
     request.post(authOptions, function(error, response, bodyS) {
         
@@ -218,28 +218,36 @@ router.get('/callback', function(req, res, error) {
                                     console.log(err);
                                     }) 
                                      
-                                     //TERMINA DE GUARDARSE INFORMACIÓN DEL TRACK Y COMIENZA A PROCRESARCE EL ALGORITMO
+                                      //TERMINA DE GUARDARSE INFORMACIÓN DEL TRACK Y COMIENZA A PROCRESARCE EL ALGORITMO
 
-                                     objetosGlobales[position].track_uri = record.uri.substring(14);
-                                    
+                                    objetosGlobales[position].track_uri[index] = record.uri.substring(14);
+                                     
+                                    console.log("index de cancion analizada del usuario")
+                                    console.log(index)
+                                     if(index == 49){
+                                        
+                                    console.log("URI de track a analizar")
+                                    console.log(objetosGlobales[position].track_uri)
 
                                     //SEG GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
-                                     objetosGlobales[0].spotifyApi.getAudioFeaturesForTrack(record.uri.substring(14))
+                                     objetosGlobales[0].spotifyApi.getAudioFeaturesForTracks(objetosGlobales[position].track_uri)
                                       .then(function(data) {
-
-                                         var danceability_bd = parseFloat(data.body.danceability);
-                                         var energia_bd = parseFloat(data.body.energy);
-                                         var fundamental_bd = parseFloat(data.body.key); 
-                                         var amplitud_bd = parseFloat(data.body.loudness);
-                                         var modo_bd = parseFloat(data.body.mode);
-                                         var dialogo_bd =parseFloat(data.body.speechiness);
-                                         var acustica_bd = parseFloat(data.body.acousticness);
-                                         var instrumental_bd = parseFloat(data.body.instrumentalness);
-                                         var audiencia_bd = parseFloat(data.body.liveness);
-                                         var positivismo_bd = parseFloat(data.body.valence);
-                                         var tempo_bd = parseFloat(data.body.tempo);
-                                         var firma_tiempo_bd = parseFloat(data.body.time_signature);
-                                         var duracion_bd =  parseFloat(data.body.duration_ms);
+                                         console.log('Datos extraídos de los 50 tracks')
+                                         console.log(data)
+                                        data.body.audio_features.forEach(function(data, index){
+                                         var danceability_bd = parseFloat(data.danceability);
+                                         var energia_bd = parseFloat(data.energy);
+                                         var fundamental_bd = parseFloat(data.key); 
+                                         var amplitud_bd = parseFloat(data.loudness);
+                                         var modo_bd = parseFloat(data.mode);
+                                         var dialogo_bd =parseFloat(data.speechiness);
+                                         var acustica_bd = parseFloat(data.acousticness);
+                                         var instrumental_bd = parseFloat(data.instrumentalness);
+                                         var audiencia_bd = parseFloat(data.liveness);
+                                         var positivismo_bd = parseFloat(data.valence);
+                                         var tempo_bd = parseFloat(data.tempo);
+                                         var firma_tiempo_bd = parseFloat(data.time_signature);
+                                         var duracion_bd =  parseFloat(data.duration_ms);
 
                                          objetosGlobales[0].session
                                             .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) RETURN n', {track_uri:record.uri})
@@ -272,19 +280,19 @@ router.get('/callback', function(req, res, error) {
 
 
                                          //Suma para luego sacar promedio
-                                         objetosGlobales[position].danceability = objetosGlobales[position].danceability + parseFloat(data.body.danceability);
-                                         objetosGlobales[position].energia = objetosGlobales[position].energia + parseFloat(data.body.energy);
-                                         objetosGlobales[position].fundamental = objetosGlobales[position].fundamental + parseFloat(data.body.key); 
-                                         objetosGlobales[position].amplitud = objetosGlobales[position].amplitud + parseFloat(data.body.loudness);
-                                         objetosGlobales[position].modo = objetosGlobales[position].modo + parseFloat(data.body.mode);
-                                         objetosGlobales[position].dialogo = objetosGlobales[position].dialogo + parseFloat(data.body.speechiness);
-                                         objetosGlobales[position].acustica = objetosGlobales[position].acustica + parseFloat(data.body.acousticness);
-                                         objetosGlobales[position].instrumental = objetosGlobales[position].instrumental + parseFloat(data.body.instrumentalness);
-                                         objetosGlobales[position].audiencia = objetosGlobales[position].audiencia + parseFloat(data.body.liveness);
-                                         objetosGlobales[position].positivismo = objetosGlobales[position].positivismo + parseFloat(data.body.valence);
-                                         objetosGlobales[position].tempo = objetosGlobales[position].tempo + parseFloat(data.body.tempo);
-                                         objetosGlobales[position].firma_tiempo = objetosGlobales[position].firma_tiempo + parseFloat(data.body.time_signature);
-                                         objetosGlobales[position].duracion = objetosGlobales[position].duracion + parseFloat(data.body.duration_ms);
+                                         objetosGlobales[position].danceability = objetosGlobales[position].danceability + parseFloat(data.danceability);
+                                         objetosGlobales[position].energia = objetosGlobales[position].energia + parseFloat(data.energy);
+                                         objetosGlobales[position].fundamental = objetosGlobales[position].fundamental + parseFloat(data.key); 
+                                         objetosGlobales[position].amplitud = objetosGlobales[position].amplitud + parseFloat(data.loudness);
+                                         objetosGlobales[position].modo = objetosGlobales[position].modo + parseFloat(data.mode);
+                                         objetosGlobales[position].dialogo = objetosGlobales[position].dialogo + parseFloat(data.speechiness);
+                                         objetosGlobales[position].acustica = objetosGlobales[position].acustica + parseFloat(data.acousticness);
+                                         objetosGlobales[position].instrumental = objetosGlobales[position].instrumental + parseFloat(data.instrumentalness);
+                                         objetosGlobales[position].audiencia = objetosGlobales[position].audiencia + parseFloat(data.liveness);
+                                         objetosGlobales[position].positivismo = objetosGlobales[position].positivismo + parseFloat(data.valence);
+                                         objetosGlobales[position].tempo = objetosGlobales[position].tempo + parseFloat(data.tempo);
+                                         objetosGlobales[position].firma_tiempo = objetosGlobales[position].firma_tiempo + parseFloat(data.time_signature);
+                                         objetosGlobales[position].duracion = objetosGlobales[position].duracion + parseFloat(data.duration_ms);
 
 
                                         if(i == objetosGlobales[position].num){
@@ -395,7 +403,7 @@ router.get('/callback', function(req, res, error) {
 
                                                 objetosGlobales[position].duracion = (objetosGlobales[position].duracion/1000/60);
 
-                                                req.sessions.position = position;
+                                                req.sessions.position = position
                                                 
                                                 // we can also pass the token to the browser to make requests from there
                                                 
@@ -412,13 +420,21 @@ router.get('/callback', function(req, res, error) {
 
                                         };
 
+                                        
+                                        })    
+                                            
                                       }, function(err) {
                                         done(err);
                                          console.log("err: " + err );
                                          res.render('pages/error');
                                       });
-                                    console.log('');    
-                                 });
+                                    console.log(''); 
+                                     }
+                                     
+                               });
+                                        
+                              
+                             
                             }); 
                                 
                               
@@ -584,7 +600,7 @@ router.get('/callback', function(req, res, error) {
 
                                                 objetosGlobales[position].duracion = (objetosGlobales[position].duracion/1000/60);
 
-                                                  req.sessions.position = position;
+                                                req.sessions.position = position;
                                                 
                                                 // we can also pass the token to the browser to make requests from there
                                                 res.redirect('/perfil#' +
