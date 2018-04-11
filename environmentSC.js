@@ -1,6 +1,8 @@
- /**var express = require('express');
+ var express = require('express');
 var router = new express.Router();
 var sc = require('supercolliderjs');
+
+/**
 
 router.get('/environment', function(request, response) {
     var objetosGlobales = request.app.get('objetosGlobales');
@@ -171,6 +173,6 @@ sc.server.boot().then((server) => {
   response.render('pages/environment');
 });
 
-//Finaliza proceso
+//Finaliza proceso */
 
-module.exports = router;  */
+module.exports = router; 
