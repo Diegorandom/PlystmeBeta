@@ -234,7 +234,9 @@ router.get('/callback', function(req, res, error) {
                                       .then(function(data) {
                                          console.log('Datos extraídos de los 50 tracks')
                                          console.log(data)
+                                         
                                         data.body.audio_features.forEach(function(data, index){
+                                            
                                          var danceability_bd = parseFloat(data.danceability);
                                          var energia_bd = parseFloat(data.energy);
                                          var fundamental_bd = parseFloat(data.key); 
@@ -250,7 +252,7 @@ router.get('/callback', function(req, res, error) {
                                          var duracion_bd =  parseFloat(data.duration_ms);
 
                                          objetosGlobales[0].session
-                                            .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) RETURN n', {track_uri:record.uri})
+                                            .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) RETURN n', {track_uri:data.uri})
                                             .then(function(resultado){
                                                 console.log("1 = Debe guardarse la info, 0 = no pasa nada")
                                                 console.log(resultado.records)
@@ -259,7 +261,7 @@ router.get('/callback', function(req, res, error) {
 
 
                                                      objetosGlobales[0].session
-                                                        .run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:record.uri })
+                                                        .run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:data.uri })
                                                         .then(function(resultado){
                                                             console.log(resultado)
                                                             console.log('Se guardaron las caracteristicas del track')

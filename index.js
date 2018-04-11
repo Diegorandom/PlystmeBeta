@@ -206,7 +206,7 @@ if(error == true){ res.render('pages/error')}else{
     querystring.stringify({
       client_id: objetosGlobales[0].client_id,
       response_type: 'code',
-      redirect_uri: objetosGlobales[position].redirect_uri,
+      redirect_uri: objetosGlobales[0].redirect_uri,
       scope: scope,
       state: state
     })))
@@ -509,10 +509,7 @@ app.get('/logOut', function(req, res) {
     req.sessions.position = 0
     objetosGlobales[0].access_token = null
     console.log('Depuracion de datos por salida de Usuario')
-    console.log(objetosGlobales)
-    //objetosGlobales[0].access_token = null
-    //objetosGlobales[0].spotifyApi._credentials = []
-    
+    console.log(objetosGlobales)    
     res.redirect('/')
     
 });
