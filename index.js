@@ -196,7 +196,7 @@ app.get('/login', function(req, res, error) {
 if(error == true){ res.render('pages/error')}else{
   
     var state = generateRandomString(16);
-  res.cookie(objetosGlobales[position].stateKey, state);
+  res.cookie(objetosGlobales[0].stateKey, state);
 
   // your application requests authorization
   var scope = 'user-read-private user-read-email playlist-read-private user-library-read user-top-read playlist-modify-private user-library-modify';
@@ -414,17 +414,14 @@ app.get('/messages.ejs', function(request, response) {
 app.get('/perfil', function(request, response, error) {
         position = request.sessions.position;
         objetosGlobales[position].ref=false;
-        
-        if(objetosGlobales[position].anti_playlist.length > 0 || error != true ){
+    
             console.log("objetosGlobales");
             console.log(objetosGlobales);
+            console.log('')
+            console.log('SeedTracks info:')
+            console.log(objetosGlobales[position].seedTracks)
         
             response.render('pages/author-login.ejs', objetosGlobales[position]);
-        
-        }else{
-            console.log('Error en /perfil #2');
-            response.render('pages/error');         
-        };
 });
 
 /*

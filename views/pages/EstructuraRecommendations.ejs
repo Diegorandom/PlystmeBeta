@@ -1,0 +1,216 @@
+
+                         <!--   <div class="tab-info "> 
+                                
+                        <div class="col-lg-12">
+                            
+                            <h2 style="text-align:center; font-family: 'Josefin Slab', serif;">Recommendations </h2>
+                            
+                        </div> 
+                                
+                        
+                        <div class="col-lg-12 centro" style=" text-align: center;" >
+                            
+                             <div class=" btn centro " style="text-align: center;">
+                                <form  method="post" action="/create/playlist" id="createP" class="centro" style="text-align: center;">
+                                  <input class="form-control color-5 size-2 hover-1 centro" placeholder="Name and Press Enter to Add Playlist to Spotify" style="width:265px; font-size: 80%; text-align: center;" name="playlistname">
+                                </form>
+                            </div>
+                            <!-- 
+                                <div class=" btn btn-share color-5 size-2 hover-1 ">
+                               <a ><i class="fa fa-share-alt"></i>Share Playlist</a>        
+                                <div class="share-buttons">
+                                        <a class="color-1" href="page1.ejs"><i class="fa fa-facebook"></i> 278</a>
+                                        <a class="color-2" href="page1.ejs"><i class="fa fa-twitter"></i> 180</a>
+                                        <a class="color-3" href="page1.ejs"><i class="fa fa-pinterest-p"></i> 78</a>
+                                        <a class="color-4" href="page1.ejs"><i class="fa fa-linkedin"></i> 53</a>
+                                    </div>
+                                <br/>
+                              </div>  -->  
+                                
+                             
+                        </div>
+                                
+                                <div class="col-lg-12">
+                            
+                            <h4 style="text-align:center; font-family: 'Josefin Slab', serif;">Add what you like by going into the song profile! </h4>
+                            <br/>
+                        </div> 
+                     
+                            
+                                
+                            <div class="row">
+
+                                        <% anti_playlist.tracks.forEach(function(records, index){ %>
+                                
+                                    <div class="col-ml-12 col-xs-6 col-sm-4" id="track<%=index%>" style="height:448px !important;">
+                                        
+                                    <div class="be-post">
+                                        
+                                        <form method="post" action="/track/profile" id="trackprofile">
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
+                                        <% if(records.album.images[0] != undefined){ %>    
+                                        <img src="<%=records.album.images[0].url%>" alt="omg">
+                                        <% } else{ %>
+                                          <img src="" alt="omg">      
+                                        <%    } %>
+                                        </button>   
+                                        </form>
+                                        
+                                        <span class="be-post-title"><%= records.name %></span> 
+                                        <a class="close" style="background-color:white; font-size:200%;" id="fadeOut<%=index%>">&times;</a>
+                                        <span>
+                                            Popularity: <%=records.popularity%> %
+                                        </span>
+                                        <div class="author-post">
+                                            <span>by <%=records.artists[0].name%></span>
+                                        </div>
+                                        <div class="info-block">
+                                        </div>
+                                    </div>
+                                  </div>
+                                
+                            <script src="/script/ajax.js"></script>
+                                        
+                                
+                                <%})%>
+                                
+                                
+                                
+                                </div>
+                            </div>  -->
+
+
+<!--  <div class="tab-info">
+								<div class="row">
+										<div class="col-md-12">
+					
+                     <h2 style="text-align: center; font-family: 'Josefin Slab', serif;">Music Data Analisis</h2>
+                    
+                        <br/>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Variables</th>
+                                <td>My data</td>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Danceability</th>
+                                <td><%=danceability.toFixed(1)%>/100</td>
+                              
+                            </tr>
+                            <tr>
+                                <th>Energy</th>
+                                <td><%=energia.toFixed(1)%>/100</td>
+                                
+                            </tr>
+                            <tr>
+                                <th>Key</th>
+                                <% 
+                                switch(Math.round(fundamental)) {
+                                    case 0:
+                                        fundamental = 'C';
+                                        break;
+                                    case 1:
+                                        fundamental = 'C#/Db';
+                                        break;
+                                    case 2:
+                                        fundamental = 'D';
+                                        break;
+                                    case 3:
+                                        fundamental = 'D#/Eb';
+                                        break;
+                                    case 4:
+                                        fundamental = 'E';
+                                        break;
+                                    case 5:
+                                        fundamental = 'F';
+                                        break;
+                                    case 6:
+                                        fundamental = 'F#/Gb';
+                                        break;
+                                    case 7:
+                                        fundamental = 'G';
+                                        break;
+                                    case 8: 
+                                        fundamental = 'G#/Ab';
+                                        break;
+                                    case 9: 
+                                        fundamental = 'A';
+                                        break;
+                                    case 10: 
+                                        fundamental = 'A#/Bb';
+                                        break;
+                                    case 11: 
+                                        fundamental = 'B';
+                                        break;
+                                };
+                               
+                                %>
+                                <td><%=fundamental%></td>
+                               
+                            </tr>
+                            <tr>
+                                <th>Loudness</th>
+                                <td><%=amplitud.toFixed(1)%> dB</td>
+                                
+                            </tr>
+                            <tr>
+                                <th>Mode</th>
+                                <%
+                                switch(Math.round(modo)){
+                                    case 0:
+                                        modo = 'Minor';
+                                        break;
+                                    case 1:
+                                        modo = 'Major';
+                                        break;
+                                };
+                                
+                                %>
+                                <td><%=modo%></td>
+                                
+                            </tr>
+                            <tr>
+                                <th>Speechiness</th>
+                                <td><%=dialogo.toFixed(1)%>/100</td>
+                                
+                            </tr>
+                            <tr>
+                                <th>Acousticness</th>
+                                <td><%=acustica.toFixed(1)%>/100</td>
+                                
+                            </tr>
+                            <tr>
+                                <th>Instrumentalness</th>
+                                <td><%=instrumental.toFixed(1)%>/100</td>
+                            </tr>
+                            <tr>
+                                <th>Liveness</th>
+                                <td><%=audiencia.toFixed(1)%>/100</td>
+                            </tr>
+                            <tr>
+                                <th>Valence</th>
+                                <td><%=positivismo.toFixed(1)%>/100</td>
+                            </tr>
+                            <tr>
+                                <th>Tempo</th>
+                                <td><%=tempo.toFixed(1)%> BPM</td>
+                            </tr>
+                            <tr>
+                                <th>Duration</th>
+                                <td><%=duracion.toFixed(1)%> Minutes Average</td>
+                                
+                            </tr>
+                            <tr>
+                                <th>Beats per bar</th>
+                                <td><%=Math.round(firma_tiempo)%></td>
+                            </tr>
+                        </tbody>
+                    </table>							
+									</div>
+								</div>
+                            </div> -->

@@ -51,21 +51,15 @@
 						</div>
 						<div class="be-user-statistic">
 							
-							<div class="stat-row clearfix"><i class="stat-icon icon-followers-b"></i>Spotify Followers<span class="stat-counter"><%=followers%></span></div>
+							<div class="stat-row clearfix"><i class="stat-icon icon-followers-b"></i>Seguidores de Spotify<span class="stat-counter"><%=followers%></span></div>
 							
 						</div>
 					</div>
                     <div class="be-desc-author">
-							<div class="be-desc-label">About our Recommendations</div>
+							<div class="be-desc-label">Acerca de atmos</div>
 							<div class="clearfix"></div>
 							<div class="be-desc-text">
-				            The recommendations are created through a careful search inside Spotify Database. <br>
-                                <br/>
-                            For a starting point, we take a look at the universe of songs surrounding your <em>Seed Tracks</em>. From there we now look for songs with opposite features from those measured at your <em>top tracks</em> list.<br>
-                                <br/>
-                            To know what you wouldn't normally listen to, we first study what you like. At the <em><%=nombre%>'s Music Data</em> section you can find more about our algorithm.<br>
-                                <br/>
-                            This melting pot creates conditions for you to discover new music, searching where no other engine searches. <a href="about-us">More info...</a>   
+				               
 							</div>
 						</div>
 					
@@ -77,16 +71,13 @@
                         <div class="tab-nav-wrapper">
                             <div  class="nav-tab  clearfix">
                                 
-                                <div class="nav-tab-item ">
-                                    
-                                    <span>Recommendations</span>
-                                </div>
-                                <div class="nav-tab-item ">
-                                    <span><%=nombre%>'s Music Data</span>
-                                </div>
                                 <div class="nav-tab-item active">
-                                    <span>Seed Tracks</span>
-                                </div> 
+                                    
+                                    <span>Las 50 canciones que más escuchas</span>
+                                </div>
+                                <div class="nav-tab-item ">
+                                    <span>Tu perfil de preferencias</span>
+                                </div>
                                 
                                 <!-- <div class="nav-tab-item ">
                                     <span>Collections</span>
@@ -99,23 +90,23 @@
                         <div class="tabs-content clearfix">
                             
                             
-                            <div class="tab-info "> 
+                            <div class="tab-info active"> 
                                 
                         <div class="col-lg-12">
                             
-                            <h2 style="text-align:center; font-family: 'Josefin Slab', serif;">Recommendations </h2>
+                            <h2 style="text-align:center; font-family: 'Josefin Slab', serif;">Las 50 canciones que más escuchas</h2>
                             
                         </div> 
                                 
                         
-                        <div class="col-lg-12 centro" style=" text-align: center;" >
+                        <!-- <div class="col-lg-12 centro" style=" text-align: center;" >
                             
                              <div class=" btn centro " style="text-align: center;">
                                 <form  method="post" action="/create/playlist" id="createP" class="centro" style="text-align: center;">
                                   <input class="form-control color-5 size-2 hover-1 centro" placeholder="Name and Press Enter to Add Playlist to Spotify" style="width:265px; font-size: 80%; text-align: center;" name="playlistname">
                                 </form>
                             </div>
-                            <!-- 
+                            
                                 <div class=" btn btn-share color-5 size-2 hover-1 ">
                                <a ><i class="fa fa-share-alt"></i>Share Playlist</a>        
                                 <div class="share-buttons">
@@ -125,22 +116,26 @@
                                         <a class="color-4" href="page1.ejs"><i class="fa fa-linkedin"></i> 53</a>
                                     </div>
                                 <br/>
-                              </div>  -->  
+                              </div> 
                                 
                              
-                        </div>
+                        </div>  
                                 
                                 <div class="col-lg-12">
                             
                             <h4 style="text-align:center; font-family: 'Josefin Slab', serif;">Add what you like by going into the song profile! </h4>
                             <br/>
-                        </div> 
+                        </div>  --> 
                      
                             
                                 
                             <div class="row">
 
-                                        <% anti_playlist.tracks.forEach(function(records, index){ %>
+                                
+                                        <% 
+                                if(mensaje == 'nuevo_usuario'){ 
+                                    
+                                    seedTracks.forEach(function(records, index){ %>
                                 
                                     <div class="col-ml-12 col-xs-6 col-sm-4" id="track<%=index%>" style="height:448px !important;">
                                         
@@ -172,18 +167,61 @@
                             <script src="/script/ajax.js"></script>
                                         
                                 
-                                <%})%>
+                                <%})
+                                    
+                                    
+                                }else{
+                                    
+                             
+                                
+                                seedTracks.forEach(function(records, index){ %>
+                                
+                                    <div class="col-ml-12 col-xs-6 col-sm-4" id="track<%=index%>" style="height:448px !important;">
+                                        
+                                    <div class="be-post">
+                                        
+                                        <form method="post" action="/track/profile" id="trackprofile">
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
+                                        <% if(records.albumImagen != undefined){ %>    
+                                        <img src="<%=records.albumImagen%>" alt="omg">
+                                        <% } else{ %>
+                                          <img src="" alt="omg">      
+                                        <%    } %>
+                                        </button>   
+                                        </form>
+                                        
+                                        <span class="be-post-title"><%= records.nombre %></span> 
+                                        <a class="close" style="background-color:white; font-size:200%;" id="fadeOut<%=index%>">&times;</a>
+                                        <span>
+                                            Popularity: <%=records.popularidad%> %
+                                        </span>
+                                        <div class="author-post">
+                                            <span>by <%=records.artistas%></span>
+                                        </div>
+                                        <div class="info-block">
+                                        </div>
+                                    </div>
+                                  </div>
+                                
+                            <script src="/script/ajax.js"></script>
+                                        
+                                
+                                <%
+                                })    
+                                       }
+                                    
+                               %>
                                 
                                 
                                 
-                                </div>
+                                </div> 
                             </div> 
                             
                             <div class="tab-info">
 								<div class="row">
 										<div class="col-md-12">
 					
-                     <h2 style="text-align: center; font-family: 'Josefin Slab', serif;">Music Data Analisis</h2>
+                     <h2 style="text-align: center; font-family: 'Josefin Slab', serif;">Análisis de tu perfil musical</h2>
                     
                         <br/>
                     
@@ -191,13 +229,13 @@
                         <thead>
                             <tr>
                                 <th>Variables</th>
-                                <td>My data</td>
+                                <td>Mi perfil</td>
                                 
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th>Danceability</th>
+                                <th>Danzabilidad</th>
                                 <td><%=danceability.toFixed(1)%>/100</td>
                               
                             </tr>
@@ -316,34 +354,7 @@
                             <div class="tab-info active">
 								<div class="row">
                                     
-								<div class="col-lg-12">
-                                    <h2 style="font-family: 'Josefin Slab', serif;">Seed Tracks</h2>
-                                    
-                                   
-                                    <h3 style="font-family: 'Josefin Slab', serif;">These seeds are the songs you listen the most.</h3>
-                                    <h4 style="font-family: 'Josefin Slab', serif;">These songs are connected with a music universe with related features inside the Spotify Database. With these seeds as starting point, the algorithm becomes controled and searches for music within this universe.</h4>
-                                    <br/>
-                                    
-                                </div>
                                   
-                         <% seedTracks.forEach(function(records, index){ %>
-                                    
-                           <h4 style="font-family: 'Josefin Slab', serif;" ># <%=index + 1%></h4>  
-                                   
-                          <div class="be-largepost-iframe  
-							embed-responsive embed-responsive-16by9 centro" style="text-align: center; width:inherit;" >
-                                
-                                
-								 <iframe src="https://open.spotify.com/embed?uri=<%=records%>&theme=white&view=coverart" width="640" height="720" frameborder="0" allowtransparency="true" class="hidden-xs centro" style="text-align: center; " ></iframe>
-                              
-                                <iframe src="https://open.spotify.com/embed?uri=<%=records%>&theme=white&view=coverart" width="339" height="400" frameborder="0" allowtransparency="true" class="centro visible-xs centro" style="text-align: center;  margin-left:20px;" ></iframe>
-                                
-                              
-							</div>	
-                       
-                                    
-                        <% }) %>
-                               
 								</div>                                                                 
                             </div>
                         </div>
@@ -557,7 +568,7 @@
     
     
     
-    <% if(mensaje == "nuevo_playlist"){ %>
+   <!-- <% if(mensaje == "nuevo_playlist"){ %>
         <div class="alert alert-dismissable fade in" id="floating_alert">
             <a href="#" class="close" data-dismiss="alert" aria-label="close" style="background-color:white; font-size:150%;">&times;</a>
             <strong>You created</strong> a new playlist.
@@ -577,6 +588,6 @@
             <a href="#" class="close" data-dismiss="alert" aria-label="close"  style="background-color:white; font-size:150%;">&times;</a>
             <strong>Error</strong> saving the tracks to your library!
         </div>
-    <%} %>
+    <%} %> -->
     
 </html>
