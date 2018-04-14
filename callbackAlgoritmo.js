@@ -146,7 +146,7 @@ router.get('/callback', function(req, res, error) {
                                 console.log("50 tracks principales")
                                 console.log(body);
 
-                                var i = 0;
+                                var i = 0, artistaId = [];
 
                                 body.items.forEach(function(record, index){
                                     
@@ -184,14 +184,71 @@ router.get('/callback', function(req, res, error) {
                                             console.log('Se creará nuevo record en base de datos');
                                           
                                             objetosGlobales[0].session
-                                            .run('CREATE (n:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, reproducible:{reproducible}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen}})', { album:record.album.name, nombre:record.name, artistas:artistas, duracion:record.duration_ms, Cont_explicito:record.explicit, externalurls:record.external_urls.spotify, href:record.href, spotifyid:record.id, reproducible:record.is_playable, popularidad:record.popularity, previewUrl:record.preview_url, uri:record.uri, albumImagen:record.album.images[0].url })
+                                            .run('CREATE (n:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, reproducible:{reproducible}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen},artistaId:{artistaId}})', { album:record.album.name, nombre:record.name, artistas:artistas, duracion:record.duration_ms, Cont_explicito:record.explicit, externalurls:record.external_urls.spotify, href:record.href, spotifyid:record.id, reproducible:record.is_playable, popularidad:record.popularity, previewUrl:record.preview_url, uri:record.uri, albumImagen:record.album.images[0].url, artistaId:record.artists[0].id })
                                             .then(function(resultado_create){
                                                 console.log('Se Guardo con éxito la información de este track');
                                                 console.log(resultado_create)
-
                                                 
-                                                objetosGlobales[0].session
-                                                .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1 })
+                                        if(artistaId.indexOf(record.artists[0].id) == -1){        
+                                            artistaId.push(record.artists[0].id)    
+                                            
+                                            objetosGlobales[0].session
+                                                .run('MATCH (n:artista {spotifyId: {spotifyId}}) RETURN n', {spotifyId: record.artists[0].id})
+                                                .then(function(artistaBusqueda){
+                                                
+                                                    console.log("artistaBusqueda.records.length")
+                                                    console.log(artistaBusqueda.records.length)
+                                                
+                                                    if(artistaBusqueda.records.length<1){
+                                                        
+                                                        console.log('Artista Nuevo!')
+                                                        objetosGlobales[0].session
+                                                            .run('CREATE (n:artista {spotifyId: {spotifyId}, nombre:{nombre}})', {spotifyId: record.artists[0].id, nombre: record.artists[0].name})
+                                                            .then(function(artistaCreado){
+                                                                console.log('Artista Creado en la BD')
+
+                                                                objetosGlobales[0].session
+                                                                    .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}})  CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1 })
+                                                                    .then(function(resultado){
+                                                                        console.log("Se conecto exitosamente el track con el usuario")
+                                                                        
+                                                                        objetosGlobales[0].session
+                                                                            .run('MATCH (n:track {artistaId:{spotifyId}}), (o:artista {spotifyId:{spotifyId} }) CREATE (n)-[:interpretadoPor]->(o) ', {spotifyId: record.artists[0].id})
+                                                                            .then(function(resultadoUnion){
+                                                                                console.log("Union de artista existente con track existente exitoso")
+                                                                            })
+                                                                            .catch(function(err){
+                                                                            console.log(err);
+                                                                            }) 
+                                                                        
+                                                                    })
+                                                                     .catch(function(err){
+                                                                    console.log(err);
+                                                                    })
+
+                                                                })
+                                                                .catch(function(err){
+                                                                console.log(err);
+                                                                })
+                                                        
+                                                    }else{
+                                                        objetosGlobales[0].session
+                                                            .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}), (o:artista {spotifyId:{spotifyId} }) CREATE (o)<-[:interpretadoPor]-(n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1, spotifyId: record.artists[0].id  })
+                                                            .then(function(resultado){
+                                                                console.log("Se conecto exitosamente el track con el usuario")
+                                                                console.log(resultado)
+                                                            })
+                                                             .catch(function(err){
+                                                            console.log(err);
+                                                            })
+
+                                                    }
+                                                
+                                                })
+                                            
+                                        }else{
+                                            objetosGlobales[0].session
+                                                .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1  })
                                                 .then(function(resultado){
                                                     console.log("Se conecto exitosamente el track con el usuario")
                                                     console.log(resultado)
@@ -199,10 +256,11 @@ router.get('/callback', function(req, res, error) {
                                                  .catch(function(err){
                                                 console.log(err);
                                                 })
-
+                                        }
+                                                        
                                             })
                                             .catch(function(err){
-                                            console.log(err);
+                                                console.log(err);
                                             })
 
 
@@ -300,9 +358,6 @@ router.get('/callback', function(req, res, error) {
                              
                             }); 
                                 
-                              
-                    
-                            
                             
                         }else if(checkid_result.records.length >= 1){
                             console.log('Este usuario ya está registrado (no debería ser más de 1)')
@@ -355,7 +410,11 @@ router.get('/callback', function(req, res, error) {
     })
   }
     }    
+
+    
+
 });
+
 
 //Finaliza proceso
 

@@ -1,4 +1,5 @@
 var express = require('express');
+var SpotifyWebApi = require('spotify-web-api-node');
 var router = new express.Router();
 
 router.post('/track/profile', function(req, res, error){
@@ -13,8 +14,10 @@ router.post('/track/profile', function(req, res, error){
     if(objetosGlobales[position].mensaje == "nuevo_login"){
         
         if( objetosGlobales[position].seedTracks.length > 1 || error == false || objetosGlobales[position].seedTracks != undefined){
+            
+            console.log(objetosGlobales[position].seedTracks[req.body.index].artistas[0])
 
-         objetosGlobales[0].spotifyApi.getArtist(objetosGlobales[position].seedTracks.artistas[0])
+         objetosGlobales[0].spotifyApi.getArtist(objetosGlobales[position].seedTracks[req.body.index].artistas[0])
                   .then(function(data) {
 
                     objetosGlobales[position].artist_data = data.body;
