@@ -15,13 +15,16 @@ router.post('/track/profile', function(req, res, error){
         
         if( objetosGlobales[position].seedTracks.length > 1 || error == false || objetosGlobales[position].seedTracks != undefined){
             
-            console.log(objetosGlobales[position].seedTracks[req.body.index].artistas[0])
+            console.log(objetosGlobales[position].seedTracks[req.body.index].artistaId)
 
-         objetosGlobales[0].spotifyApi.getArtist(objetosGlobales[position].seedTracks[req.body.index].artistas[0])
+         objetosGlobales[0].spotifyApi.getArtist(objetosGlobales[position].seedTracks[req.body.index].artistaId)
                   .then(function(data) {
 
                     objetosGlobales[position].artist_data = data.body;
                     console.log('Artist_data', data.body);
+             
+                    req.sessions.track_uri = objetosGlobales[position].seedTracks[req.body.index].uri
+                     res.render('pages/page3', objetosGlobales[position]);
 
                 })
                 .catch(function(error){

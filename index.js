@@ -464,12 +464,11 @@ app.get('/error', function(request, response) {
 
 app.post('/save/track', function(req, res, error){
    if(error == true){ res.redirect('/error') }
-        
-    console.log("add")
-    console.log(add)
+          var track_uri = req.sessions.track_uri
+            console.log(track_uri.substring(14))
     
            // Add tracks to the signed in user's Your Music library
-        objetosGlobales[0].spotifyApi.addToMySavedTracks([add.toString()])
+objetosGlobales[0].spotifyApi.addToMySavedTracks([track_uri.substring(14)])
           .then(function(data) {
             console.log('Added track!');
             mensaje = "exito_save_track"
