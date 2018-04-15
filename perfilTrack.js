@@ -16,7 +16,7 @@ router.post('/track/profile', function(req, res, error){
         if( objetosGlobales[position].seedTracks.length > 1 || error == false || objetosGlobales[position].seedTracks != undefined){
             
             console.log(objetosGlobales[position].seedTracks[req.body.index].artistaId)
-
+            console.log(objetosGlobales[position].trackid)
          objetosGlobales[0].spotifyApi.getArtist(objetosGlobales[position].seedTracks[req.body.index].artistaId)
                   .then(function(data) {
 
