@@ -61,7 +61,6 @@ function setup() {
 setup();
  
 function startTimer() {
-    // wait 2 seconds before calling goInactive
     timeoutID = window.setTimeout(goInactive, 60000*60);
 }
  
@@ -90,7 +89,7 @@ var timer2;
 
 
 function startTimer2(){
-    timer2 = window.setTimeout(heartbeat, 1000*30)
+    timer2 = window.setTimeout(heartbeat, 1000*60*2)
 }
     
 function heartbeat() {
@@ -99,5 +98,10 @@ function heartbeat() {
 }
     
 startTimer2();
+    
+   
+document.getElementById('saveTrack').addEventListener('click', function() {
+            $.post( '/save/track', function(data, status) {})
+})
 
 </script>

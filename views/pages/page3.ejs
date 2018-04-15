@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<% include ../partials/header.ejs  %>
-         <% include ../partials/footer.ejs %>
+         <% include ../partials/footer.ejs  %>
 		<!--[if lt IE 10]>
 			<link rel="stylesheet" type="text/css" href="style/ie-9.css" />
 		<![endif]-->		
@@ -270,11 +270,11 @@
 					<div class="be-user-block">
 						<div class="be-user-detail">
 							<a class="be-ava-user" href="<%=seedTracks[trackid].externalurls%>" target="_blank">
-								<img src="<%= seedTracks[trackid].albumImagen %>" alt="" style="border-radius:50px; height: 88px; width:88px;">
+								<img src="<%= artist_data.images[2].url %>" alt="" style="border-radius:50px; height: 88px; width:88px;">
 							</a>
 							<p class="be-use-name"><%=seedTracks[trackid].artistas[0]%></p>
 							<span class="be-user-info">
-								Popularity <%= seedTracks[trackid].popularidad %>/100
+								Popularity <%= artist_data.popularity %>/100
 							</span>
 						</div>
 						<div class="be-user-activity-block">
@@ -461,11 +461,3 @@
     <%}%>
 </html>
 
-
-<script>
-document.getElementById('saveTrack').addEventListener('click', function() {
-            $.post( '/save/track', function(data, status) {})
-})
-</script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

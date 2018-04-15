@@ -150,7 +150,7 @@ app.get('/heartbeat', function(req,res){
     
     clearTimeout(timeoutID);
     
-    timeoutID = setTimeout(goInactive, 1000*60*2);
+    timeoutID = setTimeout(goInactive, 1000*60*5);
     
     function goInactive() {
         // do something
@@ -493,7 +493,7 @@ objetosGlobales[0].spotifyApi.addToMySavedTracks([track_uri.substring(14)])
 
 app.get('/idle', function(req,res){
     objetosGlobales.splice(req.sessions.position, 1);
-    console.log('redirecting')
+    console.log('redireccionando y depurando datos')
     res.send("success");
     res.sessions.position = 0;
 })
