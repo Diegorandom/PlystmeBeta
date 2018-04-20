@@ -3,6 +3,7 @@ var router = new express.Router();
 var request = require("request");
 
 router.get('/pool', function(req, res, error){
+    console.log("Llegamos al pool")
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position'); 
     var pool = [];
@@ -26,7 +27,20 @@ router.get('/pool', function(req, res, error){
             request(options, function (error, response, body) {
               if (error) throw new Error(error);
 
-              console.log(body);
+              //console.log(body);
+                
+                body.lista_de_canciones.forEach(function(item,index){
+                     objetosGlobales[position].pool.push(item)
+                     
+                     if(index == body.lista_de_canciones.length-1 ){
+                         res.render('pages/author-login.ejs', objetosGlobales[position]);
+                     }
+                     
+                })
+               
+                console.log(objetosGlobales[position].pool)
+                
+                
 
             });
 
