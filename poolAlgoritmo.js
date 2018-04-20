@@ -29,14 +29,14 @@ router.get('/pool', function(req, res, error){
 
               //console.log(body);
                 
-                body.lista_de_canciones.forEach(function(item,index){
+              /*  body.lista_de_canciones.forEach(function(item,index){
                      objetosGlobales[position].pool.push(item)
                      
                      if(index == body.lista_de_canciones.length-1 ){
                          
                      }
                      
-                })
+                }) */
                 
                 res.send(body.lista_de_canciones);
                

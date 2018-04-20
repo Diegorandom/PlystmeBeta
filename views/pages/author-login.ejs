@@ -455,7 +455,7 @@
                         form.appendChild(boton)
                         
                         var img= document.createElement("img")
-                        img.src=""
+                        img.src=item[4]
                         img.alt="omg"
                         
                         boton.appendChild(img)
@@ -478,7 +478,7 @@
                         
                         var span2 = document.createElement("span")
                         span2.style="color:#885053; font-size:120%;"
-                        span2.innerHTML="Popularity:"
+                        span2.innerHTML="Popularidad: " + item[5]
                         
                         innerDiv.appendChild(span2)
                         
@@ -489,7 +489,7 @@
                         
                         var span3= document.createElement("span")
                         span3.style="color:#885053; font-size:150%;"
-                        span3.innerHTML="by " + item[2]
+                        span3.innerHTML="Por " + item[2]
                         
                         div2.appendChild(span3)
 
