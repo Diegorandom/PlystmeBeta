@@ -106,13 +106,13 @@ a:focus { outline: none; outline-offset: 0px; color: inherit; }
 */
 header * { -webkit-backface-visibility: hidden; }
 
-header { height: 70px; width: 100%; color: #fff; font-size: 14px; background: #222835; position: fixed; top: 0; line-height: 0; z-index: 1000; }
+header { height: 0px; width: 100%; color: #fff; font-size: 14px; background: none; position: relative; top: 0; line-height: 0; z-index: 1000; }
 
 header .custom-container { position: relative; }
 
 header .row-header .brand-be { margin-top: 16.5px; float: left; }
 
-header .row-header .header-menu-block { position: absolute;
+header .row-header .header-menu-block { position: relative;
     top: 0px; left: 50%; -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%); transform: translateX(-50%);
 }
@@ -722,7 +722,7 @@ transition: all ease-out 0.3s;}
 	07 - FOOTER
 ==================================
 */
-footer { background: #222835; }
+footer { background: #d5573b; }
 
 .footer_slider .swiper-slide { position: relative; }
 
@@ -1239,7 +1239,7 @@ a.social-btn:hover { opacity: 0.6; color: #fff; }
 
 .be-user-statistic { position: relative; margin-left: -15px; margin-right: -15px; }
 
-.be-user-statistic:before { content: ''; display: block; position: absolute; top: -11px; left: 50%; margin-left: -11px; width: 0; height: 0; border-style: solid; border-width: 0 11.5px 11px 11.5px; border-color: transparent transparent #222835 transparent; }
+.be-user-statistic:before { content: ''; display: block; position: absolute; top: -11px; left: 50%; margin-left: -11px; width: 0; height: 0; border-style: solid; border-width: 0 11.5px 11px 11.5px; border-color: transparent transparent #d5573b transparent; }
 
 .be-user-statistic .stat-row { font-size: 13px; line-height: 18px; font-weight: 400; color: #6b7180; padding: 15px 29px 15px 29px; text-align: left; background: #222835; border-bottom: 1px solid #2e3542; }
 
@@ -1496,7 +1496,7 @@ display: inline-block; float: none; margin: 0 10px;}
 /*buttons*/
 .btn { display: inline-block; font-size: 12px; line-height: 12px; font-weight: 400; color: #fff; text-transform: uppercase; margin-bottom: 10px; margin-right: 27px; border-radius: 3px; }
 
-.btn.color-1 { background: #0d58c8; border: 1px solid #0d58c8; }
+.btn.color-1 { background: #d5573b; border: 1px solid #FFB024; }
 
 .btn.color-1 .fa { color: #8ba1dd; }
 

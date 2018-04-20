@@ -57,7 +57,7 @@ router.post('/track/profile', function(req, res, error){
                 }
 
                  objetosGlobales[0].session
-                        .run('MATCH (n:artista {artistaId: {artistaId}}) RETURN n', {artistaId: records.artists[0].id })
+                        .run('MATCH (n:artista {artistaId:{artistaId}}) RETURN n', {artistaId: records.artists[0].id })
                         .then(function(artista){
                             if(artista.records.length>=1){
                                 console.log('Artista ya analizado y guardado');
@@ -67,13 +67,9 @@ router.post('/track/profile', function(req, res, error){
 
                                     objetosGlobales[position].artist_data = data.body;
                                     console.log('Artist_data', data.body);
-
-                                })
-                                .catch(function(error){
-                                console.log(error);
-                            })
-
-                                objetosGlobales[0].session
+                                    
+                                    
+                                    objetosGlobales[0].session
                                         .run('MATCH (t:track {spotifyid:{trackid}}) RETURN t', {trackid:records.id})
                                         .then(function(track){
                                             if(track.records.length>=1){ 
@@ -82,9 +78,19 @@ router.post('/track/profile', function(req, res, error){
                                                 console.log('Cancion desconocida por la BD')
 
                                                 objetosGlobales[0].session
-                                                    .run('MATCH (a:artista {artistaId: {artistaId}}), (u:usuario {spotifyid:{userid}}) CREATE (a)-[:interpreta]->(m:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen}})<-[:Escuchado]-(u)', {artistaId: objetosGlobales[position].artist_data.id, userid:objetosGlobales[position].userid,nalbum:records.album.name, nombre:records.name, artistas:artistas, duracion:records.duration_ms, Cont_explicito:records.explicit, externalurls:records.external_urls.spotify, href:records.href, spotifyid:records.id, popularidad:records.popularity, previewUrl:records.preview_url, uri:records.uri, albumImagen:records.album.images[2].url })
+                                                    .run('MATCH (a:artista {artistaId: {artistaId}}), (u:usuario {spotifyid:{userid}}) CREATE (a)-[:interpreta]->(a)<-[:Escuchado]-(u)', {artistaId: objetosGlobales[position].artist_data.id, userid:objetosGlobales[position].userid})
                                                     .then(function(resultado){
                                                         console.log(records.name + ' Guardadx en la BD')
+                                                        
+                                                        
+                                                    objetosGlobales[0].session
+                                                            .run('MATCH (a:artista {artistaId: {artistaId}}) SET t.album={album}, t.nombre={nombre}, t.artistas={artistas}, t.duracion={duracion}, t.Contenido_explicito={Cont_explicito}, externalurls={externalurls}, href={href}, spotifyid={spotifyid}, popularidad={popularidad}, previewUrl={previewUrl}, uri={uri}, albumImagen={albumImagen}}) RETURN t', {album:records.album.name, nombre:records.name, artistas:artistas, duracion:records.duration_ms, Cont_explicito:records.explicit, externalurls:records.external_urls.spotify, href:records.href, spotifyid:records.id, popularidad:records.popularity, previewUrl:records.preview_url, uri:records.uri, albumImagen:records.album.images[2].url, artistaId: objetosGlobales[position].artist_data.id })
+                                                            .then(function(datosAgregados){
+                                                                console.log('Se agregó información al nodo del artista')
+                                                            })
+                                                            .catch(function(error){
+                                                                console.log(error);
+                                                            })
 
                                                         //SEG GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
                                                          objetosGlobales[0].spotifyApi.getAudioFeaturesForTrack(records.uri.substring(14))
@@ -146,6 +152,12 @@ router.post('/track/profile', function(req, res, error){
                                    res.render('pages/error');   
                                   });
 
+                                })
+                                .catch(function(error){
+                                console.log(error);
+                            })
+
+                              
                             }else if(artista.records.length<1){
                                 console.log('Artista NUEVO');
 
@@ -162,7 +174,7 @@ router.post('/track/profile', function(req, res, error){
                                                  console.log('Cancion conocida por la BD')
 
                                                  objetosGlobales[0].session
-                                                    .run('MATCH (t:track {spotifyid:{trackid}}) CREATE (n:artista {external_urls:{external_urls}, seguidores:{seguidores}, generos:{generos}, herf:{href}, artistaId:{artistaId}, imagenes:{imagenes}, nombre:{nombre_artista}, popularidad:{popularidad}, uri:{uri} })-[:interpreta]->(t)', {external_urls: objetosGlobales[position].artist_data.external_urls.spotify, seguidores:objetosGlobales[position].artist_data.followers.total, generos:objetosGlobales[position].artist_data.genres, href:objetosGlobales[position].artist_data.href, artistaId:objetosGlobales[position].artist_data.id, imagenes:objetosGlobales[position].artist_data.images[0].url, nombre_artista:objetosGlobales[position].artist_data.name, popularidad:objetosGlobales[position].artist_data.popularity, uri:objetosGlobales[position].artist_data.uri})
+                                                    .run('MATCH (t:track {spotifyid:{trackid}}) CREATE (n:artista {external_urls:{external_urls}, seguidores:{seguidores}, generos:{generos}, herf:{href}, artistaId:{artistaId}, imagenes:{imagenes}, nombre:{nombre_artista}, popularidad:{popularidad}, uri:{uri} })-[:interpreta]->(t)', {external_urls: objetosGlobales[position].artist_data.external_urls.spotify, seguidores:objetosGlobales[position].artist_data.followers.total, generos:objetosGlobales[position].artist_data.genres, href:objetosGlobales[position].artist_data.href, artistaId:objetosGlobales[position].artist_data.id, imagenes:objetosGlobales[position].artist_data.images[0].url, nombre_artista:objetosGlobales[position].artist_data.name, popularidad:objetosGlobales[position].artist_data.popularity, uri:objetosGlobales[position].artist_data.uri, trackid:records.id})
                                                     .then(function(resultado){
                                                         console.log(objetosGlobales[position].artist_data.name + ' Guardado en la BD')
                                                     })
@@ -177,7 +189,7 @@ router.post('/track/profile', function(req, res, error){
                                                  console.log('Cancion desconocida por la BD')
 
                                                  objetosGlobales[0].session
-                                                    .run('MATCH (u:usuario {spotifyid:{userid}}) CREATE (n:artista {external_urls:{external_urls}, seguidores:{seguidores}, generos:{generos}, herf:{href}, artistaId:{artistaId}, imagenes:{imagenes}, nombre:{nombre_artista}, popularidad:{popularidad}, uri:{uri} })-[:interpreta]->(m:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen}})<-[:Escuchado]-(u)', {external_urls: objetosGlobales[position].artist_data.external_urls.spotify, seguidores:objetosGlobales[position].artist_data.followers.total, generos:objetosGlobales[position].artist_data.genres, href:objetosGlobales[position].artist_data.href, artistaId:objetosGlobales[position].artist_data.id, imagenes:objetosGlobales[position].artist_data.images[0].url, nombre_artista:objetosGlobales[position].artist_data.name, popularidad:objetosGlobales[position].artist_data.popularity, uri:objetosGlobales[position].artist_data.uri, album:records.album.name, nombre:records.name, artistas:artistas, duracion:records.duration_ms, Cont_explicito:records.explicit, externalurls:records.external_urls.spotify, href:records.href, spotifyid:records.id, popularidad:records.popularity, previewUrl:records.preview_url, uri:records.uri, albumImagen:records.album.images[2].url, userid:objetosGlobales[position].userid  })
+                                                    .run('MATCH (u:usuario {spotifyid:{userid}}), (n:artista {spotifyId:{artistaId}}) SET n.external_urls:{external_urls}, n.seguidores:{seguidores}, n.generos:{generos}, n.herf:{href}, n.imagenes:{imagenes}, n.nombre:{nombre_artista}, n.popularidad:{popularidad}, n.uri:{uri} })-[:interpreta]->(m:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen}})<-[:Escuchado]-(u)', {external_urls: objetosGlobales[position].artist_data.external_urls.spotify, seguidores:objetosGlobales[position].artist_data.followers.total, generos:objetosGlobales[position].artist_data.genres, href:objetosGlobales[position].artist_data.href, artistaId:objetosGlobales[position].artist_data.id, imagenes:objetosGlobales[position].artist_data.images[0].url, nombre_artista:objetosGlobales[position].artist_data.name, popularidad:objetosGlobales[position].artist_data.popularity, uri:objetosGlobales[position].artist_data.uri, album:records.album.name, nombre:records.name, artistas:artistas, duracion:records.duration_ms, Cont_explicito:records.explicit, externalurls:records.external_urls.spotify, href:records.href, spotifyid:records.id, popularidad:records.popularity, previewUrl:records.preview_url, uri:records.uri, albumImagen:records.album.images[2].url, userid:objetosGlobales[position].userid  })
                                                     .then(function(resultado){
                                                         console.log(records.name + ' Guardado en la BD')
 

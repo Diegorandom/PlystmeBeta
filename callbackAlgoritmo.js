@@ -193,7 +193,7 @@ router.get('/callback', function(req, res, error) {
                                             artistaId.push(record.artists[0].id)    
                                             
                                             objetosGlobales[0].session
-                                                .run('MATCH (n:artista {spotifyId: {spotifyId}}) RETURN n', {spotifyId: record.artists[0].id})
+                                                .run('MATCH (n:artista {artistaId: {spotifyId}}) RETURN n', {spotifyId: record.artists[0].id})
                                                 .then(function(artistaBusqueda){
                                                 
                                                     console.log("artistaBusqueda.records.length")
@@ -203,7 +203,7 @@ router.get('/callback', function(req, res, error) {
                                                         
                                                         console.log('Artista Nuevo!')
                                                         objetosGlobales[0].session
-                                                            .run('CREATE (n:artista {spotifyId: {spotifyId}, nombre:{nombre}})', {spotifyId: record.artists[0].id, nombre: record.artists[0].name})
+                                                            .run('CREATE (n:artista {artistaId: {spotifyId}, nombre:{nombre}})', {spotifyId: record.artists[0].id, nombre: record.artists[0].name})
                                                             .then(function(artistaCreado){
                                                                 console.log('Artista Creado en la BD')
 
@@ -213,7 +213,7 @@ router.get('/callback', function(req, res, error) {
                                                                         console.log("Se conecto exitosamente el track con el usuario")
                                                                         
                                                                         objetosGlobales[0].session
-                                                                            .run('MATCH (n:track {artistaId:{spotifyId}}), (o:artista {spotifyId:{spotifyId} }) CREATE (n)-[:interpretadoPor]->(o) ', {spotifyId: record.artists[0].id})
+                                                                            .run('MATCH (n:track {artistaId:{spotifyId}}), (o:artista {artistaId:{spotifyId} }) CREATE (n)-[:interpretadoPor]->(o) ', {spotifyId: record.artists[0].id})
                                                                             .then(function(resultadoUnion){
                                                                                 console.log("Union de artista existente con track existente exitoso")
                                                                             })
@@ -398,9 +398,6 @@ router.get('/callback', function(req, res, error) {
                     console.log(err);
                 })     
                      
-                
-                                    
-                            
                         }else{
                             console.log('No se pudo determinar si es un usuario nuevo o registrado')
                         }

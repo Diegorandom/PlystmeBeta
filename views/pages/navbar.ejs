@@ -1,18 +1,20 @@
-  <header>
-		<div class="container-fluid custom-container">
+
+
+<header>
+		<div class="container" >
 			<div class="row">
 
                 
 <div class="col-lg-6 col-md-6 col-sm-6 hidden-xs" style=" text-align: left;">
 	<a href="/">
-        <h2   style="margin-left:5px; margin-top:22px; color:silver; text-align: left; font-family: 'Orbitron', sans-serif; font-size:300%;">atmos</h2>
+        <h2   style="margin-left:5px; margin-top:22px; color:#d5573b; text-align: left; font-family: 'Orbitron', sans-serif; font-size:300%;">atmos</h2>
 	</a>
    
 </div>
                 
     <div class="hidden-lg hidden-md hidden-sm col-xs-6" style="text-align:left;" >
 	<a href="/">
-        <h3   style=" margin-top:22px; color:silver; text-align: left; font-family: 'Orbitron', sans-serif;">atmos</h3>
+        <h3   style=" margin-top:22px; color:#d5573b; text-align: left; font-family: 'Orbitron', sans-serif;">atmos</h3>
 	</a>
    
 </div>
@@ -45,15 +47,15 @@ Try it!</a>
                         <% if(nombre != undefined && nombre != ''){ %>
                     
                 <div class="col-lg-6 col-md-6 col-sm-6 hidden-xs">
-                            <div class="login-header-block" style="margin-right:10px;">
+                            <div class="login-header-block" style="margin-right:0px;">
                                 <div class="login_block" style="margin-top:9px;" >
-                                    <a href="/perfil" style="color:white; " > 
+                                    <!--<a href="/perfil" style="color:white; " > 
                                     <img class="login-user" src="<%=imagen_url%>" alt="" style="border-radius:5px; height:35px; ">
                                     <span class="be-dropdown-content" style="">
                                         <span style="margin-top:40px; margin-right:30px;"><%= nombre %>  </span>
                                     </span>
-                                    </a>
-                                    <a class="btn color-1 size-2 hover-2 hidden-xs" href="/logOut"  style="color:white;"><i class="fa fa-sign-out"></i>
+                                    </a>-->
+                                    <a class="btn color-1 size-2 hover-2 hidden-xs" href="/logOut"  style="color:white;" align="right"><i class="fas fa-sign-out-alt"></i>
 						                  Salir
                                     </a>
                               </div>
@@ -64,11 +66,11 @@ Try it!</a>
                 
                 <div class="hidden-lg hidden-md hidden-sm col-xs-6">
                     <div class="login-header-block">
-                                <div class="login_block" style="margin-top:9px;" >
-                                    <a href="/perfil" style="color:white; " > 
+                                <div class="login_block" style="margin-top:0px;" >
+                                    <!--<a href="/perfil" style="color:white; " class="hidden-xs" > 
                                         <img class="login-user" src="<%=imagen_url%>" alt="" style="border-radius:5px; height:35px; ">
-                                    </a>
-                                    <a class="btn color-1 size-2 hover-2" href="/logOut"  style="color:white;"><i class="fa fa-sign-out"></i>
+                                    </a>-->
+                                    <a class="btn color-1 size-2 hover-2" href="/logOut"  style="color:white; text-align:right; margin:0;" align="right"><i class="fas fa-sign-out-alt"></i>
 						                  Salir
                                     </a>
                               </div>
@@ -86,7 +88,7 @@ Try it!</a>
                         
                   
                         
-                <div class="login-header-block" style="margin-left: 20px; margin-top:22px; color:silver; text-align: right;">
+                <div class="login-header-block" style="margin-left: 20px; color:silver; text-align: right;">
 					<div class="login_block" >
                         <% if(ref){ %> 
                              <a class="btn color-1 size-2 hover-2 hidden-xs" href="/login"  style="color:white;"><i class="fa fa-info-circle"></i>

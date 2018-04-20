@@ -224,7 +224,7 @@ app.set('objetosGlobales',objetosGlobales);
 app.set('position',position);
 app.use(require("./callbackAlgoritmo"));
 
-//app.use(require("./poolAlgoritmo.py"));
+app.use(require("./poolAlgoritmo.js"));
 
 //Proceso para refrescar un token
 
