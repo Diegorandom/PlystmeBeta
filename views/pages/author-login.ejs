@@ -318,35 +318,11 @@
                                     
                                    
                                     
-                                  <% pool.forEach(function(item, index){ %>
+                                 
                                     
-                                    <div class="col-ml-12 col-xs-12 col-sm-4" id="pool<%=index%>" style="height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;">
+                                    <div class="pool"></div>
 
-                                    <div class="be-post" style=" background-color: rgba(255,255,255,0.5); ">
-
-                                        <form method="post" action="/track/profile" id="trackprofile">
-                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
-                                        <% if(item.albumImagen != undefined){ %>    
-                                        <img src="<%=item.albumImagen%>" alt="omg">
-                                        <% } else{ %>
-                                          <img src="" alt="omg">      
-                                        <%    } %>
-                                        </button>   
-                                        </form>
-
-                                        <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"><%= item[0] %></span> 
-                                        <a class="close" style="background-color:white; font-size:250%;" id="fadeOut<%=index%>">&times;</a>
-                                        <span style="color:#885053; font-size:120%;">
-                                            Popularity: <%=  %>
-                                        </span>
-                                        <div class="author-post">
-                                            <span style="color:#885053; font-size:150%;">by <%=item[2]%></span>
-                                        </div>
-                                    </div>
-
-                                  </div>
-
-                                    <% }) %>
+                               
 
                                    
 								</div>
@@ -446,8 +422,85 @@
             $.get( '/pool', function(data, status) {
                 console.log(data)
                 console.log(status)
+                if(status === "success"){
+                   data.forEach(function(item,index){
+                       console.log(item)
+                       var iDiv = document.createElement('div');
+                        iDiv.id = 'pool' + index;
+                        iDiv.className = 'col-ml-12 col-xs-12 col-sm-4';
+                        iDiv.style = "height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;"
+
+                        // Create the inner div before appending to the body
+                        var innerDiv = document.createElement('div');
+                        innerDiv.className = 'be-post';
+                        innerDiv.style = 'background-color: rgba(255,255,255,0.5);';
+
+                        // The variable iDiv is still good... Just append to it.
+                        iDiv.appendChild(innerDiv);
+                       
+                        var form = document.createElement("form")
+                        form.method="post"
+                        form.action="/track/profile"
+                        form.id="trackprofile"
+                        
+                        innerDiv.appendChild(form)
+                        
+                        var boton = document.createElement("button")
+                        boton.className="be-img-block"
+                        boton.form="trackprofile"
+                        boton.type="submit"
+                        boton.name="index"
+                        boton.value= index
+                        
+                        form.appendChild(boton)
+                        
+                        var img= document.createElement("img")
+                        img.src=""
+                        img.alt="omg"
+                        
+                        boton.appendChild(img)
+                        
+                        var span = document.createElement("span")
+                        span.className="be-post-title"
+                        span.style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"
+                        
+                        span.innerHTML = item[0]
+                        
+                        innerDiv.appendChild(span)
+                        
+                        var a = document.createElement('a')
+                        a.className="close"
+                        a.style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"
+                        a.id="fadeOut" + index
+                        a.innerHTML ="&times;"
+                        
+                        innerDiv.appendChild(a)
+                        
+                        var span2 = document.createElement("span")
+                        span2.style="color:#885053; font-size:120%;"
+                        span2.innerHTML="Popularity:"
+                        
+                        innerDiv.appendChild(span2)
+                        
+                        var div2 = document.createElement("div")
+                        div2.className="author-post"
+                        
+                        innerDiv.appendChild(div2)
+                        
+                        var span3= document.createElement("span")
+                        span3.style="color:#885053; font-size:150%;"
+                        span3.innerHTML="by " + item[2]
+                        
+                        div2.appendChild(span3)
+
+                        // Then append the whole thing onto the body
+                        document.getElementsByClassName('pool')[0].appendChild(iDiv);
+                   })
+                }
                 
             })
         })
     
 </script>
+
+     

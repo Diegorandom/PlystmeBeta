@@ -33,10 +33,12 @@ router.get('/pool', function(req, res, error){
                      objetosGlobales[position].pool.push(item)
                      
                      if(index == body.lista_de_canciones.length-1 ){
-                         res.render('pages/author-login.ejs', objetosGlobales[position]);
+                         
                      }
                      
                 })
+                
+                res.send(body.lista_de_canciones);
                
                 console.log(objetosGlobales[position].pool)
                 
