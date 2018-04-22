@@ -16,7 +16,7 @@
     
    
     
-	<body class="page-login" >
+	<body class="page-login">
 
         
         <div style="background: url('img/back1.jpg');background-size:100%;background-attachment:fixed;">
@@ -137,7 +137,7 @@
                                         <form method="post" action="/track/profile" id="trackprofile">
                                         <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
                                         <% if(records.albumImagen != undefined){ %>    
-                                        <img src="<%=records.albumImagen%>" alt="omg">
+                                        <img src="<%=records.albumImagen%>" alt="omg" style="height:100%">
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
@@ -305,15 +305,22 @@
                             
                             
                            <div class="tab-info">
-								<div class="row">
+								<div class="row" style="margin-bottom:100px;">
                                     <div class="col-lg-12">
                             
                                         <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#94c9a9; font-size: 40px; background-color: rgba(255,255,255,0.9); border-radius:5px;">Fiesta</h2>
                                         
                                         
-                                        <button form="enterPool" type="submit" value="Submit" class="be-button-vidget blue-style" style="width:100%; border: none; background-color:#94c9a9" id="enterPool">
+                                        <button  type="submit" value="Submit" class="be-button-vidget blue-style" style="width:80%; border: none; background-color:#94c9a9; margin:0 auto;"  id="enterPool">
                                             <i class="far fa-play-circle" style="font-size:20px; color:white; margin-left:5px;"></i> Entra a la Fiesta 
                                         </button>
+                                        <br>
+                                        
+                                        <button  type="submit" value="Submit" class="be-button-vidget blue-style" style="margin: 0 auto; width:80%; border:none; background-color:#94c9a9;display:none;" id="createPlaylist">
+                                            <i class="far far fa-save" style="font-size:20px; color:white; margin-left:5px;"></i> Guardar Playlist En Spotify 
+                                        </button>
+                                        
+                                        <br>
                                          </div> 
                                     
                                    
@@ -414,16 +421,66 @@
         </div>
     <%} %> -->
     
+    <div class="alert alert-dismissable fade in" id="floating_alert" style="display:none; width:80%; height:80px;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="background-color:white; font-size:100%;">&times;</a>
+            <strong>El playlist se guardó </strong> como ATMOS FIESTA en Spotify
+        </div>
+    
 </html>
 
  <script>
-     var check = true
+     
+     Element.prototype.remove = function() {
+        this.parentElement.removeChild(this);
+    }
+        NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+            for(var i = this.length - 1; i >= 0; i--) {
+                if(this[i] && this[i].parentElement) {
+                    this[i].parentElement.removeChild(this[i]);
+                }
+            }
+        }
+     
+        document.getElementById('createPlaylist').addEventListener('click', function(){
+            $.get('/create/playlist', function(data, status){
+                console.log(status)
+                console.log(data)
+                if(status == "success"){
+                    if(data=="playlistGuardado"){
+                        document.getElementById('floating_alert').style.display="block"
+                    }
+                }
+                
+            })
+        })
+        
         document.getElementById('enterPool').addEventListener('click', function() {
             $.get( '/pool', function(data, status) {
                 console.log(data)
                 console.log(status)
                 if(status === "success"){
+                    
+                    var botonPool = document.getElementById('enterPool')
+                    botonPool.innerHTML = "Actualizar Playlist"
+                    var icono = document.createElement('i')
+                    icono.className ="fas fa-sync-alt"
+                    icono.style="font-size:20px; color:white; margin-left:5px;"
+                    botonPool.appendChild(icono)
+                    
+                    document.getElementById('createPlaylist').style.display="block"
+                    
+                    
+                    
+                    
+                console.log('El playlist ha cambiado')
                    data.forEach(function(item,index){
+                       if(document.getElementById("pool"+index) !== null){
+                            document.getElementById("pool"+index).remove();
+                            console.log("Depuración de playlist")
+                       }
+                      
+                        playlist = data
+                        
                        console.log(item)
                        var iDiv = document.createElement('div');
                         iDiv.id = 'pool' + index;
@@ -495,12 +552,29 @@
 
                         // Then append the whole thing onto the body
                         document.getElementsByClassName('pool')[0].appendChild(iDiv);
+                       
+                    
+                       
+                       
+                       console.log('Nueva canción desplegada')
                    })
+                }else{
+                    console.log(data);
                 }
                 
             })
         })
     
 </script>
+
+                                    <form method="post" action="/track/profile" id="trackprofile">
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
+                                        <% if(records.album.images[0] != undefined){ %>    
+                                        <img src="<%=records.album.images[0].url%>" alt="omg">
+                                        <% } else{ %>
+                                          <img src="" alt="omg">      
+                                        <%    } %>
+                                        </button>   
+                                        </form>
 
      

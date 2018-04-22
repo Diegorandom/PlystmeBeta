@@ -16,7 +16,7 @@ var sessions = require("client-sessions");
 var idleTimer = require("idle-timer");
 
 
-var jsonDatosInit = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:[], track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0, pool:[]}
+var jsonDatosInit = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:[], track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0, pool:[], playlist:[]}
 
 var position = 0;
 
@@ -160,7 +160,8 @@ app.get('/heartbeat', function(req,res){
             console.log('Depuracion de datos no utilizados')
             console.log(objetosGlobales)
         }
-    } 
+    }
+    res.send('Heartbeat')
 })
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
@@ -283,79 +284,6 @@ app.get('/author-edit.ejs', function(request, response) {
   response.render('pages/author-edit');
 });
 
-app.post('/create/playlist', function(req, res){
-    position = req.sessions.position;
-var playlistname = req.body.playlistname;
-console.log('playlistname = ' + playlistname);
-console.log('userids = ' + objetosGlobales[position].userid);
-    
-objetosGlobales[position].mensaje = "nuevo_playlist";    
-  
-var uris1 = [], uris2 = [];     
-    
-    // Create a private playlist
-    objetosGlobales[0].spotifyApi.createPlaylist(objetosGlobales[position].userid, playlistname, { 'public' : false })
-        .then(function(data) {
-            console.log('Created playlist!');
-            console.log('data', data);
-            objetosGlobales[position].anti_playlist.tracks.forEach(function(records, index){
-                //uris[index] = records.uri;
-                if(index < 50){
-                 uris1[index] = records.uri    
-                 //obj1['uris'].push(records.uri);
-                }else{
-                 uris2[index-50] = records.uri     
-                 //obj2['uris'].push(records.uri);   
-                }
-            });
-
-            console.log("uris1 =", uris1);
-            console.log("uris2 =", uris2);
-
-           // uris1 = JSON.stringify(obj1);;
-
-            //uris2 = JSON.stringify(obj2);
-        
-             var playlist_id = data.body.id; 
-        
-             console.log("info para agregar tracks a playlist: \n", "userids: ", objetosGlobales[position].userid,  "\n",
-                "data.body.id: ", data.body.id, "\n", 
-                "uris2: ", uris1 )
-            
-            // Add tracks to a playlist
-            objetosGlobales[0].spotifyApi.addTracksToPlaylist(objetosGlobales[position].userid, data.body.id, uris1)
-              .then(function(data) {
-                 console.log('Added tracks to playlist ! paso #1');
-                 console.log('data', data);
-                    
-                     console.log("info para agregar tracks a playlist: \n", "userids: ", objetosGlobales[position].userid,  "\n",
-                        "data.body.id: ", playlist_id, "\n", 
-                        "uris2: ", uris2 )
-                                      
-                     objetosGlobales[0].spotifyApi.addTracksToPlaylist(objetosGlobales[position].userid, playlist_id, uris2)
-                          .then(function(data) {
-                            console.log('Added tracks to playlist paso #2!');
-                            console.log('data', data);
-                            res.redirect('/perfil');
-                          }, function(err) {
-                            console.log('Error al momento de agregar tracks a playlist paso #2', err);
-                            res.render('pages/author-login', objetosGlobales[position]);
-                          });
-                    
-                  }, function(err) {
-                    console.log('Error al momento de agregar tracks a playlist paso #1', err);
-                    res.render('pages/author-login', objetosGlobales[position]);    
-       
-        },function(error){
-            console.log(error);
-            res.render('pages/autorizacion', objetosGlobales[position]);  
-        });
-           
-          }, function(err) {
-            console.log('Error a ', err);
-            res.render('pages/author-login', objetosGlobales[position]);
-          });
-          });
         
 /*
         Ambiente de SUPERCOLLIDER
@@ -495,7 +423,7 @@ app.get('/idle', function(req,res){
     objetosGlobales.splice(req.sessions.position, 1);
     console.log('redireccionando y depurando datos')
     res.send("success");
-    res.sessions.position = 0;
+    req.sessions.position = 0;
 })
 
 app.get('/logOut', function(req, res) {

@@ -95,7 +95,11 @@ function startTimer2(){
 }
     
 function heartbeat() {
-    $.get('/heartbeat',function(data,succes){})
+    $.get('/heartbeat',function(data,success){
+        if(success == true){
+            console.log(data)
+        }
+    })
     startTimer2();
 }
     
