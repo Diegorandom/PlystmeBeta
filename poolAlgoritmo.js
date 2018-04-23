@@ -16,8 +16,6 @@ router.get('/pool', function(req, res, error){
         
         if(index == objetosGlobales.length-1){
             
-          
-            
               var options = { method: 'POST',
               url: 'https://atmos-algorithm.mybluemix.net/api/v1/dynamic_playlist/dynamic_playlist_search',
               headers: 
@@ -69,6 +67,8 @@ objetosGlobales[position].mensaje = "nuevo_playlist";
   
 var uris1 = [], uris2 = [];     
     
+    if(objetosGlobales[position].playlist_id == undefined){
+        
     // Create a private playlist
     objetosGlobales[0].spotifyApi.createPlaylist(objetosGlobales[position].userid, playlistname, { 'public' : false })
         .then(function(data) {
@@ -93,6 +93,7 @@ var uris1 = [], uris2 = [];
             //uris2 = JSON.stringify(obj2);
         
              var playlist_id = data.body.id; 
+            objetosGlobales[position].playlist_id = data.body.id;
         
              console.log("info para agregar tracks a playlist: \n", "userids: ", objetosGlobales[position].userid,  "\n",
                 "data.body.id: ", data.body.id, "\n", 
@@ -131,7 +132,31 @@ var uris1 = [], uris2 = [];
             console.log('Error a ', err);
             res.send('Error al momento de agregar tracks a playlist paso #2');
           });
-          });
+        
+    }else{
+        var options = { method: 'PUT',
+              url: 'https://api.spotify.com/v1/users/'+objetosGlobales[position].userid+'/playlists/'+objetosGlobales[position].playlist_id+'/tracks',
+              headers: { 
+                  'Authorization': 'Bearer ' + objetosGlobales[position].access_token,
+                   'Content-Type': 'application/json' 
+              },
+                body: {
+                    'uris': objetosGlobales[position].playlist
+                },
+              json: true };
+
+            request(options, function (error, response, body, status) {
+              if (error) throw new Error(error);
+                console.log('Actualizacion de playlist')
+                console.log(body)
+                console.log(status)
+                res.send('ActualizacionPlaylist')
+                
+            });
+    }
+    
+  });
+
 
 //Finaliza proceso
 module.exports = router;

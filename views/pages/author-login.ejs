@@ -385,8 +385,21 @@
             
 		</div>
 	</div>
+            
+        <div class="alert alert-success alert-dismissable fade in" id="actualizacion" style="display:none; width:80%; height:80px;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="background-color:white; font-size:100%;">&times;</a>
+            <strong>Se actualizó el playlist</strong> como FIESTA ATMOS en Spotify
+        </div>
+        <br>
 
-
+        <div class="alert2 alert-dismissable fade in" id="floating_alert" style="display:none; width:80%; height:80px;">
+            <a href="#" class="close" data-dismiss="alert2" aria-label="close" style="background-color:white; font-size:100%;">&times;</a>
+            <strong>El playlist se guardó </strong> como FIESTA ATMOS en Spotify
+        </div>
+    
+            
+   
+            
 	<div class="be-fixed-filter"></div>
 	
 
@@ -421,10 +434,7 @@
         </div>
     <%} %> -->
     
-    <div class="alert alert-dismissable fade in" id="floating_alert" style="display:none; width:80%; height:80px;">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="background-color:white; font-size:100%;">&times;</a>
-            <strong>El playlist se guardó </strong> como FIESTA ATMOS en Spotify
-        </div>
+  
     
 </html>
 
@@ -444,11 +454,16 @@
         document.getElementById('createPlaylist').addEventListener('click', function(){
             $.get('/create/playlist', function(data, status){
                 console.log(status)
-                console.log(data)
+                
                 if(status == "success"){
                     if(data=="playlistGuardado"){
                         document.getElementById('floating_alert').style.display="block"
+                        console.log(data)
+                    }else if(data=="ActualizacionPlaylist"){
+                        console.log(data)
+                        document.getElementById('actualizacion').style.display="block"
                     }
+                    
                 }
                 
             })
