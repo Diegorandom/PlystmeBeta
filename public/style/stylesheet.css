@@ -1,4 +1,9 @@
- #floating_alert {
+input, textarea {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+} 
+
+#floating_alert {
         position: fixed;
         top: 170px;
         right: 10px;
