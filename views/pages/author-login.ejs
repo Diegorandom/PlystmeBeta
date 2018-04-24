@@ -12,6 +12,7 @@
 	    <![endif]-->
         
         <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+         <script type="text/javascript" src="/script/Chart.js"></script>
 	</head>
     
    
@@ -19,7 +20,7 @@
 	<body class="page-login">
 
         
-        <div style="background: url('img/back1.jpg');background-size:100%;background-attachment:fixed;">
+        <div>
         
 	<!-- THE HEADER -->
 	<header>
@@ -31,11 +32,28 @@
 	<div id="content-block" style="margin-top:0px;">
 		<div class="container be-detail-container">
 			<div class="row">
-				<div class="col-xs-12 col-md-4 left-feild" >
+				
+                
+				<div class="col-xs-12 col-md-8 col-lg-8" style="margin: 0 auto; align-items:center; float:inherit;" align="center">
+                    <div class="tab-wrapper style-1" style="margin: 0 auto;" >
+                        
+                        <div class="container-fuild tabs-content clearfix">
+                           
+                            <div style="background: url('img/fondo4.jpeg') no-repeat; background-size:100%;background-attachment:fixed; width:100%; ">
+                             
+                                <div class="tab-info active"  >
+								<div class="row">
+                                    
+                                    <div class="col-xs-12 col-md-12 col-lg-12 left-feild" >
 					<div class="be-user-block style-3" style="background-color: rgba(255,255,255,0.5); border-radius:5px;">
 						<div class="be-user-detail">
 							<a class="be-ava-user style-2" >
-								<img src="<%=imagen_url%>" style="border-radius:5px; "  alt=""> 
+                                <% if(imagen_url){ %>
+                                    <img src="<%=imagen_url%>" style="border-radius:5px;"  alt=""> 
+                              <%  }else{ %>
+                                    <img src="img/Perfil.png" style="border-radius:5px; "  alt=""> 
+                               <% } %>
+								
 							</a>
 							<!-- <a class="be-ava-left btn color-1 size-2 hover-1" href="author-edit.ejs"><i class="fa fa-pencil"></i>Edit</a 
 							<div class="color-4 size-2 hover-7">
@@ -52,131 +70,20 @@
 							
 						</div>
 					</div>
-                    <!--<div class="be-desc-author">
-							<div class="be-desc-label">Acerca de atmos</div>
-							<div class="clearfix"></div>
-							<div class="be-desc-text">
-				               
-							</div>
-						</div>-->
-					
-					<!-- <a class="btn full color-1 size-1 hover-1"><i class="fa fa-plus"></i>add sections</a>	 -->									
+                    									
 				</div>
             
-				<div class="col-xs-12 col-md-8">
-                    <div class="tab-wrapper style-1">
-                        
-                        
-                        
-                        
-                        <div class="tabs-content clearfix">
-                            
-                            
-                            <div class="tab-info active"> 
-                                
-                        <div class="col-lg-12">
-                            
-                            <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#885053; font-size: 40px; background-color: rgba(255,255,255,0.9); border-radius:5px;">Top 50</h2>
-                            
-                        </div> 
-                                
-                        
-                      
-                     
-                            
-                                
-                            <div class="row" style="margin-bottom:100px;">
-
-                                
-                                        <% 
-                                if(mensaje == 'nuevo_usuario'){ 
-                                    
-                                    seedTracks.forEach(function(records, index){ %>
-                                
-                                    <div class="col-ml-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px;padding-right:30px; margin-bottom:0px;">
-                                        
-                                    <div class="be-post" style=" background-color: rgba(255,255,255,0.5); color:#d5573b;">
-                                        
-                                        <form method="post" action="/track/profile" id="trackprofile">
-                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
-                                        <% if(records.album.images[0] != undefined){ %>    
-                                        <img src="<%=records.album.images[0].url%>" alt="omg">
-                                        <% } else{ %>
-                                          <img src="" alt="omg">      
-                                        <%    } %>
-                                        </button>   
-                                        </form>
-                                        
-                                        <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"><%= records.name %></span> 
-                                        <a class="close" style="background-color:white; font-size:250%;" id="fadeOut<%=index%>">&times;</a>
-                                        <span style="color:#885053; font-size:120%;">
-                                            Popularity: <%=records.popularity%> %
-                                        </span>
-                                        <div class="author-post">
-                                            <span style="color:#885053; font-size:150%;">by <%=records.artists[0].name%></span>
-                                        </div>
-                                    </div>
-                                        
-                                  </div>
-                                
-                                        
-                                
-                                <%})
-                                    
-                                    
-                                }else{
-                                    
-                             
-                                
-                                seedTracks.forEach(function(records, index){ %>
-                                
-                                    <div class="col-ml-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;">
-                                        
-                                    <div class="be-post" style=" background-color: rgba(255,255,255,0.5); ">
-                                        
-                                        <form method="post" action="/track/profile" id="trackprofile">
-                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
-                                        <% if(records.albumImagen != undefined){ %>    
-                                        <img src="<%=records.albumImagen%>" alt="omg" style="height:100%">
-                                        <% } else{ %>
-                                          <img src="" alt="omg">      
-                                        <%    } %>
-                                        </button>   
-                                        </form>
-                                        
-                                        <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"><%= records.nombre %></span> 
-                                        <a class="close" style="background-color:white; font-size:250%;" id="fadeOut<%=index%>">&times;</a>
-                                        <span style="color:#885053; font-size:120%;">
-                                            Popularity: <%=records.popularidad%> %
-                                        </span>
-                                        <div class="author-post">
-                                            <span style="color:#885053; font-size:150%;">by <%=records.artistas%></span>
-                                        </div>
-                                    </div>
-                                        
-                                  </div>
-                                        
-                                
-                                <%
-                                })    
-                                       }
-                                    
-                               %>
-                                
-                                
-                                
-                                </div> 
-                            </div> 
-                            
-                            <div class="tab-info">
-								<div class="row">
+                <div class="clearfix"></div>
 										<div class="col-md-12">
 					
-                     <h2 style="text-align: center; font-family: 'Josefin Slab', serif;">Análisis de tu perfil musical</h2>
+                     <h2 style="text-align: center; font-family: 'Kanit', serif; background-color: rgb(255,255,255); border-radius:5px; margin-top:0; color:#777da7;">Perfil</h2>
                     
                         <br/>
+                                            
+                        <canvas id="myChart" width="400" height="400" style="background-color:rgba(255,255,255,0); border-radius:5px; color:white; max-width:400px; margin: 0 auto;"></canvas>
+                                            <br> 
                     
-                    <table class="table">
+                    <table class="table" style="background-color: rgba(255,255,255,0.5); border-radius:5px; margin-bottom:50px;">
                         <thead>
                             <tr>
                                 <th>Variables</th>
@@ -302,6 +209,100 @@
 									</div>
 								</div>
                             </div>
+                                
+                            </div>
+                            
+                            <div class="tab-info "> 
+                                
+                        <div class="col-lg-12">
+                            
+                            <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#885053; font-size: 40px; background-color: rgba(255,255,255,0.9); border-radius:5px;">Top 50</h2>
+            
+                        </div> 
+                                
+                            <div class="row" style="margin-bottom:100px;">
+
+                                        <% 
+                                if(mensaje == 'nuevo_usuario'){ 
+                                    
+                                    seedTracks.forEach(function(records, index){ %>
+                                
+                                    <div class="col-ml-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px;padding-right:30px; margin-bottom:0px;">
+                                        
+                                    <div class="be-post" style=" background-color: rgba(255,255,255,0.5); color:#d5573b;">
+                                        
+                                        <form method="post" action="/track/profile" id="trackprofile">
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
+                                        <% if(records.album.images[0] != undefined){ %>    
+                                        <img src="<%=records.album.images[0].url%>" alt="omg">
+                                        <% } else{ %>
+                                          <img src="" alt="omg">      
+                                        <%    } %>
+                                        </button>   
+                                        </form>
+                                        
+                                        <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"><%= records.name %></span> 
+                                        
+                                        <span style="color:#885053; font-size:120%;">
+                                            Popularity: <%=records.popularity%> %
+                                        </span>
+                                        <div class="author-post">
+                                            <span style="color:#885053; font-size:150%;">by <%=records.artists[0].name%></span>
+                                        </div>
+                                    </div>
+                                        
+                                  </div>
+                                
+                                        
+                                
+                                <%})
+                                    
+                                    
+                                }else{
+                                    
+                             
+                                
+                                seedTracks.forEach(function(records, index){ %>
+                                
+                                    <div class="col-ml-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;">
+                                        
+                                    <div class="be-post" style=" background-color: rgba(255,255,255,0.5); ">
+                                        
+                                        <form method="post" action="/track/profile" id="trackprofile">
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
+                                        <% if(records.albumImagen != undefined){ %>    
+                                        <img src="<%=records.albumImagen%>" alt="omg" style="height:100%">
+                                        <% } else{ %>
+                                          <img src="" alt="omg">      
+                                        <%    } %>
+                                        </button>   
+                                        </form>
+                                        
+                                        <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"><%= records.nombre %></span> 
+                                       
+                                        <span style="color:#885053; font-size:120%;">
+                                            Popularity: <%=records.popularidad%> %
+                                        </span>
+                                        <div class="author-post">
+                                            <span style="color:#885053; font-size:150%;">by <%=records.artistas%></span>
+                                        </div>
+                                    </div>
+                                        
+                                  </div>
+                                        
+                                
+                                <%
+                                })    
+                                       }
+                                    
+                               %>
+                                
+                                
+                                
+                                </div> 
+                            </div> 
+                            
+                           
                             
                             
                            <div class="tab-info">
@@ -350,36 +351,40 @@
                         </div>
                     
                     
-                        <div class="tab-nav-wrapper" style="position:fixed; left:0; bottom:50px; z-index:10; width:100%;">
+                        <div class="tab-nav-wrapper" style="position:fixed; left:0; bottom:0; z-index:10; width:100%;">
                                 <div  class="nav-tab  clearfix" style="width:100%;">
                                    
-                                        <div class="row" style="width:100%; margin:0;">
+                                        <div class="row" style="width:100%; margin:0; text-align:center;">
+                                            
                                             <div class="col-xs-6" style="width:25%; margin:0; padding:0;">
-                                                <div class="nav-tab-item active " style="width:100%; margin:0; padding:0;">
-                                                    <span><i class="fas fa-music" style="font-size:20px; color:#885053"></i></span>
+                                                <div class="nav-tab-item col-xs-6 active " style="width:100%; margin:0; padding:0;">
+                                                    <span style="padding:10px 0 0 0;"><i class="fas fa-user" style="font-size:20px; color:#777da7"></i></span>
+                                                    <span style="font-size:10px; padding:5px 0 5px 0;color:#777da7">Perfil</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6" style="width:25%; margin:0; padding:0;">
+                                                <div class="nav-tab-item  " style="width:100%; margin:0; padding:0;">
+                                                    <span style="padding:10px 0 0 0;"><i class="fas fa-music" style="font-size:20px; color:#885053"></i></span>
+                                                    <span style="font-size:10px; padding:5px 0 5px 0;color:#885053">Top 50</span>
                                                 </div>
                                             </div>
                                             <div class="col-xs-6" style="width:25%; margin:0; padding:0;">
                                                 <div class="nav-tab-item col-xs-6 " style="width:100%; margin:0; padding:0;">
-                                                    <span><i class="fas fa-user" style="font-size:20px; color:#777da7"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-6" style="width:25%; margin:0; padding:0;">
-                                                <div class="nav-tab-item col-xs-6 " style="width:100%; margin:0; padding:0;">
-                                                    <span><i class="far fa-play-circle" style="font-size:20px; color:#94c9a9"></i></span>
+                                                    <span style="padding:10px 0 0 0;"><i class="far fa-play-circle" style="font-size:20px; color:#94c9a9"></i></span>
+                                                    <span style="font-size:10px; padding:5px 0 5px 0;color:#94c9a9">Fiesta</span>
                                                 </div>
                                             </div> 
                                             <div class="col-xs-6" style="width:25%; margin:0; padding:0;">
                                                 <div class="nav-tab-item col-xs-6 " style="width:100%; margin:0; padding:0;">
-                                                    <span><i class="fas fa-cogs" style="font-size:20px; color:#d5573b"></i></span>
+                                                    <span style="padding:10px 0 0 0;"><i class="fas fa-cogs" style="font-size:20px; color:#d5573b"></i></span>
+                                                    <span style="font-size:10px; padding:5px 0 5px 0;color:#d5573b">Ajustes</span>
                                                 </div>
                                             </div> 
                                     </div>
                                         
                         </div>
                          </div>
-                        
-                    </div> 				
+                    </div>				
 				</div>				
 			</div>
             
@@ -403,9 +408,6 @@
 	<div class="be-fixed-filter"></div>
 	
 
-     
-		 <% include ../partials/foot.ejs %>
-            
             </div>
 	</body>
     
@@ -580,6 +582,44 @@
             })
         })
     
+        
+        var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255,1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            labels: {
+                // This more specific font property overrides the global property
+                fontColor: 'white', 
+            }
+        }
+    }
+});
+        
 </script>
 
                         
