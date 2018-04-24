@@ -15,14 +15,7 @@
          <script type="text/javascript" src="/script/Chart.js"></script>
 	</head>
     
-   <style>
-    .cancion {
 
-    @media (max-width: @iphone-screen) {
-        background-attachment: scroll;
-    }
-}
-    </style>
     
 	<body class="page-login">
 
@@ -234,14 +227,14 @@
                                     
                                     seedTracks.forEach(function(records, index){ %>
                                 
-                                    <div class="col-ml-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px;padding-right:30px; margin-bottom:0px;">
+                                    <div class="col-md-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px;padding-right:30px; margin-bottom:0px;">
                                         
                                     <div class="be-post" style=" background-color: rgba(255,255,255,0.5); color:#d5573b;">
                                         
                                         <form method="post" action="/track/profile" id="trackprofile">
-                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style="min-height:100px;"> 
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
                                         <% if(records.album.images[0] != undefined){ %>    
-                                        <img src="<%=records.album.images[0].url%>" alt="omg" style="min-height:100px; !important; min-width:100%;" class="cancion">
+                                        <img src="<%=records.album.images[0].url%>" alt="omg" style="min-height:100% !important; min-width:100%;" class="cancion">
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
@@ -271,14 +264,14 @@
                                 
                                 seedTracks.forEach(function(records, index){ %>
                                 
-                                    <div class="col-md-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;">
+                                    <div class="col-ml-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;">
                                         
                                     <div class="be-post" style=" background-color: rgba(255,255,255,0.5); ">
                                         
-                                        <form method="post" action="/track/profile" id="trackprofile">
-                                        <button form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
+                                        <form method="post" action="/track/profile" id="trackprofile" style="height:100%;">
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style="height:100%;"> 
                                         <% if(records.albumImagen != undefined){ %>    
-                                        <img src="<%=records.albumImagen%>">
+                                        <img src="<%=records.albumImagen%>" alt="omg" style="height:100%;">
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
