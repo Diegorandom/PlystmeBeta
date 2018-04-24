@@ -15,7 +15,14 @@
          <script type="text/javascript" src="/script/Chart.js"></script>
 	</head>
     
-   
+   <style>
+    .cancion {
+
+    @media (max-width: @iphone-screen) {
+        background-attachment: scroll;
+    }
+}
+    </style>
     
 	<body class="page-login">
 
@@ -234,7 +241,7 @@
                                         <form method="post" action="/track/profile" id="trackprofile">
                                         <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
                                         <% if(records.album.images[0] != undefined){ %>    
-                                        <img src="<%=records.album.images[0].url%>" alt="omg" style="min-height:100% !important; min-width:100%; ">
+                                        <img src="<%=records.album.images[0].url%>" alt="omg" style="min-height:100% !important; min-width:100%;" class="cancion">
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
