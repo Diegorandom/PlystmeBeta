@@ -166,7 +166,7 @@ app.get('/heartbeat', function(req,res){
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
 app.get('/', function(req, res, error){ 
-    objetosGlobales[0].ref=false;
+    
     
 
     
