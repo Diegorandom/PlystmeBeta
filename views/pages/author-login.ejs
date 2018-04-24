@@ -278,7 +278,7 @@
                                         <form method="post" action="/track/profile" id="trackprofile">
                                         <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
                                         <% if(records.albumImagen != undefined){ %>    
-                                        <img src="<%=records.album.images[0].url%>" alt="omg" style="min-height:100px; !important; min-width:100%;" class="cancion">
+                                        <img src="<%=records.albumImagen%>" style="min-height:100px; !important; min-width:100%;" class="cancion">
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
