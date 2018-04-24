@@ -227,14 +227,14 @@
                                     
                                     seedTracks.forEach(function(records, index){ %>
                                 
-                                    <div class="col-md-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px;padding-right:30px; margin-bottom:0px;">
+                                    <div class="col-md-4 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px;padding-right:30px; margin-bottom:0px;">
                                         
                                     <div class="be-post" style=" background-color: rgba(255,255,255,0.5); color:#d5573b;">
                                         
                                         <form method="post" action="/track/profile" id="trackprofile">
-                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style="-webkit-appearance: none;-webkit-border-radius: 0px;"> 
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style=" -webkit-appearance: none;-webkit-border-radius: 0px;">  
                                         <% if(records.album.images[0] != undefined){ %>    
-                                        <img src="<%=records.album.images[0].url%>" alt="omg" style="min-height:100% !important; min-width:100%;" class="cancion">
+                                        <img src="<%=records.album.images[0].url%>" alt="omg">
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
@@ -264,14 +264,14 @@
                                 
                                 seedTracks.forEach(function(records, index){ %>
                                 
-                                    <div class="col-md-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;">
+                                    <div class="col-md-4 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;">
                                         
                                     <div class="be-post" style=" background-color: rgba(255,255,255,0.5); ">
                                         
                                         <form method="post" action="/track/profile" id="trackprofile" style="min-height:300px;">
-                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style="min-height:300px; -webkit-appearance: none;-webkit-border-radius: 0px;"> 
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style="-webkit-appearance: none;-webkit-border-radius: 0px;"> 
                                         <% if(records.albumImagen != undefined){ %>    
-                                        <img src="<%=records.albumImagen%>" alt="omg" style="min-height:300px;">
+                                        <img src="<%=records.albumImagen%>" alt="omg" >
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
@@ -289,7 +289,7 @@
                                     </div>
                                         
                                   </div>
-                                        
+                                        <br>
                                 
                                 <%
                                 })    
@@ -501,7 +501,7 @@
                        console.log(item)
                        var iDiv = document.createElement('div');
                         iDiv.id = 'pool' + index;
-                        iDiv.className = 'col-ml-12 col-xs-12 col-sm-4';
+                        iDiv.className = 'col-md-4 col-xs-12 col-sm-4';
                         iDiv.style = "height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;"
 
                         // Create the inner div before appending to the body
