@@ -268,10 +268,10 @@
                                         
                                     <div class="be-post" style=" background-color: rgba(255,255,255,0.5); ">
                                         
-                                        <form method="post" action="/track/profile" id="trackprofile" style="height:300px;">
-                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style="height:300px;"> 
+                                        <form method="post" action="/track/profile" id="trackprofile" style="min-height:300px;">
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style="min-height:300px;"> 
                                         <% if(records.albumImagen != undefined){ %>    
-                                        <img src="<%=records.albumImagen%>" alt="omg" style="height:300px;">
+                                        <img src="<%=records.albumImagen%>" alt="omg" style="min-height:300px;">
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
