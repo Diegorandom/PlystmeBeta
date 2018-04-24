@@ -271,19 +271,19 @@
                                 
                                 seedTracks.forEach(function(records, index){ %>
                                 
-                                    <div class="col-ml-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;">
+                                    <div class="col-md-12 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;">
                                         
                                     <div class="be-post" style=" background-color: rgba(255,255,255,0.5); ">
                                         
-                                        <form method="post" action="/track/profile" id="trackprofile">
-                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>"> 
+                                        <!--<form method="post" action="/track/profile" id="trackprofile">
+                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>">--> 
                                         <% if(records.albumImagen != undefined){ %>    
                                         <img src="<%=records.albumImagen%>" style="min-height:100px !important; min-width:100%;" class="cancion">
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
-                                        </button>   
-                                        </form>
+                                        <!--</button>   
+                                        </form>-->
                                         
                                         <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"><%= records.nombre %></span> 
                                        
