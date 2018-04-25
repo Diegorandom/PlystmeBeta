@@ -29,7 +29,7 @@ router.get('/pool', function(req, res, error){
                 objetosGlobales[0].pool = pool
                 console.log(objetosGlobales)
                 console.log(body)
-                res.send(body.lista_de_canciones); 
+                res.send(body.listaCanciones); 
                 
                  objetosGlobales[position].playlist = []
                  
