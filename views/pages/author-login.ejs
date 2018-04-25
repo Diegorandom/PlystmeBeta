@@ -13,11 +13,17 @@
         
         <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
          <script type="text/javascript" src="/script/Chart.js"></script>
+        
+        <style>
+        
+            
+            
+        </style>
 	</head>
     
 
     
-	<body class="page-login">
+	<body class="page-login"  style="background: url('img/fondo4.jpeg') no-repeat; background-size:cover;background-attachment:fixed; width:100%; transition: all 1.5s ease; background-position:center;">
 
         
         <div>
@@ -39,9 +45,9 @@
                         
                         <div class="container-fuild tabs-content clearfix">
                            
-                            <div style="background: url('img/fondo4.jpeg') no-repeat; background-size:100%;background-attachment:fixed; width:100%; ">
+                            <div>
                              
-                                <div class="tab-info active"  >
+                                <div class="tab-info active"  id="perfilTab">
 								<div class="row">
                                     
                                     <div class="col-xs-12 col-md-12 col-lg-12 left-feild" >
@@ -212,13 +218,14 @@
                                 
                             </div>
                             
-                            <div class="tab-info "> 
+                            <div class="tab-info " id="topTab"> 
                                 
-                        <div class="col-lg-12">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                             
-                            <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#885053; font-size: 40px; background-color: rgba(255,255,255,0.9); border-radius:5px;">Top 50</h2>
+                            <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#885053; font-size: 40px; background-color: rgb(255,255,255); border-radius:5px;">Top 50</h2>
             
                         </div> 
+                                       
                                 
                             <div class="row" style="margin-bottom:100px;">
 
@@ -227,27 +234,27 @@
                                     
                                     seedTracks.forEach(function(records, index){ %>
                                 
-                                    <div class="col-md-4 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px;padding-right:30px; margin-bottom:0px;">
+                                    <div class="col-lg-12 col-md-4 col-xs-12 col-sm-4" id="track<%=index%>" style="padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; ">
                                         
-                                    <div class="be-post" style=" background-color: rgba(255,255,255,0.5); color:#d5573b;">
+                                    <div class="be-post" style=" background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;">
                                         
                                         <form method="post" action="/track/profile" id="trackprofile">
                                         <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style=" -webkit-appearance: none;-webkit-border-radius: 0px;">  
                                         <% if(records.album.images[0] != undefined){ %>    
-                                        <img src="<%=records.album.images[0].url%>" alt="omg">
+                                        <img src="<%=records.album.images[0].url%>" alt="omg" style="max-width:200px;">
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
                                         </button>   
                                         </form>
                                         
-                                        <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"><%= records.name %></span> 
+                                        <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.name %></span> 
                                         
-                                        <span style="color:#885053; font-size:120%;">
-                                            Popularity: <%=records.popularity%> %
+                                        <span style="color:#885053; font-size:120%; overflow:hidden; max-height:20px;">
+                                            Popularidad: <%=records.popularity%> %
                                         </span>
                                         <div class="author-post">
-                                            <span style="color:#885053; font-size:150%;">by <%=records.artists[0].name%></span>
+                                            <span style="color:#885053; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artists[0].name%></span>
                                         </div>
                                     </div>
                                         
@@ -264,27 +271,27 @@
                                 
                                 seedTracks.forEach(function(records, index){ %>
                                 
-                                    <div class="col-md-4 col-xs-12 col-sm-4" id="track<%=index%>" style="height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;">
+                                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4" id="track<%=index%>" style="padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; ">
                                         
-                                    <div class="be-post" style=" background-color: rgba(255,255,255,0.5); ">
+                                    <div class="be-post" style=" background-color: rgba(255,255,255,0.9); max-height:400px; max-width:250px; ">
                                         
-                                        <form method="post" action="/track/profile" id="trackprofile" style="min-height:300px;">
+                                        <form method="post" action="/track/profile" id="trackprofile" >
                                         <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style="-webkit-appearance: none;-webkit-border-radius: 0px;"> 
                                         <% if(records.albumImagen != undefined){ %>    
-                                        <img src="<%=records.albumImagen%>" alt="omg" >
+                                        <img src="<%=records.albumImagen%>" alt="omg" style="max-width:200px;">
                                         <% } else{ %>
                                           <img src="" alt="omg">      
                                         <%    } %>
                                         </button>   
                                         </form>
                                         
-                                        <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"><%= records.nombre %></span> 
+                                        <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.nombre %></span> 
                                        
-                                        <span style="color:#885053; font-size:120%;">
-                                            Popularity: <%=records.popularidad%> %
+                                        <span style="color:#885053; font-size:120%; overflow:hidden; max-height:20px;">
+                                            Popularidad: <%=records.popularidad%> %
                                         </span>
                                         <div class="author-post">
-                                            <span style="color:#885053; font-size:150%;">by <%=records.artistas%></span>
+                                            <span style="color:#885053; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artistas%></span>
                                         </div>
                                     </div>
                                         
@@ -305,11 +312,11 @@
                            
                             
                             
-                           <div class="tab-info">
+                           <div class="tab-info" id="fiestaTab">
 								<div class="row" style="margin-bottom:100px;">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             
-                                        <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#94c9a9; font-size: 40px; background-color: rgba(255,255,255,0.9); border-radius:5px;">Fiesta</h2>
+                                        <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#94c9a9; font-size: 40px; background-color: rgb(255,255,255); border-radius:5px;">Fiesta</h2>
                                         
                                         
                                         <button  type="submit" value="Submit" class="be-button-vidget blue-style" style="width:80%; border: none; background-color:#94c9a9; margin:0 auto;"  id="enterPool">
@@ -337,7 +344,7 @@
                             </div>
                             
                             
-                            <div class="tab-info">
+                            <div class="tab-info" id="ajustesTab">
 								<div class="row">
 										<div class="col-md-12">
                                             <h2 style="text-align: center; font-family: 'Josefin Slab', serif;">Configuración</h2>
@@ -357,25 +364,25 @@
                                         <div class="row" style="width:100%; margin:0; text-align:center;">
                                             
                                             <div class="col-xs-6" style="width:25%; margin:0; padding:0;">
-                                                <div class="nav-tab-item col-xs-6 active " style="width:100%; margin:0; padding:0;">
+                                                <div class="nav-tab-item col-xs-6 active" style="width:100%; margin:0; padding:0;" id="btnPerfil">
                                                     <span style="padding:10px 0 0 0;"><i class="fas fa-user" style="font-size:20px; color:#777da7"></i></span>
                                                     <span style="font-size:10px; padding:5px 0 5px 0;color:#777da7">Perfil</span>
                                                 </div>
                                             </div>
                                             <div class="col-xs-6" style="width:25%; margin:0; padding:0;">
-                                                <div class="nav-tab-item  " style="width:100%; margin:0; padding:0;">
+                                                <div class="nav-tab-item  " style="width:100%; margin:0; padding:0;" id="btnTop50">
                                                     <span style="padding:10px 0 0 0;"><i class="fas fa-music" style="font-size:20px; color:#885053"></i></span>
                                                     <span style="font-size:10px; padding:5px 0 5px 0;color:#885053">Top 50</span>
                                                 </div>
                                             </div>
                                             <div class="col-xs-6" style="width:25%; margin:0; padding:0;">
-                                                <div class="nav-tab-item col-xs-6 " style="width:100%; margin:0; padding:0;">
+                                                <div class="nav-tab-item col-xs-6 " style="width:100%; margin:0; padding:0;" id="btnFiesta">
                                                     <span style="padding:10px 0 0 0;"><i class="far fa-play-circle" style="font-size:20px; color:#94c9a9"></i></span>
                                                     <span style="font-size:10px; padding:5px 0 5px 0;color:#94c9a9">Fiesta</span>
                                                 </div>
                                             </div> 
                                             <div class="col-xs-6" style="width:25%; margin:0; padding:0;">
-                                                <div class="nav-tab-item col-xs-6 " style="width:100%; margin:0; padding:0;">
+                                                <div class="nav-tab-item col-xs-6 " style="width:100%; margin:0; padding:0;" id="btnAjustes">
                                                     <span style="padding:10px 0 0 0;"><i class="fas fa-cogs" style="font-size:20px; color:#d5573b"></i></span>
                                                     <span style="font-size:10px; padding:5px 0 5px 0;color:#d5573b">Ajustes</span>
                                                 </div>
@@ -621,6 +628,73 @@ var myChart = new Chart(ctx, {
     }
 });
         
+</script>
+
+<script>
+
+    $('#btnPerfil').on('click',function(){
+        $('body').css("background","url('img/fondo4.jpeg') no-repeat");
+        $('body').css("background-size","cover");
+        $('body').css("background-attachment","fixed");
+        $('body').css("width","100%");
+        $('body').css("background-position","center");
+        
+        
+    });
+    
+    $('#btnTop50').on('click',function(){
+        $('body').css("background","url('img/fondo7.jpg') no-repeat");
+        $('body').css("background-size","cover");
+        $('body').css("background-attachment","fixed");
+        $('body').css("width","100%");
+        
+        var ancho = $( window ).width();
+        
+        if(ancho > 577){        
+            $('body').css("background-position","0 150%");
+        }else{
+            $('body').css("background-position","center");
+        }
+    });
+    
+    $('#btnFiesta').on('click',function(){
+        $('body').css("background","url('img/fondo2.jpg') no-repeat");
+        $('body').css("background-size","cover");
+        $('body').css("background-attachment","fixed");
+        $('body').css("width","100%");
+        $('body').css("background-position","center");
+    });
+    
+    $('#btnAjustes').on('click',function(){
+        
+        
+        var ancho = $( window ).width();
+        
+        console.log(ancho);
+        
+        if(ancho > 577){
+            $('body').css("background","url('img/fondo8.jpg') no-repeat");
+            $('body').css("background-position","0 100%");
+            $('body').css("background-size","cover");
+            $('body').css("background-attachment","fixed");
+            $('body').css("width","100%");
+        }else{
+            $('body').css("background","url('img/fondo9.jpg') no-repeat");           
+            $('body').css("background-position","center");
+            $('body').css("background-size","cover");
+            $('body').css("background-attachment","fixed");
+            $('body').css("width","100%");
+        }
+        
+        
+        
+
+    });
+    
+    
+    
+
+
 </script>
 
                         
