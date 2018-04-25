@@ -35,7 +35,7 @@ router.get('/pool', function(req, res, error){
                  
                 console.log() 
                  
-                body.lista_de_canciones.forEach(function(item, index){
+                body.listaCanciones.forEach(function(item, index){
                     objetosGlobales[position].playlist.push(item[1])
                 })
                 
