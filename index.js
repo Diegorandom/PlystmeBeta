@@ -351,7 +351,6 @@ app.get('/perfil', function(request, response, error) {
         
             response.render('pages/author-login.ejs', objetosGlobales[position]);
 });
-
 /*
         PERFIL DE UN TRACK
 */
