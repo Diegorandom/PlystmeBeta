@@ -11,9 +11,11 @@ var querystring = require('querystring');
 
 router.get('/callback', function(req, res, error) {
     var objetosGlobales = req.app.get('objetosGlobales');
-    var position = req.sessions.position;
+    var position = req.app.get('position');
     
     if(error == true){ res.render('pages/error')}else{ 
+        
+        
     
   res.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
     
