@@ -13,7 +13,6 @@ router.get('/pool', function(req, res, error){
            pool.push(objetosGlobales[index].userid)
         }
         
-        
         if(index == objetosGlobales.length-1){
             
               var options = { method: 'POST',
@@ -29,16 +28,19 @@ router.get('/pool', function(req, res, error){
               if (error) throw new Error(error);
                 objetosGlobales[0].pool = pool
                 console.log(objetosGlobales)
+                console.log(body)
                 res.send(body.lista_de_canciones); 
                 
                  objetosGlobales[position].playlist = []
+                 
+                console.log() 
                  
                 body.lista_de_canciones.forEach(function(item, index){
                     objetosGlobales[position].playlist.push(item[1])
                 })
                 
                 console.log("objetosGlobales[position].playlist")
-                    console.log(objetosGlobales[position].playlist)
+                console.log(objetosGlobales[position].playlist)
                 
             });
 
