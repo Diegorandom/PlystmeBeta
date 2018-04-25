@@ -150,7 +150,7 @@ app.get('/heartbeat', function(req,res){
     
     clearTimeout(timeoutID);
     
-    timeoutID = setTimeout(goInactive, 1000*60*5);
+    timeoutID = setTimeout(goInactive, 1000*60*10);
     
     function goInactive() {
         // do something
