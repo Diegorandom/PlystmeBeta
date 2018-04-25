@@ -82,7 +82,7 @@
                 <div class="clearfix"></div>
 										<div class="col-md-12">
 					
-                     <h2 style="text-align: center; font-family: 'Kanit', serif; background-color: rgb(255,255,255); border-radius:5px; margin-top:0; color:#777da7;">Perfil</h2>
+                     <h2 style="text-align: center; font-family: 'Kanit', serif; background-color: #777da7; border-radius:5px; margin-top:0; color:#FFF;">Perfil</h2>
                     
                         <br/>
                                             
@@ -222,7 +222,7 @@
                                 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             
-                            <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#885053; font-size: 40px; background-color: rgb(255,255,255); border-radius:5px;">Top 50</h2>
+                            <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #885053; border-radius:5px; padding-bottom:5px;">Top 50</h2>
             
                         </div> 
                                        
@@ -316,11 +316,11 @@
 								<div class="row" style="margin-bottom:100px;">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             
-                                        <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#94c9a9; font-size: 40px; background-color: rgb(255,255,255); border-radius:5px;">Fiesta</h2>
+                                        <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #94c9a9; border-radius:5px;">Fiesta</h2>
                                         
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget blue-style" style="width:80%; border: none; background-color:#94c9a9; margin:0 auto;"  id="enterPool">
-                                            <i class="far fa-play-circle" style="font-size:20px; color:white; margin-left:5px;"></i> Entra a la Fiesta 
+                                        <button  type="submit" value="Submit" class="be-button-vidget blue-style" style="width:80%; border: none; background-color:#FFF; margin:0 auto;"  id="enterPool">
+                                            <i class="far fa-play-circle" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> <p style="color:#94c9a9; display:inline-block; margin-top:-5px;">Entra a la Fiesta </p> 
                                         </button>
                                         <br>
                                         
@@ -346,10 +346,11 @@
                             
                             <div class="tab-info" id="ajustesTab">
 								<div class="row">
-										<div class="col-md-12">
-                                            <h2 style="text-align: center; font-family: 'Josefin Slab', serif;">Configuración</h2>
-                                            <br/>							
-									</div>
+								    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            
+                                        <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #d5573b; border-radius:5px; padding-bottom:5px;">Ajustes</h2>
+            
+                                    </div>
 								</div>
                             </div>
                             
@@ -643,7 +644,7 @@ var myChart = new Chart(ctx, {
     });
     
     $('#btnTop50').on('click',function(){
-        $('body').css("background","url('img/fondo7.jpg') no-repeat");
+        $('body').css("background","url('img/fondo7.png') no-repeat");
         $('body').css("background-size","cover");
         $('body').css("background-attachment","fixed");
         $('body').css("width","100%");
@@ -673,13 +674,13 @@ var myChart = new Chart(ctx, {
         console.log(ancho);
         
         if(ancho > 577){
-            $('body').css("background","url('img/fondo8.jpg') no-repeat");
+            $('body').css("background","url('img/fondo8.png') no-repeat");
             $('body').css("background-position","0 100%");
             $('body').css("background-size","cover");
             $('body').css("background-attachment","fixed");
             $('body').css("width","100%");
         }else{
-            $('body').css("background","url('img/fondo9.jpg') no-repeat");           
+            $('body').css("background","url('img/fondo9.png') no-repeat");           
             $('body').css("background-position","center");
             $('body').css("background-size","cover");
             $('body').css("background-attachment","fixed");
