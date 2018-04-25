@@ -14,11 +14,6 @@
         <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
          <script type="text/javascript" src="/script/Chart.js"></script>
         
-        <style>
-        
-            
-            
-        </style>
 	</head>
     
 
@@ -693,7 +688,11 @@ var myChart = new Chart(ctx, {
 
     });
     
+    var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
     
+    if(iOS){
+        $('#content-block').css("margin-top","50px");
+    }
     
 
 
