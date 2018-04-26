@@ -174,20 +174,14 @@ if(error == true){
     res.render('pages/error')
 }else{    
 
-    objetosGlobales[0].session
-    .run('MATCH (n:usuario) RETURN COUNT(n)')
-    .then(function(response){
-        response.records.forEach(function(record){
-            objetosGlobales[0].totalUsers = record._fields[[0]].low; 
-        });
+    
+   objetosGlobales[0].totalUsers = objetosGlobales[index].userid.length
         
-        console.log(objetosGlobales)
-        res.render('pages/autorizacion',  objetosGlobales[0]);
+       
+    console.log(objetosGlobales)
+    res.render('pages/autorizacion',  objetosGlobales[0]);
         
-    })
-    .catch(function(err){
-		console.log(err);
-		})
+    
 }
 });
 
