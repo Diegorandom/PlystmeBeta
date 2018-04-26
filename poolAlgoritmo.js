@@ -25,25 +25,33 @@ router.get('/pool', function(req, res, error){
               body: { spotifyid: pool  },
               json: true };
 
-            request(options, function (error, response, body) {
-              if (error) throw new Error(error);
-                objetosGlobales[0].pool = pool
-                console.log(objetosGlobales)
-                console.log(body)
-                res.send(body.listaCanciones); 
-                
-                 objetosGlobales[position].playlist = []
-                 
-                console.log() 
-                 
-                body.listaCanciones.forEach(function(item, index){
-                    objetosGlobales[position].playlist.push(item[1])
-                })
-                
-                console.log("objetosGlobales[position].playlist")
-                console.log(objetosGlobales[position].playlist)
-                
-            });
+            function Test(options){
+                request(options, function (error, response, body) {
+                    if (error) {
+                        Test(options);
+                    }else{
+                        objetosGlobales[0].pool = pool
+                        console.log(objetosGlobales)
+                        console.log(body)
+                        res.send(body.listaCanciones); 
+
+                         objetosGlobales[position].playlist = []
+
+                        console.log() 
+
+                        body.listaCanciones.forEach(function(item, index){
+                            objetosGlobales[position].playlist.push(item[1])
+                        })
+
+                        console.log("objetosGlobales[position].playlist")
+                        console.log(objetosGlobales[position].playlist)
+                     
+                    }
+                    });
+            };
+
+            Test(options);
+            
 
         }
     })

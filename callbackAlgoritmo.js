@@ -431,26 +431,34 @@ router.get('/callback', function(req, res, error) {
                                                   body: { spotifyid: objetosGlobales[position].userid },
                                                   json: true };
 
+                                               
+                                                 function Test(options){
                                                 request(options, function (error, response, body) {
-                                                  if (error) throw new Error(error);
+                                                    if (error) {
+                                                        Test(options);
+                                                    }else{
+                                                        
+                                                        console.log(body);
 
-                                                  console.log(body);
-                                                    
-                                    objetosGlobales[position].danceability = body.profile.danceability_profile;
-                                                    
-                                                    objetosGlobales[position].energia = body.profile.energia_profile;
-                                                    
-                                                    objetosGlobales[position].acustica = body.profile.acousticness_profile;
-                                                    
-                                                    objetosGlobales[position].instrumental = body.profile.instrumentalness_profile;
-                                                    
-                                                    objetosGlobales[position].audiencia = body.profile.liveness_profile;
-                                                    
-                                                    objetosGlobales[position].positivismo = body.profile.positivismo_profile;
-                                                    
-                                                    console.log(objetosGlobales[position]);
-                                                    
-                                                });
+                                                        objetosGlobales[position].danceability = body.profile.danceability_profile;
+
+                                                        objetosGlobales[position].energia = body.profile.energia_profile;
+
+                                                        objetosGlobales[position].acustica = body.profile.acousticness_profile;
+
+                                                        objetosGlobales[position].instrumental = body.profile.instrumentalness_profile;
+
+                                                        objetosGlobales[position].audiencia = body.profile.liveness_profile;
+
+                                                        objetosGlobales[position].positivismo = body.profile.positivismo_profile;
+
+                                                        console.log(objetosGlobales[position]);
+
+                                                    }
+                                                    });
+                                                };
+
+                                            Test(options);
 
 
                                                  //Termina request de perfil
