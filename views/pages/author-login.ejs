@@ -99,12 +99,12 @@
                               
                             </tr>
                             <tr>
-                                <th>Energy</th>
+                                <th>Energia</th>
                                 <td><%=energia.toFixed(1)%>/100</td>
                                 
                             </tr>
                             <tr>
-                                <th>Key</th>
+                                <th>Tono</th>
                                 <% 
                                 switch(Math.round(fundamental)) {
                                     case 0:
@@ -150,12 +150,12 @@
                                
                             </tr>
                             <tr>
-                                <th>Loudness</th>
+                                <th>Volumen</th>
                                 <td><%=amplitud.toFixed(1)%> dB</td>
                                 
                             </tr>
                             <tr>
-                                <th>Mode</th>
+                                <th>Modo</th>
                                 <%
                                 switch(Math.round(modo)){
                                     case 0:
@@ -171,25 +171,25 @@
                                 
                             </tr>
                             <tr>
-                                <th>Speechiness</th>
+                                <th>Habla</th>
                                 <td><%=dialogo.toFixed(1)%>/100</td>
                                 
                             </tr>
                             <tr>
-                                <th>Acousticness</th>
+                                <th>Acústica</th>
                                 <td><%=acustica.toFixed(1)%>/100</td>
                                 
                             </tr>
                             <tr>
-                                <th>Instrumentalness</th>
+                                <th>Instrumental</th>
                                 <td><%=instrumental.toFixed(1)%>/100</td>
                             </tr>
                             <tr>
-                                <th>Liveness</th>
+                                <th>En vivo</th>
                                 <td><%=audiencia.toFixed(1)%>/100</td>
                             </tr>
                             <tr>
-                                <th>Valence</th>
+                                <th>Valencia</th>
                                 <td><%=positivismo.toFixed(1)%>/100</td>
                             </tr>
                             <tr>
@@ -197,12 +197,12 @@
                                 <td><%=tempo.toFixed(1)%> BPM</td>
                             </tr>
                             <tr>
-                                <th>Duration</th>
+                                <th>Duración</th>
                                 <td><%=duracion.toFixed(1)%> Minutes Average</td>
                                 
                             </tr>
                             <tr>
-                                <th>Beats per bar</th>
+                                <th>Beats por compás</th>
                                 <td><%=Math.round(firma_tiempo)%></td>
                             </tr>
                         </tbody>
@@ -591,17 +591,18 @@
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: ["Danzabilidad", "Energía", "Habla", "Acustica", "Instrumental", "En vivo","Valencia"],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: [12, 19, 3, 5, 2, 3,5],
             backgroundColor: [
                 'rgba(255, 99, 132,1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255,1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(255, 159, 64, 1)',
+                'rgba(200, 250, 50, 1)'
             ],
             borderColor: [
                 'rgba(255,99,132,1)',
@@ -609,7 +610,8 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(255, 159, 64, 1)',
+                'rgba(200, 250, 50, 1)'
             ],
             borderWidth: 1
         }]
