@@ -239,13 +239,13 @@
                                     <div class="be-post" style=" background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;">
                                         
                                         <form method="post" action="/track/profile" id="trackprofile">
-                                        <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style=" -webkit-appearance: none;-webkit-border-radius: 0px;">  
-                                        <% if(records.album.images[0] != undefined){ %>    
-                                        <img src="<%=records.album.images[0].url%>" alt="omg" style="max-width:200px;">
-                                        <% } else{ %>
-                                          <img src="" alt="omg">      
-                                        <%    } %>
-                                        </button>   
+                                            <button class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style=" -webkit-appearance: none;-webkit-border-radius: 0px;">  
+                                            <% if(records.album.images[0] != undefined){ %>    
+                                            <img src="<%=records.album.images[0].url%>" alt="omg" style="max-width:200px;">
+                                            <% } else{ %>
+                                              <img src="" alt="omg">      
+                                            <%    } %>
+                                            </button>   
                                         </form>
                                         
                                         <span class="be-post-title" style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.name %></span> 
@@ -509,8 +509,8 @@
                        console.log(item)
                        var iDiv = document.createElement('div');
                         iDiv.id = 'pool' + index;
-                        iDiv.className = 'col-md-4 col-xs-12 col-sm-4';
-                        iDiv.style = "height:448px !important; padding-left:30px; padding-right:30px; margin-bottom:0px;"
+                        iDiv.className = 'col-lg-12 col-md-4 col-xs-12 col-sm-4';
+                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; "
 
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
