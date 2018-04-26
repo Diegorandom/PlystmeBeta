@@ -95,12 +95,12 @@
                         <tbody>
                             <tr>
                                 <th>Danzabilidad</th>
-                                <td><%=danceability.toFixed(1)%>/100</td>
+                                <td><%=danceability.toFixed(1)*100%>/100</td>
                               
                             </tr>
                             <tr>
                                 <th>Energia</th>
-                                <td><%=energia.toFixed(1)%>/100</td>
+                                <td><%=energia.toFixed(1)*100%>/100</td>
                                 
                             </tr>
                             <tr>
@@ -172,25 +172,25 @@
                             </tr>
                             <tr>
                                 <th>Habla</th>
-                                <td><%=dialogo.toFixed(1)%>/100</td>
+                                <td><%=dialogo.toFixed(1)*100%>/100</td>
                                 
                             </tr>
                             <tr>
                                 <th>Acústica</th>
-                                <td><%=acustica.toFixed(1)%>/100</td>
+                                <td><%=acustica.toFixed(1)*100%>/100</td>
                                 
                             </tr>
                             <tr>
                                 <th>Instrumental</th>
-                                <td><%=instrumental.toFixed(1)%>/100</td>
+                                <td><%=instrumental.toFixed(1)*100%>/100</td>
                             </tr>
                             <tr>
                                 <th>En vivo</th>
-                                <td><%=audiencia.toFixed(1)%>/100</td>
+                                <td><%=audiencia.toFixed(1)*100%>/100</td>
                             </tr>
                             <tr>
-                                <th>Valencia</th>
-                                <td><%=positivismo.toFixed(1)%>/100</td>
+                                <th>Positivismo</th>
+                                <td><%=positivismo.toFixed(1)*100%>/100</td>
                             </tr>
                             <tr>
                                 <th>Tempo</th>
@@ -587,14 +587,18 @@
         })
     
         
+        
+        
+        
+        
         var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: ["Danzabilidad", "Energía", "Habla", "Acustica", "Instrumental", "En vivo","Valencia"],
+        labels: ["Danzabilidad", "Energía", "Habla", "Acustica", "Instrumental", "En vivo","Positivismo"],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3,5],
+            data: [<%=danceability%>*100, <%=energia%>*100, <%=dialogo%>*100, <%=acustica%>*100, <%=instrumental%>*100, <%=audiencia%>*100,<%=positivismo%>*100],
             backgroundColor: [
                 'rgba(255, 99, 132,1)',
                 'rgba(54, 162, 235, 1)',
