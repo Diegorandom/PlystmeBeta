@@ -5,7 +5,8 @@ var request = require("request");
 router.get('/pool', function(req, res, error){
     console.log("Llegamos al pool")
     var objetosGlobales = req.app.get('objetosGlobales');
-    var position = req.sessions.position;
+    var position = req.app.get('position');
+    position = req.sessions.position;
     var pool = [];
     
     objetosGlobales.forEach(function(item, index){
@@ -59,7 +60,8 @@ router.get('/pool', function(req, res, error){
 
 router.get('/create/playlist', function(req, res){
 var objetosGlobales = req.app.get('objetosGlobales');
-var position = req.sessions.position;
+var position = req.app.get('position');
+    position = req.sessions.position;
     
 var playlistname = "FIESTA ATMOS"
 console.log('playlistname = ' + playlistname);

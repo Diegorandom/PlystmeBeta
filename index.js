@@ -156,7 +156,7 @@ app.get('/heartbeat', function(req,res){
         // do something
         if(objetosGlobales.length>1){
             position = req.sessions.position;
-            objetosGlobales.splice(position, 1);
+            objetosGlobales[req.sessions.position] = null
             console.log('Depuracion de datos no utilizados')
             console.log(objetosGlobales)
         }
@@ -171,8 +171,18 @@ app.get('/', function(req, res, error){
         if(error == true){
             res.render('pages/error')
         }else{    
-
-            objetosGlobales[0].totalUsers = objetosGlobales.length
+            objetosGlobales[0].totalUsers = 0;
+            
+            objetosGlobales.forEach(function(item, index){
+                if(item != null){
+                    objetosGlobales[0].totalUsers = objetosGlobales[0].totalUsers + 1
+                }
+            })
+            
+            if( objetosGlobales[0].totalUsers <= 1){
+                objetosGlobales.splice(1, objetosGlobales[0].totalUsers.lenght-1)
+            }
+            
             console.log(objetosGlobales)
             res.render('pages/autorizacion',  objetosGlobales[0]);
         
@@ -407,7 +417,7 @@ objetosGlobales[0].spotifyApi.addToMySavedTracks([track_uri.substring(14)])
 });
 
 app.get('/idle', function(req,res){
-    objetosGlobales.splice(req.sessions.position, 1);
+    objetosGlobales[req.sessions.position] = null
     console.log('redireccionando y depurando datos')
     res.send("success");
     req.sessions.position = 0;
@@ -415,7 +425,7 @@ app.get('/idle', function(req,res){
 
 app.get('/logOut', function(req, res) {
     position = req.sessions.position;
-    objetosGlobales.splice(position, 1);
+    objetosGlobales[req.sessions.position] = null
     position = 0
     req.sessions.position = 0
     objetosGlobales[0].access_token = null
