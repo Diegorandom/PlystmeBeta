@@ -341,6 +341,42 @@ router.get('/callback', function(req, res, error) {
                                       });
                                     console.log(''); 
                                          
+                                         //Comienza request de perfil
+                                         
+                                            
+                                        var options = { method: 'POST',
+                                          url: 'https://atmos-algorithm.mybluemix.net/api/v1/user_profile/user_profile',
+                                          headers: 
+                                           { 'Postman-Token': '234b375e-8429-4718-b095-2054555fd0b2',
+                                             'Cache-Control': 'no-cache',
+                                             'Content-Type': 'application/json' },
+                                          body: { spotifyid: objetosGlobales[position].userid },
+                                          json: true };
+
+                                        request(options, function (error, response, body) {
+                                          if (error) throw new Error(error);
+
+                                          console.log(body);
+                                            
+                                            objetosGlobales[position].danceability = body.profile.danceability_profile;
+                                                    
+                                                    objetosGlobales[position].energia = body.profile.energia_profile;
+                                                    
+                                                    objetosGlobales[position].acustica = body.profile.acousticness_profile;
+                                                    
+                                                    objetosGlobales[position].instrumental = body.profile.instrumentalness_profile;
+                                                    
+                                                    objetosGlobales[position].audiencia = body.profile.liveness_profile;
+                                                    
+                                                    objetosGlobales[position].positivismo = body.profile.positivismo_profile;
+                                                    
+                                                    console.log(objetosGlobales[position]);
+                                            
+                                        });
+                                          
+                                         
+                                         //Termina request de perfil
+                                         
                                         req.sessions.position = position;
                                         
                                         res.redirect('/perfil#' +
@@ -381,6 +417,44 @@ router.get('/callback', function(req, res, error) {
                                                 objetosGlobales[position].seedTracks[records._fields[1]-1] = records._fields[0].properties;
                                                // objetosGlobales[position].track_uri_ref2[records._fields[1]-1]= records._fields[0].properties.spotifyid;
                                             }else{
+                                                
+                                                
+                                                //Comienza request de perfil
+                                         
+                                                
+                                                var options = { method: 'POST',
+                                                  url: 'https://atmos-algorithm.mybluemix.net/api/v1/user_profile/user_profile',
+                                                  headers: 
+                                                   { 'Postman-Token': '234b375e-8429-4718-b095-2054555fd0b2',
+                                                     'Cache-Control': 'no-cache',
+                                                     'Content-Type': 'application/json' },
+                                                  body: { spotifyid: objetosGlobales[position].userid },
+                                                  json: true };
+
+                                                request(options, function (error, response, body) {
+                                                  if (error) throw new Error(error);
+
+                                                  console.log(body);
+                                                    
+                                    objetosGlobales[position].danceability = body.profile.danceability_profile;
+                                                    
+                                                    objetosGlobales[position].energia = body.profile.energia_profile;
+                                                    
+                                                    objetosGlobales[position].acustica = body.profile.acousticness_profile;
+                                                    
+                                                    objetosGlobales[position].instrumental = body.profile.instrumentalness_profile;
+                                                    
+                                                    objetosGlobales[position].audiencia = body.profile.liveness_profile;
+                                                    
+                                                    objetosGlobales[position].positivismo = body.profile.positivismo_profile;
+                                                    
+                                                    console.log(objetosGlobales[position]);
+                                                    
+                                                });
+
+
+                                                 //Termina request de perfil
+                                                
                                                 req.sessions.position = position;
                         
                                                  res.redirect('/perfil#' +
