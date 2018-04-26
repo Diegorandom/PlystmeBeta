@@ -93,12 +93,12 @@ if( app.get('port') == 5000 ){
     console.log("Corriendo en servidor web con uri de redireccionamiento: ");
     objetosGlobales[0].client_id = 'b590c1e14afd46a69891549457267135'; // Your client id
     objetosGlobales[0].client_secret = config.sessionSecret; // Your secret
-    objetosGlobales[0].redirect_uri = 'https://proyecto-techclub.herokuapp.com/callback'; // Your redirect uri
+    objetosGlobales[0].redirect_uri = 'http://ponteatmos.com/callback'; // Your redirect uri
 
     objetosGlobales[0].spotifyApi = new SpotifyWebApi({
         clientId: 'b590c1e14afd46a69891549457267135',
         clientSecret: config.sessionSecret,
-        redirectUri: 'https://proyecto-techclub.herokuapp.com/callback' 
+        redirectUri: 'http://ponteatmos.com/callback' 
     });
     console.log(objetosGlobales[0].redirect_uri);
 };
