@@ -509,7 +509,7 @@
                        console.log(item)
                        var iDiv = document.createElement('div');
                         iDiv.id = 'pool' + index;
-                        iDiv.className = 'col-lg-12 col-md-4 col-xs-12 col-sm-4';
+                        iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
                         iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; "
 
                         // Create the inner div before appending to the body
@@ -540,6 +540,7 @@
                         var img= document.createElement("img")
                         img.src=item[4]
                         img.alt="omg"
+                        img.style="max-width:200px;"
                         
                         boton.appendChild(img)
                         
