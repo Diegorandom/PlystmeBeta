@@ -166,21 +166,17 @@ app.get('/heartbeat', function(req,res){
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
 app.get('/', function(req, res, error){ 
+   
     
-    
-
-    
-if(error == true){
-    res.render('pages/error')
-}else{    
+        if(error == true){
+            res.render('pages/error')
+        }else{    
 
             objetosGlobales[0].totalUsers = objetosGlobales.length
-    
-        console.log(objetosGlobales)
-        res.render('pages/autorizacion',  objetosGlobales[0]);
+            console.log(objetosGlobales)
+            res.render('pages/autorizacion',  objetosGlobales[0]);
         
-    
-}
+        }       
 });
 
 
