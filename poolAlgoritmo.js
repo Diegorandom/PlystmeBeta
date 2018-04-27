@@ -11,7 +11,15 @@ router.get('/pool', function(req, res, error){
     
     objetosGlobales.forEach(function(item, index){
         if(index != 0 && objetosGlobales[index] != null){
-           pool.push(objetosGlobales[index].userid)
+           pool.forEach(function(record, index){
+               
+               if(record == objetosGlobales[index].userid){
+                   
+               }else if(index == pool.length-1){
+                   pool.push(objetosGlobales[index].userid) 
+               }
+              
+           })
         }
         
         if(index == objetosGlobales.length-1){
