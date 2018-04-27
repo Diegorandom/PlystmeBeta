@@ -11,7 +11,7 @@ var querystring = require('querystring');
 
 router.get('/callback', function(req, res, error) {
     var objetosGlobales = req.app.get('objetosGlobales');
-    var position = req.sessions.position
+    var position = position + 1;
     
     if(error == true){ res.render('pages/error')}else{ 
         
@@ -75,7 +75,6 @@ router.get('/callback', function(req, res, error) {
             jsonDatos.followers = bodyS.followers.total;    
             console.log("userid:" + jsonDatos.userid + '\n');
             
-            position = position + 1;
             
             objetosGlobales[position]= jsonDatos;
             objetosGlobales[position].access_token = objetosGlobales[0].access_token;
