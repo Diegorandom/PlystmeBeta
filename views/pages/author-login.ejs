@@ -27,7 +27,7 @@
 	<body class="page-login"  style="background: url('img/fondo4.png') no-repeat; background-size:cover;background-attachment:fixed; width:100%; transition: all 1.5s ease; background-position:center;">
 
         
-        <div>
+        <div id="fondoIphone" style="display: none; height: 100%; position:fixed; top:0; bottom:0; z-index:-1000; background: url('img/fondo4.png') no-repeat;">
         
 	<!-- THE HEADER -->
 	<header>
@@ -858,9 +858,9 @@ var myChart = new Chart(ctx, {
         
         
         $('#content-block').css("margin-top","50px");
-        $('body').css("top","0");
-        $('body').css("left","0");
-        $('body').css("background-size","auto 100%");
+        $('body').css("display","none");
+        $('#fondoIphone').css("display","inherit");
+        
         
         
     }
