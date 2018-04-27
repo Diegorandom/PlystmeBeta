@@ -81,7 +81,7 @@
                     
                         <br/>
                                             
-                        <canvas id="myChart" width="400" height="400" style="background-color:rgba(255,255,255,0); border-radius:5px; color:white; max-width:400px; margin: 0 auto;"></canvas>
+                        <canvas id="myChart" width="400" height="400" style="background-color:white; border-radius:5px; max-width:400px; margin: 0 auto;"></canvas>
                                             <br> 
                     
                     <table class="table" style="background-color: rgba(255,255,255,0.5); border-radius:5px; margin-bottom:50px;">
@@ -593,29 +593,17 @@
         
         var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
-    type: 'pie',
+    type: 'radar',
     data: {
         labels: ["Danzabilidad", "Energía", "Habla", "Acustica", "Instrumental", "En vivo","Positivismo"],
         datasets: [{
-            label: '# of Votes',
+            label: 'Preferencias',
             data: [<%=danceability%>*100, <%=energia%>*100, <%=dialogo%>*100, <%=acustica%>*100, <%=instrumental%>*100, <%=audiencia%>*100,<%=positivismo%>*100],
             backgroundColor: [
-                'rgba(255, 99, 132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255,1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(200, 250, 50, 1)'
+                'rgba(55, 99, 252,0.5)'
             ],
             borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(200, 250, 50, 1)'
+                '#d5573b'
             ],
             borderWidth: 1
         }]
@@ -653,7 +641,7 @@ var myChart = new Chart(ctx, {
         var ancho = $( window ).width();
         
         if(ancho > 577){        
-            $('body').css("background-position","0 150%");
+            $('body').css("background-position","center");
         }else{
             $('body').css("background-position","center");
         }
