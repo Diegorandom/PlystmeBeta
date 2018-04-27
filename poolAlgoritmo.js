@@ -11,8 +11,14 @@ router.get('/pool', function(req, res, error){
     
     objetosGlobales.forEach(function(item, index){
         if(index != 0 && objetosGlobales[index] != null){
-           pool.push(objetosGlobales[index].userid)
+              pool.push(objetosGlobales[index].userid)
+              pool = pool.filter(function(item, pos, self) {
+                return self.indexOf(item) == pos;
+              })
         }
+        
+        
+        
         
         if(index == objetosGlobales.length-1){
             
@@ -25,11 +31,16 @@ router.get('/pool', function(req, res, error){
               body: { spotifyid: pool  },
               json: true };
 
+            
             function Test(options){
                 request(options, function (error, response, body) {
-                    if (error) {
+                    if (error == true || body.listaCanciones == null) {
+                    console.log("API dormida zzzzz");
                         Test(options);
                     }else{
+                        console.log("API funcionando...");	
+                        console.log(body);  
+                        
                         objetosGlobales[0].pool = pool
                         console.log(objetosGlobales)
                         console.log(body)
@@ -45,19 +56,20 @@ router.get('/pool', function(req, res, error){
 
                         console.log("objetosGlobales[position].playlist")
                         console.log(objetosGlobales[position].playlist)
-                     
                     }
                     });
             };
 
+             console.log("pool")
+            console.log(pool)
+            
             Test(options);
             
 
         }
     })
     
-    console.log("pool")
-    console.log(pool)
+   
     
        
     
