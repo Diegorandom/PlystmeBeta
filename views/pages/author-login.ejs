@@ -629,7 +629,7 @@ var myChart = new Chart(ctx, {
         $('body').css("width","100%");
         $('body').css("background-position","center");
         
-        
+        window.scrollTo(0,0);
     });
     
     $('#btnTop50').on('click',function(){
@@ -637,6 +637,8 @@ var myChart = new Chart(ctx, {
         $('body').css("background-size","cover");
         $('body').css("background-attachment","fixed");
         $('body').css("width","100%");
+        
+        window.scrollTo(0,0);
         
         var ancho = $( window ).width();
         
@@ -653,6 +655,8 @@ var myChart = new Chart(ctx, {
         $('body').css("background-attachment","fixed");
         $('body').css("width","100%");
         $('body').css("background-position","center");
+        
+        window.scrollTo(0,0);
     });
     
     $('#btnAjustes').on('click',function(){
@@ -661,6 +665,8 @@ var myChart = new Chart(ctx, {
         var ancho = $( window ).width();
         
         console.log(ancho);
+        
+        window.scrollTo(0,0);
         
         if(ancho > 577){
             $('body').css("background","url('img/fondo8.png') no-repeat");
