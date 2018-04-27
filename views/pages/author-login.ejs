@@ -341,7 +341,7 @@
                                         </button>
                                         <br>
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:80%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="createPlaylist">
+                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:80%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="createPlaylist2">
                                             <i class="far far fa-save" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> Guardar Playlist En Spotify 
                                         </button>
                                         
@@ -498,6 +498,24 @@
             })
         })
         
+        document.getElementById('createPlaylist2').addEventListener('click', function(){
+            $.get('/create/playlist', function(data, status){
+                console.log(status)
+                
+                if(status == "success"){
+                    if(data=="playlistGuardado"){
+                        document.getElementById('floating_alert').style.display="block"
+                        console.log(data)
+                    }else if(data=="ActualizacionPlaylist"){
+                        console.log(data)
+                        document.getElementById('actualizacion').style.display="block"
+                    }
+                    
+                }
+                
+            })
+        })
+        
         document.getElementById('enterPool').addEventListener('click', function() {
             $.get( '/pool', function(data, status) {
                 console.log(data)
@@ -625,7 +643,7 @@
                     icono.style="font-size:20px; color:#94c9a9; margin-left:5px;"
                     botonPool.appendChild(icono)
                     
-                    document.getElementById('createPlaylist').style.display="block"
+                    document.getElementById('createPlaylist2').style.display="block"
                     
                     
                     
