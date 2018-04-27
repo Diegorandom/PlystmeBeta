@@ -464,6 +464,11 @@
                     if(data=="playlistGuardado"){
                         document.getElementById('floating_alert').style.display="block"
                         console.log(data)
+                        
+                        setTimeout(function(){
+                            document.getElementById('floating_alert').style.display="none"
+                        }, 2000);
+                        
                     }else if(data=="ActualizacionPlaylist"){
                         console.log(data)
                         document.getElementById('actualizacion').style.display="block"
