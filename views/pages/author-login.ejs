@@ -488,9 +488,10 @@
                     if(data=="playlistGuardado"){
                         document.getElementById('floating_alert').style.display="block"
                         console.log(data)
-                        
+                        console.log("ahuevo");
                         setTimeout(function(){
                             document.getElementById('floating_alert').style.display="none"
+                            console.log("ya no está");
                         }, 2000);
                         
                     }else if(data=="ActualizacionPlaylist"){
@@ -853,6 +854,7 @@ var myChart = new Chart(ctx, {
     
     if(iOS){
         $('#content-block').css("margin-top","50px");
+        $('body').css("background-attachment","inherit");
     }
     
 
