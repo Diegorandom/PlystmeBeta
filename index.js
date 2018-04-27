@@ -341,6 +341,8 @@ app.get('/perfil', function(request, response, error) {
         position = request.sessions.position;
         objetosGlobales[position].ref=false;
     
+        console.log('apuntador del arreglo', position)
+    
             console.log("objetosGlobales");
             console.log(objetosGlobales);
             console.log('')
