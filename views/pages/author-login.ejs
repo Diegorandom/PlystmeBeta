@@ -336,7 +336,7 @@
                                         <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #94c9a9; border-radius:5px;">Fiesta</h2>
                                         
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:80%; border: none; background-color:#FFF; margin:0 auto; color:#94c9a9;"  id="enterPool">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:80%; border: none; background-color:#FFF; margin:0 auto; color:#94c9a9;"  id="enterPool2">
                                             <i class="far fa-play-circle" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> <p style="color:#94c9a9; display:inline-block; margin-top:-5px;">Entra a la Fiesta </p> 
                                         </button>
                                         <br>
@@ -611,6 +611,119 @@
             })
         })
     
+        
+        document.getElementById('enterPool2').addEventListener('click', function() {
+            $.get( '/pool', function(data, status) {
+                console.log(data)
+                console.log(status)
+                if(status === "success"){
+                    
+                    var botonPool = document.getElementById('enterPool2')
+                    botonPool.innerHTML = "Actualizar Playlist"
+                    var icono = document.createElement('i')
+                    icono.className ="fas fa-sync-alt"
+                    icono.style="font-size:20px; color:#94c9a9; margin-left:5px;"
+                    botonPool.appendChild(icono)
+                    
+                    document.getElementById('createPlaylist').style.display="block"
+                    
+                    
+                    
+                    
+                console.log('El playlist ha cambiado')
+                   data.forEach(function(item,index){
+                       if(document.getElementById("pool"+index) !== null){
+                            document.getElementById("pool"+index).remove();
+                            console.log("Depuración de playlist")
+                       }
+                      
+                        playlist = data
+                        
+                       console.log(item)
+                       var iDiv = document.createElement('div');
+                        iDiv.id = 'pool' + index;
+                        iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
+                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; "
+
+                        // Create the inner div before appending to the body
+                        var innerDiv = document.createElement('div');
+                        innerDiv.className = 'be-post';
+                        innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
+
+                        // The variable iDiv is still good... Just append to it.
+                        iDiv.appendChild(innerDiv);
+                       
+                        var form = document.createElement("form")
+                        form.method="post"
+                        form.action="/track/profile"
+                        form.id="trackprofile"
+                        
+                        innerDiv.appendChild(form)
+                        
+                        var boton = document.createElement("button")
+                        boton.className="be-img-block"
+                        boton.form="trackprofile"
+                        boton.type="submit"
+                        boton.name="index"
+                        boton.value= index
+                        boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px;"
+                        
+                        form.appendChild(boton)
+                        
+                        var img= document.createElement("img")
+                        img.src=item[4]
+                        img.alt="omg"
+                        img.style="max-width:200px;"
+                        
+                        boton.appendChild(img)
+                        
+                        var span = document.createElement("span")
+                        span.className="be-post-title"
+                        span.style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"
+                        
+                        span.innerHTML = item[0]
+                        
+                        innerDiv.appendChild(span)
+                        
+                        var a = document.createElement('a')
+                        a.className="close"
+                        a.style="color:#885053; font-size:20px; font-family:'Kanit', sans-serif;"
+                        a.id="fadeOut" + index
+                        a.innerHTML ="&times;"
+                        
+                        innerDiv.appendChild(a)
+                        
+                        var span2 = document.createElement("span")
+                        span2.style="color:#885053; font-size:120%;"
+                        span2.innerHTML="Popularidad: " + item[5]
+                        
+                        innerDiv.appendChild(span2)
+                        
+                        var div2 = document.createElement("div")
+                        div2.className="author-post"
+                        
+                        innerDiv.appendChild(div2)
+                        
+                        var span3= document.createElement("span")
+                        span3.style="color:#885053; font-size:150%;"
+                        span3.innerHTML="Por " + item[2]
+                        
+                        div2.appendChild(span3)
+
+                        // Then append the whole thing onto the body
+                        document.getElementsByClassName('pool')[0].appendChild(iDiv);
+                       
+                    
+                       
+                       
+                       console.log('Nueva canción desplegada')
+                   })
+                }else{
+                    console.log(data);
+                }
+                
+            })
+        })
         
         
         
