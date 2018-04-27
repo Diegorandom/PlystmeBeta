@@ -329,6 +329,8 @@ router.get('/callback', function(req, res, error) {
                                              .catch(function(err){
                                                 console.log(err);
                                             })
+                                         
+                                        
 
                                         })   
                                         
@@ -339,48 +341,51 @@ router.get('/callback', function(req, res, error) {
                                       });
                                     console.log(''); 
                                          
+                                        
                                          //Comienza request de perfil
                                          
                                             
-                                        var options = { method: 'POST',
-                                          url: 'https://atmos-algorithm.mybluemix.net/api/v1/user_profile/user_profile',
-                                          headers: 
-                                           { 'Postman-Token': '234b375e-8429-4718-b095-2054555fd0b2',
-                                             'Cache-Control': 'no-cache',
-                                             'Content-Type': 'application/json' },
-                                          body: { spotifyid: objetosGlobales[position].userid },
-                                          json: true };
+                                            var options = { method: 'POST',
+                                              url: 'https://atmos-algorithm.mybluemix.net/api/v1/user_profile/user_profile',
+                                              headers: 
+                                               { 'Postman-Token': '234b375e-8429-4718-b095-2054555fd0b2',
+                                                 'Cache-Control': 'no-cache',
+                                                 'Content-Type': 'application/json' },
+                                              body: { spotifyid: objetosGlobales[position].userid },
+                                              json: true };
 
-                                        request(options, function (error, response, body) {
-                                          if (error) throw new Error(error);
+                                            request(options, function (error, response, body) {
+                                              if (error) throw new Error(error);
 
-                                          console.log(body);
-                                            
-                                            objetosGlobales[position].danceability = body.profile.danceability_profile;
-                                                    
-                                                    objetosGlobales[position].energia = body.profile.energia_profile;
-                                                    
-                                                    objetosGlobales[position].acustica = body.profile.acousticness_profile;
-                                                    
-                                                    objetosGlobales[position].instrumental = body.profile.instrumentalness_profile;
-                                                    
-                                                    objetosGlobales[position].audiencia = body.profile.liveness_profile;
-                                                    
-                                                    objetosGlobales[position].positivismo = body.profile.positivismo_profile;
-                                                    
-                                                    console.log(objetosGlobales[position]);
-                                            
-                                        });
-                                          
-                                         
-                                         //Termina request de perfil
-                                         
+                                              console.log(body);
+
+                                                objetosGlobales[position].danceability = body.profile.danceability_profile;
+
+                                                        objetosGlobales[position].energia = body.profile.energia_profile;
+
+                                                        objetosGlobales[position].acustica = body.profile.acousticness_profile;
+
+                                                        objetosGlobales[position].instrumental = body.profile.instrumentalness_profile;
+
+                                                        objetosGlobales[position].audiencia = body.profile.liveness_profile;
+
+                                                        objetosGlobales[position].positivismo = body.profile.positivismo_profile;
+
+                                                        console.log(objetosGlobales[position]);
+                                                
+                                                
+                                                        res.redirect('/perfil#' +
+                                                          querystring.stringify({
+                                                            access_token: objetosGlobales[position].access_token,
+                                                            refresh_token: objetosGlobales[position].refresh_token
+                                                          })); 
+
+                                            });
+
+
+                                             //Termina request de perfil   
                                         
-                                        res.redirect('/perfil#' +
-                                          querystring.stringify({
-                                            access_token: objetosGlobales[position].access_token,
-                                            refresh_token: objetosGlobales[position].refresh_token
-                                          })); 
+                                        
                                          
                                      }
                                     
@@ -450,6 +455,12 @@ router.get('/callback', function(req, res, error) {
                                                         objetosGlobales[position].positivismo = body.profile.positivismo_profile;
 
                                                         console.log(objetosGlobales[position]);
+                                                        
+                                                        res.redirect('/perfil#' +
+                                                      querystring.stringify({
+                                                        access_token: objetosGlobales[position].access_token,
+                                                        refresh_token: objetosGlobales[position].refresh_token
+                                                      }));
 
                                                     }
                                                     });
@@ -462,11 +473,7 @@ router.get('/callback', function(req, res, error) {
                                                 
                                                 
                         
-                                                 res.redirect('/perfil#' +
-                                                      querystring.stringify({
-                                                        access_token: objetosGlobales[position].access_token,
-                                                        refresh_token: objetosGlobales[position].refresh_token
-                                                      }));
+                                                 
                                             }
                                         
                                     })
