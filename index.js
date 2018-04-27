@@ -156,9 +156,12 @@ app.get('/heartbeat', function(req,res){
         // do something
         if(objetosGlobales.length>1){
             position = req.sessions.position;
-            objetosGlobales[req.sessions.position] = null
-            console.log('Depuracion de datos no utilizados')
-            console.log(objetosGlobales)
+            objetosGlobales[position] = null
+            position = 0
+            req.sessions.position = 0
+            objetosGlobales[0].access_token = null
+            console.log('Depuracion de datos por salida de Usuario')
+            console.log(objetosGlobales)   
         }
     }
     res.send('Heartbeat')
