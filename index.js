@@ -345,9 +345,6 @@ app.get('/perfil', function(request, response, error) {
     
             console.log("objetosGlobales");
             console.log(objetosGlobales);
-            console.log('')
-            console.log('SeedTracks info:')
-            console.log(objetosGlobales[position].seedTracks)
         
             response.render('pages/author-login.ejs', objetosGlobales[position]);
 });
