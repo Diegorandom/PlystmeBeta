@@ -11,7 +11,8 @@ var querystring = require('querystring');
 
 router.get('/callback', function(req, res, error) {
     var objetosGlobales = req.app.get('objetosGlobales');
-    var position = position + 1;
+    var position = req.app.get('position');
+        position = position + 1;
     
     if(error == true){ res.render('pages/error')}else{ 
         
