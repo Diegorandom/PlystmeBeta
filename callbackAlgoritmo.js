@@ -356,7 +356,6 @@ router.get('/callback', function(req, res, error) {
                                               json: true };
 
                                             request(options, function (error, response, body) {
-                                              if (error) throw new Error(error);
 
                                               console.log(body);
 
