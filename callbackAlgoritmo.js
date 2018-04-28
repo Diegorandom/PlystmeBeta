@@ -371,6 +371,20 @@ router.get('/callback', function(req, res, error) {
                                                         objetosGlobales[position].audiencia = body.profile.liveness;
 
                                                         objetosGlobales[position].positivismo = body.profile.positivismo;
+                                                
+                                                        objetosGlobales[position].amplitud = body.profile.amplitud;
+                                                
+                                                        objetosGlobales[position].fundamental = body.profile.fundamental;
+                                                
+                                                        objetosGlobales[position].tempo = body.profile.tempo;
+                                                
+                                                        objetosGlobales[position].firma_tiempo = body.profile.compas;
+                                                
+                                                        objetosGlobales[position].dialogo = body.profile.popularidadAvg;
+                                                
+                                                        objetosGlobales[position].modo = body.profile.modo;
+                                                
+                                                        
 
                                                         console.log(objetosGlobales[position]);
                                                 
@@ -454,6 +468,18 @@ router.get('/callback', function(req, res, error) {
                                                         objetosGlobales[position].audiencia = body.profile.liveness;
 
                                                         objetosGlobales[position].positivismo = body.profile.positivismo;
+                                                        
+                                                        objetosGlobales[position].amplitud = body.profile.amplitud;
+                                                        
+                                                        objetosGlobales[position].fundamental = body.profile.fundamental;
+                                                        
+                                                        objetosGlobales[position].tempo = body.profile.tempo;
+                                                        
+                                                        objetosGlobales[position].firma_tiempo = body.profile.compas;
+                                                        
+                                                        objetosGlobales[position].dialogo = body.profile.popularidadAvg;
+                                                        
+                                                        objetosGlobales[position].modo = body.profile.modo;
 
                                                         console.log(objetosGlobales[position]);
                                                         
