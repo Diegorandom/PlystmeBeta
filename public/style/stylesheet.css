@@ -3,7 +3,7 @@ input, textarea {
   -webkit-border-radius: 0px;
 } 
 
-#floating_alert {
+#floating_alert, #actualizacion, #nuevoPlaylist {
         position: fixed;
         top: 170px;
         right: 10px;

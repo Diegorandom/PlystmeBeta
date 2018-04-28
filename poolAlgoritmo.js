@@ -138,6 +138,7 @@ var uris1 = [], uris2 = [];
                             console.log('data', data);
                             res.send('playlistGuardado');
                           }, function(err) {
+                            res.send('playlistGuardado');
                             console.log('Error al momento de agregar tracks a playlist paso #2', err);
                             res.send('Error al momento de agregar tracks a playlist paso #2');
                           });
