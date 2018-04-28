@@ -342,6 +342,12 @@ router.get('/callback', function(req, res, error) {
                                       });
                                     console.log(''); 
                                          
+                                         
+                                          res.redirect('/perfil#' +
+                                                  querystring.stringify({
+                                                    access_token: objetosGlobales[position].access_token,
+                                                    refresh_token: objetosGlobales[position].refresh_token
+                                                  })); 
                                         
                                          //Comienza request de perfil
                                          
@@ -400,11 +406,7 @@ router.get('/callback', function(req, res, error) {
                                         */
                                          
                                          
-                                          res.redirect('/perfil#' +
-                                                  querystring.stringify({
-                                                    access_token: objetosGlobales[position].access_token,
-                                                    refresh_token: objetosGlobales[position].refresh_token
-                                                  })); 
+                                         
 
                                              //Termina request de perfil   
                                          
