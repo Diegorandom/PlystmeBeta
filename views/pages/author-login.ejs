@@ -177,8 +177,8 @@
                                 
                             </tr>
                             <tr>
-                                <th>Habla</th>
-                                <td><%=dialogo.toFixed(1)*100%>/100</td>
+                                <th>Popularidad</th>
+                                <td><%=dialogo.toFixed(1)%>/100</td>
                                 
                             </tr>
                             <tr>
@@ -202,11 +202,11 @@
                                 <th>Tempo</th>
                                 <td><%=tempo.toFixed(1)%> BPM</td>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <th>Duración</th>
                                 <td><%=duracion.toFixed(1)%> Minutes Average</td>
                                 
-                            </tr>
+                            </tr>-->
                             <tr>
                                 <th>Beats por compás</th>
                                 <td><%=Math.round(firma_tiempo)%></td>
@@ -757,10 +757,10 @@
 var myChart = new Chart(ctx, {
     type: 'radar',
     data: {
-        labels: ["Danzabilidad", "Energía", "Habla", "Acustica", "Instrumental", "En vivo","Positivismo"],
+        labels: ["Danzabilidad", "Energía", "Popularidad", "Acustica", "Instrumental", "En vivo","Positivismo"],
         datasets: [{
             label: 'Preferencias',
-            data: [<%=danceability%>*100, <%=energia%>*100, <%=dialogo%>*100, <%=acustica%>*100, <%=instrumental%>*100, <%=audiencia%>*100,<%=positivismo%>*100],
+            data: [<%=danceability%>*100, <%=energia%>*100, <%=dialogo%>, <%=acustica%>*100, <%=instrumental%>*100, <%=audiencia%>*100,<%=positivismo%>*100],
             backgroundColor: [
                 'rgba(55, 99, 252,0.5)'
             ],
