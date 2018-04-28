@@ -346,7 +346,7 @@ router.get('/callback', function(req, res, error) {
                                          //Comienza request de perfil
                                          
                                             
-                                            var options = { method: 'POST',
+                                            /*var options = { method: 'POST',
                                               url: 'https://atmos-algorithm.mybluemix.net/api/v1/user_profile/user_profile',
                                               headers: 
                                                { 'Postman-Token': '234b375e-8429-4718-b095-2054555fd0b2',
@@ -392,17 +392,19 @@ router.get('/callback', function(req, res, error) {
 
                                                         console.log(objetosGlobales[position]);
                                                     
-                                                        res.redirect('/perfil#' +
-                                                  querystring.stringify({
-                                                    access_token: objetosGlobales[position].access_token,
-                                                    refresh_token: objetosGlobales[position].refresh_token
-                                                  })); 
+                                                       
                                                     
                                                 }
                                                 });
                                         };
-                                        
+                                        */
                                          
+                                         
+                                          res.redirect('/perfil#' +
+                                                  querystring.stringify({
+                                                    access_token: objetosGlobales[position].access_token,
+                                                    refresh_token: objetosGlobales[position].refresh_token
+                                                  })); 
 
                                              //Termina request de perfil   
                                          
