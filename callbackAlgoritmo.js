@@ -354,10 +354,15 @@ router.get('/callback', function(req, res, error) {
                                                  'Content-Type': 'application/json' },
                                               body: { spotifyid: objetosGlobales[position].userid },
                                               json: true };
-
+                                         
+                                         
+                                         function Test(options){
                                             request(options, function (error, response, body) {
-
-                                              console.log(body);
+                                                if (error == true || body.listaCanciones == null) {
+                                                console.log("API dormida zzzzz");
+                                                    Test(options);
+                                                }else{
+                                                    console.log(body);
 
                                                 objetosGlobales[position].danceability = body.profile.danceability;
 
@@ -386,21 +391,23 @@ router.get('/callback', function(req, res, error) {
                                                         
 
                                                         console.log(objetosGlobales[position]);
-                                                
-                                                
-                                                        
-
-                                            });
+                                                    
+                                                        res.redirect('/perfil#' +
+                                                  querystring.stringify({
+                                                    access_token: objetosGlobales[position].access_token,
+                                                    refresh_token: objetosGlobales[position].refresh_token
+                                                  })); 
+                                                    
+                                                }
+                                                });
+                                        };
+                                        
                                          
-                                         
-                                            res.redirect('/perfil#' +
-                                                          querystring.stringify({
-                                                            access_token: objetosGlobales[position].access_token,
-                                                            refresh_token: objetosGlobales[position].refresh_token
-                                                          })); 
-
 
                                              //Termina request de perfil   
+                                         
+                                         
+                                         
                                         
                                         
                                          
