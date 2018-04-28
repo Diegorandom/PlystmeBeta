@@ -389,13 +389,16 @@ router.get('/callback', function(req, res, error) {
                                                         console.log(objetosGlobales[position]);
                                                 
                                                 
-                                                        res.redirect('/perfil#' +
+                                                        
+
+                                            });
+                                         
+                                         
+                                            res.redirect('/perfil#' +
                                                           querystring.stringify({
                                                             access_token: objetosGlobales[position].access_token,
                                                             refresh_token: objetosGlobales[position].refresh_token
                                                           })); 
-
-                                            });
 
 
                                              //Termina request de perfil   
