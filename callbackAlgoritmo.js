@@ -450,7 +450,7 @@ router.get('/callback', function(req, res, error) {
                                                 
                                                 
                                                 //Comienza request de perfil
-                                         
+                                         /*
                                                 
                                                 var options = { method: 'POST',
                                                   url: 'https://atmos-algorithm.mybluemix.net/api/v1/user_profile/user_profile',
@@ -496,18 +496,20 @@ router.get('/callback', function(req, res, error) {
 
                                                         console.log(objetosGlobales[position]);
                                                         
-                                                        res.redirect('/perfil#' +
-                                                      querystring.stringify({
-                                                        access_token: objetosGlobales[position].access_token,
-                                                        refresh_token: objetosGlobales[position].refresh_token
-                                                      }));
+                                                       
 
                                                     }
                                                     });
                                                 };
 
-                                            Test(options);
+                                            Test(options); */
 
+                                                
+                                                 res.redirect('/perfil#' +
+                                                      querystring.stringify({
+                                                        access_token: objetosGlobales[position].access_token,
+                                                        refresh_token: objetosGlobales[position].refresh_token
+                                                      }));
 
                                                  //Termina request de perfil
                                                 
