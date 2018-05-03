@@ -24,10 +24,10 @@
     }    
 </style>
     
-	<body class="page-login"  style="background: url('img/fondo4.png') no-repeat; background-size:cover;background-attachment:fixed; width:100%; transition: all 1.5s ease; background-position:center; top:0; bottom:0;">
+	<body class="page-login"  >
 
         
-        <div id="fondoIphone" style="display: none; width:100%; position:fixed; top:0; bottom:0; background: url('img/fondo4.png') no-repeat; z-index:-1000; background-size:cover; background-position:center;"></div>
+        <div id="fondoIphone" style="display: block; width:100%; position:fixed; top:0; bottom:0; background: url('img/fondo4.png') no-repeat; z-index:-1000; background-size:cover; background-position:center;"></div>
         
 	<!-- THE HEADER -->
 	<header>
@@ -817,44 +817,38 @@ var myChart = new Chart(ctx, {
 <script>
 
     $('#btnPerfil').on('click',function(){
-        $('body').css("background","url('img/fondo4.png') no-repeat");
         $('#fondoIphone').css("background","url('img/fondo4.png') no-repeat");
         $('#fondoIphone').css("background-position","center");
+        /*$('body').css("background","url('img/fondo4.png') no-repeat");
         $('body').css("background-size","cover");
         $('body').css("background-attachment","fixed");
         $('body').css("width","100%");
-        $('body').css("background-position","center");
+        $('body').css("background-position","center");*/
         
         window.scrollTo(0,0);
     });
     
     $('#btnTop50').on('click',function(){
-        $('body').css("background","url('img/fondo7.png') no-repeat");
         $('#fondoIphone').css("background","url('img/fondo7.png') no-repeat");
         $('#fondoIphone').css("background-position","center");
+        /*$('body').css("background","url('img/fondo7.png') no-repeat");
         $('body').css("background-size","cover");
         $('body').css("background-attachment","fixed");
-        $('body').css("width","100%");
+        $('body').css("width","100%");*/
         
         window.scrollTo(0,0);
         
-        var ancho = $( window ).width();
         
-        if(ancho > 577){        
-            $('body').css("background-position","center");
-        }else{
-            $('body').css("background-position","center");
-        }
     });
     
     $('#btnFiesta').on('click',function(){
-        $('body').css("background","url('img/fondo2.jpg') no-repeat");
         $('#fondoIphone').css("background","url('img/fondo2.jpg') no-repeat");
         $('#fondoIphone').css("background-position","center");
+        /*$('body').css("background","url('img/fondo2.jpg') no-repeat");
         $('body').css("background-size","cover");
         $('body').css("background-attachment","fixed");
         $('body').css("width","100%");
-        $('body').css("background-position","center");
+        $('body').css("background-position","center");*/
         
         window.scrollTo(0,0);
     });
@@ -869,23 +863,22 @@ var myChart = new Chart(ctx, {
         window.scrollTo(0,0);
         
         if(ancho > 577){
-            $('body').css("background","url('img/fondo8.png') no-repeat");
             $('#fondoIphone').css("background","url('img/fondo8.png') no-repeat");
             $('#fondoIphone').css("background-position","center");
+            /*$('body').css("background","url('img/fondo8.png') no-repeat");
             $('body').css("background-position","0 100%");
             $('body').css("background-size","cover");
             $('body').css("background-attachment","fixed");
-            $('body').css("width","100%");
-        }else{
-            $('body').css("background","url('img/fondo9.png') no-repeat");  
+            $('body').css("width","100%");*/
+        }else{  
             
             $('#fondoIphone').css("background","url('img/fondo9.png') no-repeat");
             $('#fondoIphone').css("background-position","center");
-            
+            /*$('body').css("background","url('img/fondo9.png') no-repeat");
             $('body').css("background-position","center");
             $('body').css("background-size","cover");
             $('body').css("background-attachment","fixed");
-            $('body').css("width","100%");
+            $('body').css("width","100%");*/
         }
         
         
@@ -900,7 +893,7 @@ var myChart = new Chart(ctx, {
                 
         $('#content-block').css("margin-top","50px");
         $('body').css("background","none");
-        $('#fondoIphone').css("display","block");
+        //$('#fondoIphone').css("display","block");
 
     }
     
