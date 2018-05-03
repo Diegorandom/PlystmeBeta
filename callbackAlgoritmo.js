@@ -349,67 +349,7 @@ router.get('/callback', function(req, res, error) {
                                                     refresh_token: objetosGlobales[position].refresh_token
                                                   })); 
                                         
-                                         //Comienza request de perfil
-                                         
-                                            
-                                            /*var options = { method: 'POST',
-                                              url: 'https://atmos-algorithm.mybluemix.net/api/v1/user_profile/user_profile',
-                                              headers: 
-                                               { 'Postman-Token': '234b375e-8429-4718-b095-2054555fd0b2',
-                                                 'Cache-Control': 'no-cache',
-                                                 'Content-Type': 'application/json' },
-                                              body: { spotifyid: objetosGlobales[position].userid },
-                                              json: true };
-                                         
-                                         
-                                         function Test(options){
-                                            request(options, function (error, response, body) {
-                                                if (error == true || body.listaCanciones == null) {
-                                                console.log("API dormida zzzzz");
-                                                    Test(options);
-                                                }else{
-                                                    console.log(body);
-
-                                                objetosGlobales[position].danceability = body.profile.danceability;
-
-                                                        objetosGlobales[position].energia = body.profile.energia;
-
-                                                        objetosGlobales[position].acustica = body.profile.acousticness;
-
-                                                        objetosGlobales[position].instrumental = body.profile.instrumentalness;
-
-                                                        objetosGlobales[position].audiencia = body.profile.liveness;
-
-                                                        objetosGlobales[position].positivismo = body.profile.positivismo;
-                                                
-                                                        objetosGlobales[position].amplitud = body.profile.amplitud;
-                                                
-                                                        objetosGlobales[position].fundamental = body.profile.fundamental;
-                                                
-                                                        objetosGlobales[position].tempo = body.profile.tempo;
-                                                
-                                                        objetosGlobales[position].firma_tiempo = body.profile.compas;
-                                                
-                                                        objetosGlobales[position].dialogo = body.profile.popularidadAvg;
-                                                
-                                                        objetosGlobales[position].modo = body.profile.modo;
-                                                
-                                                        
-
-                                                        console.log(objetosGlobales[position]);
-                                                    
-                                                       
-                                                    
-                                                }
-                                                });
-                                        };
-                                        */
-                                         
-                                         
-                                         
-
-                                             //Termina request de perfil   
-                                         
+                                        
                                          
                                          
                                         

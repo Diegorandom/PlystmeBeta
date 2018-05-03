@@ -483,6 +483,14 @@
             }
         }
      
+        $.post('/preferencias', function(data, status){
+            console.log(status)
+            if(status == "success"){
+                console.log('Preferencias exitoso')
+                console.log(data)
+            }
+        })
+        
         document.getElementById('createPlaylist').addEventListener('click', function(){
             $.get('/create/playlist', function(data, status){
                 console.log(status)

@@ -358,6 +358,8 @@ app.get('/perfil', function(request, response, error) {
 
 app.use(require("./perfilTrack"));
 
+app.use(require("./preferencias"));
+
 app.get('/track', function(request, response) {
   response.render('pages/page3', objetosGlobales);
 });
