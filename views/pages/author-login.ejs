@@ -15,6 +15,7 @@
          <script type="text/javascript" src="/script/Chart.js"></script>
         
         
+        
 	</head>
     
 <style>
@@ -229,7 +230,7 @@
                                         <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #94c9a9; border-radius:5px;">Fiesta</h2>
                                         
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:50%; border: none; background-color:#FFF; margin:0 auto; color:#94c9a9;"  id="enterPool">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:50%; border: none; background-color:#FFF; margin:0 auto; color:#94c9a9;" id="enterPool">
                                             <i class="far fa-play-circle" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> <p style="color:#94c9a9; display:inline-block; margin-top:-5px;">Entra a la Fiesta </p> 
                                         </button>
                                         <br>
@@ -239,20 +240,29 @@
                                         </button>
                                         <br>
                                     
-                                        <div class="col-lg-6 col-md-6" style="height:250px;">
-                                            <div style="width:100%;height:100%; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;" id="crearFiesta">
-                                            
+                                        
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:50%;height:250px; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;" >
+                                            <i class="fas fa-plus-square" style="margin-top:10px;  font-size:80px;"></i>
+
+                                            <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
+                                        </button>
+                                        
+                                        <!--<div class="col-lg-6 col-md-6" style="height:250px;"  id="crearFiesta">
+                                            <div style="width:100%;height:100%; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;">
+
                                                 <i class="fas fa-plus-square" style="margin-top:50px;  font-size:80px;"></i>
-                                                
+
                                                 <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
-                                            
+
                                             </div>
-                                        
+
                                         </div>
+                                            
                                         
-                                        <div class="col-lg-6 col-md-6" style="height:250px;">
                                         
-                                            <div style="width:100%;height:100%; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color: #94c9a9" id="entrarFiesta">
+                                        <div class="col-lg-6 col-md-6" style="height:250px;"  id="entrarFiesta">
+                                        
+                                            <div style="width:100%;height:100%; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color: #94c9a9">
                                             
                                                 <i class="fas fa-users" style="margin-top:50px;  font-size:80px;"></i>
                                                 
@@ -260,7 +270,7 @@
                                             
                                             </div>
                                         
-                                        </div>
+                                        </div>-->
                                         
                                     </div> 
                                     
@@ -281,7 +291,36 @@
                                         </button>
                                         
                                         <br>
-                                         </div>
+                                        
+                                        <!--<div class="col-xs-12  hidden-md hidden-lg" style="height:180px;"  id="crearFiesta1">
+                                            <div style="width:80%;height:100%; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;">
+
+                                                <i class="fas fa-plus-square" style="margin-top:40px;  font-size:50px;"></i>
+
+                                                <p style="font-size:25px; margin-top:10px;">Crea una fiesta</p>
+
+                                            </div>
+
+                                        </div>
+                                            
+                                        
+                                        
+                                        <div class="col-xs-12 hidden-md hidden-lg" style="height:180px; margin-top:20px;"  id="entrarFiesta1">
+                                        
+                                            <div style="width:80%;height:100%; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color: #94c9a9">
+                                            
+                                                <i class="fas fa-users" style="margin-top:40px;  font-size:50px;"></i>
+                                                
+                                                <p style="font-size:25px; margin-top:10px;">Entra a una fiesta</p>
+                                            
+                                            </div>
+                                        
+                                        </div>-->
+                                        
+                                        
+                                        
+                                        
+                                    </div>
                                     
                                     
                                     
@@ -974,6 +1013,18 @@
 
     }
     
+    
+    $('#entrarFiesta').on('click',function(){
+        console.log("asdf");
+        $('#entrarFiesta').css("display","none");
+        $('#crearFiesta').css("display","none");
+    })
+    
+    $('#entrarFiesta1').on('click',function(){
+        console.log("asdf");
+        $('#entrarFiesta1').css("display","none");
+        $('#crearFiesta1').css("display","none");
+    })
 
 
 </script>
