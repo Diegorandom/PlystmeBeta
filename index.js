@@ -153,20 +153,23 @@ app.get('/heartbeat', function(req,res){
     timeoutID = setTimeout(goInactive, 1000*60*10);
     
     res.send('Heartbeat')
-})
-
-function goInactive() {
+    
+    function goInactive() {
         // do something
-        if(objetosGlobales.length>1){
+        if(objetosGlobales.length>1 && req.sessions.position != undefined){
             position = req.sessions.position;
-            objetosGlobales[req.sessions.position] = null
-            position = 0
+            objetosGlobales[req.sessions.position] = null;
+            position = 0;
             req.sessions.position = 0
             objetosGlobales[0].access_token = null
             console.log('Depuracion de datos por salida de Usuario')
             console.log(objetosGlobales) 
         }
     }
+    
+})
+
+
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
 app.get('/', function(req, res, error){ 
