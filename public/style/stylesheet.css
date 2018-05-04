@@ -3132,6 +3132,7 @@ input:focus {
     margin-bottom: 70px !important;
 }
 
+
 @media screen and (max-width: 992px) {
     .st-col .nav{
         width: 100% !important;
