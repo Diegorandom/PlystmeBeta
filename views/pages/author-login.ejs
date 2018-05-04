@@ -97,8 +97,8 @@
                     <table class="table" style="background-color: rgba(255,255,255,0.5); border-radius:5px; margin-bottom:50px;">
                         <thead>
                             <tr>
-                                <th>Variables</th>
-                                <td>Mi perfil</td>
+                                <th>Variables Promedio</th>
+                                <td>Tu Perfil Musical</td>
                                 
                             </tr>
                         </thead>
@@ -114,11 +114,9 @@
                             <tr id="tempo">
                                 
                             </tr>
-                            <!--<tr>
-                                <th>Duración</th>
-                                <td><%=duracion.toFixed(1)%> Minutes Average</td>
+                            <tr id="duracion">
                                 
-                            </tr>-->
+                            </tr>
                             <tr id="beats">
                                 
                             </tr>
@@ -520,10 +518,10 @@
                     
                 switch(Math.round(data.modo)){
                     case 0:
-                        data.modo = 'Minor';
+                        data.modo = 'Menor';
                         break;
                     case 1:
-                        data.modo = 'Major';
+                        data.modo = 'Mayor';
                         break;
                 }
                         
@@ -566,6 +564,16 @@
                 trBeats.appendChild(beatsT)
                 trBeats.appendChild(beats)
                 
+                var trDuracion = document.getElementById('duracion')
+                
+                var durT = document.createElement('th')
+                durT.innerHTML = 'Duración'
+                
+                var dur = document.createElement('td')
+                dur.innerHTML = data.duracion/60000 + ' minutos'
+                
+                trDuracion.appendChild(durT)
+                trDuracion.appendChild(dur)
             }
         })
         

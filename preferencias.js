@@ -59,10 +59,9 @@ router.post('/preferencias', function(req, res, error) {
                         objetosGlobales[position].popularidadAvg = body.profile.popularidadAvg;
 
                         objetosGlobales[position].modo = body.profile.modo;
-                    
-                    
-
                         
+                        objetosGlobales[position].duracion = body.profile.duracion;
+                    
                         console.log('Preferencias llegó a servidor')
                     
                         res.send(objetosGlobales[position])
