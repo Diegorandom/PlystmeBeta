@@ -22,6 +22,10 @@
     *{
          -webkit-appearance: none;-webkit-border-radius: 0px;
     }    
+    
+    
+    
+    
 </style>
     
 	<body class="page-login"  >
@@ -235,9 +239,34 @@
                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="createPlaylist">
                                             <i class="far far fa-save" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> Guardar Playlist En Spotify 
                                         </button>
-                                        
                                         <br>
-                                         </div> 
+                                    
+                                        <div class="col-lg-6 col-md-6" style="height:250px;">
+                                            <div style="width:100%;height:100%; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;" id="crearFiesta">
+                                            
+                                                <i class="fas fa-plus-square" style="margin-top:50px;  font-size:80px;"></i>
+                                                
+                                                <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
+                                            
+                                            </div>
+                                        
+                                        </div>
+                                        
+                                        <div class="col-lg-6 col-md-6" style="height:250px;">
+                                        
+                                            <div style="width:100%;height:100%; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color: #94c9a9" id="entrarFiesta">
+                                            
+                                                <i class="fas fa-users" style="margin-top:50px;  font-size:80px;"></i>
+                                                
+                                                <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
+                                            
+                                            </div>
+                                        
+                                        </div>
+                                        
+                                    </div> 
+                                    
+                                    
                                     
                                     <div class="hidden-lg hidden-md col-sm-12 col-xs-12">
                             
@@ -847,6 +876,7 @@
     $('#btnPerfil').on('click',function(){
         $('#fondoIphone').css("background","url('img/fondo4.png') no-repeat");
         $('#fondoIphone').css("background-position","center");
+        $('#fondoIphone').css("background-size","cover");
         /*$('body').css("background","url('img/fondo4.png') no-repeat");
         $('body').css("background-size","cover");
         $('body').css("background-attachment","fixed");
@@ -859,6 +889,7 @@
     $('#btnTop50').on('click',function(){
         $('#fondoIphone').css("background","url('img/fondo7.png') no-repeat");
         $('#fondoIphone').css("background-position","center");
+        $('#fondoIphone').css("background-size","cover");
         /*$('body').css("background","url('img/fondo7.png') no-repeat");
         $('body').css("background-size","cover");
         $('body').css("background-attachment","fixed");
@@ -872,6 +903,7 @@
     $('#btnFiesta').on('click',function(){
         $('#fondoIphone').css("background","url('img/fondo2.jpg') no-repeat");
         $('#fondoIphone').css("background-position","center");
+        $('#fondoIphone').css("background-size","cover");
         /*$('body').css("background","url('img/fondo2.jpg') no-repeat");
         $('body').css("background-size","cover");
         $('body').css("background-attachment","fixed");
@@ -893,6 +925,7 @@
         if(ancho > 577){
             $('#fondoIphone').css("background","url('img/fondo8.png') no-repeat");
             $('#fondoIphone').css("background-position","center");
+            $('#fondoIphone').css("background-size","cover");
             /*$('body').css("background","url('img/fondo8.png') no-repeat");
             $('body').css("background-position","0 100%");
             $('body').css("background-size","cover");
@@ -902,6 +935,7 @@
             
             $('#fondoIphone').css("background","url('img/fondo9.png') no-repeat");
             $('#fondoIphone').css("background-position","center");
+            $('#fondoIphone').css("background-size","cover");
             /*$('body').css("background","url('img/fondo9.png') no-repeat");
             $('body').css("background-position","center");
             $('body').css("background-size","cover");
@@ -920,7 +954,7 @@
     if(iOS){
                 
         $('#content-block').css("margin-top","50px");
-        $('body').css("background","none");
+        //$('body').css("background","none");
         //$('#fondoIphone').css("display","block");
 
     }
