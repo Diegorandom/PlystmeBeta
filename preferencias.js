@@ -10,12 +10,14 @@ router.post('/preferencias', function(req, res, error) {
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
     position=req.sessions.position;
-    console.log('apuntador del objeto', position);
+    console.log('apuntador del objeto en preferencias', position);
     
     if(error == true){ res.render('pages/error')}else{ 
     
 //Comienza request de perfil
-                                         
+                                     
+        console.log('comienza petición a api')
+        
          var options = { method: 'POST',
               url: 'https://atmos-algorithm.mybluemix.net/api/v1/user_profile/user_profile',
               headers: 
@@ -28,11 +30,11 @@ router.post('/preferencias', function(req, res, error) {
 
          function Test(options){
             request(options, function (error, response, body) {
-                if (error == true || body.listaCanciones == null) {
+                console.log(body)
+                if (error == true || body.profile == null) {
                 console.log("API dormida zzzzz");
                     Test(options);
                 }else{
-                        console.log(body);
 
                         objetosGlobales[position].danceability = body.profile.danceability;
 
@@ -54,11 +56,12 @@ router.post('/preferencias', function(req, res, error) {
 
                         objetosGlobales[position].firma_tiempo = body.profile.compas;
 
-                        objetosGlobales[position].dialogo = body.profile.popularidadAvg;
+                        objetosGlobales[position].popularidadAvg = body.profile.popularidadAvg;
 
                         objetosGlobales[position].modo = body.profile.modo;
+                    
+                    
 
-                        console.log(objetosGlobales[position]);
                         
                         console.log('Preferencias llegó a servidor')
                     
@@ -68,6 +71,8 @@ router.post('/preferencias', function(req, res, error) {
                 }
                 });
         };
+        
+            Test(options)
     }
                                 
 });

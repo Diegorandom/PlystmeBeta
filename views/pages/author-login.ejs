@@ -87,7 +87,7 @@
                     
                         <br/>
                                             
-                        <canvas id="myChart" width="400" height="400" style="background-color:white; border-radius:5px; max-width:400px; margin: 0 auto;"></canvas>
+                        <canvas id="myChart" width="100%" height="100%" style="background-color:rgba(255, 255, 255, 0.5); border-radius:5px; max-width:800px; margin: 0 auto;"></canvas>
                                             <br> 
                     
                     <table class="table" style="background-color: rgba(255,255,255,0.5); border-radius:5px; margin-bottom:50px;">
@@ -99,117 +99,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>Danzabilidad</th>
-                                <td><%=danceability.toFixed(1)*100%>/100</td>
-                              
+                            <tr id="tono">
                             </tr>
-                            <tr>
-                                <th>Energia</th>
-                                <td><%=energia.toFixed(1)*100%>/100</td>
-                                
-                            </tr>
-                            <tr>
-                                <th>Tono</th>
-                                <% 
-                                switch(Math.round(fundamental)) {
-                                    case 0:
-                                        fundamental = 'C';
-                                        break;
-                                    case 1:
-                                        fundamental = 'C#/Db';
-                                        break;
-                                    case 2:
-                                        fundamental = 'D';
-                                        break;
-                                    case 3:
-                                        fundamental = 'D#/Eb';
-                                        break;
-                                    case 4:
-                                        fundamental = 'E';
-                                        break;
-                                    case 5:
-                                        fundamental = 'F';
-                                        break;
-                                    case 6:
-                                        fundamental = 'F#/Gb';
-                                        break;
-                                    case 7:
-                                        fundamental = 'G';
-                                        break;
-                                    case 8: 
-                                        fundamental = 'G#/Ab';
-                                        break;
-                                    case 9: 
-                                        fundamental = 'A';
-                                        break;
-                                    case 10: 
-                                        fundamental = 'A#/Bb';
-                                        break;
-                                    case 11: 
-                                        fundamental = 'B';
-                                        break;
-                                };
-                               
-                                %>
-                                <td><%=fundamental%></td>
+                            <tr id="vol">
                                
                             </tr>
-                            <tr>
-                                <th>Volumen</th>
-                                <td><%=amplitud.toFixed(1)%> dB</td>
+                            <tr id="modo">
+                            </tr>
+                            
+                            <tr id="tempo">
                                 
-                            </tr>
-                            <tr>
-                                <th>Modo</th>
-                                <%
-                                switch(Math.round(modo)){
-                                    case 0:
-                                        modo = 'Minor';
-                                        break;
-                                    case 1:
-                                        modo = 'Major';
-                                        break;
-                                };
-                                
-                                %>
-                                <td><%=modo%></td>
-                                
-                            </tr>
-                            <tr>
-                                <th>Popularidad</th>
-                                <td><%=dialogo.toFixed(1)%>/100</td>
-                                
-                            </tr>
-                            <tr>
-                                <th>Acústica</th>
-                                <td><%=acustica.toFixed(1)*100%>/100</td>
-                                
-                            </tr>
-                            <tr>
-                                <th>Instrumental</th>
-                                <td><%=instrumental.toFixed(1)*100%>/100</td>
-                            </tr>
-                            <tr>
-                                <th>En vivo</th>
-                                <td><%=audiencia.toFixed(1)*100%>/100</td>
-                            </tr>
-                            <tr>
-                                <th>Positivismo</th>
-                                <td><%=positivismo.toFixed(1)*100%>/100</td>
-                            </tr>
-                            <tr>
-                                <th>Tempo</th>
-                                <td><%=tempo.toFixed(1)%> BPM</td>
                             </tr>
                             <!--<tr>
                                 <th>Duración</th>
                                 <td><%=duracion.toFixed(1)%> Minutes Average</td>
                                 
                             </tr>-->
-                            <tr>
-                                <th>Beats por compás</th>
-                                <td><%=Math.round(firma_tiempo)%></td>
+                            <tr id="beats">
+                                
                             </tr>
                         </tbody>
                     </table>							
@@ -482,14 +389,153 @@
                 }
             }
         }
-     
-        $.post('/preferencias', function(data, status){
+        
+        
+        setTimeout(function(){
+                
+                $.post('/preferencias', function(data, status){
             console.log(status)
             if(status == "success"){
                 console.log('Preferencias exitoso')
-                console.log(data)
+                console.log(data.danceability)
+                
+                    var ctx = document.getElementById("myChart").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: ["Danzabilidad", "Energía Promedio", "Popularidad de Música", "Música Acustica", "Instrumentalidad", "Música en Vivo","Positivismo"],
+                            datasets: [{
+                                label: 'Preferencias',
+                                data: [data.danceability*100, data.energia*100, data.popularidadAvg, data.acustica*100, data.instrumental*100, data.audiencia*100,data.positivismo*100],
+                                backgroundColor: [
+                                    'rgba(55, 99, 252,0.5)'
+                                ],
+                                borderColor: [
+                                    '#d5573b'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            legend: {
+                                labels: {
+                                    // This more specific font property overrides the global property
+                                    fontColor: 'black', 
+                                }
+                            }
+                        }
+                    });
+     
+                
+                var tr = document.getElementById('tono');
+                
+                var tonoT = document.createElement('th')
+                tonoT.innerHTML = "Tono"
+                
+                switch(Math.round(data.fundamental)) {
+                    case 0:
+                        data.fundamental = 'C';
+                        break;
+                    case 1:
+                        data.fundamental = 'C#/Db';
+                        break;
+                    case 2:
+                        data.fundamental = 'D';
+                        break;
+                    case 3:
+                        data.fundamental = 'D#/Eb';
+                        break;
+                    case 4:
+                        data.fundamental = 'E';
+                        break;
+                    case 5:
+                        data.fundamental = 'F';
+                        break;
+                    case 6:
+                        data.fundamental = 'F#/Gb';
+                        break;
+                    case 7:
+                        data.fundamental = 'G';
+                        break;
+                    case 8: 
+                        data.fundamental = 'G#/Ab';
+                        break;
+                    case 9: 
+                        data.fundamental = 'A';
+                        break;
+                    case 10: 
+                        data.fundamental = 'A#/Bb';
+                        break;
+                    case 11: 
+                        data.fundamental = 'B';
+                        break;
+                };
+                
+                var tono = document.createElement('td')
+                tono.innerHTML = data.fundamental
+                
+                tr.appendChild(tonoT)
+                tr.appendChild(tono)
+                
+                var trModo = document.getElementById('modo');
+                
+                var modoT = document.createElement('th')
+                modoT.innerHTML = "Modo"
+                    
+                switch(Math.round(data.modo)){
+                    case 0:
+                        data.modo = 'Minor';
+                        break;
+                    case 1:
+                        data.modo = 'Major';
+                        break;
+                }
+                        
+                var modo = document.createElement('td')
+                modo.innerHTML = data.modo
+                
+                trModo.appendChild(modoT)
+                trModo.appendChild(modo)
+                
+                var trVol = document.getElementById('vol')
+                
+                var volT = document.createElement('th')
+                volT.innerHTML = "Volumen"
+                
+                var vol = document.createElement('td')
+                vol.innerHTML = data.amplitud.toFixed(1) + ' dB'
+                
+                trVol.appendChild(volT)
+                trVol.appendChild(vol)
+                
+                var trTempo = document.getElementById('tempo')
+                
+                var tempoT = document.createElement('th')
+                tempoT.innerHTML = "Tempo"
+                
+                var tempo = document.createElement('td')
+                tempo.innerHTML = data.tempo + " BPM"
+                
+                trTempo.appendChild(tempoT)
+                trTempo.appendChild(tempo)
+                
+                var trBeats = document.getElementById('beats')
+                
+                var beatsT = document.createElement('th')
+                beatsT.innerHTML = "Beats x Compás"
+                
+                var beats = document.createElement('td')
+                beats.innerHTML = data.firma_tiempo
+                
+                trBeats.appendChild(beatsT)
+                trBeats.appendChild(beats)
+                
             }
         })
+        
+        }, 1000);
+     
+        
         
         document.getElementById('createPlaylist').addEventListener('click', function(){
             $.get('/create/playlist', function(data, status){
@@ -793,33 +839,7 @@
         
         
         
-        var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'radar',
-    data: {
-        labels: ["Danzabilidad", "Energía", "Popularidad", "Acustica", "Instrumental", "En vivo","Positivismo"],
-        datasets: [{
-            label: 'Preferencias',
-            data: [<%=danceability%>*100, <%=energia%>*100, <%=dialogo%>, <%=acustica%>*100, <%=instrumental%>*100, <%=audiencia%>*100,<%=positivismo%>*100],
-            backgroundColor: [
-                'rgba(55, 99, 252,0.5)'
-            ],
-            borderColor: [
-                '#d5573b'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        legend: {
-            labels: {
-                // This more specific font property overrides the global property
-                fontColor: 'black', 
-            }
-        }
-    }
-});
-        
+       
 </script>
 
 <script>
