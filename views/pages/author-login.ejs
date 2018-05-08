@@ -24,8 +24,19 @@
          -webkit-appearance: none;-webkit-border-radius: 0px;
     }    
     
+    #btnCrear:hover{
+        background-color: #94c9a9 !important; 
+    }
     
+    #btnEntrar:hover{
+        background-color: white !important; 
+    }
     
+    @media screen and (max-width:450px){
+        #btnEntrar2, #btnCrear2{
+            width:90% !important;
+        }
+    }
     
 </style>
     
@@ -241,36 +252,22 @@
                                         <br>
                                     
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:50%;height:250px; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;" >
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white; display:inline-block;" id="btnCrear">
+                                            
                                             <i class="fas fa-plus-square" style="margin-top:10px;  font-size:80px;"></i>
 
                                             <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
                                         </button>
                                         
-                                        <!--<div class="col-lg-6 col-md-6" style="height:250px;"  id="crearFiesta">
-                                            <div style="width:100%;height:100%; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9; display:inline-block;" id="btnEntrar">
+                                            <i class="fas fa-users" style="margin-top:10px;  font-size:80px;"></i>
 
-                                                <i class="fas fa-plus-square" style="margin-top:50px;  font-size:80px;"></i>
-
-                                                <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
-
-                                            </div>
-
-                                        </div>
-                                            
+                                            <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
+                                        </button>
                                         
+                                       
                                         
-                                        <div class="col-lg-6 col-md-6" style="height:250px;"  id="entrarFiesta">
-                                        
-                                            <div style="width:100%;height:100%; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color: #94c9a9">
-                                            
-                                                <i class="fas fa-users" style="margin-top:50px;  font-size:80px;"></i>
-                                                
-                                                <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
-                                            
-                                            </div>
-                                        
-                                        </div>-->
+                                       
                                         
                                     </div> 
                                     
@@ -291,6 +288,20 @@
                                         </button>
                                         
                                         <br>
+                                        
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:50%;height:250px; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;" id="btnCrear2">
+                                            
+                                            <i class="fas fa-plus-square" style="margin-top:10px;  font-size:80px;"></i>
+
+                                            <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
+                                        </button>
+                                        
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:50%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9;" id="btnEntrar2">
+                                            <i class="fas fa-users" style="margin-top:10px;  font-size:80px;"></i>
+
+                                            <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
+                                        </button>
+                                        
                                         
                                         <!--<div class="col-xs-12  hidden-md hidden-lg" style="height:180px;"  id="crearFiesta1">
                                             <div style="width:80%;height:100%; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;">
@@ -1014,18 +1025,24 @@
     }
     
     
-    $('#entrarFiesta').on('click',function(){
-        console.log("asdf");
-        $('#entrarFiesta').css("display","none");
-        $('#crearFiesta').css("display","none");
+    
+    $('#btnCrear').on('click',function(){
+        $('#btnCrear').css("display","none");
+        $('#btnEntrar').css("display","none");
+    })
+    $('#btnEntrar').on('click',function(){
+        $('#btnCrear').css("display","none");
+        $('#btnEntrar').css("display","none");
     })
     
-    $('#entrarFiesta1').on('click',function(){
-        console.log("asdf");
-        $('#entrarFiesta1').css("display","none");
-        $('#crearFiesta1').css("display","none");
+    $('#btnCrear2').on('click',function(){
+        $('#btnCrear2').css("display","none");
+        $('#btnEntrar2').css("display","none");
     })
-
+    $('#btnEntrar2').on('click',function(){
+        $('#btnCrear2').css("display","none");
+        $('#btnEntrar2').css("display","none");
+    })
 
 </script>
 
