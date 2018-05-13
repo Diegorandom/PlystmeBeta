@@ -13,8 +13,8 @@
         
         <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
          <script type="text/javascript" src="/script/Chart.js"></script>
-        
-        
+       
+
         
 	</head>
     
@@ -147,6 +147,8 @@
                             <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #885053; border-radius:5px; padding-bottom:5px;">Top 50</h2>
             
                         </div> 
+                                
+                       
                                        
                                 
                             <div class="row" style="margin-bottom:100px;">
@@ -241,14 +243,16 @@
                                         <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #94c9a9; border-radius:5px;">Fiesta</h2>
                                         
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:50%; border: none; background-color:#FFF; margin:0 auto; color:#94c9a9;" id="enterPool">
+                                        <!--<button  type="submit" value="Submit" class="be-button-vidget " style="width:50%; border: none; background-color:#FFF; margin:0 auto; color:#94c9a9;">
                                             <i class="far fa-play-circle" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> <p style="color:#94c9a9; display:inline-block; margin-top:-5px;">Entra a la Fiesta </p> 
-                                        </button>
+                                        </button>-->
                                         <br>
                                         
                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="createPlaylist">
                                             <i class="far far fa-save" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> Guardar Playlist En Spotify 
                                         </button>
+                                        
+                                        
                                         <br>
                                     
                                         
@@ -259,7 +263,7 @@
                                             <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
                                         </button>
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9; display:inline-block;" id="btnEntrar">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9; display:inline-block;"  id="enterPool">
                                             <i class="fas fa-users" style="margin-top:10px;  font-size:80px;"></i>
 
                                             <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
@@ -275,15 +279,19 @@
                                     
                                     <div class="hidden-lg hidden-md col-sm-12 col-xs-12">
                             
-                                        <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #94c9a9; border-radius:5px;">Fiesta</h2>
+                                        <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:0px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #94c9a9; border-radius:5px;">Fiesta</h2>
                                         
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:80%; border: none; background-color:#FFF; margin:0 auto; color:#94c9a9;"  id="enterPool2">
+                                        <!--<button  type="submit" value="Submit" class="be-button-vidget " style="width:80%; border: none; background-color:#FFF; margin:0 auto; color:#94c9a9;">
                                             <i class="far fa-play-circle" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> <p style="color:#94c9a9; display:inline-block; margin-top:-5px;">Entra a la Fiesta </p> 
-                                        </button>
+                                        </button>-->
                                         <br>
                                         
                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:80%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="createPlaylist2">
+                                            <i class="far far fa-save" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> Guardar Playlist En Spotify 
+                                        </button>
+                                        
+                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:80%; border:none; background-color:#FFF;display:none; color:#94c9a9;">
                                             <i class="far far fa-save" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> Guardar Playlist En Spotify 
                                         </button>
                                         
@@ -296,7 +304,7 @@
                                             <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
                                         </button>
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:50%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9;" id="btnEntrar2">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:90%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9;" id="enterPool2">
                                             <i class="fas fa-users" style="margin-top:10px;  font-size:80px;"></i>
 
                                             <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
@@ -670,12 +678,14 @@
                     
                     var botonPool = document.getElementById('enterPool')
                     botonPool.innerHTML = "Actualizar Playlist"
+                    botonPool.style="width:50%; border: none; background-color:#FFF; margin:0 auto 20px auto; color:#94c9a9;"
                     var icono = document.createElement('i')
                     icono.className ="fas fa-sync-alt"
                     icono.style="font-size:20px; color:#94c9a9; margin-left:5px;"
                     botonPool.appendChild(icono)
                     
-                    document.getElementById('createPlaylist').style.display="block"
+                    document.getElementById('btnCrear').style.display="none";
+                document.getElementById('createPlaylist').style.display="block"
                     
                     
                     
@@ -793,11 +803,13 @@
                     
                     var botonPool = document.getElementById('enterPool2')
                     botonPool.innerHTML = "Actualizar Playlist"
+                    botonPool.style="width:80%; border: none; background-color:#FFF; margin:0 auto 20px auto; color:#94c9a9;"
                     var icono = document.createElement('i')
                     icono.className ="fas fa-sync-alt"
                     icono.style="font-size:20px; color:#94c9a9; margin-left:5px;"
                     botonPool.appendChild(icono)
                     
+                    document.getElementById('btnCrear2').style.display="none"
                     document.getElementById('createPlaylist2').style.display="block"
                     
                 console.log('El playlist ha cambiado')
