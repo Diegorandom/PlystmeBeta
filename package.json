@@ -7,7 +7,7 @@
   },
   "main": "master.js",
   "scripts": {
-    "start": "node master.js"
+    "start": "nodemon master.js"
   },
   "dependencies": {
     "body-parser": "*",
