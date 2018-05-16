@@ -1,13 +1,13 @@
 {
-  "name": "node-js-getting-started",
-  "version": "0.2.5",
-  "description": "A sample Node.js app using Express 4",
+  "name": "ATMOS",
+  "version": "Alpha",
+  "description": "Plataforma web para la creación de playlists dinámicos en grupos sociales",
   "engines": {
     "node": "5.9.1"
   },
-  "main": "index.js",
+  "main": "master.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node master.js"
   },
   "dependencies": {
     "body-parser": "*",
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": ""
   },
   "keywords": [
     "node",
