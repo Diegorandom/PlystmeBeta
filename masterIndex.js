@@ -1,3 +1,12 @@
+/*
+Código por Diego Ignacio Ortega
+Derechos reservados ALV PRROO!
+NO BORRAR!
+
+Todos los cambios nuevos al código deben ser apropiadamente comentados y documentados.
+
+*/
+
 // NODE MODULES
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
@@ -15,7 +24,13 @@ var neo4j = require('neo4j-driver').v1;
 var sessions = require("client-sessions");
 var idleTimer = require("idle-timer");
 
+/* 
 
+Documentación de MasterIndex
+
+El objeto jsonDatosInit es la variable constructor con la cual se construye la estructura de datos de los usuarios.
+Este objeto construye el usuario neutral con el cual funciona la plataforma cuando un usuario que no está registrado en el sistema entra. 
+*/
 var jsonDatosInit = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:[], track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0, pool:[], playlist:[], popularidadAvg:0}
 
 var position = 0;
@@ -24,14 +39,24 @@ var objetosGlobales=[];
 
 objetosGlobales[0] = jsonDatosInit;
 
-// Conexión con base de datos remota
+// Conexión con base de datos remota NO CAMBIAR
 var graphenedbURL = process.env.GRAPHENEDB_BOLT_URL;
 var graphenedbUser = process.env.GRAPHENEDB_BOLT_USER;
 var graphenedbPass = process.env.GRAPHENEDB_BOLT_PASSWORD;
 
 console.log(graphenedbUser)
 
-//BASE DE DATOS
+/*
+Configuración de base de datos
+
+Hay 2 tipos de conexiones posibles:
+    1. Conexion con base de datos local
+    2. Conexion con base de datos del servidor
+    
+Cuando se conecta la base de datos con localhost deben usarse los permisos mencionados en la siguiente estructura IF.
+No se debe cambiar nada de la estructura de configuración de la base de datos.
+
+*/
 
 if(graphenedbURL == undefined){
 	var driver = neo4j.driver('bolt://localhost', neo4j.auth.basic('neo4j', 'mdl'));
@@ -41,11 +66,19 @@ if(graphenedbURL == undefined){
 	objetosGlobales[0].session = driver.session();
 };
 
-//PROTOCOLO DE SEGURIDAD CON CLAVE SPOTIFY
+/* 
+PROTOCOLO DE SEGURIDAD CON CLAVE SPOTIFY 
+
+El protocolo de seguridad utiliza una llave la cual se encuentre en secret-config.json y por ningun motivo debe ser compartida con ninguna persona que no pertenezca al grupo de programadores de Atmos.
+
+*/
 
 var fileName = "./secret-config.json";
 var config;
 
+/*
+la siguiente estructura TRY configura la llave secreta y la manda a llamar en la variable config.
+*/
 try {
   config = require(fileName);
 }
@@ -60,7 +93,26 @@ console.log("session secret is:", config.sessionSecret);
 
 
 
-//SETUP DE EXPRESS
+
+/*
+SETUP DE EXPRESS
+
+Referencia de la tecnología
+http://expressjs.com/es/4x/api.html
+
+Infraestructura web rápida, minimalista y flexible para Node.js
+
+Aplicaciones web
+Express es una infraestructura de aplicaciones web Node.js mínima y flexible que proporciona un conjunto sólido de características para las aplicaciones web y móviles.
+API
+Con miles de métodos de programa de utilidad HTTP y middleware a su disposición, la creación de una API sólida es rápida y sencilla.
+Rendimiento
+Express proporciona una delgada capa de características de aplicación web básicas, que no ocultan las características de Node.js que tanto ama y conoce.
+LoopBack
+Desarrolle aplicaciones basadas en modelos con una infraestructura basada en Express.
+Encontrará más información en loopback.io.
+
+*/
 var app = express();
 
 //CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
@@ -72,17 +124,25 @@ app.use(cookieParser());
 app.use(methodOverride());
 
 
-//SETUP DE PUERTO
+/*
+SETUP DE PUERTO
+con la clase APP y el método SET se configura el puerto a través del cual se comunica el servidor con la interfaz.
+El puerto puede ser el 5000 y el asignado por por la configuración del servidor en la variable process.env.PORT
+
+En este misma parte del código se configura con que URL de redireccionamiento trabajará spotify.
+Todas estas configuraciones se guardan en la posición [0] del objeto objetosGlobales.
+*/
 app.set('port', (process.env.PORT || 5000));
 
-//SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
+
+objetosGlobales[0].client_id = 'b590c1e14afd46a69891549457267135'; // Your client id
+objetosGlobales[0].client_secret = config.sessionSecret; // Your secret
+
 if( app.get('port') == 5000 ){
     console.log("Corriendo en servidor local con uri de redireccionamiento: ");
- 
-    objetosGlobales[0].client_id = 'b590c1e14afd46a69891549457267135'; // Your client id
-    objetosGlobales[0].client_secret = config.sessionSecret; // Your secret
     objetosGlobales[0].redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
 
+    //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
     objetosGlobales[0].spotifyApi = new SpotifyWebApi({
         clientId: 'b590c1e14afd46a69891549457267135',
         clientSecret: config.sessionSecret,
@@ -91,10 +151,9 @@ if( app.get('port') == 5000 ){
     console.log(objetosGlobales[0].redirect_uri);
 }else{
     console.log("Corriendo en servidor web con uri de redireccionamiento: ");
-    objetosGlobales[0].client_id = 'b590c1e14afd46a69891549457267135'; // Your client id
-    objetosGlobales[0].client_secret = config.sessionSecret; // Your secret
     objetosGlobales[0].redirect_uri = 'http://www.ponteatmos.com/callback'; // Your redirect uri
 
+    //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
     objetosGlobales[0].spotifyApi = new SpotifyWebApi({
         clientId: 'b590c1e14afd46a69891549457267135',
         clientSecret: config.sessionSecret,
@@ -102,17 +161,18 @@ if( app.get('port') == 5000 ){
     });
     console.log(objetosGlobales[0].redirect_uri);
 };
-//Finaliza setup
+//Finaliza setup de puerto
 
       
-    /**
-    Este proceso funciona para crear una llave de acceso a la API
+/*
+    Este proceso funciona para crear una llave de acceso a la API de SPOTIFY
     
     La llave enviada a la API será comparada con la que se reciba después del proceso y estas deberán coincidir para no generar un error.
 
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
  * @return {string} The generated string
+ 
  */
 var generateRandomString = function(length) {
   var text = '';
@@ -126,6 +186,12 @@ var generateRandomString = function(length) {
 
 objetosGlobales[0].stateKey = 'spotify_auth_state';
 
+// Finaliza creacion de llaves
+
+/*
+Configuración de Cookies para control de sesiones
+*/
+
 var sessionSecreto = generateRandomString(16);
 
 app.use(sessions({
@@ -136,65 +202,24 @@ app.use(sessions({
   ephemeral: true
 }));
 
-// Finaliza creacion de llaves
+//Termina configuracion de cookies
 
 /*
 Pieza de middleware que dirije los links a la carpeta donde se alojan los recursos
 */
 app.use(express.static(__dirname + '/public'))
 
-var timeoutID; 
+/*Variables globales que son pasadas a las diferentes rutas del sistema*/
+app.set('objetosGlobales',objetosGlobales);
+app.set('position',position);
 
-app.get('/heartbeat', function(req,res){
-     console.log('heartbeat');
-    
-    clearTimeout(timeoutID);
-    
-    timeoutID = setTimeout(goInactive, 1000*60*10);
-    
-    res.send('Heartbeat')
-    
-    function goInactive() {
-        // do something
-        if(objetosGlobales.length>1 && req.sessions.position != undefined){
-            position = req.sessions.position;
-            objetosGlobales[req.sessions.position] = null;
-            position = 0;
-            req.sessions.position = 0
-            objetosGlobales[0].access_token = null
-            console.log('Depuracion de datos por salida de Usuario')
-            console.log(objetosGlobales) 
-        }
-    }
-    
-})
-
-
+/*
+La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. 
+*/
+app.use(require(".rutas/heartbeat"));
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
-app.get('/', function(req, res, error){ 
-   
-    
-        if(error == true){
-            res.render('pages/error')
-        }else{    
-            objetosGlobales[0].totalUsers = 0;
-            
-            objetosGlobales.forEach(function(item, index){
-                if(item != null){
-                    objetosGlobales[0].totalUsers = objetosGlobales[0].totalUsers + 1
-                }
-            })
-            
-            if( objetosGlobales[0].totalUsers <= 1){
-                objetosGlobales.splice(1, objetosGlobales[0].totalUsers.lenght-1)
-            }
-            
-            console.log(objetosGlobales)
-            res.render('pages/autorizacion',  objetosGlobales[0]);
-        
-        }       
-});
+app.use(require(".rutas/inicio"))
 
 
 //Login procesa el REQUEST de la API de Spotify para autorizacion
@@ -228,9 +253,9 @@ if(error == true){ res.render('pages/error')}else{
 */
 app.set('objetosGlobales',objetosGlobales);
 app.set('position',position);
-app.use(require("./callbackAlgoritmo"));
+app.use(require(".rutas/callbackAlgoritmo"));
 
-app.use(require("./poolAlgoritmo.js"));
+app.use(require(".rutas/poolAlgoritmo.js"));
 
 //Proceso para refrescar un token
 

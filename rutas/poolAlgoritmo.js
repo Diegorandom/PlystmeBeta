@@ -18,8 +18,6 @@ router.get('/pool', function(req, res, error){
         }
         
         
-        
-        
         if(index == objetosGlobales.length-1){
             
               var options = { method: 'POST',
