@@ -33,8 +33,8 @@
     }
     
     @media screen and (max-width:550px){
-        #btnEntrar2, #btnCrear2, #enterPool2{
-            width:90% !important;
+        #btnCrear2, #btnEntrar2{
+            width: 90% !important;
         }
     }
     
@@ -280,7 +280,7 @@
                                             
                                                 <input type="text" id="codigoPool" class="form-control" aria-describedby="helpBlock" style="width:70%; height:50px; font-size:35px;">
                                                 
-                                                <button type="button" class="btn btn-default" style="margin-top:20px; width:105px;">Cancelar</button>
+                                                <button type="button" class="btn btn-default" style="margin-top:20px; width:105px;" id="formCancelar">Cancelar</button>
 
                                                 
                                                 <button type="button" class="btn btn-primary" style="margin-top:20px; width:105px" id="enterPool">Entrar</button>
@@ -299,18 +299,17 @@
                                         <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:0px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #94c9a9; border-radius:5px;">Fiesta</h2>
                                         
                                         
-                                        <!--<button  type="submit" value="Submit" class="be-button-vidget " style="width:80%; border: none; background-color:#FFF; margin:0 auto; color:#94c9a9;">
-                                            <i class="far fa-play-circle" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> <p style="color:#94c9a9; display:inline-block; margin-top:-5px;">Entra a la Fiesta </p> 
-                                        </button>-->
+                                        
                                         <br>
+                                        
+                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="btnActualizar2">
+                                        </button>
                                         
                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:80%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="createPlaylist2">
                                             <i class="far far fa-save" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> Guardar Playlist En Spotify 
                                         </button>
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:80%; border:none; background-color:#FFF;display:none; color:#94c9a9;">
-                                            <i class="far far fa-save" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> Guardar Playlist En Spotify 
-                                        </button>
+                                        
                                         
                                         <br>
                                         
@@ -321,7 +320,7 @@
                                             <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
                                         </button>
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:55%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9;" id="enterPool2">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:55%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9;" id="btnEntrar2">
                                             <i class="fas fa-users" style="margin-top:10px;  font-size:80px;"></i>
 
                                             <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
@@ -329,7 +328,21 @@
                                         
                                         
                                         
+                                        <div style="background-color: rgba(255,255,255,0.8); border-radius:5px; position:relative; padding-top:20px; display: none;" id="formCodigo2">
                                         
+                                            <p style="font-size: 30px; font-family: 'Kanit', sans-serif; width:80%;">Ingresa el código de la fiesta</p>
+                                            <form>
+                                            
+                                                <input type="text" id="codigoPool" class="form-control" aria-describedby="helpBlock" style="width:70%; height:50px; font-size:35px;">
+                                                
+                                                <button type="button" class="btn btn-default" style="margin:20px 0; width:105px;" id="formCancelar2">Cancelar</button>
+
+                                                
+                                                <button type="button" class="btn btn-primary" style="margin:20px 0; width:105px" id="enterPool2">Entrar</button>
+                                            
+                                            </form>
+                                            
+                                        </div>
                                         
                                         
                                         
@@ -812,14 +825,21 @@
             })
         })
     
+     
+        $('#btnEntrar2').on('click',function(){
+            $('#formCodigo2').css("display","inherit");
+        })
         
         document.getElementById('enterPool2').addEventListener('click', function() {
+            
+            $('#formCodigo2').css("display","none");
+            
             $.get( '/pool', function(data, status) {
                 console.log(data)
                 console.log(status)
                 if(status === "success"){
                     
-                    var botonPool = document.getElementById('enterPool2')
+                    var botonPool = document.getElementById('btnActualizar2')
                     botonPool.innerHTML = "Actualizar Playlist"
                     botonPool.style="width:80%; border: none; background-color:#FFF; margin:0 auto 20px auto; color:#94c9a9;"
                     var icono = document.createElement('i')
@@ -1049,6 +1069,18 @@
     $('#btnEntrar2').on('click',function(){
         $('#btnCrear2').css("display","none");
         $('#btnEntrar2').css("display","none");
+    })
+    
+    $('#formCancelar').on('click',function(){
+        $('#formCodigo').css("display","none");
+        $('#btnCrear').css("display","inline-block");
+        $('#btnEntrar').css("display","inline-block");
+    })
+    
+    $('#formCancelar2').on('click',function(){
+        $('#formCodigo2').css("display","none");
+        $('#btnCrear2').css("display","inline-block");
+        $('#btnEntrar2').css("display","inline-block");
     })
 
 </script>
