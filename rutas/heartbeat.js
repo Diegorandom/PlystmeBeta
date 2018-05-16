@@ -1,3 +1,7 @@
+var express = require("express");
+var router = new express.Router();
+var request = require("request");
+
 //timeoutID es una funcion cronometro que borra al usuario del sistema dado que este salga de la pagina sin salirse de su usuario.
 var timeoutID;
 

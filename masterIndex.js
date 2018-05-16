@@ -216,10 +216,10 @@ app.set('position',position);
 /*
 La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. 
 */
-app.use(require(".rutas/heartbeat"));
+app.use(require("./rutas/heartbeat"));
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
-app.use(require(".rutas/inicio"))
+app.use(require("./rutas/inicio"))
 
 
 //Login procesa el REQUEST de la API de Spotify para autorizacion
@@ -253,9 +253,9 @@ if(error == true){ res.render('pages/error')}else{
 */
 app.set('objetosGlobales',objetosGlobales);
 app.set('position',position);
-app.use(require(".rutas/callbackAlgoritmo"));
+app.use(require("./rutas/callbackAlgoritmo"));
 
-app.use(require(".rutas/poolAlgoritmo.js"));
+app.use(require("./rutas/poolAlgoritmo.js"));
 
 //Proceso para refrescar un token
 
@@ -319,7 +319,7 @@ app.get('/author-edit.ejs', function(request, response) {
         Ambiente de SUPERCOLLIDER
 */
 
-app.use(require("./environmentSC"));
+app.use(require("./rutas/environmentSC"));
 
 app.get('/author.ejs', function(request, response) {
   response.render('pages/author');
@@ -384,9 +384,9 @@ app.get('/perfil', function(request, response, error) {
         PERFIL DE UN TRACK
 */
 
-app.use(require("./perfilTrack"));
+app.use(require("./rutas/perfilTrack"));
 
-app.use(require("./preferencias"));
+app.use(require("./rutas/preferencias"));
 
 app.get('/track', function(request, response) {
   response.render('pages/page3', objetosGlobales);
