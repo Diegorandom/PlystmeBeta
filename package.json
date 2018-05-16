@@ -1,6 +1,6 @@
 {
   "name": "ATMOS",
-  "version": "Alpha",
+  "version": "0.2.5",
   "description": "Plataforma web para la creación de playlists dinámicos en grupos sociales",
   "engines": {
     "node": "5.9.1"
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://git.heroku.com/proyecto-techclub.git"
   },
   "keywords": [
     "node",
