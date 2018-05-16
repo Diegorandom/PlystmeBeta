@@ -378,6 +378,8 @@ app.get('/perfil', function(request, response, error) {
             console.log("objetosGlobales");
             console.log(objetosGlobales);
             
+            objetosGlobales[position].usuarios = []
+    
             objetosGlobales.forEach(function(item,index){
                 if(index>0){
                     objetosGlobales[position].usuarios.push(item.nombre)
