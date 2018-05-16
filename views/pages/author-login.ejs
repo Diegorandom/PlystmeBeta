@@ -32,8 +32,8 @@
         background-color: white !important; 
     }
     
-    @media screen and (max-width:450px){
-        #btnEntrar2, #btnCrear2{
+    @media screen and (max-width:550px){
+        #btnEntrar2, #btnCrear2, #enterPool2{
             width:90% !important;
         }
     }
@@ -148,11 +148,7 @@
             
                         </div> 
                                 
-                       <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-secondary">Left</button>
-                          <button type="button" class="btn btn-secondary">Middle</button>
-                          <button type="button" class="btn btn-secondary">Right</button>
-                        </div>
+                       
 
 
                             <div class="row" style="margin-bottom:100px;">
@@ -252,6 +248,9 @@
                                         </button>-->
                                         <br>
                                         
+                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="btnActualizar">
+                                        </button>
+                                        
                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="createPlaylist">
                                             <i class="far far fa-save" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> Guardar Playlist En Spotify 
                                         </button>
@@ -267,14 +266,28 @@
                                             <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
                                         </button>
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9; display:inline-block;"  id="enterPool">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9; display:inline-block;"  id="btnEntrar">
                                             <i class="fas fa-users" style="margin-top:10px;  font-size:80px;"></i>
 
                                             <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
                                         </button>
                                         
                                        
+                                        <div style="background-color: rgba(255,255,255,0.8); border-radius:5px; height: 200px; position:relative; padding-top:20px; display: none;" id="formCodigo">
                                         
+                                            <p style="font-size: 30px; font-family: 'Kanit', sans-serif;">Ingresa el código de la fiesta</p>
+                                            <form>
+                                            
+                                                <input type="text" id="codigoPool" class="form-control" aria-describedby="helpBlock" style="width:70%; height:50px; font-size:35px;">
+                                                
+                                                <button type="button" class="btn btn-default" style="margin-top:20px; width:105px;">Cancelar</button>
+
+                                                
+                                                <button type="button" class="btn btn-primary" style="margin-top:20px; width:105px" id="enterPool">Entrar</button>
+                                            
+                                            </form>
+                                            
+                                        </div>
                                        
                                         
                                     </div> 
@@ -301,14 +314,14 @@
                                         
                                         <br>
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:50%;height:250px; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;" id="btnCrear2">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:55%;height:250px; background-color:#94c9a9cc;border-radius:5px; border: 3px solid white; color:white;" id="btnCrear2">
                                             
                                             <i class="fas fa-plus-square" style="margin-top:10px;  font-size:80px;"></i>
 
                                             <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
                                         </button>
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:90%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9;" id="enterPool2">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:55%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9;" id="enterPool2">
                                             <i class="fas fa-users" style="margin-top:10px;  font-size:80px;"></i>
 
                                             <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
@@ -628,10 +641,8 @@
                     if(data=="playlistGuardado"){
                         document.getElementById('floating_alert').style.display="block"
                         console.log(data)
-                        console.log("ahuevo");
                         setTimeout(function(){
                             document.getElementById('floating_alert').style.display="none"
-                            console.log("ya no está");
                         }, 2000);
                         
                     }else if(data=="ActualizacionPlaylist"){
@@ -639,7 +650,6 @@
                         document.getElementById('actualizacion').style.display="block"
                         setTimeout(function(){
                             document.getElementById('actualizacion').style.display="none"
-                            console.log("ya no está");
                         }, 2000);
                     }
                     
@@ -658,14 +668,12 @@
                         console.log(data)
                         setTimeout(function(){
                             document.getElementById('floating_alert').style.display="none"
-                            console.log("ya no está");
                         }, 2000);
                     }else if(data=="ActualizacionPlaylist"){
                         console.log(data)
                         document.getElementById('actualizacion').style.display="block"
                         setTimeout(function(){
                             document.getElementById('actualizacion').style.display="none"
-                            console.log("ya no está");
                         }, 2000);
                     }
                     
@@ -673,14 +681,22 @@
                 
             })
         })
+     
+        
+        $('#btnEntrar').on('click',function(){
+            $('#formCodigo').css("display","inherit");
+        })
         
         document.getElementById('enterPool').addEventListener('click', function() {
+            
+            $('#formCodigo').css("display","none");
+            
             $.get( '/pool', function(data, status) {
                 console.log(data)
                 console.log(status)
                 if(status === "success"){
                     
-                    var botonPool = document.getElementById('enterPool')
+                    var botonPool = document.getElementById('btnActualizar')
                     botonPool.innerHTML = "Actualizar Playlist"
                     botonPool.style="width:50%; border: none; background-color:#FFF; margin:0 auto 20px auto; color:#94c9a9;"
                     var icono = document.createElement('i')
@@ -688,7 +704,6 @@
                     icono.style="font-size:20px; color:#94c9a9; margin-left:5px;"
                     botonPool.appendChild(icono)
                     
-                    document.getElementById('btnCrear').style.display="none";
                 document.getElementById('createPlaylist').style.display="block"
                     
                     
@@ -706,7 +721,6 @@
                                 console.log(data)
                                 setTimeout(function(){
                                     document.getElementById('nuevoPlaylist').style.display="none"
-                                    console.log("ya no está");
                                 }, 2000);
                             }
                             
