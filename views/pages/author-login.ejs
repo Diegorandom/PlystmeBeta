@@ -266,14 +266,14 @@
                                             <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
                                         </button>
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9; display:inline-block;"  id="btnEntrar">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9; display:inline-block;"  id="enterPool">
                                             <i class="fas fa-users" style="margin-top:10px;  font-size:80px;"></i>
 
                                             <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
                                         </button>
                                         
                                        
-                                        <div style="background-color: rgba(255,255,255,0.8); border-radius:5px; height: 200px; position:relative; padding-top:20px; display: none;" id="formCodigo">
+                                        <!--<div style="background-color: rgba(255,255,255,0.8); border-radius:5px; height: 200px; position:relative; padding-top:20px; display: none;" id="formCodigo">
                                         
                                             <p style="font-size: 30px; font-family: 'Kanit', sans-serif;">Ingresa el código de la fiesta</p>
                                             <form>
@@ -287,7 +287,7 @@
                                             
                                             </form>
                                             
-                                        </div>
+                                        </div>-->
                                        
                                         
                                     </div> 
@@ -320,7 +320,7 @@
                                             <p style="font-size:30px; margin-top:20px;">Crea una fiesta</p>
                                         </button>
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:55%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9;" id="btnEntrar2">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:55%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #94c9a9; color:#94c9a9;" id="enterPool2">
                                             <i class="fas fa-users" style="margin-top:10px;  font-size:80px;"></i>
 
                                             <p style="font-size:30px; margin-top:20px;">Entra a una fiesta</p>
@@ -328,7 +328,7 @@
                                         
                                         
                                         
-                                        <div style="background-color: rgba(255,255,255,0.8); border-radius:5px; position:relative; padding-top:20px; display: none;" id="formCodigo2">
+                                        <!--<div style="background-color: rgba(255,255,255,0.8); border-radius:5px; position:relative; padding-top:20px; display: none;" id="formCodigo2">
                                         
                                             <p style="font-size: 30px; font-family: 'Kanit', sans-serif; width:80%;">Ingresa el código de la fiesta</p>
                                             <form>
@@ -342,7 +342,7 @@
                                             
                                             </form>
                                             
-                                        </div>
+                                        </div>-->
                                         
                                         
                                         
@@ -696,9 +696,7 @@
         })
      
         
-        $('#btnEntrar').on('click',function(){
-            $('#formCodigo').css("display","inherit");
-        })
+        
         
         document.getElementById('enterPool').addEventListener('click', function() {
             
@@ -937,9 +935,7 @@
             })
         })
         
-        $('#btnEntrar2').on('click',function(){
-            $('#formCodigo2').css("display","inherit");
-        })
+        
         
         document.getElementById('enterPool2').addEventListener('click', function() {
             
@@ -1289,36 +1285,17 @@
     }
     
     
+    //Ocultar los botones de entrar y crear fiesta
     
-    $('#btnCrear').on('click',function(){
+    $('#enterPool').on('click',function(){
+        $('#enterPool').css("display","none");
         $('#btnCrear').css("display","none");
-        $('#btnEntrar').css("display","none");
     })
-    $('#btnEntrar').on('click',function(){
-        $('#btnCrear').css("display","none");
-        $('#btnEntrar').css("display","none");
-    })
-    
-    $('#btnCrear2').on('click',function(){
+    $('#enterPool2').on('click',function(){
+        $('#enterPool2').css("display","none");
         $('#btnCrear2').css("display","none");
-        $('#btnEntrar2').css("display","none");
     })
-    $('#btnEntrar2').on('click',function(){
-        $('#btnCrear2').css("display","none");
-        $('#btnEntrar2').css("display","none");
-    })
-    
-    $('#formCancelar').on('click',function(){
-        $('#formCodigo').css("display","none");
-        $('#btnCrear').css("display","inline-block");
-        $('#btnEntrar').css("display","inline-block");
-    })
-    
-    $('#formCancelar2').on('click',function(){
-        $('#formCodigo2').css("display","none");
-        $('#btnCrear2').css("display","inline-block");
-        $('#btnEntrar2').css("display","inline-block");
-    })
+ 
 
 </script>
 
