@@ -20,7 +20,7 @@
 
          .contenedor{
                     background-color: rgba(255, 255, 255, 0.8);
-                    border-radius: 50px;
+                    border-radius: 15px 50px 30px;
                 }
         .text-overflow {
                 overflow: hidden;
@@ -105,7 +105,8 @@
      /*************  Color de la barra de navegación *********/
      
      .navboton2{
-         background-color:rgba(255,255,255,0.5);
+         position:fixed;
+         background-color:rgba(200,85,61,1);
          height: 60px;
      } 
      
@@ -156,10 +157,11 @@
     
   <body class="page-login">
     
+    <section id="one"></section>
       
       <!-- Heaader de la página principal-->
       
-     <header style="background-color:rgba(255,255,255); height:2%;">
+     <header style="background-color:#c8553d; height:60px;">
 		<div class="container-fluid custom-container"  style="height:60px; width:cover">
 			<div class="row"  style="height:60px;">
 
@@ -168,16 +170,18 @@
                 
           
         <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs navboton2" style="text-align: center;">
-                <a href="/nosotros">
-                    <img src="img/Atmos-Nombre2.png" style="height:50%; margin-top:1.5%;">
+                <a href="#one">
+                    <img src="img/AtmosName.png" align="middle" style="height:50%; margin-top:15px;">
                 </a>    
 
             </div>
                 
+    <!-- Barra de header en tamaño XS --->
+                
             <div class="col-xs-12 hidden-sm hidden-md hidden-lg navboton2" style=" text-align: left;">
                 
                 <div style="margin: 5px auto 0 auto; text-align:center;">
-                    <img src="img/logoAtmos.png" style="width:50px;">
+                    <img src="img/AtmosLogoWhite.png" style="width:50px;">
                 </div>
             </div>
                 
@@ -261,14 +265,19 @@ Pruébalo</a>
 		</div>
 	</header> 
       
+
       
-      <!----------------- Cuadro de acceso------------------------>
+      <!----------------- Imagen en pequeño------------------------>
     
       <div class="col-xs-12 hidden-sm hidden-md hidden-lg" style="width:100%; padding: 0; margin-top:0px; max-height: 300px;">
             <img src="img/backgroundNew.jpg" style="width:100%; background-size:100%;">
       </div>
         
-        <div class="tag col-xs-12 hidden-md hidden-lg hidden-sm" style="font-size:40px; text-align:center; text-shadow: 1px 1px 1px black;">Atmos</div>
+      <!----------------- Cuadro de acceso------------------------>
+
+      <div class="tag col-xs-12 hidden-md hidden-lg hidden-sm" style="font-size:40px; text-align:center; text-shadow: 1px 1px 1px black;">
+          <img src="img/AtmosName.png" style="height:50px;">
+      </div>
       
       <div class="tag2 col-xs-12 hidden-md hidden-lg hidden-sm" style="font-size:15px; text-align:center; text-shadow: 1px 1px 1px black;">Una nueva experiencia musical</div>
     
@@ -285,7 +294,7 @@ Pruébalo</a>
         <div class="centro">
             <div class=" hidden-lg hidden-md hidden-sm col-xs-12" style="margin-top:35px; margin-bottom:10px;">
                     <a href="/login" >
-                      <div class="centro btn size-2 btnHover" style="text-align: center;  width: 100%; padding-left:0; padding-right:0; background-color:#F7660A;">
+                      <div class="centro btn size-2 btnHover" style="text-align: center;  width: 100%; padding-left:0; padding-right:0; background-color:#c8553d;">
                           <span style="color:white; font-family: 'Lato', sans-serif; text-align: center; font-size:120%;">
                               Entrar
                           </span>
@@ -309,10 +318,10 @@ Pruébalo</a>
       <!--LOGIN BOX
       Aquí está la división para la caja de inicio, para todos los tamaños excepto XS-->
     
-      <div id="login" class="contenedor row hidden-xs" style="margin-top:5%; font-family: 'Lato', sans-serif; margin-bottom:15%; font-weight: 300;">
+      <div id="login" class="contenedor row hidden-xs" style="margin-top:5%; font-family: 'Lato', sans-serif; margin-bottom:15%; font-weight: 300; width:400px;">
           <br>
           <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
-                <h1>ATMOS</h1>
+                <h1>Disfrutando de las mejores playlists:</h1>
           </div> 
           <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="margin-bottom:10px;">
                 <h3>Empieza ya </h3>
@@ -330,7 +339,7 @@ Pruébalo</a>
           <div class="col-lg-12">
           <div class="number-counters">  
           <div class="counter-entry">
-                <div class="stat-number" style="color: black;" data-to="<%=totalUsers%>" data-speed="3000">0</div> <div class="counter-label" style="color: black; border-bottom: 5px solid #ED6D25;">Usuarios</div>
+                <div class="stat-number" style="color: black;" data-to="<%=totalUsers%>" data-speed="3000">0</div> <div class="counter-label" style="color: black; border-bottom: 5px solid #c8553d;">Usuarios</div>
             </div>
           </div>
           </div>      
@@ -339,7 +348,7 @@ Pruébalo</a>
           <div class="centro">
                <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="margin-bottom:25px;">
                     <a href="/login" >
-                      <div class="centro btn size-2 hover-3" style="text-align: center;  width: 100%;background-color:#ED6D25;">
+                      <div class="centro btn size-2 hover-3" style="text-align: center;  width: 100%;background-color:#c8553d;">
                           <span style="color:white; font-family: 'Kanit', sans-serif; text-align: center; font-size:200%;">
                               Entrar 
                           </span> 
@@ -349,7 +358,7 @@ Pruébalo</a>
               <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="text-align: center;">
                 <a href="https://www.spotify.com/mx/account/apps/" target="_blank" >
                       <span style="color:black; font-family: 'Kanit', sans-serif; text-align: center;">
-                          Revocar permisos para Entrar con otro usuario
+                          Revocar permisos para entrar con otro usuario
                       </span> 
                 </a>
               </div>
@@ -403,6 +412,27 @@ Pruébalo</a>
         <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
       </div>
     
+      
+      <!-- About us -->
+      
+      <!-- YouTube Videos --->
+      
+      <!--Tamaño grande -->
+      
+      <section class="col-lg-12 col-md-12 hidden-sm hidden-xs" style="background-color:rgba(255,255,255,0.5);">
+      
+        <h1 class="text-center" style="color:black;">VIDEOS<br><small style="color: black;">Conoce más sobre nosotros.</small></h1>
+            <ol text-align="center">
+                <li>
+                     <iframe align="left"  width="45%" height="315" src="https://www.youtube.com/embed/1RAY8xf6elg?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </li>
+                <li>
+                    <iframe align="right" width="45%" height="315" src="https://www.youtube.com/embed/bruksbn9LTc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>  
+                </li>          
+          </ol>
+       
+      </section>
+      
     
       
     <script id="user-profile-template" type="text/x-handlebars-template">
