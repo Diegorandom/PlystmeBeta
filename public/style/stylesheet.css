@@ -727,7 +727,7 @@ transition: all ease-out 0.3s;}
 	07 - FOOTER
 ==================================
 */
-footer { background: #d5573b; }
+footer { background: #c8553d; }
 
 .footer_slider .swiper-slide { position: relative; }
 
@@ -801,9 +801,9 @@ ul.link-list li > a { font-size: 12px; line-height: 18px; font-weight: 400; colo
 
 ul.link-list li > a:hover { color: #FFF !important; }
 
-span.white a { color: #FFF; font-family: 'Conv_helveticaneuecyr-bold'; }
+span.white a { color: white; font-family: 'Conv_helveticaneuecyr-bold'; }
 
-span.white a:hover { color: #337ab7; }
+span.white a:hover { color: black; }
 
 span.left { text-align: left; }
 
