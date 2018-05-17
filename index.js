@@ -10,7 +10,6 @@ Todos los cambios nuevos al código deben ser apropiadamente comentados y docume
 // NODE MODULES
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
-var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var fs = require("fs");
 var SpotifyWebApi = require('spotify-web-api-node');
@@ -18,7 +17,6 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override')
 var logger = require('morgan');
 var path = require('path');
-var sanitize = require('sanitize-html');
 var shuffle = require('shuffle-array');
 var neo4j = require('neo4j-driver').v1;
 var sessions = require("client-sessions");
@@ -200,6 +198,7 @@ app.set('view engine', 'ejs');
 /*Variables globales que son pasadas a las diferentes rutas del sistema*/
 app.set('objetosGlobales',objetosGlobales);
 app.set('position',position);
+app.set('generateRandomString',generateRandomString);
 
 
 /*
@@ -247,6 +246,10 @@ app.use(require('./rutas/otrosProcesos'))
 
 /*Ambiente de SUPERCOLLIDER - no utilizada por el momento*/
 app.use(require("./rutas/environmentSC"));
+
+app.get('/error', function(req, res){
+    res.render('pages/error', {error:"NINGUNO"})
+})
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));

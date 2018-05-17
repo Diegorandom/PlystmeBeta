@@ -3,8 +3,11 @@ var router = new express.Router();
 var request = require("request");
 
 router.get('/perfil', function(request, response, error) {
-    if(error){
-        res.render('pages/error',{error:error})
+    var objetosGlobales = request.app.get('objetosGlobales');
+    var position = request.app.get('position');
+    
+    if(error==true){
+        response.render('pages/error',{error:error})
     }else{
         position = request.sessions.position;
         objetosGlobales[position].ref=false;

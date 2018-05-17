@@ -3,7 +3,7 @@ var router = new express.Router();
 var request = require("request");
 
 router.get('/logOut', function(req, res, error) {
-    if(error){
+    if(error==true){
         console.log('Ha ocurrido un error -> ', error)
         res.redirect('/')
     }else{
