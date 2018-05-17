@@ -4,12 +4,13 @@ var request = require('request'); // "Request" library
 var SpotifyWebApi = require('spotify-web-api-node');
 var shuffle = require('shuffle-array');
 var querystring = require('querystring');
+var app = express()
 
 /*
         CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION
 */
 
-router.get('/callback', function(req, res, error) {
+var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
         position = objetosGlobales.length;
@@ -31,10 +32,7 @@ router.get('/callback', function(req, res, error) {
 
   if (state === null || state !== storedState) {
       
-     res.redirect('/error#' +
-      querystring.stringify({
-        error: 'state_mismatch'
-      }));
+     res.render('pages/error', {error:error});
       console.log('Error de autentizacion state_mismatch');
  
   }else {
@@ -72,12 +70,15 @@ router.get('/callback', function(req, res, error) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, bodyS) {
+            if(error == true){
+                res.render('pages/error', {error:error})
+            }else{
+            
             jsonDatos.userid = bodyS.id;
             console.log("Datos:");
             console.log(bodyS);
             jsonDatos.followers = bodyS.followers.total;    
             console.log("userid:" + jsonDatos.userid + '\n');
-            
             
             objetosGlobales[position]= jsonDatos;
             objetosGlobales[position].access_token = objetosGlobales[0].access_token;
@@ -90,7 +91,7 @@ router.get('/callback', function(req, res, error) {
             
             imagen_url = "";
             
-            //EN CASO DE QUE EL USUARIO NO TENGA FOTORGRAÍA DEFINIDA #BUG el pendejo de jona
+            //EN CASO DE QUE EL USUARIO NO TENGA FOTORGRAÍA DEFINIDA #BUG de jona
             if(bodyS.images[0] != undefined){
                 console.log('imagen_url');
                 console.log(imagen_url);
@@ -99,8 +100,6 @@ router.get('/callback', function(req, res, error) {
                 console.log(imagen_url);
             };
              
-            
-            
             objetosGlobales[position].refresh_token = bodyS.refresh_token;
             
             console.log('Comienza proceso de revisión en base de datos para verificar si es un usuario nuevo o ya está regitrado \n');
@@ -130,19 +129,23 @@ router.get('/callback', function(req, res, error) {
                                 console.log(resultado_create)
                                  })
                             .catch(function(err){
-                            console.log(err);
+                                console.log(err);
+                                res.render('pages/error', {error:err})
                             }) 
                             
                             
                              //PROCESO DE HARVESTING DE INFORMACIÓN DE USUARIO
-                                    var options2 = {
-                                      url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + objetosGlobales[position].num +"&time_range=long_term",
-                                      headers: { 'Authorization': 'Bearer ' + objetosGlobales[position].access_token },
-                                      json: true
-                                    };
-                                    console.log('Request de informacion de canciones: ', options2);
-                                    request.get(options2, function(error, response, body){     
-            
+                            var options2 = {
+                              url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + objetosGlobales[position].num +"&time_range=long_term",
+                              headers: { 'Authorization': 'Bearer ' + objetosGlobales[position].access_token },
+                              json: true
+                            };
+                            console.log('Request de informacion de canciones: ', options2);
+                            
+                            request.get(options2, function(error, response, body){     
+                                if(error == true){
+                                    res.render('pages/error', {error:error})
+                                }else{
                                 console.log("50 tracks principales")
                                 console.log(body);
 
@@ -270,9 +273,10 @@ router.get('/callback', function(req, res, error) {
                                        
                                     }
                                      })
-                                     .catch(function(err){
-                                    console.log(err);
-                                    }) 
+                                         .catch(function(err){
+                                            console.log(err);
+                                            res.render('pages/error', {error:err})
+                                        }) 
                                      
                                       //TERMINA DE GUARDARSE INFORMACIÓN DEL TRACK Y COMIENZA A PROCRESARCE EL ALGORITMO
 
@@ -324,11 +328,13 @@ router.get('/callback', function(req, res, error) {
                                                         })
                                                          .catch(function(err){
                                                             console.log(err);
+                                                            res.render('pages/error', {error:err})
                                                         })
                                                 }
                                             })
                                              .catch(function(err){
                                                 console.log(err);
+                                                res.render('pages/error', {error:err})
                                             })
                                          
                                         
@@ -338,30 +344,24 @@ router.get('/callback', function(req, res, error) {
                                       }, function(err) {
                                         done(err);
                                          console.log("err: " + err );
-                                         res.render('pages/error');
+                                         res.render('pages/error', {error:err});
                                       });
                                     console.log(''); 
                                          
                                          
-                                          res.redirect('/perfil#' +
-                                                  querystring.stringify({
-                                                    access_token: objetosGlobales[position].access_token,
-                                                    refresh_token: objetosGlobales[position].refresh_token
-                                                  })); 
+                                      res.redirect('/perfil#' +
+                                              querystring.stringify({
+                                                access_token: objetosGlobales[position].access_token,
+                                                refresh_token: objetosGlobales[position].refresh_token
+                                              })); 
                                         
-                                        
-                                         
-                                         
-                                        
-                                        
-                                         
                                      }
-                                    
-                                    
                                     
                                });
                                         
                               
+                                }
+                                
                              
                             }); 
                                 
@@ -374,7 +374,7 @@ router.get('/callback', function(req, res, error) {
                               objetosGlobales[0].session
                                 .run('MATCH (n:track)-[r:Escuchado]-(m:usuario {spotifyid:{spotifyid}}) RETURN n, r.importanciaIndex', {spotifyid:jsonDatos.userid})
                                 .then(function(tracks){
-                                   console.log(tracks);
+                                  console.log(tracks);
                                   objetosGlobales[position].seedTracks = [];
                                   
                                     tracks.records.forEach(function(records,index){
@@ -401,15 +401,25 @@ router.get('/callback', function(req, res, error) {
                                     
                  
                 })
-                .catch(function(err){
-                    console.log(err);
-                })     
+                                .catch(function(err){
+                                    console.log(err);
+                                    res.render('pages/error', {error:err})
+                                })     
                      
                         }else{
                             console.log('No se pudo determinar si es un usuario nuevo o registrado')
                         }
-             });
+             })
+            .catch(function(err){
+                console.log(err);
+                res.render('pages/error', {error:err})
+            }) 
+            }
+            
         })
+      
+      }else{
+          res.render('pages/error', {error:error})
       }
     })
   }
@@ -418,6 +428,14 @@ router.get('/callback', function(req, res, error) {
     
 
 });
+
+app.use(function (req, res) {
+  var delayed = new DelayedResponse(req, res);
+  // verySlowFunction can now run indefinitely
+  callbackAlgoritmo(delayed.start());
+});
+
+
 
 
 //Finaliza proceso

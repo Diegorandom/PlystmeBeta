@@ -19,18 +19,16 @@ router.get('/perfil', function(request, response, error) {
 
         objetosGlobales[position].usuarios = []
 
-        function onlyUnique(value, index, self) { 
-            return self.indexOf(value) === index;
-        }
-   
         objetosGlobales.forEach(function(item,index){
             if(index>0 && item.nombre != null){
                 objetosGlobales[position].usuarios.push(item.nombre)
             }
         })
         
-        
         /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/
+        function onlyUnique(value, index, self) { 
+            return self.indexOf(value) === index;
+        }
         objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter( onlyUnique );
 
 
