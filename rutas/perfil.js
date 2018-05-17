@@ -29,7 +29,9 @@ router.get('/perfil', function(request, response, error) {
             }
         })
         
-        var unique = objetosGlobales[position].usuarios.filter( onlyUnique );
+        
+        /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/
+        objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter( onlyUnique );
 
 
         response.render('pages/author-login.ejs', objetosGlobales[position]);   
