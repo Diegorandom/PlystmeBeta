@@ -5,6 +5,7 @@ var request = require("request");
 router.get('/perfil', function(request, response, error) {
     var objetosGlobales = request.app.get('objetosGlobales');
     var position = request.app.get('position');
+    position = request.sessions.position;
     
     if(error==true){
         response.render('pages/error',{error:error})
@@ -20,7 +21,7 @@ router.get('/perfil', function(request, response, error) {
         objetosGlobales[position].usuarios = []
 
         objetosGlobales.forEach(function(item,index){
-            if(index>0 && item.nombre != null){
+            if(index>0 && item != null){
                 objetosGlobales[position].usuarios.push(item.nombre)
             }
         })

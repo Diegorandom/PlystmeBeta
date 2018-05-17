@@ -3,6 +3,11 @@ var router = new express.Router();
 var request = require("request");
 
 router.get('/logOut', function(req, res, error) {
+    console.log("Llegamos al pool")
+    var objetosGlobales = req.app.get('objetosGlobales');
+    var position = req.app.get('position');
+    position = req.sessions.position;
+    
     if(error==true){
         console.log('Ha ocurrido un error -> ', error)
         res.redirect('/')

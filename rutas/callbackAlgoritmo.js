@@ -13,9 +13,9 @@ var app = express()
 var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
-        position = objetosGlobales.length;
+    position = objetosGlobales.length;
     console.log('apuntador del objeto', position);
-        req.sessions.position = position;
+    req.sessions.position = position;
     
     if(error == true){ res.render('pages/error', {error:error})}else{ 
         
@@ -32,7 +32,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
 
   if (state === null || state !== storedState) {
       
-     res.render('pages/error', {error:error});
+     res.render('pages/error', {error:"Error de autentizacion state_mismatch",error});
       console.log('Error de autentizacion state_mismatch');
  
   }else {
@@ -424,9 +424,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
     })
   }
     }    
-
     
-
 });
 
 app.use(function (req, res) {
