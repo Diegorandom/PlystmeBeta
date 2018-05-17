@@ -25,7 +25,6 @@ var sessions = require("client-sessions");
 var idleTimer = require("idle-timer");
 
 /* 
-
 Documentación de MasterIndex
 
 El objeto jsonDatosInit es la variable constructor con la cual se construye la estructura de datos de los usuarios.
@@ -55,7 +54,6 @@ Hay 2 tipos de conexiones posibles:
     
 Cuando se conecta la base de datos con localhost deben usarse los permisos mencionados en la siguiente estructura IF.
 No se debe cambiar nada de la estructura de configuración de la base de datos.
-
 */
 
 if(graphenedbURL == undefined){
@@ -70,15 +68,12 @@ if(graphenedbURL == undefined){
 PROTOCOLO DE SEGURIDAD CON CLAVE SPOTIFY 
 
 El protocolo de seguridad utiliza una llave la cual se encuentre en secret-config.json y por ningun motivo debe ser compartida con ninguna persona que no pertenezca al grupo de programadores de Atmos.
-
 */
 
 var fileName = "./secret-config.json";
 var config;
 
-/*
-la siguiente estructura TRY configura la llave secreta y la manda a llamar en la variable config.
-*/
+/*la siguiente estructura TRY configura la llave secreta y la manda a llamar en la variable config.*/
 try {
   config = require(fileName);
 }
@@ -90,9 +85,6 @@ catch (err) {
 
 console.log("session secret is:", config.sessionSecret);
 //Finaliza protocolo de seguridad
-
-
-
 
 /*
 SETUP DE EXPRESS
@@ -173,7 +165,7 @@ if( app.get('port') == 5000 ){
  * @param  {number} length The length of the string
  * @return {string} The generated string
  
- */
+*/
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -185,13 +177,9 @@ var generateRandomString = function(length) {
 };
 
 objetosGlobales[0].stateKey = 'spotify_auth_state';
-
 // Finaliza creacion de llaves
 
-/*
-Configuración de Cookies para control de sesiones
-*/
-
+/*Configuración de Cookies para control de sesiones*/
 var sessionSecreto = generateRandomString(16);
 
 app.use(sessions({
@@ -201,281 +189,64 @@ app.use(sessions({
   activeDuration: 5 * 60 * 1000,
   ephemeral: true
 }));
-
 //Termina configuracion de cookies
 
-/*
-Pieza de middleware que dirije los links a la carpeta donde se alojan los recursos
-*/
+/*Pieza de middleware que dirije los links a la carpeta donde se alojan los recursos*/
 app.use(express.static(__dirname + '/public'))
+// views is directory for all template files/Directorio de Templates
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
 
 /*Variables globales que son pasadas a las diferentes rutas del sistema*/
 app.set('objetosGlobales',objetosGlobales);
 app.set('position',position);
 
+
 /*
-La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. 
+            RUTEO DE TODAS LA FUNCIONES DEL SISTEMA - NO MOVER
 */
+
+/*La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. */
 app.use(require("./rutas/heartbeat"));
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
 app.use(require("./rutas/inicio"))
 
-
 //Login procesa el REQUEST de la API de Spotify para autorizacion
-app.get('/login', function(req, res, error) {
-if(error == true){ res.render('pages/error')}else{
-  
-    var state = generateRandomString(16);
-  res.cookie(objetosGlobales[0].stateKey, state);
+app.use(require('./rutas/login'))
 
-  // your application requests authorization
-  var scope = 'user-read-private user-read-email playlist-read-private user-library-read user-top-read playlist-modify-private user-library-modify';
-    
-    
-  sanitize(res.redirect('https://accounts.spotify.com/authorize/?' +
-    querystring.stringify({
-      client_id: objetosGlobales[0].client_id,
-      response_type: 'code',
-      redirect_uri: objetosGlobales[0].redirect_uri,
-      scope: scope,
-      state: state
-    })))
-    
-    console.log("se termina la autorización desde cliente!");
-}
-    
-});
-//Finaliza proceso
-
-/*
-        CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION
-*/
-app.set('objetosGlobales',objetosGlobales);
-app.set('position',position);
+/*CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION*/
 app.use(require("./rutas/callbackAlgoritmo"));
 
-app.use(require("./rutas/poolAlgoritmo.js"));
+/*Proceso de conexio con la API del algoritmo del pool*/
+app.use(require("./rutas/poolAlgoritmo"));
 
 //Proceso para refrescar un token
+app.use(require('./rutas/tokenRefreshing'));
 
-app.get('/refresh_token', function(req, res) {
-
-  // requesting access token from refresh token
-  var refresh_token = req.query.refresh_token;
-  var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(objetosGlobales[0].client_id + ':' + objetosGlobales[0].client_secret).toString('base64')) },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
-    json: true
-  };
-
-  request.post(authOptions, function(error, response, bodyS) {
-    if (!error && response.statusCode === 200) {
-      var access_token = bodyS.access_token;
-      res.send({
-        'access_token': access_token
-      });
-      res.render('pages/author-login');
-    }
-  });
-});
-
-//Finaliza proceso
-
-// views is directory for all template files/Directorio de Templates
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-
-//Otros PROCESOS 
-app.get('/index.ejs', function(request, response) {
-  response.render('pages/index');
-});
-
-app.get('/about-us.ejs', function(request, response) { 
-    
-    position = request.sessions.position;
-    objetosGlobales[0].ref=true;
-  response.render('pages/about-us', objetosGlobales[0]);
-});
-
-app.get('/activity.ejs', function(request, response) {
-  response.render('pages/activity.ejs');
-});
-
-app.get('/ajax_for_index.ejs', function(request, response) {
-  response.render('pages/ajax_for_index');
-});
-
-app.get('/author-edit.ejs', function(request, response) {
-  response.render('pages/author-edit');
-});
-
+/*Ruta a perfil*/
+app.use(require('./rutas/perfil'));
         
-/*
-        Ambiente de SUPERCOLLIDER
-*/
-
-app.use(require("./rutas/environmentSC"));
-
-app.get('/author.ejs', function(request, response) {
-  response.render('pages/author');
-});
-
-app.get('/blog-2.ejs', function(request, response) {
-  response.render('pages/blog-2');
-});
-
-app.get('/blog-3.ejs', function(request, response) {
-  response.render('pages/blog-3');
-});
-
-app.get('/blog-detail-2.ejs', function(request, response) {
-  response.render('pages/blog-detail-2');
-});
-
-app.get('/blog-detail.ejs', function(request, response) {
-  response.render('pages/blog-detail');
-});
-
-app.get('/blog.ejs', function(request, response) {
-  response.render('pages/blog');
-});
-
-app.get('/contact-us.ejs', function(request, response) {
-  response.render('pages/contact-us');
-});
-
-app.get('/faq.ejs', function(request, response) {
-  response.render('pages/faq');
-});
-
-app.get('/gallery', function(request, response) {
-  response.render('pages/gallery');
-});
-
-app.get('/login.ejs', function(request, response) {
-    response.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
-});
-
-app.get('/messages-2.ejs', function(request, response) {
-  response.render('pages/messages-2');
-});
-
-app.get('/messages.ejs', function(request, response) {
-  response.render('pages/messages');
-});
-
-app.get('/perfil', function(request, response, error) {
-        position = request.sessions.position;
-        objetosGlobales[position].ref=false;
-    
-        console.log('apuntador del arreglo', position)
-    
-            console.log("objetosGlobales");
-            console.log(objetosGlobales);
-            
-            objetosGlobales[position].usuarios = []
-    
-            objetosGlobales.forEach(function(item,index){
-                if(index>0){
-                    objetosGlobales[position].usuarios.push(item.nombre)
-                }
-            })
-            
-        
-            response.render('pages/author-login.ejs', objetosGlobales[position]);
-});
-/*
-        PERFIL DE UN TRACK
-*/
-
+/*PERFIL DE UN TRACK*/
 app.use(require("./rutas/perfilTrack"));
 
+/*Ruta a preferencias*/
 app.use(require("./rutas/preferencias"));
 
-app.get('/track', function(request, response) {
-  response.render('pages/page3', objetosGlobales);
-});
+/*Ruta a proceso  para guardar un track*/
+app.use(require('./rutas/saveTrack'))
 
-app.get('/people.ejs', function(request, response) {
-  response.render('pages/people');
-});
+/*Ruta a funcion IDLE, la cual depura los datos de objetoGlobales*/
+app.use(require('./rutas/idle'))
 
-app.get('/search.ejs', function(request, response) {
-  response.render('pages/search');
-});
+/*Proceso para salirse de una sesion*/
+app.use(require('./rutas/logOut'))
 
-app.get('/shortcodes.ejs', function(request, response) {
-  response.render('pages/shortcodes');
-});
+/*Rutas no implementadas aun*/
+app.use(require('./rutas/otrosProcesos'))
 
-app.get('/site-map.ejs', function(request, response) {
-  response.render('pages/site-map');
-});
-
-app.get('/statictics.ejs', function(request, response) {
-  response.render('pages/statictics');
-});
-
-app.get('/work.ejs', function(request, response) {
-  response.render('pages/work');
-});
-
-app.get('/error', function(request, response) {
-    response.render('pages/error', objetosGlobales);
-});
-
-app.post('/save/track', function(req, res, error){
-   if(error == true){ res.redirect('/error') }
-          var track_uri = req.sessions.track_uri
-            console.log(track_uri.substring(14))
-    
-           // Add tracks to the signed in user's Your Music library
-objetosGlobales[0].spotifyApi.addToMySavedTracks([track_uri.substring(14)])
-          .then(function(data) {
-            console.log('Added track!');
-            mensaje = "exito_save_track"
-            
-             res.render('pages/page3', objetosGlobales, function(error, html){
-                    if(error == true){
-                        console.log('error', error)
-                        res.redirect('/error')
-                    }else{
-                        res.send(html) 
-                     } 
-                });
-        
-          }, function(err) {
-            console.log('Something went wrong!', err);
-            mensaje = "error_save_track"
-            res.redirect('/error')
-          })
-    
-    
-});
-
-app.get('/idle', function(req,res){
-    objetosGlobales[req.sessions.position] = null
-    console.log('redireccionando y depurando datos')
-    res.send("success");
-    req.sessions.position = 0;
-})
-
-app.get('/logOut', function(req, res) {
-    position = req.sessions.position;
-    objetosGlobales[req.sessions.position] = null
-    position = 0
-    req.sessions.position = 0
-    objetosGlobales[0].access_token = null
-    console.log('Depuracion de datos por salida de Usuario')
-    console.log(objetosGlobales)    
-    res.redirect('/')
-    
-});
+/*Ambiente de SUPERCOLLIDER - no utilizada por el momento*/
+app.use(require("./rutas/environmentSC"));
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));

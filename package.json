@@ -5,9 +5,9 @@
   "engines": {
     "node": "5.9.1"
   },
-  "main": "index.js",
+  "main": "master.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon master.js"
   },
   "dependencies": {
     "body-parser": "*",

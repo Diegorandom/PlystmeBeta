@@ -7,7 +7,7 @@ var timeoutID;
 
 router.get('/heartbeat', function(req,res, error){
     if(error == true){
-        res.render('pages/error')
+        res.render('pages/error', {error: error})
     }else{ 
         var timeoutID = req.app.get('timeoutID');
         console.log('heartbeat');
@@ -19,7 +19,9 @@ router.get('/heartbeat', function(req,res, error){
 
         clearTimeout(timeoutID);
 
-        /*timeoutID se reinicia cada vez que se llama la ruta heartbeat*/
+        /*timeoutID se reinicia cada vez que se llama la ruta heartbeat
+        El cronometro tarda 10 minutos en activar goInactive dado que se termina el tiempo
+        */
         timeoutID = setTimeout(goInactive, 1000*60*10);
 
         res.send('Heartbeat')
@@ -28,6 +30,10 @@ router.get('/heartbeat', function(req,res, error){
             /*Cuando el cronometro se termina se activa la funcion y se borra el access token, el cookkie de position se reposiciona en 0, la posición neutral. */
             if(objetosGlobales.length>1 && req.sessions.position != undefined){
                 position = req.sessions.position;
+                /*
+                Se signa el valor NULL a la posicion de la cookie req.sessions.position en objetosGlobales.
+                El objetivo es que cuando ningún usuario se encuentre dentro del sistema, todas las posiciones excepto la [0] (posicion neutral) sean convertidas a NULL para que al entrar a la página de landing page, la siguiente parte del sistema al hacer el conteo de usuarios, elimine las posiciones.
+                */
                 objetosGlobales[req.sessions.position] = null;
                 position = 0;
                 req.sessions.position = 0
