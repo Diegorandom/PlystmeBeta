@@ -17,7 +17,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
     console.log('apuntador del objeto', position);
         req.sessions.position = position;
     
-    if(error == true){ res.render('pages/error')}else{ 
+    if(error == true){ res.render('pages/error', {error:error})}else{ 
         
   res.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
     
@@ -434,8 +434,6 @@ app.use(function (req, res) {
   // verySlowFunction can now run indefinitely
   callbackAlgoritmo(delayed.start());
 });
-
-
 
 
 //Finaliza proceso
