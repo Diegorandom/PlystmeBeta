@@ -19,8 +19,8 @@
             }
 
          .contenedor{
-                    background-color: #e8e9eb;
-                    border-radius: 20px;
+                    background-color: rgba(255, 255, 255, 0.8);
+                    border-radius: 50px;
                 }
         .text-overflow {
                 overflow: hidden;
@@ -101,8 +101,11 @@
          height: 60px;
      } 
        
+     
+     /*************  Color de la barra de navegación *********/
+     
      .navboton2{
-         background-color: #F7660A;
+         background-color:rgba(255,255,255,0.5);
          height: 60px;
      } 
      
@@ -154,16 +157,17 @@
   <body class="page-login">
     
       
+      <!-- Heaader de la página principal-->
       
-     <header style="background-color:none; height:60px;">
-		<div class="container-fluid custom-container "  style="height:60px;">
+     <header style="background-color:rgba(255,255,255); height:2%;">
+		<div class="container-fluid custom-container"  style="height:60px; width:cover">
 			<div class="row"  style="height:60px;">
 
                                  
     <% if(nombre != undefined){ %>   
                 
           
-        <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs navboton2" style=" text-align: center;">
+        <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs navboton2" style="text-align: center;">
                 <a href="/nosotros">
                     <img src="img/Atmos-Nombre2.png" style="height:50%; margin-top:1.5%;">
                 </a>    
@@ -258,6 +262,8 @@ Pruébalo</a>
 	</header> 
       
       
+      <!----------------- Cuadro de acceso------------------------>
+    
       <div class="col-xs-12 hidden-sm hidden-md hidden-lg" style="width:100%; padding: 0; margin-top:0px; max-height: 300px;">
             <img src="img/backgroundNew.jpg" style="width:100%; background-size:100%;">
       </div>
@@ -265,7 +271,7 @@ Pruébalo</a>
         <div class="tag col-xs-12 hidden-md hidden-lg hidden-sm" style="font-size:40px; text-align:center; text-shadow: 1px 1px 1px black;">Atmos</div>
       
       <div class="tag2 col-xs-12 hidden-md hidden-lg hidden-sm" style="font-size:15px; text-align:center; text-shadow: 1px 1px 1px black;">Una nueva experiencia musical</div>
-      
+    
       <div class="col-xs-12 hidden-sm hidden-md hidden-lg" style="background-color:white;font-family: 'Lato', sans-serif; margin-top:25px;">
       
         <div class="col-6" style="margin-top:10px;">
@@ -302,7 +308,8 @@ Pruébalo</a>
  
       <!--LOGIN BOX
       Aquí está la división para la caja de inicio, para todos los tamaños excepto XS-->
-      <div id="login" class="contenedor row hidden-xs" style="margin-top:5%; font-family: 'Lato', sans-serif; margin-bottom:50%; font-weight: 300;">
+    
+      <div id="login" class="contenedor row hidden-xs" style="margin-top:5%; font-family: 'Lato', sans-serif; margin-bottom:15%; font-weight: 300;">
           <br>
           <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
                 <h1>ATMOS</h1>
@@ -323,7 +330,7 @@ Pruébalo</a>
           <div class="col-lg-12">
           <div class="number-counters">  
           <div class="counter-entry">
-                <div class="stat-number" data-to="<%=totalUsers%>" data-speed="3000">0</div> <div class="counter-label" style="border-bottom: 5px solid #ED6D25;">Usuarios</div>
+                <div class="stat-number" style="color: black;" data-to="<%=totalUsers%>" data-speed="3000">0</div> <div class="counter-label" style="color: black; border-bottom: 5px solid #ED6D25;">Usuarios</div>
             </div>
           </div>
           </div>      
@@ -333,7 +340,7 @@ Pruébalo</a>
                <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="margin-bottom:25px;">
                     <a href="/login" >
                       <div class="centro btn size-2 hover-3" style="text-align: center;  width: 100%;background-color:#ED6D25;">
-                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:200%;">
+                          <span style="color:white; font-family: 'Kanit', sans-serif; text-align: center; font-size:200%;">
                               Entrar 
                           </span> 
                       </div>
@@ -346,6 +353,9 @@ Pruébalo</a>
                       </span> 
                 </a>
               </div>
+              
+              <!-- Tamaño mediano -->
+              
               <div class=" hidden-lg col-md-12 hidden-xs" style="margin-bottom:25px;">
                     <a href="/login" >
                       <div class="centro btn size-2 hover-3" style="text-align: center;  width: 100%; background-color:#ED6D25;">
@@ -362,6 +372,9 @@ Pruébalo</a>
                       </span> 
                 </a>
               </div>
+              
+              <!-- Tamaño pequeño -->
+              
                <div class=" hidden-lg hidden-md hidden-sm col-xs-12" style="margin-bottom:25px;">
                     <a href="/login" >
                       <div class="centro btn size-2 hover-3" style="text-align: center;  width: 100%; padding-left:0; padding-right:0; background-color:#ED6D25;">
