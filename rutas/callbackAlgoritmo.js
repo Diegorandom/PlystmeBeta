@@ -32,8 +32,9 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
 
   if (state === null || state !== storedState) {
       
-     res.render('pages/error', {error:"Error de autentizacion state_mismatch",error});
+     res.render('pages/error', {error:"Error de autentizacion state_mismatch",error });
       console.log('Error de autentizacion state_mismatch');
+      console.log('State from Spotify -> ', state)
  
   }else {
       
