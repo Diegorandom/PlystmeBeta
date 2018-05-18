@@ -32,6 +32,25 @@
         background-color: white !important; 
     }
     
+    .timeFilter{
+        transition: all 2s;
+        -webkit-transition: all 1s;
+    }
+    
+    .timeFilter:hover{
+        color: white;
+        cursor: pointer;
+    }
+    .filterSelected{
+        color: white;
+        background-color: #885053;
+        border-radius:5px;
+    }
+    
+    #mostrarUsuarios{
+        cursor: pointer;
+    }
+    
     @media screen and (max-width:550px){
         #btnCrear2, #enterPool2{
             width: 90% !important;
@@ -144,8 +163,16 @@
                                 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             
-                            <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #885053; border-radius:5px; padding-bottom:5px;">Top 50</h2>
-            
+                            <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:0px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #885053; border-radius:5px 5px 0 0; padding-bottom:5px;">Top 50</h2>
+                            
+                            <div style="background-color:black; border-radius: 0 0 5px 5px; margin-bottom:10px; color: #aaa;background-color: #885053DD; font-size:15px;">
+                                
+                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="filterUno">1 mes</div>
+                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="filterSeis">6 meses</div>
+                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter filterSelected" id="filterDoce">12 meses</div>
+                                
+                            </div>
+                            
                         </div> 
                                 
                        
@@ -241,30 +268,31 @@
                                     <div class="col-lg-12 col-md-12 hidden-xs hidden-sm">
                             
                                         <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:10px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #94c9a9; border-radius:5px;">Fiesta</h2>
-                                        
-                                        
-                                        <!--<button  type="submit" value="Submit" class="be-button-vidget " style="width:50%; border: none; background-color:#FFF; margin:0 auto; color:#94c9a9;">
-                                            <i class="far fa-play-circle" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> <p style="color:#94c9a9; display:inline-block; margin-top:-5px;">Entra a la Fiesta </p> 
-                                        </button>-->
+
                                         <br>
                                         
-                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="btnActualizar">
-                                        </button>
+                                        <div id="usuariosDentro" style="width:50%; background-color:white; border-radius:5px; display:none;" >
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="createPlaylist">
-                                            <i class="far far fa-save" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> Guardar Playlist En Spotify 
-                                        </button>
-                                        
-                                        <div id="usuariosDentro" style="width:50%; height: 50px; background-color:white;" >
-                                        
-                                            <p>Usuarios dentro</p>
-                                            <ul>
-                                            <%usuarios.forEach(function(usuarios,index){ %>
-                                                  <li><%=usuarios%></li> 
+                                            <p>
+                                                Usuarios dentro         <%=usuarios.length%><i class="fas fa-chevron-circle-down" id="mostrarUsuarios"></i>
+                                            </p>
+                                            <ul style="display:none;"><%usuarios.forEach(function(usuarios,index){ %>
+                                                  <li><%=usuarios%></li>  
                                             <%})%>
                                             </ul>
                                         
                                         </div>
+                                        
+                                        <br>
+                                        
+                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:49%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="btnActualizar">
+                                        </button>
+                                        
+                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:49%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="createPlaylist">
+                                            <i class="far far fa-save" style="font-size:20px; color:#94c9a9; margin-left:5px;"></i> Guardar Playlist En Spotify 
+                                        </button>
+                                        
+                                        
                                         
                                         <br>
                                     
@@ -308,8 +336,20 @@
                             
                                         <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:0px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #94c9a9; border-radius:5px;">Fiesta</h2>
                                         
+                                        <br>
                                         
+                                        <div id="usuariosDentro2" style="width:50%; background-color:white; border-radius:5px; display:none;" >
                                         
+                                            <p>
+                                                Usuarios dentro         <%=usuarios.length%><i class="fas fa-chevron-circle-down" id="mostrarUsuarios2"></i>
+                                            </p>
+                                            <ul style="display:none;"><%usuarios.forEach(function(usuarios,index){ %>
+                                                  <li><%=usuarios%></li>  
+                                            <%})%>
+                                            </ul>
+                                        
+                                        </div>
+
                                         <br>
                                         
                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#94c9a9;" id="btnActualizar2">
@@ -710,7 +750,7 @@
         
         document.getElementById('enterPool').addEventListener('click', function() {
             
-            $('#formCodigo').css("display","none");
+            $('#usuariosDentro').css("display","block");
             
             $.get( '/pool', function(data, status) {
                 console.log(data)
@@ -719,13 +759,13 @@
                     
                     var botonPool = document.getElementById('btnActualizar')
                     botonPool.innerHTML = "Actualizar Playlist"
-                    botonPool.style="width:50%; border: none; background-color:#FFF; margin:0 auto 20px auto; color:#94c9a9;"
+                    botonPool.style="width:50%; border: none; background-color:#FFF; margin:0 auto 20px auto; color:#94c9a9; display:inline-block;"
                     var icono = document.createElement('i')
                     icono.className ="fas fa-sync-alt"
                     icono.style="font-size:20px; color:#94c9a9; margin-left:5px;"
                     botonPool.appendChild(icono)
                     
-                document.getElementById('createPlaylist').style.display="block"
+                document.getElementById('createPlaylist').style.display="inline-block"
                     
                     
                     
@@ -949,7 +989,7 @@
         
         document.getElementById('enterPool2').addEventListener('click', function() {
             
-            $('#formCodigo2').css("display","none");
+            $('#usuariosDentro2').css("display","block");
             
             $.get( '/pool', function(data, status) {
                 console.log(data)
@@ -1295,7 +1335,7 @@
     }
     
     
-    //Ocultar los botones de entrar y crear fiesta
+//Ocultar los botones de entrar y crear fiesta
     
     $('#enterPool').on('click',function(){
         $('#enterPool').css("display","none");
@@ -1304,6 +1344,54 @@
     $('#enterPool2').on('click',function(){
         $('#enterPool2').css("display","none");
         $('#btnCrear2').css("display","none");
+    })
+    
+    
+//Botones de filtro de tiempo en top 50
+    
+    var filter = $('.filterSelected').attr('id'); //variable que indica el filtro de tiempo seleccionado
+    
+    
+    $('.timeFilter').on('click',function(){
+        $('.timeFilter').removeClass("filterSelected");
+        $(this).addClass("filterSelected");
+        filter = $('.filterSelected').attr('id');
+    })
+    
+//Mostrar usuarios dentro de la fiesta
+    
+    var fas = 0; //Variable para cambiar el icono de la flecha para mostrar usuarios
+    
+    
+    //Version escritorio
+    $('#mostrarUsuarios').on('click',function(){
+        $('#usuariosDentro ul').toggle();
+        if(fas == 0){
+            $('#usuariosDentro p i').removeClass("fas fa-chevron-circle-down");
+            $('#usuariosDentro p i').addClass("fas fa-chevron-circle-up");
+            fas = 1;
+        }else{
+            $('#usuariosDentro p i').removeClass("fas fa-chevron-circle-up");
+            $('#usuariosDentro p i').addClass("fas fa-chevron-circle-down");
+            fas = 0;
+        }
+        
+    })
+    
+    //version movil
+    
+    $('#mostrarUsuarios2').on('click',function(){
+        $('#usuariosDentro2 ul').toggle();
+        if(fas == 0){
+            $('#usuariosDentro2 p i').removeClass("fas fa-chevron-circle-down");
+            $('#usuariosDentro2 p i').addClass("fas fa-chevron-circle-up");
+            fas = 1;
+        }else{
+            $('#usuariosDentro2 p i').removeClass("fas fa-chevron-circle-up");
+            $('#usuariosDentro2 p i').addClass("fas fa-chevron-circle-down");
+            fas = 0;
+        }
+        
     })
  
 
