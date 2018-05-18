@@ -271,11 +271,13 @@
 
                                         <br>
                                         
-                                        <div id="usuariosDentro" style="width:50%; background-color:white; border-radius:5px; display:none;" >
+                                        <div id="usuariosDentro" style="width:40%; background-color:white; border-radius:5px; display:none;" >
                                         
-                                            <p>
-                                                Usuarios dentro         <%=usuarios.length%><i class="fas fa-chevron-circle-down" id="mostrarUsuarios"></i>
-                                            </p>
+                                            Usuarios dentro <div style="background-color:#588b8b;border-radius:50%; color:white; width:20px; display:inline-block"><%=usuarios.length%></div>
+                                            <i class="fas fa-chevron-circle-down" id="mostrarUsuarios"></i>
+                                            
+                                            <div style="width:100%; height: 30px; background-color:green; border-radius: 0 0 5px 5px;"></div>
+                                            
                                             <ul style="display:none;"><%usuarios.forEach(function(usuarios,index){ %>
                                                   <li><%=usuarios%></li> 
                                             <%})%>
@@ -1368,12 +1370,12 @@
     $('#mostrarUsuarios').on('click',function(){
         $('#usuariosDentro ul').toggle();
         if(fas == 0){
-            $('#usuariosDentro p i').removeClass("fas fa-chevron-circle-down");
-            $('#usuariosDentro p i').addClass("fas fa-chevron-circle-up");
+            $('#usuariosDentro i').removeClass("fas fa-chevron-circle-down");
+            $('#usuariosDentro i').addClass("fas fa-chevron-circle-up");
             fas = 1;
         }else{
-            $('#usuariosDentro p i').removeClass("fas fa-chevron-circle-up");
-            $('#usuariosDentro p i').addClass("fas fa-chevron-circle-down");
+            $('#usuariosDentro i').removeClass("fas fa-chevron-circle-up");
+            $('#usuariosDentro i').addClass("fas fa-chevron-circle-down");
             fas = 0;
         }
         
@@ -1384,12 +1386,12 @@
     $('#mostrarUsuarios2').on('click',function(){
         $('#usuariosDentro2 ul').toggle();
         if(fas == 0){
-            $('#usuariosDentro2 p i').removeClass("fas fa-chevron-circle-down");
-            $('#usuariosDentro2 p i').addClass("fas fa-chevron-circle-up");
+            $('#usuariosDentro2 i').removeClass("fas fa-chevron-circle-down");
+            $('#usuariosDentro2 i').addClass("fas fa-chevron-circle-up");
             fas = 1;
         }else{
-            $('#usuariosDentro2 p i').removeClass("fas fa-chevron-circle-up");
-            $('#usuariosDentro2 p i').addClass("fas fa-chevron-circle-down");
+            $('#usuariosDentro2 i').removeClass("fas fa-chevron-circle-up");
+            $('#usuariosDentro2 i').addClass("fas fa-chevron-circle-down");
             fas = 0;
         }
         
