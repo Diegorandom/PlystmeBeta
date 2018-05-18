@@ -31,7 +31,7 @@ router.post('/preferencias', function(req, res, error) {
          function Test(options){
             request(options, function (error, response, body) {
                 console.log(body)
-                if (error == true || body.profile == null) {
+                if (error == true || body == undefined) {
                 console.log("API dormida zzzzz");
                     Test(options);
                 }else{

@@ -11,14 +11,18 @@ var app = express()
 */
 
 var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
+    
+    /*Dado un error en la ruta se llama la pagina de error*/
+    if(error == true){ res.render('pages/error', {error:error})}else{ 
+        
+/*Configuracion de variables globales y position desde cookies*/
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
     position = objetosGlobales.length;
     console.log('apuntador del objeto', position);
     req.sessions.position = position;
-    
-    if(error == true){ res.render('pages/error', {error:error})}else{ 
         
+/*Headers para comunicacion con API de Spotify*/
   res.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
     
   // your application requests refresh and access tokens
@@ -424,7 +428,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
       }
     })
   }
-    }    
+}    
     
 });
 
