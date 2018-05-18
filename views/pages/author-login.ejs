@@ -276,10 +276,15 @@
                                             Usuarios dentro <div style="background-color:#588b8b;border-radius:50%; color:white; width:20px; display:inline-block"><%=usuarios.length%></div>
                                             <i class="fas fa-chevron-circle-down" id="mostrarUsuarios"></i>
                                             
-                                            <div style="width:100%; height: 30px; background-color:green; border-radius: 0 0 5px 5px;"></div>
+                                            <div style="width:100%; height: 30px; background-color:green; border-radius: 0 0 5px 5px;">
+                                            <%usuarios.forEach(function(usuarios,index){ %>
+                                                  <img src="<%=usuarios[1]%>" style="height:100%; border-radius:50%;"> 
+                                            <%})%>
+                                            </div>
                                             
-                                            <ul style="display:none;"><%usuarios.forEach(function(usuarios,index){ %>
-                                                  <li><%=usuarios%></li> 
+                                            <ul style="display:none;">
+                                            <%usuarios.forEach(function(usuarios,index){ %>
+                                                  <li><%=usuarios[0]%></li> 
                                             <%})%>
                                             </ul>
                                         
