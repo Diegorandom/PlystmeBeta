@@ -271,12 +271,12 @@
 
                                         <br>
                                         
-                                        <div id="usuariosDentro" style="width:40%; background-color:white; border-radius:5px; display:none;" >
+                                        <div id="usuariosDentro" style="width:40%; background-color:white; border-radius:5px; display:none; padding: 5px 0 0 0;" >
                                         
-                                            Usuarios dentro <div style="background-color:#588b8b;border-radius:50%; color:white; width:20px; display:inline-block"><%=usuarios.length%></div>
+                                            Usuarios dentro <div style="background-color:#588b8b;border-radius:50%; color:white; width:20px; display:inline-block; margin-bottom: 5px;"><%=usuarios.length%></div>
                                             <i class="fas fa-chevron-circle-down" id="mostrarUsuarios"></i>
                                             
-                                            <div style="width:100%; height: 30px; background-color:green; border-radius: 0 0 5px 5px;">
+                                            <div style="width:100%; height: 30px; background-color:#666; border-radius: 0 0 5px 5px; padding: 5px 0;" id="usuariosFotos">
                                             <%usuarios.forEach(function(usuarios,index){ %>
                                                   <img src="<%=usuarios[1]%>" style="height:100%; border-radius:50%;"> 
                                             <%})%>
@@ -284,7 +284,7 @@
                                             
                                             <ul style="display:none;">
                                             <%usuarios.forEach(function(usuarios,index){ %>
-                                                  <li><%=usuarios[0]%></li> 
+                                                  <li><img src="<%=usuarios[1]%>" style="height:15px; border-radius:50%;"><%=usuarios[0]%></li> 
                                             <%})%>
                                             </ul>
                                         
@@ -1377,10 +1377,12 @@
         if(fas == 0){
             $('#usuariosDentro i').removeClass("fas fa-chevron-circle-down");
             $('#usuariosDentro i').addClass("fas fa-chevron-circle-up");
+            //$('#usuariosFotos').css("display","none");
             fas = 1;
         }else{
             $('#usuariosDentro i').removeClass("fas fa-chevron-circle-up");
             $('#usuariosDentro i').addClass("fas fa-chevron-circle-down");
+            //$('#usuariosFotos').css("display","block");
             fas = 0;
         }
         
