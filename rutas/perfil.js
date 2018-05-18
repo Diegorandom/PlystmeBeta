@@ -22,7 +22,7 @@ router.get('/perfil', function(request, response, error) {
 
         objetosGlobales.forEach(function(item,index){
             if(index>0 && item != null){
-                objetosGlobales[position].usuarios.push(item.nombre)
+                objetosGlobales[position].usuarios.push([item.nombre,item.imagen_url])
             }
         })
         
