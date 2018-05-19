@@ -548,6 +548,7 @@
         
     
     function preferencias(){
+        console.log('Se ha comenzado a llamar a preferencias')
         $.post('/preferencias', function(data, status){
             console.log(status)
             if(status == "success"){
@@ -723,9 +724,8 @@
      console.log('Se ha comenzado a revisar la base de datos')
      
      function chequeoBDLoop() {
-         
+         chequeoFBD()
              if(referenciaBD != "guardado"){
-                chequeoFBD()
                 setTimeout(chequeoBDLoop, 1000)
              }else{
                  chequeoBD == true

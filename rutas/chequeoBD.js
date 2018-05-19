@@ -15,7 +15,7 @@ router.post('/chequeoBD', function(req, res, error) {
     
     console.log('Se comenzó a consultar si la BD ya guardó la información')
     
-    if(error == true){ res.req.sessions.position = positionrender('pages/error')}else{
+    if(error == true){ render('pages/error', {error:error})}else{
         console.log("Estado del perfil de datos del usuario ", objetosGlobales[position].bdEstado )
         res.send(objetosGlobales[position].bdEstado)
     }

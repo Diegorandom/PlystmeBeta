@@ -299,6 +299,8 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                       .then(function(datosTrack) {
                                          console.log('Datos extraídos de los 50 tracks')
                                          console.log(datosTrack)
+                                         console.log('Largo de Datos de tracks')
+                                         console.log(datosTrack.body.audio_features.length)
                                          
                                          datosTrack.body.audio_features.forEach(function(data, index){
                                             
@@ -342,11 +344,12 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                                 res.render('pages/error', {error:err})
                                             })
                                          
-                                        if(datosTrack.lenght == index){
+                                        if(datosTrack.body.audio_features.length == index+1){
                                             objetosGlobales[position].bdEstado="guardado"
                                             console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
                                         }else{
                                             console.log('Aun no se termina de guardar la informacion en la BD')
+                                            console.log("index: ", index+1, "datosTrack.body.audio_features[0] ", datosTrack.body.audio_features.length)
                                         }
 
                                         })   
