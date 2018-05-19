@@ -296,11 +296,11 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
 
                                     //SEG GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
                                      objetosGlobales[0].spotifyApi.getAudioFeaturesForTracks(objetosGlobales[position].track_uri)
-                                      .then(function(data) {
+                                      .then(function(datosTrack) {
                                          console.log('Datos extraídos de los 50 tracks')
-                                         console.log(data)
+                                         console.log(datosTrack)
                                          
-                                        data.body.audio_features.forEach(function(data, index){
+                                         datosTrack.body.audio_features.forEach(function(data, index){
                                             
                                          var danceability_bd = parseFloat(data.danceability);
                                          var energia_bd = parseFloat(data.energy);
@@ -342,7 +342,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                                 res.render('pages/error', {error:err})
                                             })
                                          
-                                        if(data.lenght == index+1){
+                                        if(datosTrack.lenght == index){
                                             objetosGlobales[position].bdEstado="guardado"
                                             console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
                                         }else{

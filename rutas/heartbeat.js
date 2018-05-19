@@ -11,11 +11,10 @@ router.get('/heartbeat', function(req,res, error){
     }else{ 
         var timeoutID = req.app.get('timeoutID');
         console.log('heartbeat');
-        var objetosGlobales = req.app.get('objetosGlobales');
+         var objetosGlobales = req.app.get('objetosGlobales');
         var position = req.app.get('position');
-        position = objetosGlobales.length;
-        console.log('apuntador del objeto', position);
-        req.sessions.position = position;
+        position = req.sessions.position;
+        console.log('apuntador del objeto en preferencias', position);
 
         clearTimeout(timeoutID);
 
