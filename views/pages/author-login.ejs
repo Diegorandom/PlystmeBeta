@@ -549,7 +549,8 @@
     
     function preferencias(){
         console.log('Se ha comenzado a llamar a preferencias')
-        $.post('/preferencias', function(data, status){
+        $.post('/preferencias', function(data, status, error){
+            
             console.log(status)
             if(status == "success"){
                 console.log('Preferencias exitoso')
@@ -710,12 +711,12 @@
         })
     }
      
-     var chequeoBD = false, referenciaBD="noGuardado"
+    referenciaBD="noGuardado"
      
     function chequeoFBD(){
         $.post('/chequeoBD', function(data,status){
             if(status == "success" && data == "guardado"){
-                setTimeout(preferencias,0.500)
+                preferencias()
                 referenciaBD = data
             }
         })
@@ -728,7 +729,6 @@
              if(referenciaBD != "guardado"){
                 setTimeout(chequeoBDLoop, 1000)
              }else{
-                 chequeoBD == true
                  console.log('Ya se terminó de guardar la información en la base de datos')
              }
          
