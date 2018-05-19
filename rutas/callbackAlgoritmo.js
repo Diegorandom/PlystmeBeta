@@ -372,7 +372,8 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                 
                             
                         }else if(checkid_result.records.length >= 1){
-                            console.log('Este usuario ya está registrado (no debería ser más de 1)')  
+                            console.log('Este usuario ya está registrado (no debería ser más de 1)')
+                            
                             objetosGlobales[position].mensaje = "nuevo_login";
                 
                               objetosGlobales[0].session

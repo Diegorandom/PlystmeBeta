@@ -546,10 +546,9 @@
             }
         }
         
-        
-        setTimeout(function(){
-                
-                $.post('/preferencias', function(data, status){
+    
+    function preferencias(){
+        $.post('/preferencias', function(data, status){
             console.log(status)
             if(status == "success"){
                 console.log('Preferencias exitoso')
@@ -704,12 +703,11 @@
                 
                 trDuracion.appendChild(durT)
                 trDuracion.appendChild(dur)
+            }else{
+                setTimeout(preferencias,5000)
             }
         })
-        
-        }, 3000);
-     
-        
+    }
         
         document.getElementById('createPlaylist').addEventListener('click', function(){
             $.get('/create/playlist', function(data, status){

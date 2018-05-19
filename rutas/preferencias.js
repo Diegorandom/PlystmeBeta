@@ -9,7 +9,6 @@ var request = require('request'); // "Request" library
 router.post('/preferencias', function(req, res, error) { 
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
-    position=req.sessions.position;
     console.log('apuntador del objeto en preferencias', position);
     
     if(error == true){ res.render('pages/error')}else{ 
