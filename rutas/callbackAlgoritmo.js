@@ -343,14 +343,6 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                                 console.log(err);
                                                 res.render('pages/error', {error:err})
                                             })
-                                         
-                                        if(datosTrack.body.audio_features.length == index+1){
-                                            objetosGlobales[position].bdEstado="guardado"
-                                            console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
-                                        }else{
-                                            console.log('Aun no se termina de guardar la informacion en la BD')
-                                            console.log("index: ", index+1, "datosTrack.body.audio_features[0] ", datosTrack.body.audio_features.length)
-                                        }
 
                                         })   
                                         
@@ -370,8 +362,17 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                         
                                      }
                                     
+                                    if(body.items.length == index+1){
+                                            objetosGlobales[position].bdEstado="guardado"
+                                            console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
+                                        }else{
+                                            console.log('Aun no se termina de guardar la informacion en la BD')
+                                            console.log("index: ", index+1, "datosTrack.body.audio_features[0] ", datosTrack.body.audio_features.length)
+                                        }
+                                    
                                });
-                                        
+                              
+                                    
                               
                                 }
                                 
