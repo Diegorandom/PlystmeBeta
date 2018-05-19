@@ -9,6 +9,7 @@ var request = require('request'); // "Request" library
 router.post('/preferencias', function(req, res, error) { 
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
+    position = req.sessions.position;
     console.log('apuntador del objeto en preferencias', position);
     
     if(error == true){ res.render('pages/error')}else{ 
@@ -27,14 +28,17 @@ router.post('/preferencias', function(req, res, error) {
               json: true };
 
 
-         function Test(options){
+        function Test(options){
+            console.log('La API de preferencias ha sido llamada')
             request(options, function (error, response, body) {
                 console.log(body)
-                if (error == true || body == undefined) {
-                console.log("API dormida zzzzz")
-                    setTimeout(Test(options),1000);
+                if (error == true || body == undefined || body.profile == undefined) {
+                console.log("API dormida zzzzz ugh!")
+                console.log(body)
+                console.log(error)
+                    Test(options)
                 }else{
-
+                    console.log('La API jaló, alabado sea el señor')
                         objetosGlobales[position].danceability = body.profile.danceability;
 
                         objetosGlobales[position].energia = body.profile.energia;
@@ -69,8 +73,7 @@ router.post('/preferencias', function(req, res, error) {
                 }
                 });
         };
-        
-            Test(options)
+        Test(options)
     }
                                 
 });
