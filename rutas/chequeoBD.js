@@ -12,7 +12,10 @@ router.post('/chequeoBD', function(req, res, error) {
     position = req.sessions.position;
     console.log('apuntador del objeto en preferencias', position);
     
-    if(error == true){ res.render('pages/error')}else{ 
+    console.log('Se comenzó a consultar si la BD ya guardó la información')
+    
+    if(error == true){ res.render('pages/error')}else{
+        console.log("Estado del perfil de datos del usuario ", objetosGlobales[position].bdEstado )
         res.send(objetosGlobales[position].bdEstado)
     }
                                 

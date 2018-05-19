@@ -344,7 +344,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                          
                                         if(data.lenght == index+1){
                                             objetosGlobales[position].bdEstado="guardado"
-                                            console.log('Ya se terminó de guardar la informacion en la BD')
+                                            console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
                                         }else{
                                             console.log('Aun no se termina de guardar la informacion en la BD')
                                         }
