@@ -367,7 +367,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                             console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
                                         }else{
                                             console.log('Aun no se termina de guardar la informacion en la BD')
-                                            console.log("index: ", index+1, "datosTrack.body.audio_features[0] ", datosTrack.body.audio_features.length)
+                                            console.log("index: ", index+1, "body.items.length ", body.items.length)
                                         }
                                     
                                });
