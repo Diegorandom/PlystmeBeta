@@ -31,8 +31,8 @@ router.post('/preferencias', function(req, res, error) {
             request(options, function (error, response, body) {
                 console.log(body)
                 if (error == true || body == undefined) {
-                console.log("API dormida zzzzz");
-                    Test(options);
+                console.log("API dormida zzzzz"))
+                    setTimeout(Test(options),1000);
                 }else{
 
                         objetosGlobales[position].danceability = body.profile.danceability;

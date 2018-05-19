@@ -550,7 +550,7 @@
     function preferencias(){
         $.post('/preferencias', function(data, status){
             console.log(status)
-            if(status == "success"){
+            if(status == "success" || data.danceability == 0){
                 console.log('Preferencias exitoso')
                 console.log(data.danceability)
                 
