@@ -31,7 +31,7 @@ router.post('/preferencias', function(req, res, error) {
         function Test(options){
             console.log('La API de preferencias ha sido llamada')
             request(options, function (error, response, body) {
-                console.log(body)
+                console.log('La API de preferencias respondió algo')
                 if (error == true || body == undefined || body.profile == undefined) {
                 console.log("API dormida zzzzz ugh!")
                 console.log(body)
@@ -73,7 +73,18 @@ router.post('/preferencias', function(req, res, error) {
                 }
                 });
         };
-        Test(options)
+        
+        var chequeoBD = false
+        
+        while(chequeoBD == false){
+            if(objetosGlobales[position].bdEstado == "guardado"){
+                console.log('Información de BD guardada')
+                setTimeout(function(){Test(options)},1000)
+                chequeoBD == true
+            }
+            
+        }
+        
     }
                                 
 });
