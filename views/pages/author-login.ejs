@@ -708,7 +708,26 @@
             }
         })
     }
-    setTimeout(preferencias,0.500)
+     
+     var chequeoBD = false, referenciaBD="noGuardado"
+     
+    function chequeoBD(){
+        $.post('/chequeoBD', function(data,status){
+            if(status == "success" && data == "guardado"){
+                setTimeout(preferencias,0.500)
+                referenciaBD = data
+            }
+        })
+    }
+     
+     while(chequeoBD == false){
+         if(referenciaBD == "guardado"){
+            setTimeout(chequeoBD,0.500)   
+            chequeoBD == true
+         }
+     }
+     
+    
         
         document.getElementById('createPlaylist').addEventListener('click', function(){
             $.get('/create/playlist', function(data, status){

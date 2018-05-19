@@ -233,6 +233,8 @@ app.use(require("./rutas/perfilTrack"));
 /*Ruta a preferencias*/
 app.use(require("./rutas/preferencias"));
 
+app.use(require("./rutas/chequeoBD"));
+
 /*Ruta a proceso  para guardar un track*/
 app.use(require('./rutas/saveTrack'))
 
