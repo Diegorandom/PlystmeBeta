@@ -11,6 +11,7 @@ router.post('/chequeoBD', function(req, res, error) {
     var position = req.app.get('position');
     position = req.sessions.position;
     console.log('apuntador del objeto en preferencias', position);
+
     
     console.log('Se comenzó a consultar si la BD ya guardó la información')
     
