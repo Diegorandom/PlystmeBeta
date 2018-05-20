@@ -15,12 +15,19 @@ router.get('/pool', function(req, res, error){
     /*El arreglo pool se llena con los IDs de los usuarios*/
     var pool = [];
     objetosGlobales.forEach(function(item, index){
+        
+        
         if(index != 0 && objetosGlobales[index] != null){
               pool.push(objetosGlobales[index].userid)
               pool = pool.filter(function(item, pos, self) {
                 return self.indexOf(item) == pos;
               })
-        }
+            /*Filtrado de usuarios repetidos*/
+            function onlyUnique(value, index, self) { 
+                return self.indexOf(value) === index;
+            }
+            pool = pool.filter( onlyUnique );
+        }    
         
         /*Cuando el index del forEach esté en su última posición, es decir todos los IDs han sido guardados, entonces se comienza el proceso de requerir las recomendaciones a la API del suri*/
         if(index == objetosGlobales.length-1){

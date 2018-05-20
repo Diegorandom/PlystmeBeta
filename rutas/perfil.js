@@ -25,15 +25,19 @@ router.get('/perfil', function(request, response, error) {
         objetosGlobales.forEach(function(item,index){
             if(index>0 && item != null){
                 objetosGlobales[position].usuarios.push([item.nombre,item.imagen_url])
-            }
+                /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/
+                function onlyUnique(value, index, self) { 
+                    return self[0].indexOf(value[0]) === index;
+                }
+                
+                objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter( onlyUnique );
+                }
+                
+                
+            
         })
-        
-        /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/
-        function onlyUnique(value, index, self) { 
-            return self.indexOf(value) === index;
-        }
-        objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter( onlyUnique );
-
+        console.log('USUARIOS EN EL POOL GLOBAL')
+        console.log(objetosGlobales[position].usuarios)
         response.render('pages/author-login.ejs', objetosGlobales[position]);   
     }
 });
