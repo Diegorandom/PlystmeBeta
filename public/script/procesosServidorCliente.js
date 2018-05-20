@@ -214,7 +214,7 @@ var referenciaBD="noGuardado"
     document.getElementById('createPlaylist').addEventListener('click', function(){
         $.get('/create/playlist', function(data, status){
             console.log(status)
-
+            console.log(data)
             if(status == "success"){
                 /*Si se ha guardado el playlist se despliega un mensaje en la interfaz*/
                 if(data=="playlistGuardado"){
@@ -231,8 +231,14 @@ var referenciaBD="noGuardado"
                     setTimeout(function(){
                         document.getElementById('actualizacion').style.display="none"
                     }, 2000);
+                }else if(data=="ERRORORIGEN"){
+                    console.log('ERROR DE ORIGEN')
+                    window.location.replace('http://www.ponteatmos.com/error')
                 }
 
+            }else{
+                console.log('ERROR DE ORIGEN')
+                window.location.replace('http://www.ponteatmos.com/error')
             }
 
         })
@@ -241,7 +247,7 @@ var referenciaBD="noGuardado"
         document.getElementById('createPlaylist2').addEventListener('click', function(){
             $.get('/create/playlist', function(data, status){
                 console.log(status)
-                
+                console.log(data)
                 if(status == "success"){
                     if(data=="playlistGuardado"){
                         document.getElementById('floating_alert').style.display="block"
@@ -255,9 +261,14 @@ var referenciaBD="noGuardado"
                         setTimeout(function(){
                             document.getElementById('actualizacion').style.display="none"
                         }, 2000);
-                    }
-                    
-                }
+                    }else if(data=="ERRORORIGEN"){
+                        console.log('ERROR DE ORIGEN')
+                        window.location.replace('http://www.ponteatmos.com/error')
+                    }     
+                }else{
+                    console.log('ERROR DE ORIGEN')
+                    window.location.replace('http://www.ponteatmos.com/error')
+                } 
                 
             })
         })
@@ -271,6 +282,9 @@ var referenciaBD="noGuardado"
                 console.log(data)
                 console.log(status)
                 if(status === "success"){
+                    if(data != undefined){
+                        
+                    
                     /*Proceso entrar a un pool, se configuran los botones que serán las opciones dentro del pool*/
                     var botonPool = document.getElementById('btnActualizar')
                     botonPool.innerHTML = "Actualizar Playlist"
@@ -379,9 +393,14 @@ var referenciaBD="noGuardado"
                        
                        
                        console.log('Nueva canción desplegada')
+                       
                    })
+                   }else{
+                        window.location.replace('http://www.ponteatmos.com/error')
+                    }
                 }else{
                     console.log(data);
+                    window.location.replace('http://www.ponteatmos.com/error')
                 }
                 
             })
@@ -396,6 +415,7 @@ var referenciaBD="noGuardado"
                 console.log(data)
                 console.log(status)
                 if(status === "success"){
+                    if(data != undefined){
                         
                 console.log('El playlist ha cambiado')
                    data.forEach(function(item,index){
@@ -497,8 +517,12 @@ var referenciaBD="noGuardado"
                        console.log('Nueva canción desplegada')
                    })
                 }else{
-                    console.log(data);
+                     window.location.replace('http://www.ponteatmos.com/error')
                 }
+                }else{
+                    window.location.replace('http://www.ponteatmos.com/error')
+                }
+                    
                 
             })
         })
@@ -512,6 +536,7 @@ var referenciaBD="noGuardado"
                 console.log(data)
                 console.log(status)
                 if(status === "success"){
+                    if(data != undefined){
                     
                     var botonPool = document.getElementById('btnActualizar2')
                     botonPool.innerHTML = "Actualizar Playlist"
@@ -623,8 +648,11 @@ var referenciaBD="noGuardado"
                        
                        console.log('Nueva canción desplegada')
                    })
+                    }else{
+                        window.location.replace('http://www.ponteatmos.com/error')
+                    }
                 }else{
-                    console.log(data);
+                    window.location.replace('http://www.ponteatmos.com/error')
                 }
                 
             })
@@ -638,6 +666,7 @@ var referenciaBD="noGuardado"
                 console.log(data)
                 console.log(status)
                 if(status === "success"){
+                    if(data != undefined){
                     
                     var botonPool = document.getElementById('btnActualizar2')
                     botonPool.innerHTML = "Actualizar Playlist"
@@ -749,8 +778,11 @@ var referenciaBD="noGuardado"
                        
                        console.log('Nueva canción desplegada')
                    })
+                    }else{
+                        window.location.replace('http://www.ponteatmos.com/error')
+                    }
                 }else{
-                    console.log(data);
+                    window.location.replace('http://www.ponteatmos.com/error')
                 }
                 
             })

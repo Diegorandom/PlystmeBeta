@@ -12,7 +12,7 @@ router.get('/pool', function(req, res, error){
     /*En caso de que el conteo de errores de la API sobrepase un theshold, se manda a la página de error para evitar consumo de servidor inútil ALV*/
     var conteoErrores = 0;
     
-    /*El arreglo pool se llena con lo IDs de los usuarios*/
+    /*El arreglo pool se llena con los IDs de los usuarios*/
     var pool = [];
     objetosGlobales.forEach(function(item, index){
         if(index != 0 && objetosGlobales[index] != null){
@@ -42,23 +42,25 @@ router.get('/pool', function(req, res, error){
                     if (error == true || body.listaCanciones == null) {
                         console.log('error en Endpoint de Pool --> ', error)
                         console.log("API dormida zzzzz");
-                        /*Se vuelve a intenter la comunicación con la API después de un tiempo de espera*/
-                        setTimeout(Test(options),1000);
+                        /*Se vuelve a intentar la comunicación con la API después de un tiempo de espera (1 segundo)*/
+                        setTimeout(function(){
+                            Test(options)
+                        },1000);
                         conteoErrores += 1;
                     }else{
-                        /*En caso de que la API esté funcionando apropiadamente se llena el arreglo con pool de la posicion 0 [posicion neutral] del arreglo objetosGlobales con los IDs de los usuarios*/
+                        /*En caso de que la API esté funcionando apropiadamente se llena el arreglo del pool de la posicion 0 [posicion neutral] del arreglo objetosGlobales con los IDs de los usuarios*/
                         console.log("API funcionando, GRACIAS A DIOS ALV PRRO!...");	
                         console.log(body); 
                         objetosGlobales[0].pool = pool
                         console.log(objetosGlobales)
                         console.log(body)
                         /*La lista de canciones recomendadas es enviada al cliente*/
+                        console.log('Despliegue de playlist exitosa')
                         res.send(body.listaCanciones); 
 
                         objetosGlobales[position].playlist = []
 
-                        console.log() 
-                        /*Se guarda la lista de canciones en el arreglo playlist del objetoGlobal del usuario correspondiente*/
+                        /*Se guarda la lista de canciones en el arreglo playlist del objetoGlobal del usuario correspondiente. Esto se hace para después usar este objeto en caso de que sea requerido guardar este playlist en Spotify*/
                         body.listaCanciones.forEach(function(item, index){
                             objetosGlobales[position].playlist.push(item[1])
                         })

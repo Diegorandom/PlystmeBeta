@@ -255,7 +255,7 @@ app.use(require("./rutas/environmentSC"));
 
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function(req, res){
-    res.render('pages/error', {error:"NINGUNO"})
+    res.render('pages/error', {error:"No identificado :,("})
 })
 
 /*Configuración de puerto de la app*/
