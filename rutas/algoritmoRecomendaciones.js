@@ -1,4 +1,7 @@
-   /* //Suma para luego sacar promedio
+/*NO ESTÁ EN USO ESTA PARTE DEL SOFTWARE, IGNORAR*/  
+
+
+/* //Suma para luego sacar promedio
                                          objetosGlobales[position].danceability = objetosGlobales[position].danceability + parseFloat(records._fields[0].properties.danceability);
                                          objetosGlobales[position].energia = objetosGlobales[position].energia + parseFloat(records._fields[0].properties.energia);
                                          objetosGlobales[position].fundamental = objetosGlobales[position].fundamental + parseFloat(records._fields[0].properties.fundamental); 

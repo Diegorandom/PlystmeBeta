@@ -255,6 +255,7 @@ app.get('/error', function(req, res){
     res.render('pages/error', {error:"NINGUNO"})
 })
 
+/*Configuración de puerto de la app*/
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });

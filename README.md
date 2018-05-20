@@ -1,2 +1,3 @@
-# too-cool-for-a-logo
-Music Industry Project
+CÓDGIO DE ATMOS
+
+POR DIEGO IGNACIO ORTEGA, ALEXIS DESTRUÍDO Y DAVID BARRIENTOS

@@ -23,7 +23,7 @@ router.get('/heartbeat', function(req,res, error){
         /*timeoutID se reinicia cada vez que se llama la ruta heartbeat
         El cronometro tarda 10 minutos en activar goInactive dado que se termina el tiempo
         */
-        timeoutID = setTimeout(goInactive, 1000*60*10);
+        timeoutID = setTimeout(goInactive, 1000*60*60*4);
 
         res.send('Heartbeat')
 

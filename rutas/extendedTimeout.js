@@ -16,3 +16,4 @@ app.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA PU
 app.use(cookieParser());
 app.use(methodOverride());
 
+/*PIEZA DE MIDDLEWARE QUE NO SE ESTÁ USANDO*/

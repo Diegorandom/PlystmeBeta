@@ -2,6 +2,8 @@ var express = require('express');
 var SpotifyWebApi = require('spotify-web-api-node');
 var router = new express.Router();
 
+/*ESTE SOFTWARE NO ESTÁ EN USO*/
+
 router.post('/track/profile', function(req, res, error){
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');

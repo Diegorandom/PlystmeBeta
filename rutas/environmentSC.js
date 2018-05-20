@@ -1,8 +1,11 @@
- var express = require('express');
+ 
+var express = require('express');
 var router = new express.Router();
 var sc = require('supercolliderjs');
 
 /**
+
+        ESTA PARTE DEL SOFTWARE NO ESTÁ EN USO
 
 router.get('/environment', function(request, response) {
     var objetosGlobales = request.app.get('objetosGlobales');

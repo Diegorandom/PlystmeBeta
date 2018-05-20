@@ -4,6 +4,8 @@ var request = require("request");
 var sanitize = require('sanitize-html');
 var querystring = require('querystring');
 
+/*PROCESO QUE CREA LA CONFIGURACIÓN PARA COMENZAR LA CONEXION CON LA API DE SPOTIFY*/
+
 router.get('/login', function(req, res, error) {
 if(error == true){ res.render('pages/error',{error:error})}else{
     var objetosGlobales = req.app.get('objetosGlobales');

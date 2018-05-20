@@ -2,6 +2,8 @@ var express = require("express");
 var router = new express.Router();
 var request = require("request");
 
+/*PROCESO PARA QUE EL USUARIO PUEDA SALIRSE DE SU PERFIL */
+
 router.get('/logOut', function(req, res, error) {
     console.log("Llegamos al pool")
     var objetosGlobales = req.app.get('objetosGlobales');

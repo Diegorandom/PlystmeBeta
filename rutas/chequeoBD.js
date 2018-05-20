@@ -3,7 +3,7 @@ var router = new express.Router();
 var request = require('request'); // "Request" library
 
 /*
-        CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION
+        Pieza de control que checa si el estado de la BD cambió a guardado y pueden comenzar a requerirse las preferencias del usuario
 */
 
 router.post('/chequeoBD', function(req, res, error) { 
