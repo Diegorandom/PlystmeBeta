@@ -12,7 +12,7 @@ router.post('/preferencias', function(req, res, error) {
     position = req.sessions.position;
     console.log('apuntador del objeto en preferencias', position);
     
-    if(error == true){ res.render('pages/error')}else{ 
+    if(error == true || objetosGlobales[position] == undefined){ res.render('pages/error')}else{ 
     
 //Comienza request de perfil
                                      

@@ -6,15 +6,17 @@ var request = require("request");
 var timeoutID;
 
 router.get('/heartbeat', function(req,res, error){
-    if(error == true){
-        res.render('pages/error', {error: error})
-    }else{ 
-        var timeoutID = req.app.get('timeoutID');
+     var timeoutID = req.app.get('timeoutID');
         console.log('heartbeat');
          var objetosGlobales = req.app.get('objetosGlobales');
         var position = req.app.get('position');
         position = req.sessions.position;
         console.log('apuntador del objeto', position);
+    
+    if(error == true || objetosGlobales[position] == undefined){
+        res.render('pages/error', {error: error})
+    }else{ 
+       
 
         clearTimeout(timeoutID);
 

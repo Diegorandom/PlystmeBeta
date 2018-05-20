@@ -7,7 +7,7 @@ router.get('/perfil', function(request, response, error) {
     var position = request.app.get('position');
     position = request.sessions.position;
     
-    if(error==true){
+    if(error==true || objetosGlobales[position] == undefined){
         response.render('pages/error',{error:error})
     }else{
         position = request.sessions.position;
