@@ -221,6 +221,9 @@ app.use(require("./rutas/callbackAlgoritmo"));
 /*Proceso de conexio con la API del algoritmo del pool*/
 app.use(require("./rutas/poolAlgoritmo"));
 
+/*Ruta de proceso para guardar playlist en Spotify*/
+app.use(require("./rutas/guardaPlaylist"));
+
 //Proceso para refrescar un token
 app.use(require('./rutas/tokenRefreshing'));
 

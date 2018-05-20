@@ -2,14 +2,18 @@ var express = require("express");
 var router = new express.Router();
 var request = require("request");
 
+/*Proceso para entrar a un pool*/
 router.get('/pool', function(req, res, error){
     console.log("Llegamos al pool")
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
     position = req.sessions.position;
     
-    var pool = [];
+    /*En caso de que el conteo de errores de la API sobrepase un theshold, se manda a la página de error para evitar consumo de servidor inútil ALV*/
+    var conteoErrores = 0;
     
+    /*El arreglo pool se llena con lo IDs de los usuarios*/
+    var pool = [];
     objetosGlobales.forEach(function(item, index){
         if(index != 0 && objetosGlobales[index] != null){
               pool.push(objetosGlobales[index].userid)
@@ -18,9 +22,10 @@ router.get('/pool', function(req, res, error){
               })
         }
         
-        
+        /*Cuando el index del forEach esté en su última posición, es decir todos los IDs han sido guardados, entonces se comienza el proceso de requerir las recomendaciones a la API del suri*/
         if(index == objetosGlobales.length-1){
             
+            /*Argumentos necesarios para establecer comunicación co la API del suriel*/
               var options = { method: 'POST',
               url: 'https://atmos-algorithm.mybluemix.net/api/v1/dynamic_playlist/dynamic_playlist_search',
               headers: 
@@ -30,25 +35,30 @@ router.get('/pool', function(req, res, error){
               body: { spotifyid: pool  },
               json: true };
 
-            
+            /*Funcion que manda a llamar la API */
             function Test(options){
                 request(options, function (error, response, body) {
+                    /*En caso de que haya errores en el requerimiento se manda el error a la consola*/
                     if (error == true || body.listaCanciones == null) {
-                    console.log("API dormida zzzzz");
-                        Test(options);
+                        console.log('error en Endpoint de Pool --> ', error)
+                        console.log("API dormida zzzzz");
+                        /*Se vuelve a intenter la comunicación con la API después de un tiempo de espera*/
+                        setTimeout(Test(options),1000);
+                        conteoErrores += 1;
                     }else{
-                        console.log("API funcionando...");	
-                        console.log(body);  
-                        
+                        /*En caso de que la API esté funcionando apropiadamente se llena el arreglo con pool de la posicion 0 [posicion neutral] del arreglo objetosGlobales con los IDs de los usuarios*/
+                        console.log("API funcionando, GRACIAS A DIOS ALV PRRO!...");	
+                        console.log(body); 
                         objetosGlobales[0].pool = pool
                         console.log(objetosGlobales)
                         console.log(body)
+                        /*La lista de canciones recomendadas es enviada al cliente*/
                         res.send(body.listaCanciones); 
 
                         objetosGlobales[position].playlist = []
 
                         console.log() 
-
+                        /*Se guarda la lista de canciones en el arreglo playlist del objetoGlobal del usuario correspondiente*/
                         body.listaCanciones.forEach(function(item, index){
                             objetosGlobales[position].playlist.push(item[1])
                         })
@@ -56,130 +66,26 @@ router.get('/pool', function(req, res, error){
                         console.log("objetosGlobales[position].playlist")
                         console.log(objetosGlobales[position].playlist)
                     }
+                    
+                    /*Si los errores en la API persisten por más de 1 minuto se manda a la pantalla de error*/
+                    if(conteoErrores > 60){
+                        res.render('pages/error', {error: error})
+                    }
+                    
                     });
             };
 
-             console.log("pool")
+            console.log("pool")
             console.log(pool)
             
+            /*Comienza proceso de comunicación con la API de Suriel en el endpoint del POOL*/
             Test(options);
             
 
         }
     })
-    
-   
-    
-       
-    
-    
 });
-
-//ENDPOINT DE CREACION DE PLAYLIST
-
-router.get('/create/playlist', function(req, res){
-var objetosGlobales = req.app.get('objetosGlobales');
-var position = req.sessions.position;
-    
-var playlistname = "FIESTA ATMOS"
-console.log('playlistname = ' + playlistname);
-console.log('userids = ' + objetosGlobales[position].userid);
-    
-objetosGlobales[position].mensaje = "nuevo_playlist";    
-  
-var uris1 = [], uris2 = [];     
-    
-    if(objetosGlobales[position].playlist_id == undefined){
-        
-    // Create a private playlist
-    objetosGlobales[0].spotifyApi.createPlaylist(objetosGlobales[position].userid, playlistname, { 'public' : false })
-        .then(function(data) {
-            console.log('Created playlist!');
-            console.log('data', data);
-            objetosGlobales[position].playlist.forEach(function(records, index){
-                //uris[index] = records.uri;
-                if(index < 50){
-                 uris1[index] = records    
-                 //obj1['uris'].push(records.uri);
-                }else{
-                 uris2[index-50] = records    
-                 //obj2['uris'].push(records.uri);   
-                }
-            });
-
-            console.log("uris1 =", uris1);
-            console.log("uris2 =", uris2);
-
-           // uris1 = JSON.stringify(obj1);;
-
-            //uris2 = JSON.stringify(obj2);
-        
-             var playlist_id = data.body.id; 
-            objetosGlobales[position].playlist_id = data.body.id;
-        
-             console.log("info para agregar tracks a playlist: \n", "userids: ", objetosGlobales[position].userid,  "\n",
-                "data.body.id: ", data.body.id, "\n", 
-                "uris2: ", uris1 )
-            
-            // Add tracks to a playlist
-            objetosGlobales[0].spotifyApi.addTracksToPlaylist(objetosGlobales[position].userid, data.body.id, uris1)
-              .then(function(data) {
-                 console.log('Added tracks to playlist ! paso #1');
-                 console.log('data', data);
-                    
-                     console.log("info para agregar tracks a playlist: \n", "userids: ", objetosGlobales[position].userid,  "\n",
-                        "data.body.id: ", playlist_id, "\n", 
-                        "uris2: ", uris2 )
-                                      
-                     objetosGlobales[0].spotifyApi.addTracksToPlaylist(objetosGlobales[position].userid, playlist_id, uris2)
-                          .then(function(data) {
-                            console.log('Added tracks to playlist paso #2!');
-                            console.log('data', data);
-                            res.send('playlistGuardado');
-                          }, function(err) {
-                            res.send('playlistGuardado');
-                            console.log('Error al momento de agregar tracks a playlist paso #2', err);
-                            res.send('Error al momento de agregar tracks a playlist paso #2');
-                          });
-                    
-                  }, function(err) {
-                    console.log('Error al momento de agregar tracks a playlist paso #1', err);
-                    res.send('Error al momento de agregar tracks a playlist paso #2');    
-       
-        },function(error){
-            console.log(error);
-            res.send('Error al momento de agregar tracks a playlist paso #2');  
-        });
-           
-          }, function(err) {
-            console.log('Error a ', err);
-            res.send('Error al momento de agregar tracks a playlist paso #2');
-          });
-        
-    }else{
-        var options = { method: 'PUT',
-              url: 'https://api.spotify.com/v1/users/'+objetosGlobales[position].userid+'/playlists/'+objetosGlobales[position].playlist_id+'/tracks',
-              headers: { 
-                  'Authorization': 'Bearer ' + objetosGlobales[position].access_token,
-                   'Content-Type': 'application/json' 
-              },
-                body: {
-                    'uris': objetosGlobales[position].playlist
-                },
-              json: true };
-
-            request(options, function (error, response, body, status) {
-              if (error) throw new Error(error);
-                console.log('Actualizacion de playlist')
-                console.log(body)
-                console.log(status)
-                res.send('ActualizacionPlaylist')
-                
-            });
-    }
-    
-  });
-
 
 //Finaliza proceso
 module.exports = router;
+
