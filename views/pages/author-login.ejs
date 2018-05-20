@@ -726,11 +726,14 @@
      
      function chequeoBDLoop() {
          chequeoFBD()
-             if(referenciaBD != "guardado"){
-                setTimeout(chequeoBDLoop, 1000)
-             }else{
-                 console.log('Ya se terminó de guardar la información en la base de datos')
-             }
+             setTimeout(function(){
+                 if(referenciaBD != "guardado"){
+                    chequeoBDLoop
+                 }else{
+                     console.log('Ya se terminó de guardar la información en la base de datos')
+                 }
+             },1000)
+             
          
      }
      

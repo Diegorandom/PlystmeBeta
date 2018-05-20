@@ -14,7 +14,7 @@ router.get('/heartbeat', function(req,res, error){
          var objetosGlobales = req.app.get('objetosGlobales');
         var position = req.app.get('position');
         position = req.sessions.position;
-        console.log('apuntador del objeto en preferencias', position);
+        console.log('apuntador del objeto', position);
 
         clearTimeout(timeoutID);
 

@@ -17,6 +17,7 @@ router.post('/preferencias', function(req, res, error) {
 //Comienza request de perfil
                                      
         console.log('comienza petición a api')
+        console.log('Obteniendo preferencias del id --> ', objetosGlobales[position].userid )
         
          var options = { method: 'POST',
               url: 'https://atmos-algorithm.mybluemix.net/api/v1/user_profile/user_profile',
