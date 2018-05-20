@@ -224,6 +224,13 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                                                             .run('MATCH (n:track {artistaId:{spotifyId}}), (o:artista {artistaId:{spotifyId} }) CREATE (n)-[:interpretadoPor]->(o) ', {spotifyId: record.artists[0].id})
                                                                             .then(function(resultadoUnion){
                                                                                 console.log("Union de artista existente con track existente exitoso")
+                                                                                if(body.items.length == index+1){
+                                                                                    objetosGlobales[position].bdEstado="guardado"
+                                                                                    console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
+                                                                                }else{
+                                                                                    console.log('Aun no se termina de guardar la informacion en la BD')
+                                                                                    console.log("index: ", index+1, "body.items.length ", body.items.length)
+                                                                                }
                                                                             })
                                                                             .catch(function(err){
                                                                             console.log(err);
@@ -362,13 +369,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                         
                                      }
                                     
-                                    if(body.items.length == index+1){
-                                            objetosGlobales[position].bdEstado="guardado"
-                                            console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
-                                        }else{
-                                            console.log('Aun no se termina de guardar la informacion en la BD')
-                                            console.log("index: ", index+1, "body.items.length ", body.items.length)
-                                        }
+                                    
                                     
                                });
                               
