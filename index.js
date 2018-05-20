@@ -143,13 +143,13 @@ if( app.get('port') == 5000 ){
     console.log(objetosGlobales[0].redirect_uri);
 }else{
     console.log("Corriendo en servidor web con uri de redireccionamiento: ");
-    objetosGlobales[0].redirect_uri = url + '/callback'; // Your redirect uri
+    objetosGlobales[0].redirect_uri = url.href + '/callback'; // Your redirect uri
 
     //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
     objetosGlobales[0].spotifyApi = new SpotifyWebApi({
         clientId: 'b590c1e14afd46a69891549457267135',
         clientSecret: config.sessionSecret,
-        redirectUri: url + 'callback' 
+        redirectUri: url.href + '/callback' 
     });
     console.log(objetosGlobales[0].redirect_uri);
 };
