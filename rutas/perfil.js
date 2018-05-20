@@ -7,6 +7,7 @@ router.get('/perfil', function(request, response, error) {
     var objetosGlobales = request.app.get('objetosGlobales');
     var position = request.app.get('position');
     position = request.sessions.position;
+    console.log('apuntador del objeto', position);
     
     /*Si hay error se renderiza*/
     if(error==true || objetosGlobales[position] == undefined){
@@ -32,9 +33,6 @@ router.get('/perfil', function(request, response, error) {
                 
                 objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter( onlyUnique );
                 }
-                
-                
-            
         })
         console.log('USUARIOS EN EL POOL GLOBAL')
         console.log(objetosGlobales[position].usuarios)

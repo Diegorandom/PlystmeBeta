@@ -277,15 +277,30 @@
                                             <i class="fas fa-chevron-circle-down" id="mostrarUsuarios"></i>
                                             
                                             <div style="width:100%; height: 30px; background-color:#588b8b; border-radius: 0 0 5px 5px; padding: 5px 0;" id="usuariosFotos">
-                                            <%usuarios.forEach(function(usuarios,index){ %>
-                                                  <img src="<%=usuarios[1]%>" style="height:100%; border-radius:50%;"> 
-                                            <%})%>
+                                            <%usuarios.forEach(function(usuarios,index){ 
+                                                    if(usuarios[1]){        
+                                                %>
+                                                      <img src="<%=usuarios[1]%>" style="height:100%; border-radius:50%;"> 
+                                                <%
+                                                    }else{ %>
+                                                       <img src="img/Perfil.png" style="height:100%; border-radius:50%;">  
+                                                 <%   }
+                                                })
+                                            %>
                                             </div>
                                             
                                             <ul style="display:none; padding:5px;">
-                                            <%usuarios.forEach(function(usuarios,index){ %>
+                                            <%usuarios.forEach(function(usuarios,index){ 
+                                                if(usuarios[0] && usuarios[1]){        
+                                            %>
                                                   <li><img src="<%=usuarios[1]%>" style="height:15px; border-radius:50%; float:left;"><%=usuarios[0]%></li> 
-                                            <%})%>
+                                            <%
+                                                }else if(usuarios[0]){ %>
+                                                   <li><img src="img/Perfil.png" style="height:15px; border-radius:50%; float:left;"><%=usuarios[0]%></li>  
+                                            <%    }else if(usuarios[1]){ %>
+                                                    <li><img src="<%=usuarios[1]%>" style="height:15px; border-radius:50%; float:left;"><%userid%></li> 
+                                            <% }
+                                                })%>
                                             </ul>
                                         
                                         </div>
