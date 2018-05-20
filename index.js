@@ -125,7 +125,6 @@ En este misma parte del código se configura con que URL de redireccionamiento t
 Todas estas configuraciones se guardan en la posición [0] del objeto objetosGlobales.
 */
 app.set('port', (process.env.PORT || 5000));
-const url = require('url');
 
 objetosGlobales[0].client_id = 'b590c1e14afd46a69891549457267135'; // Your client id
 objetosGlobales[0].client_secret = config.sessionSecret; // Your secret
@@ -143,20 +142,19 @@ if( app.get('port') == 5000 ){
     console.log(objetosGlobales[0].redirect_uri);
 }else{
     console.log("Corriendo en servidor web con uri de redireccionamiento: ");
-    objetosGlobales[0].redirect_uri = url.toString() + '/callback'; // Your redirect uri
+    objetosGlobales[0].redirect_uri = 'http://www.plystme.com/callback'; // Your redirect uri
 
     //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
     objetosGlobales[0].spotifyApi = new SpotifyWebApi({
         clientId: 'b590c1e14afd46a69891549457267135',
         clientSecret: config.sessionSecret,
-        redirectUri: url.toString() + '/callback' 
+        redirectUri: 'http://www.plystme.com/callback' 
     });
     console.log(objetosGlobales[0].redirect_uri);
 };
 //Finaliza setup de puerto
 
-
-
+      
 /*
     Este proceso funciona para crear una llave de acceso a la API de SPOTIFY
     
