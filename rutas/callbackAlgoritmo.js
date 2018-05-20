@@ -80,8 +80,6 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
             }else{
             
             jsonDatos.userid = bodyS.id;
-            console.log("Datos:");
-            console.log(bodyS);
             jsonDatos.followers = bodyS.followers.total;    
             console.log("userid:" + jsonDatos.userid + '\n');
             
@@ -92,7 +90,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
             objetosGlobales[position].email = bodyS.email;
             objetosGlobales[position].external_urls = bodyS.external_urls;
             
-            console.log(objetosGlobales)
+         
             
             imagen_url = "";
             
@@ -131,7 +129,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                             .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, followers:{followers}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:jsonDatos.userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url })
                             .then(function(resultado_create){
                                 console.log('Se creó con éxito el nodo del usuario');
-                                console.log(resultado_create)
+                             
                                  })
                             .catch(function(err){
                                 console.log(err);
@@ -152,7 +150,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                     res.render('pages/error', {error:error})
                                 }else{
                                 console.log("50 tracks principales")
-                                console.log(body);
+                             
 
                                 var i = 0, artistaId = [];
 
@@ -178,7 +176,8 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                         console.log('')
                                         console.log('se realizó la consulta a la base de datos')
 
-                                        console.log(checktrack)
+                               
+                               
 
 
                                     console.log('');
@@ -195,7 +194,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                             .run('CREATE (n:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, reproducible:{reproducible}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen},artistaId:{artistaId}})', { album:record.album.name, nombre:record.name, artistas:artistas, duracion:record.duration_ms, Cont_explicito:record.explicit, externalurls:record.external_urls.spotify, href:record.href, spotifyid:record.id, reproducible:record.is_playable, popularidad:record.popularity, previewUrl:record.preview_url, uri:record.uri, albumImagen:record.album.images[0].url, artistaId:record.artists[0].id })
                                             .then(function(resultado_create){
                                                 console.log('Se Guardo con éxito la información de este track');
-                                                console.log(resultado_create)
+                                             
                                                 
                                         if(artistaId.indexOf(record.artists[0].id) == -1){        
                                             artistaId.push(record.artists[0].id)    
@@ -224,13 +223,6 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                                                             .run('MATCH (n:track {artistaId:{spotifyId}}), (o:artista {artistaId:{spotifyId} }) CREATE (n)-[:interpretadoPor]->(o) ', {spotifyId: record.artists[0].id})
                                                                             .then(function(resultadoUnion){
                                                                                 console.log("Union de artista existente con track existente exitoso")
-                                                                                if(body.items.length == index+1){
-                                                                                    objetosGlobales[position].bdEstado="guardado"
-                                                                                    console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
-                                                                                }else{
-                                                                                    console.log('Aun no se termina de guardar la informacion en la BD')
-                                                                                    console.log("index: ", index+1, "body.items.length ", body.items.length)
-                                                                                }
                                                                             })
                                                                             .catch(function(err){
                                                                             console.log(err);
@@ -251,7 +243,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                                             .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}), (o:artista {spotifyId:{spotifyId} }) CREATE (o)<-[:interpretadoPor]-(n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1, spotifyId: record.artists[0].id  })
                                                             .then(function(resultado){
                                                                 console.log("Se conecto exitosamente el track con el usuario")
-                                                                console.log(resultado)
+                                                              
                                                             })
                                                              .catch(function(err){
                                                             console.log(err);
@@ -266,7 +258,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                                 .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1  })
                                                 .then(function(resultado){
                                                     console.log("Se conecto exitosamente el track con el usuario")
-                                                    console.log(resultado)
+                                          
                                                 })
                                                  .catch(function(err){
                                                 console.log(err);
@@ -329,7 +321,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                             .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) RETURN n', {track_uri:data.uri})
                                             .then(function(resultado){
                                                 console.log("1 = Debe guardarse la info, 0 = no pasa nada")
-                                                console.log(resultado.records)
+                                
 
                                                 if(resultado.records.length>=1){
 
@@ -369,7 +361,13 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                         
                                      }
                                     
-                                    
+                                    if(body.items.length == index+1){
+                                            objetosGlobales[position].bdEstado="guardado"
+                                            console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
+                                        }else{
+                                            console.log('Aun no se termina de guardar la informacion en la BD')
+                                            console.log("index: ", index+1, "body.items.length ", body.items.length)
+                                        }
                                     
                                });
                               

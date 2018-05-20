@@ -552,7 +552,7 @@
         $.post('/preferencias', function(data, status, error){
             
             console.log(status)
-            if(status == "success"){
+            if(status == "success" && data != undefined){
                 console.log('Preferencias exitoso')
                 console.log(data.danceability)
                 
@@ -706,7 +706,7 @@
                 trDuracion.appendChild(durT)
                 trDuracion.appendChild(dur)
             }else{
-                setTimeout(preferencias,5000)
+                setTimeout(preferencias,1000)
             }
         })
     }
@@ -728,7 +728,7 @@
          chequeoFBD()
              setTimeout(function(){
                  if(referenciaBD != "guardado"){
-                    chequeoBDLoop
+                    setTimeout(chequeoBDLoop,1000)
                  }else{
                      console.log('Ya se terminó de guardar la información en la base de datos')
                  }
