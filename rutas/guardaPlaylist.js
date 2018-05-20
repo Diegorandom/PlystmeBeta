@@ -77,19 +77,22 @@ if(error == true || objetosGlobales == undefined || position == undefined){
                                   }, function(err) {
                                     /*En caso de que el segundo grupo de canciones del playlist falle en guardar se manda el mensaje de que se guardó el playlist (las primeras 50 canciones)*/
                                     console.log('Error al momento de agregar segundos 50 tracks a playlist. paso #2', err);
-                                    res.render('pages/error', {error:err})
+                                    res.send(err)
+                                    res.send('ERRORORIGEN')
                                   });
                         } 
 
                       }, function(err) {
                         console.log('Error al momento de agregar primeras 50 tracks a playlist. paso #1', err);
-                        res.render('pages/error', {error:err})
+                        res.send(err)
+                        res.send('ERRORORIGEN')
                         })
 
             },function(error){
                 console.log(error);
                 /*Error al crear playlist en Spotify*/
-                res.render('pages/error', {error:error})
+                res.send(error)
+                res.send('ERRORORIGEN')
             });
 
         }else{
@@ -109,12 +112,14 @@ if(error == true || objetosGlobales == undefined || position == undefined){
                 request(options, function (error, response, body, status) {
                   if (error == true) {
                     console.log("status de error-> ", status)
-                    res.render('pages/error', {error: error})   
+                    res.send("status de error-> ", status)
+                    res.send('ERRORORIGEN')  
                   }else{
                     /*En caso de que no exista el error, se envía mensaje de actualizacion exitosa a cliente*/
                     console.log('Actualizacion de playlist exitosa')
                     console.log(body)
                     console.log("status -> ", status)
+                    res.send("status -> ", status)
                     res.send('ActualizacionPlaylist') 
                   }
                 });
