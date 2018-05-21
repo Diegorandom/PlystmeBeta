@@ -1,4 +1,5 @@
-.spinner{width:60px;height:60px;/*animation: App-logo-spin infinite 4s linear;*/}
+.spinner{width:60px;height:60px;}
+.spinner img{animation: App-logo-spin infinite 4s linear;}
 .container1 > div, .container2 > div, .container3 > div{width:10px;height:10px;background-color:#333;border-radius:100%;position:absolute;-webkit-animation:bouncedelay 1.2s infinite ease-in-out;animation:bouncedelay 1.2s infinite ease-in-out;-webkit-animation-fill-mode:both;animation-fill-mode:both;}
 .spinner .spinner-container{position:absolute;width:100%;height:100%;}
 .container2{-webkit-transform:rotateZ(45deg);transform:rotateZ(45deg);}
@@ -24,7 +25,8 @@
 @keyframes bouncedelay{0%, 80%, 100%{transform:scale(0.0);-webkit-transform:scale(0.0);}
 40%{transform:scale(1.0);-webkit-transform:scale(1.0);}
 }
-/*@keyframes App-logo-spin {
+@keyframes App-logo-spin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
-    }*/
+    }
+
