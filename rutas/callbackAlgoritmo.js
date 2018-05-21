@@ -8,6 +8,10 @@ var app = express()
 
 /*
         CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION
+        
+        REFERENCIAS:
+        1.Documentación de TOP 50 
+        https://beta.developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/
 */
 
 var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
@@ -162,7 +166,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                 body.items.forEach(function(record, index){
                                     
                                     //SE GUARDA LA INFORMACION DE CADA TRACK EN UNA POSICION DE SEEDTRACKS DENTRO de OBJETOSGLOBALES
-                                    if(index < 50){
+                                    if(index <= 50){
                                         objetosGlobales[position].seedTracks[index] = record;
                                         //objetosGlobales[position].track_uri_ref2[index] = record.uri.substring(14);
                                     }
@@ -301,7 +305,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                     console.log("index de cancion analizada del usuario")
                                     console.log(index)
                                     /*Después de terminar el primer proceso con todos los tracks extraídos se comienza a hacer el harvesting de las características del track*/
-                                    if(index == 49){
+                                    if(body.items.length == index+1){
                                         
                                     console.log("URI de track a analizar")
                                     console.log(objetosGlobales[position].track_uri)
