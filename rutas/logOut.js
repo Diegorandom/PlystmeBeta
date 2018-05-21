@@ -9,6 +9,7 @@ router.get('/logOut', function(req, res, error) {
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
     position = req.sessions.position;
+    console.log('apuntador del objeto', position);
     
     if(error==true){
         console.log('Ha ocurrido un error -> ', error)
