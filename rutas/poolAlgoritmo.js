@@ -9,6 +9,8 @@ router.get('/pool', function(req, res, error){
     var position = req.app.get('position');
     position = req.sessions.position;
     
+    if(objetosGlobales[position] != undefined){
+    
     /*En caso de que el conteo de errores de la API sobrepase un theshold, se manda a la página de error para evitar consumo de servidor inútil ALV*/
     var conteoErrores = 0;
     
@@ -93,6 +95,10 @@ router.get('/pool', function(req, res, error){
             
         }
     })
+    }else{
+        error = error + 'objetosGlobales[position] -> INDEFINIDO'
+        res.render('pages/error', {error:error})
+    }
 });
 
 //Finaliza proceso
