@@ -27,7 +27,11 @@ router.get('/pool', function(req, res, error){
                 return self.indexOf(value) === index;
             }
             pool = pool.filter( onlyUnique );
-        }    
+        }
+        
+        
+         console.log("pool")
+        console.log(pool)
         
         /*Cuando el index del forEach esté en su última posición, es decir todos los IDs han sido guardados, entonces se comienza el proceso de requerir las recomendaciones a la API del suri*/
         if(index == objetosGlobales.length-1){
@@ -57,8 +61,7 @@ router.get('/pool', function(req, res, error){
                     }else{
                         /*En caso de que la API esté funcionando apropiadamente se llena el arreglo del pool de la posicion 0 [posicion neutral] del arreglo objetosGlobales con los IDs de los usuarios*/
                         console.log("API funcionando, GRACIAS A DIOS ALV PRRO!...");	
-                        console.log(body); 
-                        objetosGlobales[0].pool = pool
+                        console.log(body);
                         console.log(objetosGlobales)
                         console.log(body)
                         /*La lista de canciones recomendadas es enviada al cliente*/
@@ -84,13 +87,9 @@ router.get('/pool', function(req, res, error){
                     });
             };
 
-            console.log("pool")
-            console.log(pool)
-            
             /*Comienza proceso de comunicación con la API de Suriel en el endpoint del POOL*/
             Test(options);
             
-
         }
     })
 });
