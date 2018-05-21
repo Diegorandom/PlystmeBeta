@@ -2,6 +2,8 @@ var express = require("express");
 var router = new express.Router();
 var request = require("request");
 
+/*ESTE SOFTWARE NO ESTÁ EN USO*/
+
 router.get('/refresh_token', function(req, res) {
 
   // requesting access token from refresh token

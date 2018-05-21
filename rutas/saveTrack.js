@@ -2,6 +2,8 @@ var express = require("express");
 var router = new express.Router();
 var request = require("request");
 
+/*ESTE SOFTWARE NO ESTÁ EN USO*/
+
 router.post('/save/track', function(req, res, error){
    if(error == true){ res.redirect('/error',{error:error}) }
           var track_uri = req.sessions.track_uri

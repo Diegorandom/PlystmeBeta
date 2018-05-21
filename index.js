@@ -224,6 +224,9 @@ app.use(require("./rutas/poolAlgoritmo"));
 /*Ruta de proceso para guardar playlist en Spotify*/
 app.use(require("./rutas/guardaPlaylist"));
 
+/*Ruta de proceso para guardar TOP 50 en Spotify*/
+app.use(require("./rutas/guardarTOP50"));
+
 //Proceso para refrescar un token
 app.use(require('./rutas/tokenRefreshing'));
 

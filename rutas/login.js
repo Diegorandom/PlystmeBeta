@@ -18,10 +18,10 @@ if(error == true){ res.render('pages/error',{error:error})}else{
 var state = generateRandomString(16);
   res.cookie(objetosGlobales[0].stateKey, state);
 
-  // your application requests authorization
+  // Solicitud de la aplicación sobre la información que se solicitará a Spotify
   var scope = 'user-read-private user-read-email playlist-read-private user-library-read user-top-read playlist-modify-private user-library-modify';
     
-    
+    /*Response con solicitud al server de Spotify*/
   sanitize(res.redirect('https://accounts.spotify.com/authorize/?' +
     querystring.stringify({
       client_id: objetosGlobales[0].client_id,

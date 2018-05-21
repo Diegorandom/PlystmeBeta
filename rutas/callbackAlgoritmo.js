@@ -86,6 +86,8 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
             console.log("userid:" + jsonDatos.userid + '\n');
             objetosGlobales[position]= jsonDatos;
             objetosGlobales[position].access_token = objetosGlobales[0].access_token;
+            /*Se elimina el access_token del usuario del objeto neutral para que este sea no contamine a otros usuarios con información que no le corresponde*/
+            objetosGlobales[0].access_token = null
             objetosGlobales[position].pais = bodyS.country;
             objetosGlobales[position].nombre = bodyS.display_name;
             objetosGlobales[position].email = bodyS.email;

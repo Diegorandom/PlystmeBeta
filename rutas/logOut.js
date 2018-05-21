@@ -15,11 +15,10 @@ router.get('/logOut', function(req, res, error) {
         console.log('Ha ocurrido un error -> ', error)
         res.redirect('/')
     }else{
-        position = req.sessions.position;
-        objetosGlobales[req.sessions.position] = null
+        /*Se borra la información del usuario del sistema*/
+        objetosGlobales[position] = null
         position = 0
         req.sessions.position = 0
-        objetosGlobales[0].access_token = null
         console.log('Depuracion de datos por salida de Usuario')
         console.log(objetosGlobales)    
         res.redirect('/')

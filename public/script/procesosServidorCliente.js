@@ -209,6 +209,38 @@ var referenciaBD="noGuardado"
     /*Inicio de proceso de obtención de perfil de preferencias*/
      chequeoBDLoop();
      
+    document.getElementById('guardarTOP50').addEventListener('click', function(){
+        $.get('/guardar/top50', function(data, status){
+            console.log(status)
+            console.log(data)
+            if(status == "success"){
+                /*Si se ha guardado el playlist se despliega un mensaje en la interfaz*/
+                if(data=="topGuardado"){
+                    document.getElementById('topguardado').style.display="block"
+                    console.log("mensaje -> ", data)
+                    setTimeout(function(){
+                        document.getElementById('topguardado').style.display="none"
+                    }, 2000);
+
+                }else if(data=="ActualizacionTop50"){
+                    /*Si se actualizó el playlist, se despliega un mensaje*/
+                    console.log("mensaje -> ", data)
+                    document.getElementById('ActualizacionTop').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('ActualizacionTop').style.display="none"
+                    }, 2000);
+                }else if(data=="ERRORORIGEN"){
+                    console.log('ERROR DE ORIGEN')
+                    window.location.replace('http://www.ponteatmos.com/error')
+                }
+
+            }else{
+                console.log('ERROR DE ORIGEN')
+                window.location.replace('http://www.ponteatmos.com/error')
+            }
+
+        })
+    })
     
     /*Proceso que detona la guardar un playlist dado que el usuario lo solicita en la interfaz*/
     document.getElementById('createPlaylist').addEventListener('click', function(){
