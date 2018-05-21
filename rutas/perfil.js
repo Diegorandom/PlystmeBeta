@@ -24,7 +24,7 @@ router.get('/perfil', function(request, response, error) {
         objetosGlobales[position].usuarios = []
         /*Esta parte guarda a los usuarios dentro del pool en la variable usuarios para que sean desplegados en la interfaz*/
         objetosGlobales.forEach(function(item,index){
-            if(index>0 && item != null){
+            if(index!=0 && objetosGlobales[index] != null){
                 objetosGlobales[position].usuarios.push([item.nombre,item.imagen_url])
                 /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/
                 function onlyUnique(value, index, self) { 

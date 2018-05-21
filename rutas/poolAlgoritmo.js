@@ -14,6 +14,7 @@ router.get('/pool', function(req, res, error){
     
     /*El arreglo pool se llena con los IDs de los usuarios*/
     var pool = [];
+    
     objetosGlobales.forEach(function(item, index){
         
         
@@ -30,12 +31,12 @@ router.get('/pool', function(req, res, error){
         }
         
         
-         console.log("pool")
-        console.log(pool)
+         
         
         /*Cuando el index del forEach esté en su última posición, es decir todos los IDs han sido guardados, entonces se comienza el proceso de requerir las recomendaciones a la API del suri*/
         if(index == objetosGlobales.length-1){
-            
+            console.log("pool")
+            console.log(pool)
             /*Argumentos necesarios para establecer comunicación co la API del suriel*/
               var options = { method: 'POST',
               url: 'https://atmos-algorithm.mybluemix.net/api/v1/dynamic_playlist/dynamic_playlist_search',
