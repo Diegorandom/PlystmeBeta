@@ -33,7 +33,7 @@ var referenciaBD="noGuardado"
                                 label: 'Preferencias',
                                 data: [data.danceability*100, data.energia*100, data.popularidadAvg, data.acustica*100, data.instrumental*100, data.audiencia*100,data.positivismo*100],
                                 backgroundColor: [
-                                    '#c8553daa'
+                                    'rgba(200, 85, 61, 0.7)'
                                     
                                 ],
                                 borderColor: [

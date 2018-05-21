@@ -51,6 +51,14 @@
         cursor: pointer;
     }
     
+    #nuevoPlaylist{
+        -webkit-box-shadow: 4px 6px 57px 25px rgba(88,139,139,1);
+        -moz-box-shadow: 4px 6px 57px 25px rgba(88,139,139,1);
+        box-shadow: 4px 6px 57px 25px rgba(88,139,139,1);
+        font-weight: 500;
+        display:none;
+    }
+    
     @media screen and (max-width:550px){
         #btnCrear2, #enterPool2{
             width: 90% !important;
@@ -165,7 +173,7 @@
                             
                             <h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:5px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #503047; border-radius:5px 5px 0 0; padding-bottom:5px;">Top 50</h2>
                             
-                            <div style="background-color:black; border-radius: 0 0 5px 5px; margin-bottom:10px; color: #aaa;background-color: #503047DD; font-size:15px;">
+                            <div style="background-color:black; border-radius: 0 0 5px 5px; margin-bottom:10px; color: #aaa;background-color: rgba(80, 48, 71, 0.8); font-size:15px;">
                                 
                                 <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="filterUno">1 mes</div>
                                 <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="filterSeis">6 meses</div>
@@ -319,7 +327,7 @@
                                         <br>
                                     
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:#588b8bcc;border-radius:5px; border: 3px solid white; color:white; display:inline-block;" id="btnCrear">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(88, 139, 139, 0.85);border-radius:5px; border: 3px solid white; color:white; display:inline-block;" id="btnCrear">
                                             
                                             <i class="fas fa-plus-square" style="margin-top:10px;  font-size:80px;"></i>
 
@@ -506,8 +514,11 @@
             <strong>El playlist se guardó </strong> como FIESTA ATMOS en Spotify
         </div>
         
-        <div class="alert2 alert-dismissable fade in" id="nuevoPlaylist" style="display:none; width:80%; height:30px; background-color: white; font-family: 'Lato', sans-serif; font-size:130%; margin: 0 auto; border-radius:5px;">
-            <strong>Actualizando playlist! </strong>
+        
+        <div style="width:50%; right:25%; font-size:1.5em; background-color:white; height: auto; padding: 20px 0;" id="nuevoPlaylist">
+            
+            Actualizando playlist...
+            
         </div>
     
             
