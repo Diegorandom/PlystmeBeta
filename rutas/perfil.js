@@ -18,9 +18,6 @@ router.get('/perfil', function(request, response, error) {
     
         console.log('apuntador del arreglo', position)
     
-        console.log("objetosGlobales");
-        console.log(objetosGlobales);
-
         objetosGlobales[position].usuarios = [];
         var usuariosRevision = []
         /*Esta parte guarda a los usuarios dentro del pool en la variable usuarios para que sean desplegados en la interfaz*/
@@ -37,7 +34,7 @@ router.get('/perfil', function(request, response, error) {
                 objetosGlobales[position].usuarios.forEach(function(valorComparador,indice){
                 console.log('corriendo revision de duplicados')
                     console.log('Ejecutando funcion OnlyUnique')
-                    if(nuevoValor == valorComparador[0]){
+                    if(nuevoValor.toString() == valorComparador[0].toString()){
                         console.log('valor Repetido')
                         return false
                     }else if(indice+1 == objetosGlobales[position].usuarios.length){
@@ -48,10 +45,11 @@ router.get('/perfil', function(request, response, error) {
                   
             if(objetosGlobales[position].usuarios.length == 0){
                 objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
-            }else if(onlyUnique(item.nombre) == true){
+            }
+            if(onlyUnique(item.nombre) == true){
                console.log('valor No repetido ->', item.nombre )
                objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
-          }
+            }
                 
                 if(objetosGlobales.length == index+1){           
                     console.log('USUARIOS EN EL POOL GLOBAL')

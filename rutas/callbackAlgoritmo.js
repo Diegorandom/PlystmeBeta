@@ -390,7 +390,6 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                              objetosGlobales[0].session
                                 .run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:data.uri })
                                 .then(function(resultado){
-                                    console.log(resultado)
                                     console.log('Se guardaron las caracteristicas del track')
                                 })
                                  .catch(function(err){
@@ -458,13 +457,11 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                               objetosGlobales[0].session
                                 .run('MATCH (n:track)-[r:Escuchado]-(m:usuario {spotifyid:{spotifyid}}) RETURN n, r.importanciaIndex', {spotifyid:jsonDatos.userid})
                                 .then(function(tracks){
-                                  console.log(tracks);
                                   objetosGlobales[position].seedTracks = [];
                                   
                                     tracks.records.forEach(function(records,index){
                                         
                                          console.log("Datos de nodo " + records._fields[1])
-                                        console.log(records._fields[0])
                                         
                                          //Index de importancia
                                             /*Se extrae el index de importancia de la relación entre usuarios y tracks por propiedades. Con este index de importancia se ordena la posición de cada uno de los nodos de track que serán guardados en la propiedad seedTracks de objetosGlobales[position]*/
