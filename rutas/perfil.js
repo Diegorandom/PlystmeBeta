@@ -37,6 +37,7 @@ router.get('/perfil', function(request, response, error) {
                 console.log('corriendo revision de duplicados')
                     console.log('Ejecutando funcion OnlyUnique')
                     if(nuevoValor != undefined && valorComparador[0] != undefined){
+                        console.log('Los valores NO son Nulos')
                         if(nuevoValor.toString() == valorComparador[0].toString()){
                             console.log('valor Repetido')
                             return false
@@ -44,12 +45,14 @@ router.get('/perfil', function(request, response, error) {
                             return true
                         }   
                     }else{
+                        console.log('Los valores son Nulos')
                         return true
                     }
                  })
                 }
                   
             if(objetosGlobales[position].usuarios.length == 0){
+                console.log('El primer usuario se guarda solo')
                 objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
             }
             if(onlyUnique(item.nombre) == true){
