@@ -37,7 +37,7 @@ router.get('/perfil', function(request, response, error) {
                 objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
             }else{
                 console.log("usuarios ->", objetosGlobales[position].usuarios)
-                objetosGlobales[position].usuarios.every(function(valorComparador,indice){
+                objetosGlobales[position].usuarios.forEach(function(valorComparador,indice){
                     console.log('Ejecutando funcion OnlyUnique')
                     if(item.nombre != undefined && valorComparador[0] != undefined){
                         console.log('Los valores NO son Nulos')
