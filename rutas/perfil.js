@@ -46,7 +46,13 @@ router.get('/perfil', function(request, response, error) {
                         }   
                     }else{
                         console.log('Los valores son Nulos')
-                        return true
+                        console.log('Los valores NO son Nulos')
+                        if(nuevoValor == valorComparador[0]){
+                            console.log('valor Repetido')
+                            return false
+                        }else if(indice+1 == objetosGlobales[position].usuarios.length){
+                            return true
+                        }   
                     }
                  })
                 }
@@ -55,7 +61,9 @@ router.get('/perfil', function(request, response, error) {
                 console.log('El primer usuario se guarda solo')
                 objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
             }
-            if(onlyUnique(item.nombre) == true){
+            var chequeo = onlyUnique(item.nombre);    
+            console.log('Valor Unico ->', chequeo) 
+            if(chequeo == true){
                console.log('valor No repetido ->', item.nombre )
                objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
             }
