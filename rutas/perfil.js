@@ -27,6 +27,10 @@ router.get('/perfil', function(request, response, error) {
             if(index!=0 && objetosGlobales[index] != null){
                 objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
                 /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/
+                objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter(function(item, pos, self) {
+                    return self.indexOf(item) == pos;
+                  })
+                /*Filtrado de usuarios repetidos*/
                 function onlyUnique(value, index, self) { 
                     return self.indexOf(value) === index;
                 }

@@ -166,7 +166,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
 
     /*Se crea el nodo del usuario en la BD*/
     objetosGlobales[0].session
-    .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, followers:{followers}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:jsonDatos.userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url })
+    .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:jsonDatos.userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url })
     .then(function(resultado_create){
         console.log('Se creó con éxito el nodo del usuario');
 
