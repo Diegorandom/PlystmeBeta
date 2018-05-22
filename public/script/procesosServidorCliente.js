@@ -331,7 +331,7 @@ var referenciaBD="noGuardado"
                     icono.style="font-size:20px; color:#588b8b; margin-left:5px;"
                     botonPool.appendChild(icono)
                     
-                document.getElementById('createPlaylist').style.display="inline-block"
+                document.getElementById('createPlaylist').style.display="block"
                     
                 console.log('El playlist ha cambiado')
                    data.forEach(function(item,index){
