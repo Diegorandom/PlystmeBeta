@@ -33,10 +33,13 @@ router.get('/perfil', function(request, response, error) {
                 
                 objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter( onlyUnique );
                 }
+                if(objetosGlobales.length == index+1){
+                    console.log('USUARIOS EN EL POOL GLOBAL')
+                    console.log(objetosGlobales[position].usuarios)
+                    response.render('pages/author-login.ejs', objetosGlobales[position]); 
+                }
         })
-        console.log('USUARIOS EN EL POOL GLOBAL')
-        console.log(objetosGlobales[position].usuarios)
-        response.render('pages/author-login.ejs', objetosGlobales[position]);   
+          
     }
 });
 
