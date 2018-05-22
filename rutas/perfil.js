@@ -31,41 +31,32 @@ router.get('/perfil', function(request, response, error) {
                 
                 
                 
-                function onlyUnique(nuevoValor) {
-                console.log("usuarios ->", objetosGlobales[position].usuarios)
-                objetosGlobales[position].usuarios.forEach(function(valorComparador,indice){
-                console.log('corriendo revision de duplicados')
-                    console.log('Ejecutando funcion OnlyUnique')
-                    if(nuevoValor != undefined && valorComparador[0] != undefined){
-                        console.log('Los valores NO son Nulos')
-                        if(nuevoValor.toString() == valorComparador[0].toString()){
-                            console.log('valor Repetido')
-                            return false
-                        }else if(indice+1 == objetosGlobales[position].usuarios.length){
-                            return true
-                        }   
-                    }else{
-                        console.log('Los valores son Nulos')
-                        console.log('Los valores NO son Nulos')
-                        if(nuevoValor == valorComparador[0]){
-                            console.log('valor Repetido')
-                            return false
-                        }else if(indice+1 == objetosGlobales[position].usuarios.length){
-                            return true
-                        }   
-                    }
-                 })
-                }
                   
             if(objetosGlobales[position].usuarios.length == 0){
                 console.log('El primer usuario se guarda solo')
                 objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
-            }
-            var chequeo = onlyUnique(item.nombre);    
-            console.log('Valor Unico ->', chequeo) 
-            if(chequeo == true){
-               console.log('valor No repetido ->', item.nombre )
-               objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
+            }else{
+                console.log("usuarios ->", objetosGlobales[position].usuarios)
+                objetosGlobales[position].usuarios.every(function(valorComparador,indice){
+                    console.log('Ejecutando funcion OnlyUnique')
+                    if(item.nombre != undefined && valorComparador[0] != undefined){
+                        console.log('Los valores NO son Nulos')
+                        if(item.nombre.toString() == valorComparador[0].toString()){
+                            console.log('valor Repetido')
+                        }else if(indice+1 == objetosGlobales[position].usuarios.length){
+                            console.log('valor nuevo -> ', item.nombre)
+                            objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
+                        }   
+                    }else{
+                        console.log('Los valores son Nulos')
+                        if(item.nombre == valorComparador[0]){
+                            console.log('valor Repetido')
+                        }else if(indice+1 == objetosGlobales[position].usuarios.length){
+                            console.log('valor nuevo -> ',item.nombre)
+                            objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
+                        }   
+                    }
+                 })
             }
                 
                 if(objetosGlobales.length == index+1){           
@@ -73,7 +64,7 @@ router.get('/perfil', function(request, response, error) {
                     console.log(objetosGlobales[position].usuarios)
                     response.render('pages/author-login.ejs', objetosGlobales[position]); 
                     }
-                }
+        }
         })
           
     }
