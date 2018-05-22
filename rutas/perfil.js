@@ -49,7 +49,10 @@ router.get('/perfil', function(request, response, error) {
                         }   
                     }else{
                         console.log('Los valores son Nulos')
-                        if(item.nombre == valorComparador[0]){
+                        if(item.nombre == undefined){
+                            item.nombre = item.userid
+                        }
+                        if(item.nombre.toString() == valorComparador[0].toString()){
                             console.log('valor Repetido')
                         }else if(indice+1 == objetosGlobales[position].usuarios.length){
                             console.log('valor nuevo -> ', item.nombre)
