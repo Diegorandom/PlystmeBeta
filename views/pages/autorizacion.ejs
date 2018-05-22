@@ -8,6 +8,7 @@
       <% include ../partials/footerAuto.ejs  %> 
       
       <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
   </head>
 
 
@@ -30,16 +31,34 @@
               } 
 
 
-               h1, p, h4, h3 {
-                    text-align: center;
-                    color:#313638;
-                }
+        h1 {
+                font-family: 'Quicksand', sans-serif;
+                text-align: center;
+                color: black;
+                font-size: 50px;
+            } 
+     
+        p, h4, h3 {
+                text-align: center;
+                color:#313638;
+            }
+        
+         hr {
+                display:block;
+                height: 3px;
+                border: 0;
+                border-top: 3px solid;
+                border-color:#c8553d;
+                margin: 1em 0;
+                padding: 0;
+
+         }
 
         
     body {
         background-image: url("/img/backgroundNew.jpg");
-        background-size: cover;
-        background-attachment: cover;
+        background-size: 100%;
+        background-attachment: fixed;
         background-repeat: no-repeat;
         }    
       #login, #loggedin {
@@ -419,9 +438,11 @@ Pruébalo</a>
       
       <!--Tamaño grande -->
       
-      <section class="col-lg-12 col-md-12 hidden-sm hidden-xs" style="background-color:rgba(255,255,255,0.5);">
+      <section class="col-lg-12 col-md-12 hidden-sm hidden-xs" style="background-color:rgba(255,255,255,1); padding-bottom: 30px; padding-left: 10%; padding-right: 10%;">
       
-        <h1 class="text-center" style="color:black;">VIDEOS<br><small style="color: black;">Conoce más sobre nosotros.</small></h1>
+        <h1 class="text-center" style="color:black; font-family: 'Quicksand', sans-serif; font-size:50px;">VIDEOS</h1>
+          <hr align="center">
+          <h2 class="text-center" style="color: LightGray; font-size: 20px;">Conoce más sobre nosotros.</h2><br>
             <ol text-align="center">
                 <li>
                      <iframe align="left"  width="45%" height="315" src="https://www.youtube.com/embed/1RAY8xf6elg?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -430,6 +451,7 @@ Pruébalo</a>
                     <iframe align="right" width="45%" height="315" src="https://www.youtube.com/embed/bruksbn9LTc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>  
                 </li>          
           </ol>
+          <br>
        
       </section>
       
