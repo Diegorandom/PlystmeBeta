@@ -727,7 +727,7 @@ transition: all ease-out 0.3s;}
 	07 - FOOTER
 ==================================
 */
-footer { background: #c8553d; }
+footer { background: #333333; }
 
 .footer_slider .swiper-slide { position: relative; }
 
