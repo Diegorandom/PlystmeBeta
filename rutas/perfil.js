@@ -36,10 +36,14 @@ router.get('/perfil', function(request, response, error) {
                 objetosGlobales[position].usuarios.forEach(function(valorComparador,indice){
                 console.log('corriendo revision de duplicados')
                     console.log('Ejecutando funcion OnlyUnique')
-                    if(nuevoValor.toString() == valorComparador[0].toString()){
-                        console.log('valor Repetido')
-                        return false
-                    }else if(indice+1 == objetosGlobales[position].usuarios.length){
+                    if(nuevoValor != undefined && valorComparador[0] != undefined){
+                        if(nuevoValor.toString() == valorComparador[0].toString()){
+                            console.log('valor Repetido')
+                            return false
+                        }else if(indice+1 == objetosGlobales[position].usuarios.length){
+                            return true
+                        }   
+                    }else{
                         return true
                     }
                  })
