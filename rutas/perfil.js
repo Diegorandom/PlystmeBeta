@@ -21,33 +21,48 @@ router.get('/perfil', function(request, response, error) {
         console.log("objetosGlobales");
         console.log(objetosGlobales);
 
-        objetosGlobales[position].usuarios = []
+        objetosGlobales[position].usuarios = [];
+        var usuariosRevision = []
         /*Esta parte guarda a los usuarios dentro del pool en la variable usuarios para que sean desplegados en la interfaz*/
+         
         objetosGlobales.forEach(function(item,index){
             if(index!=0 && objetosGlobales[index] != null){
-                objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
-                /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/
-                objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter(function(item, pos, self) {
-                    return self.indexOf(item) == pos;
-                  })
-                /*Filtrado de usuarios repetidos*/
-                function onlyUnique(value, index, self) { 
-                    return self.indexOf(value) === index;
-                }
-                objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter( onlyUnique );
                 
+                /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/           
+                         
+                /*Filtrado de usuarios repetidos*/
+                
+                function onlyUnique(nuevoValor) {
+                console.log("usuarios ->", objetosGlobales[position].usuarios)
+                objetosGlobales[position].usuarios.forEach(function(valorComparador,indice){
+                console.log('corriendo revision de duplicados')
+                    console.log('Ejecutando funcion OnlyUnique')
+                    if(nuevoValor == valorComparador[0]){
+                        console.log('valor Repetido')
+                        return false
+                    }else if(indice+1 == objetosGlobales[position].usuarios.length){
+                        return true
+                    }
+                 })
                 }
-            
-                if(objetosGlobales.length == index+1){
+                  
+            if(objetosGlobales[position].usuarios.length == 0){
+                objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
+            }else if(onlyUnique(item.nombre) == true){
+               console.log('valor No repetido ->', item.nombre )
+               objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
+          }
+                
+                if(objetosGlobales.length == index+1){           
                     console.log('USUARIOS EN EL POOL GLOBAL')
                     console.log(objetosGlobales[position].usuarios)
                     response.render('pages/author-login.ejs', objetosGlobales[position]); 
+                    }
                 }
         })
           
     }
 });
 
-    
 //Finaliza proceso
 module.exports = router;

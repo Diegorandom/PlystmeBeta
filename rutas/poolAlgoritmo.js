@@ -11,7 +11,7 @@ router.get('/pool', function(req, res, error){
     
     if(objetosGlobales[position] != undefined){
     
-    /*En caso de que el conteo de errores de la API sobrepase un theshold, se manda a la página de error para evitar consumo de servidor inútil ALV*/
+    /*En caso de que el conteo de errores de la API sobrepase un threshold, se manda a la página de error para evitar consumo de servidor inútil ALV*/
     var conteoErrores = 0;
     
     /*El arreglo pool se llena con los IDs de los usuarios*/
@@ -32,14 +32,11 @@ router.get('/pool', function(req, res, error){
             pool = pool.filter( onlyUnique );
         }
         
-        
-         
-        
         /*Cuando el index del forEach esté en su última posición, es decir todos los IDs han sido guardados, entonces se comienza el proceso de requerir las recomendaciones a la API del suri*/
         if(index == objetosGlobales.length-1){
             console.log("pool")
             console.log(pool)
-            /*Argumentos necesarios para establecer comunicación co la API del suriel*/
+            /*Argumentos necesarios para establecer comunicación con la API del suriel*/
               var options = { method: 'POST',
               url: 'https://atmos-algorithm.mybluemix.net/api/v1/dynamic_playlist/dynamic_playlist_search',
               headers: 
