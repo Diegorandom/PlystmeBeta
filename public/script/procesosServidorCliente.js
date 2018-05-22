@@ -216,18 +216,21 @@ var referenciaBD="noGuardado"
             if(status == "success"){
                 /*Si se ha guardado el playlist se despliega un mensaje en la interfaz*/
                 if(data=="topGuardado"){
-                    document.getElementById('topguardado').style.display="block"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    document.getElementById('nuevoPlaylist').innerHTML="Guardando TOP 50 en Spotify..."
+                    
                     console.log("mensaje -> ", data)
                     setTimeout(function(){
-                        document.getElementById('topguardado').style.display="none"
+                        document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
 
                 }else if(data=="ActualizacionTop50"){
                     /*Si se actualizó el playlist, se despliega un mensaje*/
                     console.log("mensaje -> ", data)
-                    document.getElementById('ActualizacionTop').style.display="block"
+                    document.getElementById('nuevoPlaylist').innerHTML="Se ha actualizado el TOP 50"
+                    document.getElementById('nuevoPlaylist').style.display="block"
                     setTimeout(function(){
-                        document.getElementById('ActualizacionTop').style.display="none"
+                        document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                 }else if(data=="ERRORORIGEN"){
                     console.log('ERROR DE ORIGEN')
@@ -250,18 +253,20 @@ var referenciaBD="noGuardado"
             if(status == "success"){
                 /*Si se ha guardado el playlist se despliega un mensaje en la interfaz*/
                 if(data=="playlistGuardado"){
-                    document.getElementById('floating_alert').style.display="block"
+                    document.getElementById('nuevoPlaylist').innerHTML="Playlist guardado como FIESTA ATMOS en Spotify"
+                    document.getElementById('nuevoPlaylist').style.display="block"
                     console.log(data)
                     setTimeout(function(){
-                        document.getElementById('floating_alert').style.display="none"
+                        document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
 
                 }else if(data=="ActualizacionPlaylist"){
                     /*Si se actualizó el playlist, se despliega un mensaje*/
                     console.log(data)
-                    document.getElementById('actualizacion').style.display="block"
+                    document.getElementById('nuevoPlaylist').innerHTML="Se ha actualizado el Playlist"
+                    document.getElementById('nuevoPlaylist').style.display="block"
                     setTimeout(function(){
-                        document.getElementById('actualizacion').style.display="none"
+                        document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                 }else if(data=="ERRORORIGEN"){
                     console.log('ERROR DE ORIGEN')
@@ -458,6 +463,7 @@ var referenciaBD="noGuardado"
                             /*Mensaje de actualizacion de playlist*/
                             if(index == 1){
                                 console.log('cargando mensaje')
+                                document.getElementById('nuevoPlaylist').innerHTML="Actualizando Playlist..."
                                 document.getElementById('nuevoPlaylist').style.display="block"
                                 console.log(data)
                                 setTimeout(function(){
