@@ -43,7 +43,8 @@ router.get('/perfil', function(request, response, error) {
                         console.log('Los valores NO son Nulos')
                         if(item.nombre.toString() == valorComparador[0].toString()){
                             console.log('valor Repetido')
-                        }else if(indice+1 == objetosGlobales[position].usuarios.length){
+                        }
+                        if(indice+1 == objetosGlobales[position].usuarios.length){
                             console.log('valor nuevo -> ', item.nombre)
                             objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
                         }   
@@ -54,7 +55,8 @@ router.get('/perfil', function(request, response, error) {
                         }
                         if(item.nombre.toString() == valorComparador[0].toString()){
                             console.log('valor Repetido')
-                        }else if(indice+1 == objetosGlobales[position].usuarios.length){
+                        }
+                        if(indice+1 == objetosGlobales[position].usuarios.length){
                             console.log('valor nuevo -> ', item.nombre)
                             objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
                         }     
