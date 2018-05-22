@@ -29,6 +29,8 @@ router.get('/perfil', function(request, response, error) {
                          
                 /*Filtrado de usuarios repetidos*/
                 
+                
+                
                 function onlyUnique(nuevoValor) {
                 console.log("usuarios ->", objetosGlobales[position].usuarios)
                 objetosGlobales[position].usuarios.forEach(function(valorComparador,indice){
