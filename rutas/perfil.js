@@ -52,9 +52,9 @@ router.get('/perfil', function(request, response, error) {
                         if(item.nombre == valorComparador[0]){
                             console.log('valor Repetido')
                         }else if(indice+1 == objetosGlobales[position].usuarios.length){
-                            console.log('valor nuevo -> ',item.nombre)
+                            console.log('valor nuevo -> ', item.nombre)
                             objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
-                        }   
+                        }     
                     }
                  })
             }
