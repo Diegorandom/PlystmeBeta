@@ -18,6 +18,7 @@
         <link rel="preload" href="img/fondo7.png">
         <link rel="preload" href="img/fondo8.png">
         <link rel="preload" href="img/fondo2.jpg">
+        <link rel="preload" href="img/propuesta.jpg">
         
         
 	</head>
@@ -243,16 +244,16 @@
                                 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             
-                            <!--<h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:5px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #503047; border-radius:5px 5px 0 0; padding-bottom:5px;">
+                            <!--<h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:5px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #5296B9; border-radius:5px 5px 0 0; padding-bottom:5px;">
                                 Top 50
-                                <div style="float: right; background-color:#503047; font-size:30px; cursor: pointer;" id="guardarTOP50">
+                                <div style="float: right; background-color:#5296B9; font-size:30px; cursor: pointer;" id="guardarTOP50">
                                     <i class="fas fa-arrow-down"></i>
                                 </div>
                             </h2>-->
                             
                             <h2 style="">
                                 
-                                <div style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:5px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #503047; border-radius:5px 5px 0 0; padding-bottom:5px;">
+                                <div style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:5px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #5296B9; border-radius:5px 5px 0 0; padding-bottom:5px;">
                                     <p style="margin-bottom:0px;">Top 50</p>
                                     <!--<span class="glyphicon glyphicon-download-alt" style="float: right;margin:-37px 12px 0 0;font-size: 20px;cursor:pointer;" id="guardarTOP50"></span>-->
                                     <i class="far fa-arrow-alt-circle-down" style="font-size:30px; cursor:pointer; float:right; margin:-34px 15px 0 0" id="guardarTOP50"></i>
@@ -261,7 +262,7 @@
                                 </div>
                             </h2>
                             
-                            <div style="background-color:black; border-radius: 0 0 5px 5px; margin-bottom:10px; color: #aaa;background-color: rgba(80, 48, 71, 0.8); font-size:15px;">
+                            <div style="background-color:black; border-radius: 0 0 5px 5px; margin-bottom:10px; color: #ccc;background-color: rgba(82,150,185,0.8); font-size:15px;">
                                 
                                 <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="short_term">1 mes</div>
                                 <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="medium_term">6 meses</div>
@@ -297,13 +298,13 @@
                                             </span>   
                                         <!--</form>-->
                                         
-                                        <span class="be-post-title" style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.name %></span> 
+                                        <span class="be-post-title" style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.name %></span> 
                                         
-                                        <span style="color:#503047; font-size:120%; overflow:hidden; max-height:20px;">
+                                        <span style="color:#5296B9; font-size:120%; overflow:hidden; max-height:20px;">
                                             Popularidad: <%=records.popularity%> 
                                         </span>
                                         <div class="author-post">
-                                            <span style="color:#503047; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artists[0].name%></span>
+                                            <span style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artists[0].name%></span>
                                         </div>
                                     </div>
                                         
@@ -334,13 +335,13 @@
                                         </span>   
                                         <!-- </form> -->
                                         
-                                        <span class="be-post-title" style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.nombre %></span> 
+                                        <span class="be-post-title" style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.nombre %></span> 
                                        
-                                        <span style="color:#503047; font-size:120%; overflow:hidden; max-height:20px;">
+                                        <span style="color:#5296B9; font-size:120%; overflow:hidden; max-height:20px;">
                                             Popularidad: <%=records.popularidad%> 
                                         </span>
                                         <div class="author-post">
-                                            <span style="color:#503047; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artistas%></span>
+                                            <span style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artistas%></span>
                                         </div>
                                     </div>
                                         
@@ -606,8 +607,8 @@
                                             </div>
                                             <div class="col-xs-6" style="width:33.333%; margin:0; padding:0;">
                                                 <div class="nav-tab-item  " style="width:100%; margin:0; padding:0;" id="btnTop50">
-                                                    <span style="padding:10px 0 0 0;"><i class="fas fa-music" style="font-size:20px; color:#503047"></i></span>
-                                                    <span style="font-size:10px; padding:5px 0 5px 0;color:#503047">Top 50</span>
+                                                    <span style="padding:10px 0 0 0;"><i class="fas fa-music" style="font-size:20px; color:#5296B9"></i></span>
+                                                    <span style="font-size:10px; padding:5px 0 5px 0;color:#5296B9">Top 50</span>
                                                 </div>
                                             </div>
                                             <div class="col-xs-6" style="width:33.333%; margin:0; padding:0;">
@@ -713,7 +714,7 @@
     });
     
     $('#btnTop50').on('click',function(){
-        $('#fondoIphone').css("background","url('img/fondo7.png') no-repeat");
+        $('#fondoIphone').css("background","url('img/propuesta.jpg') no-repeat");
         $('#fondoIphone').css("background-position","center");
         $('#fondoIphone').css("background-size","cover");
         
