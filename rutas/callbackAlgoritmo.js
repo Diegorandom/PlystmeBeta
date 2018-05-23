@@ -152,14 +152,8 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                             objetosGlobales[position].mensaje = "nuevo_usuario";
                             
                             // mount the router on the app
-                            
-                            var mineriaUsuario=require('./mineriaUsuario')
-                            
-                            router.use('/mineriaUsuario', mineriaUsuario) 
+                            res.redirect('/mineria');
                           
-                
-
-                        
                         }else if(checkid_result.records.length >= 1){
                             console.log('Este usuario ya está registrado (no debería ser más de 1)')
                             

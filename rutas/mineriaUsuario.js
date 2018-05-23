@@ -27,7 +27,7 @@ app.use(methodOverride());
 
 console.log('Llegamos a la ruta de mineria de datos de usuario')
 
-router.use( function(req, res, next){
+router.get('/mineria', function(req, res, next){
                
     console.log('entramos a la ruta')
     var objetosGlobales = req.app.get('objetosGlobales');
@@ -37,7 +37,7 @@ router.use( function(req, res, next){
 
     /*Se crea el nodo del usuario en la BD*/
     objetosGlobales[0].session
-    .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:jsonDatos.userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url })
+    .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:objetosGlobales[position].userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url })
     .then(function(resultado_create){
         console.log('Se creó con éxito el nodo del usuario');
 
@@ -128,7 +128,7 @@ router.use( function(req, res, next){
 
                                         /*Se crea la relación entre los tracks y el usuario en BD*/
                                         objetosGlobales[0].session
-                                            .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}})  CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1 })
+                                            .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}})  CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1 })
                                             .then(function(resultado){
                                                 console.log("Se conecto exitosamente el track con el usuario")
 
@@ -161,7 +161,7 @@ router.use( function(req, res, next){
                             }else{
                                 /*Si el track existe en la BD se para directamente a conectar la relación entre track e usuario*/
                                 objetosGlobales[0].session
-                                    .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}), (o:artista {spotifyId:{spotifyId} }) CREATE (o)<-[:interpretadoPor]-(n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1, spotifyId: record.artists[0].id  })
+                                    .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}), (o:artista {spotifyId:{spotifyId} }) CREATE (o)<-[:interpretadoPor]-(n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, spotifyId: record.artists[0].id  })
                                     .then(function(resultado){
                                         console.log("Se conecto exitosamente el track con el usuario")
 
@@ -179,7 +179,7 @@ router.use( function(req, res, next){
                 }else{
                     /*En caso de que el artista ya fue procesado y por lo tanto conectado con otros tracks y con el track en proceso, solo hace falta conecta el usuario con el nuevo track*/
                     objetosGlobales[0].session
-                        .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:jsonDatos.userid, spotifyid:record.id, index:index+1  })
+                        .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1  })
                         .then(function(resultado){
                             console.log("Se conecto exitosamente el track con el usuario")
 
@@ -314,9 +314,7 @@ router.use( function(req, res, next){
 
 
     }); 
-    
 })
 
 //Finaliza proceso
-app.use('/mineriaUsuario', router);
-
+module.exports = router;

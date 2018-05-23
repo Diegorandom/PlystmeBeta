@@ -256,6 +256,8 @@ app.use(require('./rutas/otrosProcesos'))
 /*Ambiente de SUPERCOLLIDER - no utilizada por el momento*/
 app.use(require("./rutas/environmentSC"));
 
+app.use(require('./rutas/mineriaUsuario'));
+
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function(req, res){
     res.render('pages/error', {error:"No identificado :,("})
