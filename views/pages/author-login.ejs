@@ -356,12 +356,12 @@
                                             <%usuarios.forEach(function(usuario,index){ 
                                                 if(usuario[0] && usuario[1]){        
                                             %>
-                                                  <li><img src="<%=usuario[1]%>" style="height:15px;width:15px; border-radius:50%; float:left;"><%=usuario[0]%></li> 
+                                                  <li><img src="<%=usuario[1]%>" style="height:20px;width:20px; border-radius:50%; float:left;"><%=usuario[0]%></li> 
                                             <%
                                                 }else if(usuario[0]){ %>
-                                                   <li><img src="img/Perfil.png" style="height:15px;width:15px; border-radius:50%; float:left;"><%=usuario[0]%></li>  
+                                                   <li><img src="img/Perfil.png" style="height:20px;width:20px; border-radius:50%; float:left;"><%=usuario[0]%></li>  
                                             <%    }else if(usuario[1]){ %>
-                                                    <li><img src="<%=usuario[1]%>" style="height:15px;width:15px; border-radius:50%; float:left;">Anónimo</li> 
+                                                    <li><img src="<%=usuario[1]%>" style="height:20px;width:20px; border-radius:50%; float:left;">Anónimo</li> 
                                             <% }
                                                 })
                                                 %>
