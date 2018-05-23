@@ -197,9 +197,9 @@
                             
                             <div style="background-color:black; border-radius: 0 0 5px 5px; margin-bottom:10px; color: #aaa;background-color: rgba(80, 48, 71, 0.8); font-size:15px;">
                                 
-                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="filterUno">1 mes</div>
-                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="filterSeis">6 meses</div>
-                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter filterSelected" id="filterDoce">12 meses</div>
+                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="short_term">1 mes</div>
+                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="medium_term">6 meses</div>
+                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter filterSelected" id="long_term">12 meses</div>
                                 
                             </div>
                             
@@ -733,17 +733,6 @@
         $('#btnCrear2').css("display","none");
     })
     
-    
-//Botones de filtro de tiempo en top 50
-    
-    var filter = $('.filterSelected').attr('id'); //variable que indica el filtro de tiempo seleccionado
-    
-    
-    $('.timeFilter').on('click',function(){
-        $('.timeFilter').removeClass("filterSelected");
-        $(this).addClass("filterSelected");
-        filter = $('.filterSelected').attr('id');
-    })
     
 //Mostrar usuarios dentro de la fiesta
     

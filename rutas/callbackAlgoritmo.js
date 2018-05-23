@@ -82,7 +82,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
     };
       
       /*Inicialización de objeto de usuario*/
-      var jsonDatos = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:[], track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, spotifyid:null, totalUsers:0, pool:[], playlist:[], popularidadAvg:0,usuarios:[], bdEstado:"NoGuardado"}
+      var jsonDatos = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:[], track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, spotifyid:null, totalUsers:0, pool:[], playlist:[], popularidadAvg:0,usuarios:[], bdEstado:"NoGuardado", rango:"long_term"}
 
       /*Requerimiento de perfil de usuario vía API*/
     request.post(authOptions, function(error, response, bodyS) {
@@ -151,6 +151,20 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                             console.log('Se creará nuevo record en base de datos');
                             objetosGlobales[position].mensaje = "nuevo_usuario";
                             
+                            
+                            /*Se crea el nodo del usuario en la BD*/
+                            objetosGlobales[0].session
+                            .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:objetosGlobales[position].userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url })
+                            .then(function(resultado_create){
+                                console.log('Se creó con éxito el nodo del usuario');
+
+                                 })
+                            .catch(function(err){
+                                console.log(err);
+                                res.render('pages/error', {error:err})
+
+                            }) 
+                            
                             // mount the router on the app
                             res.redirect('/mineria');
                           
@@ -162,37 +176,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                             
                             objetosGlobales[position].mensaje = "nuevo_login";
                 
-                            /*Se extrae la información de del index de importancia del usuario de nuestra BD. Así mismo se extrae la información del usuario de nuestra base de datos para su display en la interfaz*/
-                              objetosGlobales[0].session
-                                .run('MATCH (n:track)-[r:Escuchado]-(m:usuario {spotifyid:{spotifyid}}) RETURN n, r.importanciaIndex', {spotifyid:jsonDatos.userid})
-                                .then(function(tracks){
-                                  objetosGlobales[position].seedTracks = [];
-                                  
-                                    tracks.records.forEach(function(records,index){
-                                        
-                                         console.log("Datos de nodo " + records._fields[1])
-                                        
-                                         //Index de importancia
-                                            /*Se extrae el index de importancia de la relación entre usuarios y tracks por propiedades. Con este index de importancia se ordena la posición de cada uno de los nodos de track que serán guardados en la propiedad seedTracks de objetosGlobales[position]*/
-                                            if(records._fields[1] < 50){
-                                                objetosGlobales[position].seedTracks[records._fields[1]-1] = records._fields[0].properties;
-                                               // objetosGlobales[position].track_uri_ref2[records._fields[1]-1]= records._fields[0].properties.spotifyid;
-                                            }else{
-                                                /*Una vez guardado el perfil de datos del usuario en el objeto apropiado, se redirije al perfil en la interfaz*/
-                                                res.redirect('/perfil#' +
-                                                      querystring.stringify({
-                                                        access_token: objetosGlobales[position].access_token,
-                                                        refresh_token: objetosGlobales[position].refresh_token
-                                                      }));
-                                                 
-                                            }
-                                        
-                                    })
-                                })
-                                .catch(function(err){
-                                    console.log(err);
-                                    res.render('pages/error', {error:err})
-                                })     
+                            res.redirect('/DatosBD');  
                      
                         }else{
                             console.log('No se pudo determinar si es un usuario nuevo o registrado')

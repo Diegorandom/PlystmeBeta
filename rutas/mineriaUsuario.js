@@ -16,15 +16,6 @@ var idleTimer = require("idle-timer");
 var DelayedResponse = require('http-delayed-response')
 var cookieParser = require('cookie-parser');
 
-//CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
-app.use(logger('dev')); 
-app.use(bodyParser.json()); //DECLARACION DE PROTOCOLO DE LECTURA DE LAS VARIABLES INTERNAS "BODY" DE LAS FUNCIONES 
-app.use(bodyParser.urlencoded({ extended:true})); //DECLARACIÓN DE ENCODER DE URL
-app.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA PUBLIC BY DEFAULT PARA LOS RECURSOS
-app.use(cookieParser());
-app.use(methodOverride());
-
-
 console.log('Llegamos a la ruta de mineria de datos de usuario')
 
 router.get('/mineria', function(req, res, next){
@@ -35,25 +26,11 @@ router.get('/mineria', function(req, res, next){
     position = req.sessions.position;
     console.log('apuntador del objeto', position);  
 
-    /*Se crea el nodo del usuario en la BD*/
-    objetosGlobales[0].session
-    .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:objetosGlobales[position].userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url })
-    .then(function(resultado_create){
-        console.log('Se creó con éxito el nodo del usuario');
-
-         })
-    .catch(function(err){
-        console.log(err);
-        res.render('pages/error', {error:err})
-        
-    }) 
-
-
      //PROCESO DE HARVESTING DE INFORMACIÓN DE USUARIO
 
     /*Argumentos para solicitud de información del TOP 50 del usuario desde el endpoint*/
     var options2 = {
-      url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + objetosGlobales[position].num +"&time_range=long_term",
+      url: 'https://api.spotify.com/v1/me/top/tracks?limit=' + objetosGlobales[position].num +"&time_range="+objetosGlobales[position].rango,
       headers: { 'Authorization': 'Bearer ' + objetosGlobales[position].access_token },
       json: true
     };
@@ -128,13 +105,13 @@ router.get('/mineria', function(req, res, next){
 
                                         /*Se crea la relación entre los tracks y el usuario en BD*/
                                         objetosGlobales[0].session
-                                            .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}})  CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1 })
+                                            .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}})  CREATE (n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, rangoTiempo:objetosGlobales[position].rango })
                                             .then(function(resultado){
                                                 console.log("Se conecto exitosamente el track con el usuario")
 
                                                 /*Se crea la relación entre track y artista en BD*/
                                                 objetosGlobales[0].session
-                                                    .run('MATCH (n:track {artistaId:{spotifyId}}), (o:artista {artistaId:{spotifyId} }) CREATE (n)-[:interpretadoPor]->(o) ', {spotifyId: record.artists[0].id})
+                                                    .run('MATCH (n:track {artistaId:{spotifyId}}), (o:artista {artistaId:{spotifyId} }) CREATE (n)-[:interpretadoPor]->(o) ', {spotifyId: record.artists[0].id, rangoTiempo:objetosGlobales[position].rango})
                                                     .then(function(resultadoUnion){
                                                         console.log("Union de artista existente con track existente exitoso")
                                                     })
@@ -161,7 +138,7 @@ router.get('/mineria', function(req, res, next){
                             }else{
                                 /*Si el track existe en la BD se para directamente a conectar la relación entre track e usuario*/
                                 objetosGlobales[0].session
-                                    .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}), (o:artista {spotifyId:{spotifyId} }) CREATE (o)<-[:interpretadoPor]-(n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, spotifyId: record.artists[0].id  })
+                                    .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}), (o:artista {spotifyId:{spotifyId} }) CREATE (o)<-[:interpretadoPor]-(n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, spotifyId: record.artists[0].id, rangoTiempo:objetosGlobales[position].rango  })
                                     .then(function(resultado){
                                         console.log("Se conecto exitosamente el track con el usuario")
 
@@ -179,7 +156,7 @@ router.get('/mineria', function(req, res, next){
                 }else{
                     /*En caso de que el artista ya fue procesado y por lo tanto conectado con otros tracks y con el track en proceso, solo hace falta conecta el usuario con el nuevo track*/
                     objetosGlobales[0].session
-                        .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1  })
+                        .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, rangoTiempo:objetosGlobales[position].rango  })
                         .then(function(resultado){
                             console.log("Se conecto exitosamente el track con el usuario")
 

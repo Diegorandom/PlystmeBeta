@@ -2,6 +2,7 @@ var express = require("express");
 var router = new express.Router();
 var request = require("request");
 
+
 /*Se ejecuta la ruta del perfil para renderizarlo*/
 router.get('/perfil', function(request, response, error) {
     var objetosGlobales = request.app.get('objetosGlobales');
@@ -70,7 +71,15 @@ router.get('/perfil', function(request, response, error) {
                  })
             }
                 
-                if(objetosGlobales.length == index+1){           
+                if(objetosGlobales.length == index+1){ 
+                    function valorNulo(usuario){
+                        if(usuario == undefined){
+                            return false
+                        }else{
+                            return true
+                        }
+                    }
+                    objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter(valorNulo)
                     console.log('USUARIOS EN EL POOL GLOBAL')
                     console.log(objetosGlobales[position].usuarios)
                     response.render('pages/author-login.ejs', objetosGlobales[position]); 

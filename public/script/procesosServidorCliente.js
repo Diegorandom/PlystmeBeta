@@ -827,6 +827,22 @@ var referenciaBD="noGuardado"
         })
         
         
+        //Botones de filtro de tiempo en top 50
+
+var filter = $('.filterSelected').attr('id'); //variable que indica el filtro de tiempo seleccionado
+
+
+$('.timeFilter').on('click',function(){
+    $('.timeFilter').removeClass("filterSelected");
+    $(this).addClass("filterSelected");
+    filter = $('.filterSelected').attr('id');
+    console.log('filter -> ', filter)
+    $.get('/rango',{filter:filter}, function(data, status){
+        
+    })
+    
+})
+
         
         
         
