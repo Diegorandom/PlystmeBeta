@@ -170,7 +170,7 @@ var referenciaBD="noGuardado"
                 durT.innerHTML = 'Duración'
                 
                 var dur = document.createElement('td')
-                dur.innerHTML = data.duracion/60000 + ' minutos'
+                dur.innerHTML = Math.floor(data.duracion/60000) +":" +Math.ceil((data.duracion%60000/60000)*60) +' minutos'
                 
                 trDuracion.appendChild(durT)
                 trDuracion.appendChild(dur)
