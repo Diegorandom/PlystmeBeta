@@ -61,6 +61,17 @@
         background-attachment: fixed;
         background-repeat: no-repeat;
         }    
+     
+     #team {
+         background-image: url("/img/3133.jpg"); 
+         background-size: cover; 
+         background-attachment: fixed; 
+         padding-bottom: 30px; 
+         padding-left: 10%; 
+         padding-right: 10%; 
+         font-family: 'Quicksand', sans-serif;
+     }
+     
       #login, #loggedin {
         display: none;
       }
@@ -435,15 +446,59 @@ Pruébalo</a>
       
       <!-- About us -->
       
-      <!-- YouTube Videos --->
+        <!-- Quienes somos --->
       
       <!--Tamaño grande -->
       
-      <section class="col-lg-12 col-md-12 hidden-sm hidden-xs" style="background-color:rgba(255,255,255,1); padding-bottom: 30px; padding-left: 10%; padding-right: 10%;">
+      <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs" style="background-color:rgba(255,255,255,1); padding-bottom: 10px; padding-left: 10%; padding-right: 10%;">
+      
+        <h1 class="text-center" style="color:#c8553d; font-family: 'Quicksand', sans-serif; font-size:50px;">Sobre nosotros</h1>
+          <hr align="center">
+          <h2 class="text-center" style="color: black; font-size: 20px; padding-top:20px; font-family: 'Quicksand', sans-serif; line-height: 1.6;">"Somos una start-up mexicana de tecnología especializada en el desarrollo de aplicaciones web, buscando innovar la forma en la que se hacen playlists, tomando en cuenta los gustos de todos."</h2><br>
+          
+            
+          <br>
+       
+      </section>
+  
+      <!-- TEAM --->
+      
+      <!--Tamaño grande -->
+      
+      <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs" id="team">
+      
+        <h1 class="text-center" style="color:black; font-size:50px;">TEAM</h1>
+          <hr align="center">
+          
+          <div>
+                <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Diego Ignacio Ortega "EL FRESKO".</h2>
+                <p style="color:black;text-align:right;">Desarrollador web.</p>
+          </div>
+          <div>
+                <h2 class="text-left" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">David Suriel García "EL SURI".</h2>
+                <p style="color:black;text-align:right;">Desarrollador web.</p>
+          </div>
+          <div>
+                <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Alexis Guerrero "EL DESTRUIDO".</h2>
+                <p style="color:black;text-align:right;">Desarrollador web.</p>
+          </div>
+          <div>
+                <h2 class="text-left" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">David Barrientos.</h2>
+                <p style="color:black;text-align:right;">Desarrollador web.</p>
+          </div>
+          <br>
+       
+      </section>
+      
+        <!-- YouTube Videos --->
+      
+      <!--Tamaño grande -->
+      
+      <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs" style="background-color:rgba(255,255,255,1); padding-bottom: 30px; padding-left: 10%; padding-right: 10%;">
       
         <h1 class="text-center" style="color:black; font-family: 'Quicksand', sans-serif; font-size:50px;">VIDEOS</h1>
           <hr align="center">
-          <h2 class="text-center" style="color: rgba(51,51,51,0.5); font-size: 20px;">Conoce más sobre nosotros.</h2><br>
+          <h2 class="text-center" style="color: rgba(51,51,51,0.5); font-size: 20px;">Descubre como funciona PlystMe.</h2><br>
             <ol text-align="center">
                 <li>
                      <iframe align="left"  width="45%" height="315" src="https://www.youtube.com/embed/1RAY8xf6elg?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -455,8 +510,6 @@ Pruébalo</a>
           <br>
        
       </section>
-      
-    
       
     <script id="user-profile-template" type="text/x-handlebars-template">
       <h1>Logged in as {{display_name}}</h1>
