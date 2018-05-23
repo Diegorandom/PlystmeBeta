@@ -34,10 +34,10 @@ router.get('/perfil', function(request, response, error) {
                   
             if(objetosGlobales[position].usuarios.length == 0){
                 console.log('El primer usuario se guarda solo')
-                if(item.nombre == undefined){
+                if(item.nombre == undefined && item.userid != undefined){
                     item.nombre = item.userid
                     objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
-                }else{
+                }else if(item.nombre != undefined){
                     objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
                 }
                 
