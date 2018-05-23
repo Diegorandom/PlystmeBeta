@@ -34,7 +34,13 @@ router.get('/perfil', function(request, response, error) {
                   
             if(objetosGlobales[position].usuarios.length == 0){
                 console.log('El primer usuario se guarda solo')
-                objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
+                if(item.nombre == undefined){
+                    item.nombre = item.userid
+                    objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
+                }else{
+                    objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
+                }
+                
             }else{
                 console.log("usuarios ->", objetosGlobales[position].usuarios)
                 objetosGlobales[position].usuarios.forEach(function(valorComparador,indice){
@@ -50,16 +56,16 @@ router.get('/perfil', function(request, response, error) {
                         }   
                     }else{
                         console.log('Los valores son Nulos')
-                        if(item.nombre == undefined){
+                        if(item.nombre == undefined ){
                             item.nombre = item.userid
-                        }
-                        if(item.nombre.toString() == valorComparador[0].toString()){
-                            console.log('valor Repetido')
-                            repetido = true
-                        }else if((indice+1 == objetosGlobales[position].usuarios.length) && repetido == false){
-                            console.log('valor nuevo -> ', item.nombre)
-                            objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
-                        }     
+                            if(item.nombre.toString() == valorComparador[0].toString()){
+                                console.log('valor Repetido')
+                                repetido = true
+                            }else if((indice+1 == objetosGlobales[position].usuarios.length) && repetido == false){
+                                console.log('valor nuevo -> ', item.nombre)
+                                objetosGlobales[position].usuarios[index-1] = [item.nombre,item.imagen_url]
+                            } 
+                        }  
                     }
                  })
             }

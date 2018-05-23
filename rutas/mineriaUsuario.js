@@ -1,23 +1,43 @@
 var express = require('express');
-var router = new express.Router();
+var app = express()
+var router = express.Router();
 var request = require('request'); // "Request" library
 var SpotifyWebApi = require('spotify-web-api-node');
 var shuffle = require('shuffle-array');
 var querystring = require('querystring');
-var app = express()
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override')
+var logger = require('morgan');
+var path = require('path');
+var shuffle = require('shuffle-array');
+var neo4j = require('neo4j-driver').v1;
+var sessions = require("client-sessions");
+var idleTimer = require("idle-timer");
+var DelayedResponse = require('http-delayed-response')
+var cookieParser = require('cookie-parser');
+
+//CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
+app.use(logger('dev')); 
+app.use(bodyParser.json()); //DECLARACION DE PROTOCOLO DE LECTURA DE LAS VARIABLES INTERNAS "BODY" DE LAS FUNCIONES 
+app.use(bodyParser.urlencoded({ extended:true})); //DECLARACIÓN DE ENCODER DE URL
+app.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA PUBLIC BY DEFAULT PARA LOS RECURSOS
+app.use(cookieParser());
+app.use(methodOverride());
+
 
 console.log('Llegamos a la ruta de mineria de datos de usuario')
 
-var mineria = router.use( function(req, res, next){
+router.use( function(req, res, next){
+               
     console.log('entramos a la ruta')
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
     position = req.sessions.position;
-    console.log('apuntador del objeto', position); 
+    console.log('apuntador del objeto', position);  
 
     /*Se crea el nodo del usuario en la BD*/
     objetosGlobales[0].session
-    .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, followers:{followers}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:jsonDatos.userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url })
+    .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:jsonDatos.userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url })
     .then(function(resultado_create){
         console.log('Se creó con éxito el nodo del usuario');
 
@@ -241,7 +261,6 @@ var mineria = router.use( function(req, res, next){
                              objetosGlobales[0].session
                                 .run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:data.uri })
                                 .then(function(resultado){
-                                    console.log(resultado)
                                     console.log('Se guardaron las caracteristicas del track')
                                 })
                                  .catch(function(err){
@@ -295,15 +314,9 @@ var mineria = router.use( function(req, res, next){
 
 
     }); 
-
     
 })
 
-app.use(function (req, res) {
-  var delayed = new DelayedResponse(req, res);
-  // verySlowFunction can now run indefinitely
-  callbackAlgoritmo(delayed.start());
-});
-
-// apply the routes to our application
+//Finaliza proceso
 app.use('/mineriaUsuario', router);
+
