@@ -88,6 +88,8 @@
           height: cover;
           padding: 0px;
           margin: 0px;
+         position:fixed;
+         height: 60px;
         }
      
       #login, #loggedin {
@@ -152,11 +154,12 @@
      
      /*************  Color de la barra de navegación *********/
      
-     .navboton2{
+    /** .navboton2{
          position:fixed;
          background-color:rgba(200,85,61,1);
          height: 60px;
-     } 
+         
+     } *//
      
      
      
@@ -209,15 +212,15 @@
       
       <!-- Heaader de la página principal-->
       
-     <header style="background-color:#c8553d; height:60px;">
+     <header id="gradient" style=" height:60px;">
 		<div class="container-fluid custom-container" style="height:60px; width:cover">
-			<div class="row"  style="height:60px;">
+			<div class="row" style="height:60px;">
 
                                  
     <% if(nombre != undefined){ %>   
                 
           
-        <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs navboton2" id="gradient" style="text-align: center;">
+        <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs" id="gradient" style="text-align: center;">
                 <a href="#one">
                     <img src="img/PlystNameWhite.png" align="middle" style="height:80%; margin-top:5px;">
                 </a>    
@@ -226,9 +229,9 @@
                 
     <!-- Barra de header en tamaño XS --->
                 
-            <div class="col-xs-12 hidden-sm hidden-md hidden-lg navboton2" style=" text-align: left;">
+            <div class="col-xs-12 hidden-sm hidden-md hidden-lg" style=" text-align: center;">
                 
-                <div style="margin: 5px auto 0 auto; text-align:center;">
+               <div style="margin: 5px auto 0 auto; text-align:center;">
                     <img src="img/AtmosLogoWhite.png" style="width:50px;">
                 </div>
             </div>
