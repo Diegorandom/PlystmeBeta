@@ -264,9 +264,9 @@
                             
                             <div style="background-color:black; border-radius: 0 0 5px 5px; margin-bottom:10px; color: #ccc;background-color: rgba(82,150,185,0.8); font-size:15px;">
                                 
-                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="short_term">1 mes</div>
-                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="medium_term">6 meses</div>
-                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter filterSelected" id="long_term">Desde siempre</div>
+                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="short_term">Último Mes</div>
+                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="medium_term">Últimos 6 Meses</div>
+                                <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter filterSelected" id="long_term">Desde Siempre</div>
                                 
                             </div>
                             
@@ -284,7 +284,7 @@
                                     
                                     seedTracks.forEach(function(records, index){ %>
                                 
-                                    <div class="col-lg-12 col-md-4 col-xs-12 col-sm-4" id="track<%=index%>" style="padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; ">
+                                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4" id="track<%=index%>" style="padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; ">
                                         
                                     <div class="be-post" style=" background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;">
                                         
@@ -346,7 +346,6 @@
                                     </div>
                                         
                                   </div>
-                                        <br>
                                 
                                 <%
                                 })    

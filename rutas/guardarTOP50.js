@@ -14,7 +14,14 @@ if(error == true || objetosGlobales == undefined || position == undefined){
 }else{    
     
     /*Se declara el nombre del playlist que será guardado en Spotify, esto debe convertir a custom by user cuando se lance la versión de usuario*/    
-    var playlistname = "TOP 50"
+    if(objetosGlobales[position].rango=="long_term"){
+        var playlistname = "TOP 50 - Desde Siempre"
+    }else if(objetosGlobales[position].rango=="medium_term"){
+        var playlistname = "TOP 50 - 6 Meses"
+    }else if(objetosGlobales[position].rango=="short_term"){
+        var playlistname = "TOP 50 - 1 Mes"
+    }
+        
     console.log('playlistname = ' + playlistname);
     console.log('userids = ' + objetosGlobales[position].userid);
 
@@ -22,8 +29,6 @@ if(error == true || objetosGlobales == undefined || position == undefined){
 
     var uris1 = [], uris2 = [];     
 
-        /*Si el playlist ID todavía no existe, significa que este será guardado por primera vez en Spotify por el usuario*/
-        if(objetosGlobales[position].top50_id == undefined){
 
         /*Se manda a llamar el endpoint para guardar plalists en Spotify con el id del usuario y el nombre del Playlist*/
         objetosGlobales[0].spotifyApi.createPlaylist(objetosGlobales[position].userid, playlistname, { 'public' : false })
@@ -95,41 +100,7 @@ if(error == true || objetosGlobales == undefined || position == undefined){
                 res.send('ERRORORIGEN')
             });
 
-        }else{
-            var uriActualizacion = [];
-            
-                objetosGlobales[position].seedTracks.forEach(function(records, index){
-                    
-                     uriActualizacion[index] = records.uri    
-                   
-                });
-            
-            /*En caso de que el playlist ya exista en la cuenta del usuario, este proceso actualiza los tracks por los nuevos que se encuentran desplegados en ese momento en la interfaz. Este proceso puede funcionar con 100 tracks a la vez.*/
-            var options = { method: 'PUT',
-                  url: 'https://api.spotify.com/v1/users/'+objetosGlobales[position].userid+'/playlists/'+objetosGlobales[position].top50_id+'/tracks',
-                  headers: { 
-                      'Authorization': 'Bearer ' + objetosGlobales[position].access_token,
-                       'Content-Type': 'application/json' 
-                  },
-                    body: {
-                        'uris': uriActualizacion
-                    },
-                  json: true };
-
-                /*Establecimiento de comunicacion con API*/
-                request(options, function (error, response, body, status) {
-                  if (error == true) {
-                    console.log("status de error-> ", status)
-                    res.send('ERRORORIGEN')  
-                  }else{
-                    /*En caso de que no exista el error, se envía mensaje de actualizacion exitosa a cliente*/
-                    console.log('Actualizacion de playlist exitosa')
-                    console.log(body)
-                    console.log("status -> ", status)
-                    res.send('ActualizacionTop50') 
-                  }
-                });
-        }
+        
 }
     
   });
