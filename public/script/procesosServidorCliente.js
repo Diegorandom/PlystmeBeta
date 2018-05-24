@@ -363,21 +363,36 @@ var referenciaBD="noGuardado"
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
                         innerDiv.className = 'be-post';
-                        innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
+                        innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
 
                         // The variable iDiv is still good... Just append to it.
                         iDiv.appendChild(innerDiv);
-
+                       
+                        /*var form = document.createElement("form")
+                        form.method="post"
+                        form.action="/track/profile"
+                        form.id="trackprofile" */
+                        
+                        var boton = document.createElement("span")
+                        boton.className="be-img-block"
+                        boton.form="trackprofile"
+                        boton.type="submit"
+                        boton.name="index"
+                        boton.value= index
+                        boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
+                        
+                        innerDiv.appendChild(boton)
+                        
                         var img= document.createElement("img")
                         img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;  max-height:400px; "
-
-                        innerDiv.appendChild(img)
+                        img.style="max-width:200px;"
+                        
+                        boton.appendChild(img)
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"
+                        span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
                         
                         span.innerHTML = item[0]
                         
@@ -392,7 +407,7 @@ var referenciaBD="noGuardado"
                         innerDiv.appendChild(a)
                         
                         var span2 = document.createElement("span")
-                        span2.style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"
+                        span2.style="color:#503047; font-size:120%;max-height:20px;"
                         span2.innerHTML="Popularidad: " + item[5]
                         
                         innerDiv.appendChild(span2)
@@ -403,7 +418,7 @@ var referenciaBD="noGuardado"
                         innerDiv.appendChild(div2)
                         
                         var span3= document.createElement("span")
-                        span3.style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;"
+                        span3.style="color:#503047; font-size:150%;max-height:20px;"
                         span3.innerHTML="Por " + item[2]
                         
                         div2.appendChild(span3)
@@ -471,21 +486,36 @@ var referenciaBD="noGuardado"
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
                         innerDiv.className = 'be-post';
-                        innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
+                        innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
 
                         // The variable iDiv is still good... Just append to it.
                         iDiv.appendChild(innerDiv);
-
+                       
+                        /*var form = document.createElement("form")
+                        form.method="post"
+                        form.action="/track/profile"
+                        form.id="trackprofile" */
+                        
+                        var boton = document.createElement("span")
+                        boton.className="be-img-block"
+                        boton.form="trackprofile"
+                        boton.type="submit"
+                        boton.name="index"
+                        boton.value= index
+                        boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
+                        
+                        innerDiv.appendChild(boton)
+                        
                         var img= document.createElement("img")
                         img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;  max-height:400px; "
-
-                        innerDiv.appendChild(img)
+                        img.style="max-width:200px;"
+                        
+                        boton.appendChild(img)
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"
+                        span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
                         
                         span.innerHTML = item[0]
                         
@@ -511,7 +541,7 @@ var referenciaBD="noGuardado"
                         innerDiv.appendChild(div2)
                         
                         var span3= document.createElement("span")
-                        span3.style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;"
+                        span3.style="color:#503047; font-size:150%;max-height:20px;"
                         span3.innerHTML="Por " + item[2]
                         
                         div2.appendChild(span3)
@@ -586,21 +616,38 @@ var referenciaBD="noGuardado"
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
                         innerDiv.className = 'be-post';
-                        innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
+                        innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
 
                         // The variable iDiv is still good... Just append to it.
                         iDiv.appendChild(innerDiv);
-
+                       
+                        /*var form = document.createElement("form")
+                        form.method="post"
+                        form.action="/track/profile"
+                        form.id="trackprofile"
+                        
+                        innerDiv.appendChild(form) */
+                        
+                        var boton = document.createElement("span")
+                        boton.className="be-img-block"
+                        boton.form="trackprofile"
+                        boton.type="submit"
+                        boton.name="index"
+                        boton.value= index
+                        boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
+                        
+                        innerDiv.appendChild(boton)
+                        
                         var img= document.createElement("img")
                         img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;  max-height:400px; "
-
-                        innerDiv.appendChild(img)
+                        img.style="max-width:200px;"
+                        
+                        boton.appendChild(img)
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"
+                        span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
                         
                         span.innerHTML = item[0]
                         
@@ -626,7 +673,7 @@ var referenciaBD="noGuardado"
                         innerDiv.appendChild(div2)
                         
                         var span3= document.createElement("span")
-                        span3.style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;"
+                        span3.style="color:#503047; font-size:150%;max-height:20px;"
                         span3.innerHTML="Por " + item[2]
                         
                         div2.appendChild(span3)
@@ -699,21 +746,38 @@ var referenciaBD="noGuardado"
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
                         innerDiv.className = 'be-post';
-                        innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
+                        innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
 
                         // The variable iDiv is still good... Just append to it.
                         iDiv.appendChild(innerDiv);
-
+                       
+                        /*var form = document.createElement("form")
+                        form.method="post"
+                        form.action="/track/profile"
+                        form.id="trackprofile"
+                        
+                        innerDiv.appendChild(form) */
+                        
+                        var boton = document.createElement("span")
+                        boton.className="be-img-block"
+                        boton.form="trackprofile"
+                        boton.type="submit"
+                        boton.name="index"
+                        boton.value= index
+                        boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
+                        
+                        innerDiv.appendChild(boton)
+                        
                         var img= document.createElement("img")
                         img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;  max-height:400px; "
-
-                        innerDiv.appendChild(img)
+                        img.style="max-width:200px;"
+                        
+                        boton.appendChild(img)
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"
+                        span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
                         
                         span.innerHTML = item[0]
                         
@@ -739,7 +803,7 @@ var referenciaBD="noGuardado"
                         innerDiv.appendChild(div2)
                         
                         var span3= document.createElement("span")
-                        span3.style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;"
+                        span3.style="color:#503047; font-size:150%;max-height:20px;"
                         span3.innerHTML="Por " + item[2]
                         
                         div2.appendChild(span3)
@@ -822,21 +886,31 @@ $('.timeFilter').on('click',function(){
             // Create the inner div before appending to the body
             var innerDiv = document.createElement('div');
             innerDiv.className = 'be-post';
-            innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
+            innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
 
             // The variable iDiv is still good... Just append to it.
             iDiv.appendChild(innerDiv);
-            
+
+            var boton = document.createElement("span")
+            boton.className="be-img-block"
+            boton.form="trackprofile"
+            boton.type="submit"
+            boton.name="index"
+            boton.value= index
+            boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
+
+            innerDiv.appendChild(boton)
+
             var img= document.createElement("img")
             img.src=item.album.images[0].url
             img.alt="omg"
-            img.style="max-width:200px;  max-height:400px; "
+            img.style="max-width:200px;"
 
-            innerDiv.appendChild(img)
+            boton.appendChild(img)
 
             var span = document.createElement("span")
             span.className="be-post-title"
-            span.style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"
+            span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
 
             span.innerHTML = item.name
 
@@ -851,7 +925,7 @@ $('.timeFilter').on('click',function(){
             innerDiv.appendChild(a)
 
             var span2 = document.createElement("span")
-            span2.style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"
+            span2.style="color:#503047; font-size:120%;max-height:20px;"
             span2.innerHTML="Popularidad: " + item.popularity
 
             innerDiv.appendChild(span2)
@@ -867,7 +941,7 @@ $('.timeFilter').on('click',function(){
             })
 
             var span3= document.createElement("span")
-            span3.style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;"
+            span3.style="color:#503047; font-size:150%;max-height:20px;"
             span3.innerHTML="Por " + artistas
 
             div2.appendChild(span3)
@@ -933,6 +1007,16 @@ $('.timeFilter').on('click',function(){
                                         
             <div class="be-post" style=" background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;">
 
+               <!-- <form method="post" action="/track/profile" id="trackprofile">-->
+                    <span class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style=" -webkit-appearance: none;-webkit-border-radius: 0px;">  
+                    <% if(records.album.images[0] != undefined){ %>    
+                    <img src="<%=records.album.images[0].url%>" alt="omg" style="max-width:200px;">
+                    <% } else{ %>
+                      <img src="" alt="omg">      
+                    <%    } %>
+                    </span>   
+                <!--</form>-->
+
                 <span class="be-post-title" style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.name %></span> 
 
                 <span style="color:#5296B9; font-size:120%; overflow:hidden; max-height:20px;">
@@ -954,26 +1038,36 @@ $('.timeFilter').on('click',function(){
            var iDiv = document.createElement('div');
             iDiv.id = 'track' + index;
             iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-            iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important;  "
+            iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; "
 
             // Create the inner div before appending to the body
             var innerDiv = document.createElement('div');
             innerDiv.className = 'be-post';
-            innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
+            innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
 
             // The variable iDiv is still good... Just append to it.
             iDiv.appendChild(innerDiv);
-            
+
+            var boton = document.createElement("span")
+            boton.className="be-img-block"
+            boton.form="trackprofile"
+            boton.type="submit"
+            boton.name="index"
+            boton.value= index
+            boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
+
+            innerDiv.appendChild(boton)
+
             var img= document.createElement("img")
             img.src=item.album.images[0].url
             img.alt="omg"
-            img.style="max-width:200px;  max-height:400px; "
+            img.style="max-width:200px;"
 
-            innerDiv.appendChild(img)
+            boton.appendChild(img)
 
             var span = document.createElement("span")
             span.className="be-post-title"
-            span.style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"
+            span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
 
             span.innerHTML = item.name
 
@@ -988,7 +1082,7 @@ $('.timeFilter').on('click',function(){
             innerDiv.appendChild(a)
 
             var span2 = document.createElement("span")
-            span2.style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"
+            span2.style="color:#503047; font-size:120%;max-height:20px;"
             span2.innerHTML="Popularidad: " + item.popularity
 
             innerDiv.appendChild(span2)
@@ -1004,7 +1098,7 @@ $('.timeFilter').on('click',function(){
             })
 
             var span3= document.createElement("span")
-            span3.style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;"
+            span3.style="color:#503047; font-size:150%;max-height:20px;"
             span3.innerHTML="Por " + artistas
 
             div2.appendChild(span3)
