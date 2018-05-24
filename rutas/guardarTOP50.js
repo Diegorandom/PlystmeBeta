@@ -17,9 +17,9 @@ if(error == true || objetosGlobales == undefined || position == undefined){
     if(objetosGlobales[position].rango=="long_term"){
         var playlistname = "TOP 50 - Desde Siempre"
     }else if(objetosGlobales[position].rango=="medium_term"){
-        var playlistname = "TOP 50 - 6 Meses"
+        var playlistname = "TOP 50 - Últimos 6 Meses"
     }else if(objetosGlobales[position].rango=="short_term"){
-        var playlistname = "TOP 50 - 1 Mes"
+        var playlistname = "TOP 50 - Último Mes"
     }
         
     console.log('playlistname = ' + playlistname);
