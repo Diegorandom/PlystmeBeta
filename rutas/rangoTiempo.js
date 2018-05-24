@@ -9,7 +9,7 @@ router.get('/rango', function(req, res, error){
     var position = req.app.get('position');
     position = req.sessions.position;
     objetosGlobales[position].rango = req.query.filter
-    
+    objetosGlobales[position].cambioRango = true
     console.log('Rango de Tiempo seleccionado -> ', objetosGlobales[position].rango)
     
     if(objetosGlobales[position].rango == "long_term"){

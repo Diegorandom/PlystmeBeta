@@ -28,12 +28,14 @@ router.get('/DatosBD', function(req, res, error) {
                     objetosGlobales[position].seedTracks[records._fields[1]-1] = records._fields[0].properties;
                    // objetosGlobales[position].track_uri_ref2[records._fields[1]-1]= records._fields[0].properties.spotifyid;
                 }else{
-                    /*Una vez guardado el perfil de datos del usuario en el objeto apropiado, se redirije al perfil en la interfaz*/
-                    res.redirect('/perfil#' +
+                    /*Una vez guardado el perfil de datos del usuario en el objeto apropiado, se redirije al perfil en la interfaz*/     
+                        res.redirect('/perfil#' +
                           querystring.stringify({
                             access_token: objetosGlobales[position].access_token,
                             refresh_token: objetosGlobales[position].refresh_token
-                          }));
+                        }));
+                   
+                    
 
                 }
 

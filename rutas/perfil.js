@@ -82,8 +82,16 @@ router.get('/perfil', function(request, response, error) {
                     objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter(valorNulo)
                     console.log('USUARIOS EN EL POOL GLOBAL')
                     console.log(objetosGlobales[position].usuarios)
-                    response.render('pages/author-login.ejs', objetosGlobales[position]); 
+                    
+                    if(objetosGlobales[position].cambioRango==true){
+                        console.log('Cambio de rango')
+                        objetosGlobales[position].cambioRango = false;
+                        response.send(objetosGlobales[position].seedTracks)
+                    }else{
+                        console.log('Cargando perfil')
+                        response.render('pages/author-login.ejs', objetosGlobales[position]); 
                     }
+                }
         }
         })
           
