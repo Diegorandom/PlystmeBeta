@@ -50,7 +50,7 @@ router.get('/pool', function(req, res, error){
             function Test(options){
                 request(options, function (error, response, body) {
                     /*En caso de que haya errores en el requerimiento se manda el error a la consola*/
-                    if (error == true || body.listaCanciones == null) {
+                    if (error == true || body == undefined || body.listaCanciones == null ) {
                         console.log('error en Endpoint de Pool --> ', error)
                         console.log("API dormida zzzzz");
                         /*Se vuelve a intentar la comunicación con la API después de un tiempo de espera (1 segundo)*/

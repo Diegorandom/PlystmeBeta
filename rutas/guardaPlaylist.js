@@ -25,6 +25,8 @@ if(error == true || objetosGlobales == undefined || position == undefined){
 
         /*Si el playlist ID todavía no existe, significa que este será guardado por primera vez en Spotify por el usuario*/
         if(objetosGlobales[position].playlist_id == undefined){
+            
+            console.log('Guardando nuevo playlist de Pool')
 
         /*Se manda a llamar el endpoint para guardar plalists en Spotify con el id del usuario y el nombre del Playlist*/
         objetosGlobales[0].spotifyApi.createPlaylist(objetosGlobales[position].userid, playlistname, { 'public' : false })
@@ -42,8 +44,8 @@ if(error == true || objetosGlobales == undefined || position == undefined){
                     }
                 });
 
-                console.log("uris1 =", uris1);
-                console.log("uris2 =", uris2);
+                /*console.log("uris1 =", uris1);
+                console.log("uris2 =", uris2);*/
 
 
                 /*Se guarda el ID del playlist recién creado para procesos más adelante*/
@@ -97,6 +99,9 @@ if(error == true || objetosGlobales == undefined || position == undefined){
 
         }else{
             /*En caso de que el playlist ya exista en la cuenta del usuario, este proceso actualiza los tracks por los nuevos que se encuentran desplegados en ese momento en la interfaz. Este proceso puede funcionar con 100 tracks a la vez.*/
+            
+            console.log('Actualizando playlist')
+            
             var options = { method: 'PUT',
                   url: 'https://api.spotify.com/v1/users/'+objetosGlobales[position].userid+'/playlists/'+objetosGlobales[position].playlist_id+'/tracks',
                   headers: { 
