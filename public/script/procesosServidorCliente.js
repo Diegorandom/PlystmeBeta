@@ -228,19 +228,27 @@ var referenciaBD="noGuardado"
                 }else if(data=="ActualizacionTop50"){
                     /*Si se actualizó el playlist, se despliega un mensaje*/
                     console.log("mensaje -> ", data)
-                    document.getElementById('nuevoPlaylist').innerHTML="Se ha actualizado el TOP 50"
+                    document.getElementById('nuevoPlaylist').innerHTML="Se ha actualizado el TOP 50 en Spotify"
                     document.getElementById('nuevoPlaylist').style.display="block"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                 }else if(data=="ERRORORIGEN"){
                     console.log('ERROR DE ORIGEN')
-                    window.location.replace('http://www.plystme.com/error')
+                     document.getElementById('nuevoPlaylist').innerHTML="Error al guardar TOP 50"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                    }, 2000);
                 }
 
             }else{
                 console.log('ERROR DE ORIGEN')
-                window.location.replace('http://www.plystme.com/error')
+                 document.getElementById('nuevoPlaylist').innerHTML="Error al guardar TOP 50"
+                document.getElementById('nuevoPlaylist').style.display="block"
+                setTimeout(function(){
+                    document.getElementById('nuevoPlaylist').style.display="none"
+                }, 2000);
             }
 
         })
@@ -577,7 +585,7 @@ var referenciaBD="noGuardado"
                    })
                 }else{
                      console.log(data)
-                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                    document.getElementById('nuevoPlaylist').innerHTML="Error al actualizar playlist, ups!"
                     document.getElementById('nuevoPlaylist').style.display="block"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
@@ -585,7 +593,7 @@ var referenciaBD="noGuardado"
                 }
                 }else{
                     console.log(data)
-                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                    document.getElementById('nuevoPlaylist').innerHTML="Error al actualizar playlist, ups!"
                     document.getElementById('nuevoPlaylist').style.display="block"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
@@ -849,7 +857,7 @@ var referenciaBD="noGuardado"
                    })
                     }else{
                         console.log(data)
-                        document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                        document.getElementById('nuevoPlaylist').innerHTML="Error al actualizar playlist, ups!"
                         document.getElementById('nuevoPlaylist').style.display="block"
                         setTimeout(function(){
                             document.getElementById('nuevoPlaylist').style.display="none"
@@ -857,7 +865,7 @@ var referenciaBD="noGuardado"
                     }
                 }else{
                     console.log(data)
-                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                    document.getElementById('nuevoPlaylist').innerHTML="Error al actualizar playlist, ups!"
                     document.getElementById('nuevoPlaylist').style.display="block"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
@@ -995,7 +1003,7 @@ $('.timeFilter').on('click',function(){
        })
        }else{
             console.log(data)
-            document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+            document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar TOP 50, ups!"
             document.getElementById('nuevoPlaylist').style.display="block"
             setTimeout(function(){
                 document.getElementById('nuevoPlaylist').style.display="none"
@@ -1004,7 +1012,7 @@ $('.timeFilter').on('click',function(){
     }else{
         console.log(data);
         console.log(data)
-        document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+        document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar TOP 50, ups!"
         document.getElementById('nuevoPlaylist').style.display="block"
         setTimeout(function(){
             document.getElementById('nuevoPlaylist').style.display="none"
@@ -1162,7 +1170,7 @@ $('.timeFilter').on('click',function(){
        })
        }else{
             console.log(data)
-            document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+            document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar TOP 50"
             document.getElementById('nuevoPlaylist').style.display="block"
             setTimeout(function(){
                 document.getElementById('nuevoPlaylist').style.display="none"
@@ -1171,7 +1179,7 @@ $('.timeFilter').on('click',function(){
     }else{
         console.log(data);
         console.log(data)
-        document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+        document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar TOP 50"
         document.getElementById('nuevoPlaylist').style.display="block"
         setTimeout(function(){
             document.getElementById('nuevoPlaylist').style.display="none"
