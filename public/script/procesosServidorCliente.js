@@ -363,7 +363,7 @@ var referenciaBD="noGuardado"
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
                         innerDiv.className = 'be-post';
-                        innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
+                        innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
 
                         // The variable iDiv is still good... Just append to it.
                         iDiv.appendChild(innerDiv);
@@ -371,7 +371,7 @@ var referenciaBD="noGuardado"
                         var img= document.createElement("img")
                         img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;"
+                        img.style="max-width:200px;  max-height:400px; "
 
                         innerDiv.appendChild(img)
                         
@@ -471,15 +471,15 @@ var referenciaBD="noGuardado"
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
                         innerDiv.className = 'be-post';
-                        innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
+                        innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
 
                         // The variable iDiv is still good... Just append to it.
                         iDiv.appendChild(innerDiv);
 
                         var img= document.createElement("img")
-                        img.src=item.album.images[0].url
+                        img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;"
+                        img.style="max-width:200px;  max-height:400px; "
 
                         innerDiv.appendChild(img)
                         
@@ -586,15 +586,15 @@ var referenciaBD="noGuardado"
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
                         innerDiv.className = 'be-post';
-                        innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
+                        innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
 
                         // The variable iDiv is still good... Just append to it.
                         iDiv.appendChild(innerDiv);
 
                         var img= document.createElement("img")
-                        img.src=item.album.images[0].url
+                        img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;"
+                        img.style="max-width:200px;  max-height:400px; "
 
                         innerDiv.appendChild(img)
                         
@@ -699,15 +699,15 @@ var referenciaBD="noGuardado"
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
                         innerDiv.className = 'be-post';
-                        innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
+                        innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
 
                         // The variable iDiv is still good... Just append to it.
                         iDiv.appendChild(innerDiv);
 
                         var img= document.createElement("img")
-                        img.src=item.album.images[0].url
+                        img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;"
+                        img.style="max-width:200px;  max-height:400px; "
 
                         innerDiv.appendChild(img)
                         
@@ -822,15 +822,15 @@ $('.timeFilter').on('click',function(){
             // Create the inner div before appending to the body
             var innerDiv = document.createElement('div');
             innerDiv.className = 'be-post';
-            innerDiv.style = ' background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
+            innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
 
-           // The variable iDiv is still good... Just append to it.
+            // The variable iDiv is still good... Just append to it.
             iDiv.appendChild(innerDiv);
             
             var img= document.createElement("img")
             img.src=item.album.images[0].url
             img.alt="omg"
-            img.style="max-width:200px;"
+            img.style="max-width:200px;  max-height:400px; "
 
             innerDiv.appendChild(img)
 
@@ -959,7 +959,7 @@ $('.timeFilter').on('click',function(){
             // Create the inner div before appending to the body
             var innerDiv = document.createElement('div');
             innerDiv.className = 'be-post';
-            innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;';
+            innerDiv.style = '  background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px; -webkit-appearance: none; -webkit-border-radius: 0px;';
 
             // The variable iDiv is still good... Just append to it.
             iDiv.appendChild(innerDiv);
@@ -967,7 +967,7 @@ $('.timeFilter').on('click',function(){
             var img= document.createElement("img")
             img.src=item.album.images[0].url
             img.alt="omg"
-            img.style="max-width:200px;"
+            img.style="max-width:200px;  max-height:400px; "
 
             innerDiv.appendChild(img)
 
