@@ -1030,17 +1030,6 @@ $('.timeFilter').on('click',function(){
     console.log(status)
     if(status === "success"){
         if(data != undefined){
-            
-        /*Proceso entrar a un pool, se configuran los botones que serán las opciones dentro del pool
-        var botonPool = document.getElementById('btnActualizar')
-        botonPool.innerHTML = "Actualizar Playlist"
-        botonPool.style="width:50%; border: none; background-color:#FFF; margin:0 auto 20px auto; color:#588b8b; display:inline-block;"
-        var icono = document.createElement('i')
-        icono.className ="fas fa-sync-alt"
-        icono.style="font-size:20px; color:#588b8b; margin-left:5px;"
-        botonPool.appendChild(icono)
-
-    document.getElementById('createPlaylist').style.display="block" */
 
     console.log('El playlist ha cambiado')
        data.forEach(function(item,index){
@@ -1049,47 +1038,12 @@ $('.timeFilter').on('click',function(){
                 document.getElementById("track"+index).remove();
                 console.log("Depuración de playlist")
                 /*Despliegue de mensaje de que hay un nuevo playlist*/
-                if(index == 1){/*
-                    console.log('cargando mensaje')
-                    document.getElementById('nuevoPlaylist').style.display="block"
-                    console.log(data)
-                    setTimeout(function(){
-                        document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);*/
+                if(index == 1){
+                    /*AQUI SE PUEDE COLOCAR UN MENSAJE/SPINNER CADA VEZ QUE SE CAMBIA DE RANGO*/
                 }
 
            }
-
-           /*Referencia de objeto de track
-           
-           <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4" id="track<%=index%>" style="padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; ">
-                                        
-            <div class="be-post" style=" background-color: rgba(255,255,255,0.9); color:#d5573b; max-height:400px; max-width:250px;">
-
-               <!-- <form method="post" action="/track/profile" id="trackprofile">-->
-                    <span class="be-img-block" form="trackprofile" type="submit" name="index"  value="<%=index%>" style=" -webkit-appearance: none;-webkit-border-radius: 0px;">  
-                    <% if(records.album.images[0] != undefined){ %>    
-                    <img src="<%=records.album.images[0].url%>" alt="omg" style="max-width:200px;">
-                    <% } else{ %>
-                      <img src="" alt="omg">      
-                    <%    } %>
-                    </span>   
-                <!--</form>-->
-
-                <span class="be-post-title" style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.name %></span> 
-
-                <span style="color:#5296B9; font-size:120%; overflow:hidden; max-height:20px;">
-                    Popularidad: <%=records.popularity%> 
-                </span>
-                <div class="author-post">
-                    <span style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artists[0].name%></span>
-                </div>
-            </div>
-
-          </div>
-           
-           */
-           
+       
            /*Se colocan las canciones en el playlist por primera vez */
             playlist = data
 
@@ -1131,14 +1085,6 @@ $('.timeFilter').on('click',function(){
             span.innerHTML = item.name
 
             innerDiv.appendChild(span)
-
-            /*var a = document.createElement('a')
-            a.className="close"
-            a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
-            a.id="fadeOut" + index
-            a.innerHTML ="&times;"
-
-            innerDiv.appendChild(a)*/
 
             var span2 = document.createElement("span")
             span2.style="color:#503047; font-size:120%;max-height:20px;"
