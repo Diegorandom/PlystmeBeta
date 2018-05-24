@@ -1,3 +1,4 @@
+
 var referenciaBD="noGuardado"
 
 /*Se agrega funcion custom a la clase de Element.prototype para crear una funcion REMOVE que será usada más adelante*/
@@ -398,13 +399,13 @@ var referenciaBD="noGuardado"
                         
                         innerDiv.appendChild(span)
                         
-                        var a = document.createElement('a')
+                        /*var a = document.createElement('a')
                         a.className="close"
                         a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
                         a.id="fadeOut" + index
                         a.innerHTML ="&times;"
                         
-                        innerDiv.appendChild(a)
+                        innerDiv.appendChild(a)*/
                         
                         var span2 = document.createElement("span")
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -521,13 +522,13 @@ var referenciaBD="noGuardado"
                         
                         innerDiv.appendChild(span)
                         
-                        var a = document.createElement('a')
+                        /*var a = document.createElement('a')
                         a.className="close"
                         a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
                         a.id="fadeOut" + index
                         a.innerHTML ="&times;"
                         
-                        innerDiv.appendChild(a)
+                        innerDiv.appendChild(a)*/
                         
                         var span2 = document.createElement("span")
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -653,13 +654,13 @@ var referenciaBD="noGuardado"
                         
                         innerDiv.appendChild(span)
                         
-                        var a = document.createElement('a')
+                        /*var a = document.createElement('a')
                         a.className="close"
                         a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
                         a.id="fadeOut" + index
                         a.innerHTML ="&times;"
                         
-                        innerDiv.appendChild(a)
+                        innerDiv.appendChild(a)*/
                         
                         var span2 = document.createElement("span")
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -783,13 +784,13 @@ var referenciaBD="noGuardado"
                         
                         innerDiv.appendChild(span)
                         
-                        var a = document.createElement('a')
+                        /*var a = document.createElement('a')
                         a.className="close"
                         a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
                         a.id="fadeOut" + index
                         a.innerHTML ="&times;"
                         
-                        innerDiv.appendChild(a)
+                        innerDiv.appendChild(a)*/
                         
                         var span2 = document.createElement("span")
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -916,13 +917,13 @@ $('.timeFilter').on('click',function(){
 
             innerDiv.appendChild(span)
 
-            var a = document.createElement('a')
+            /*var a = document.createElement('a')
             a.className="close"
             a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
             a.id="fadeOut" + index
             a.innerHTML ="&times;"
 
-            innerDiv.appendChild(a)
+            innerDiv.appendChild(a)*/
 
             var span2 = document.createElement("span")
             span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -1073,13 +1074,13 @@ $('.timeFilter').on('click',function(){
 
             innerDiv.appendChild(span)
 
-            var a = document.createElement('a')
+            /*var a = document.createElement('a')
             a.className="close"
             a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
             a.id="fadeOut" + index
             a.innerHTML ="&times;"
 
-            innerDiv.appendChild(a)
+            innerDiv.appendChild(a)*/
 
             var span2 = document.createElement("span")
             span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -1118,6 +1119,9 @@ $('.timeFilter').on('click',function(){
     }
 
 })
+
+
+
 
         
         

@@ -431,13 +431,13 @@
                                             
                                             <div style="width:100%; height: 30px; background-color:#588b8b; border-radius: 0 0 5px 5px; padding: 5px 0;" id="usuariosFotos">
                                             <%usuarios.forEach(function(usuario,index){ %>
-                                                  <img src="<%=usuario[1]%>" style="height:100%; border-radius:50%;"> 
+                                                  <img src="<%=usuario[1]%>" style="height:100%; border-radius:50%;width:20px"> 
                                             <%})%>
                                             </div>
                                             
                                             <ul style="display:none; padding:5px;">
                                             <%usuarios.forEach(function(usuario,index){ %>
-                                                  <li><img src="<%=usuarios[1]%>" style="height:15px; border-radius:50%; float:left;"><%=usuario[0]%></li> 
+                                                  <li><img src="<%=usuarios[1]%>" style="height:15px; border-radius:50%; float:left;width:20px"><%=usuario[0]%></li> 
                                             <%})%>
                                             </ul>
                                         
