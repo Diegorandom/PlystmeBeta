@@ -646,7 +646,7 @@ a.be-post-title:hover { color: #0D58C8; }
 
 .author-post a:hover { color: #0D58C8; }
 
-.be-post > span { color: #b4b7c1; display: block; font-size: 11px; line-height: 20px; padding: 0 15px; margin-bottom: 15px; }
+.be-post > span { color: #b4b7c1; display: block; font-size: 11px; line-height: 20px; padding: 0px; margin-bottom: 15px; }
 
 .info-block { background: #F6F6F6; padding: 20px 15px; font-size: 10px; color: #b4b7c1 !important; }
 
