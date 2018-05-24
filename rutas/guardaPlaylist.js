@@ -116,15 +116,13 @@ if(error == true || objetosGlobales == undefined || position == undefined){
                 /*Establecimiento de comunicacion con API*/
                 request(options, function (error, response, body, status) {
                   if (error == true) {
-                    console.log("status de error-> ", status)
-                    res.send("status de error-> ", status)
+                    console.log("No se pudo guardar el playlist - status de error-> ", status)
                     res.send('ERRORORIGEN')  
                   }else{
                     /*En caso de que no exista el error, se envía mensaje de actualizacion exitosa a cliente*/
                     console.log('Actualizacion de playlist exitosa')
                     console.log(body)
                     console.log("status -> ", status)
-                    res.send("status -> ", status)
                     res.send('ActualizacionPlaylist') 
                   }
                 });

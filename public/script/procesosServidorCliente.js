@@ -271,12 +271,22 @@ var referenciaBD="noGuardado"
                     }, 2000);
                 }else if(data=="ERRORORIGEN"){
                     console.log('ERROR DE ORIGEN')
-                    window.location.replace('http://www.plystme.com/error')
+                    console.log(data)
+                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                    }, 2000);
                 }
 
             }else{
                 console.log('ERROR DE ORIGEN')
-                window.location.replace('http://www.plystme.com/error')
+                console.log(data)
+                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                    }, 2000);
             }
 
         })
@@ -301,11 +311,21 @@ var referenciaBD="noGuardado"
                         }, 2000);
                     }else if(data=="ERRORORIGEN"){
                         console.log('ERROR DE ORIGEN')
-                        window.location.replace('http://www.plystme.com/error')
+                        console.log(data)
+                        document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                        document.getElementById('nuevoPlaylist').style.display="block"
+                        setTimeout(function(){
+                            document.getElementById('nuevoPlaylist').style.display="none"
+                        }, 2000);
                     }     
                 }else{
                     console.log('ERROR DE ORIGEN')
-                    window.location.replace('http://www.plystme.com/error')
+                    console.log(data)
+                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                    }, 2000);
                 } 
                 
             })
@@ -556,10 +576,20 @@ var referenciaBD="noGuardado"
                        console.log('Nueva canción desplegada')
                    })
                 }else{
-                     window.location.replace('http://www.plystme.com/error')
+                     console.log(data)
+                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                    }, 2000);
                 }
                 }else{
-                    window.location.replace('http://www.plystme.com/error')
+                    console.log(data)
+                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                    }, 2000);
                 }
                     
                 
@@ -818,10 +848,20 @@ var referenciaBD="noGuardado"
                        console.log('Nueva canción desplegada')
                    })
                     }else{
-                        window.location.replace('http://www.plystme.com/error')
+                        console.log(data)
+                        document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                        document.getElementById('nuevoPlaylist').style.display="block"
+                        setTimeout(function(){
+                            document.getElementById('nuevoPlaylist').style.display="none"
+                        }, 2000);
                     }
                 }else{
-                    window.location.replace('http://www.plystme.com/error')
+                    console.log(data)
+                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                    }, 2000);
                 }
                 
             })
@@ -954,11 +994,21 @@ $('.timeFilter').on('click',function(){
 
        })
        }else{
-            window.location.replace('http://www.plystme.com/error')
+            console.log(data)
+            document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+            document.getElementById('nuevoPlaylist').style.display="block"
+            setTimeout(function(){
+                document.getElementById('nuevoPlaylist').style.display="none"
+            }, 2000);
         }
     }else{
         console.log(data);
-        window.location.replace('http://www.plystme.com/error')
+        console.log(data)
+        document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+        document.getElementById('nuevoPlaylist').style.display="block"
+        setTimeout(function(){
+            document.getElementById('nuevoPlaylist').style.display="none"
+        }, 2000);
     }
 
 })
@@ -1111,11 +1161,21 @@ $('.timeFilter').on('click',function(){
 
        })
        }else{
-            window.location.replace('http://www.plystme.com/error')
+            console.log(data)
+            document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+            document.getElementById('nuevoPlaylist').style.display="block"
+            setTimeout(function(){
+                document.getElementById('nuevoPlaylist').style.display="none"
+            }, 2000);
         }
     }else{
         console.log(data);
-        window.location.replace('http://www.plystme.com/error')
+        console.log(data)
+        document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
+        document.getElementById('nuevoPlaylist').style.display="block"
+        setTimeout(function(){
+            document.getElementById('nuevoPlaylist').style.display="none"
+        }, 2000);
     }
 
 })
