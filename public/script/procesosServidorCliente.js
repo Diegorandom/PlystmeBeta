@@ -383,7 +383,7 @@ var referenciaBD="noGuardado"
 
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
-                        innerDiv.className = 'bepost';
+                        innerDiv.className = 'be-post';
                         innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
 
                         // The variable iDiv is still good... Just append to it.
@@ -506,7 +506,7 @@ var referenciaBD="noGuardado"
 
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
-                        innerDiv.className = 'bepost';
+                        innerDiv.className = 'be-post';
                         innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
 
                         // The variable iDiv is still good... Just append to it.
@@ -646,7 +646,7 @@ var referenciaBD="noGuardado"
 
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
-                        innerDiv.className = 'bepost';
+                        innerDiv.className = 'be-post';
                         innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
 
                         // The variable iDiv is still good... Just append to it.
@@ -776,7 +776,7 @@ var referenciaBD="noGuardado"
 
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
-                        innerDiv.className = 'bepost';
+                        innerDiv.className = 'be-post';
                         innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
 
                         // The variable iDiv is still good... Just append to it.
@@ -926,7 +926,7 @@ $('.timeFilter').on('click',function(){
 
             // Create the inner div before appending to the body
             var innerDiv = document.createElement('div');
-            innerDiv.className = 'bepost';
+            innerDiv.className = 'be-post';
             innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
 
             // The variable iDiv is still good... Just append to it.
@@ -1093,7 +1093,7 @@ $('.timeFilter').on('click',function(){
 
             // Create the inner div before appending to the body
             var innerDiv = document.createElement('div');
-            innerDiv.className = 'bepost';
+            innerDiv.className = 'be-post';
             innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
 
             // The variable iDiv is still good... Just append to it.
