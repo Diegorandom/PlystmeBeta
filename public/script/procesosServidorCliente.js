@@ -1,3 +1,4 @@
+
 var referenciaBD="noGuardado"
 
 /*Se agrega funcion custom a la clase de Element.prototype para crear una funcion REMOVE que será usada más adelante*/
@@ -1120,14 +1121,7 @@ $('.timeFilter').on('click',function(){
 })
 
 
-//Identifica si el usuario es un iPad
-var ua = navigator.userAgent;
-var isiPad = /iPad/i.test(ua) || /iPhone OS 3_1_2/i.test(ua) || /iPhone OS 3_2_2/i.test(ua);
 
-//Solucion de problema a vista distinta en iPad
-if(isiPad){
-    $('.be-post').css("background-color","rgba(255,255,255,0.9)");
-}
 
         
         
