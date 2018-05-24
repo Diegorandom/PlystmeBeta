@@ -398,13 +398,13 @@ var referenciaBD="noGuardado"
                         
                         innerDiv.appendChild(span)
                         
-                        var a = document.createElement('a')
+                        /*var a = document.createElement('a')
                         a.className="close"
                         a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
                         a.id="fadeOut" + index
                         a.innerHTML ="&times;"
                         
-                        innerDiv.appendChild(a)
+                        innerDiv.appendChild(a)*/
                         
                         var span2 = document.createElement("span")
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -521,13 +521,13 @@ var referenciaBD="noGuardado"
                         
                         innerDiv.appendChild(span)
                         
-                        var a = document.createElement('a')
+                        /*var a = document.createElement('a')
                         a.className="close"
                         a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
                         a.id="fadeOut" + index
                         a.innerHTML ="&times;"
                         
-                        innerDiv.appendChild(a)
+                        innerDiv.appendChild(a)*/
                         
                         var span2 = document.createElement("span")
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -653,13 +653,13 @@ var referenciaBD="noGuardado"
                         
                         innerDiv.appendChild(span)
                         
-                        var a = document.createElement('a')
+                        /*var a = document.createElement('a')
                         a.className="close"
                         a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
                         a.id="fadeOut" + index
                         a.innerHTML ="&times;"
                         
-                        innerDiv.appendChild(a)
+                        innerDiv.appendChild(a)*/
                         
                         var span2 = document.createElement("span")
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -783,13 +783,13 @@ var referenciaBD="noGuardado"
                         
                         innerDiv.appendChild(span)
                         
-                        var a = document.createElement('a')
+                        /*var a = document.createElement('a')
                         a.className="close"
                         a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
                         a.id="fadeOut" + index
                         a.innerHTML ="&times;"
                         
-                        innerDiv.appendChild(a)
+                        innerDiv.appendChild(a)*/
                         
                         var span2 = document.createElement("span")
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -916,13 +916,13 @@ $('.timeFilter').on('click',function(){
 
             innerDiv.appendChild(span)
 
-            var a = document.createElement('a')
+            /*var a = document.createElement('a')
             a.className="close"
             a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
             a.id="fadeOut" + index
             a.innerHTML ="&times;"
 
-            innerDiv.appendChild(a)
+            innerDiv.appendChild(a)*/
 
             var span2 = document.createElement("span")
             span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -1073,13 +1073,13 @@ $('.timeFilter').on('click',function(){
 
             innerDiv.appendChild(span)
 
-            var a = document.createElement('a')
+            /*var a = document.createElement('a')
             a.className="close"
             a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
             a.id="fadeOut" + index
             a.innerHTML ="&times;"
 
-            innerDiv.appendChild(a)
+            innerDiv.appendChild(a)*/
 
             var span2 = document.createElement("span")
             span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -1118,6 +1118,16 @@ $('.timeFilter').on('click',function(){
     }
 
 })
+
+
+//Identifica si el usuario es un iPad
+var ua = navigator.userAgent;
+var isiPad = /iPad/i.test(ua) || /iPhone OS 3_1_2/i.test(ua) || /iPhone OS 3_2_2/i.test(ua);
+
+//Solucion de problema a vista distinta en iPad
+if(isiPad){
+    $('.be-post').css("background-color","rgba(255,255,255,0.9)");
+}
 
         
         
