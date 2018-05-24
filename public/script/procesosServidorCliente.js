@@ -415,7 +415,7 @@ var referenciaBD="noGuardado"
                         var img= document.createElement("img")
                         img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;"
+                        img.style=""
                         
                         boton.appendChild(img)
                         
@@ -538,7 +538,7 @@ var referenciaBD="noGuardado"
                         var img= document.createElement("img")
                         img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;"
+                        img.style=""
                         
                         boton.appendChild(img)
                         
@@ -680,7 +680,7 @@ var referenciaBD="noGuardado"
                         var img= document.createElement("img")
                         img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;"
+                        img.style=""
                         
                         boton.appendChild(img)
                         
@@ -810,7 +810,7 @@ var referenciaBD="noGuardado"
                         var img= document.createElement("img")
                         img.src=item[4]
                         img.alt="omg"
-                        img.style="max-width:200px;"
+                        img.style=""
                         
                         boton.appendChild(img)
                         
@@ -953,7 +953,7 @@ $('.timeFilter').on('click',function(){
             var img= document.createElement("img")
             img.src=item.album.images[0].url
             img.alt="omg"
-            img.style="max-width:200px;"
+            img.style=""
 
             boton.appendChild(img)
 
@@ -1074,7 +1074,7 @@ $('.timeFilter').on('click',function(){
             var img= document.createElement("img")
             img.src=item.album.images[0].url
             img.alt="omg"
-            img.style="max-width:200px;"
+            img.style=""
 
             boton.appendChild(img)
 
