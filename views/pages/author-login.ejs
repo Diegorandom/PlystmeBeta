@@ -18,6 +18,7 @@
         <link rel="preload" href="img/fondo7.png">
         <link rel="preload" href="img/fondo8.png">
         <link rel="preload" href="img/fondo2.jpg">
+        <link rel="preload" href="img/propuesta.jpg">
         
         
 	</head>
@@ -63,7 +64,31 @@
         display:none;
     }
     
+    .infoVariables div i{
+        float:right;
+        margin-right:5px;
+    }
     
+    .variableInfo{
+        width:100%;
+        border-bottom:1px solid white; 
+        display:none;
+        background-color:white;
+        padding: 10px 0;
+        transition: all ease;
+    }
+    
+    .variableInfo p{
+        width:70%;
+    }
+    
+    .variableDesplegable{
+        border-bottom:1px solid #fff; 
+        width:100%;
+        height:40px; 
+        padding-top: 10px;
+        cursor:pointer;
+    }
     
     @media screen and (max-width:550px){
         #btnCrear2, #enterPool2{
@@ -97,7 +122,10 @@
                            
                             <div>
                              
+                                
                                 <div class="tab-info active"  id="perfilTab">
+
+                                    
 								<div class="row">
                                     
                                     <div class="col-xs-12 col-md-12 col-lg-12 left-feild" >
@@ -139,7 +167,7 @@
                         <canvas id="myChart" width="100%" height="100%" style="background-color:rgba(255, 255, 255, 0.5); border-radius:5px; max-width:800px; margin: 0 auto;"></canvas>
                                             <br> 
                     
-                    <table class="table" style="background-color: rgba(255,255,255,0.5); border-radius:5px; margin-bottom:50px;">
+                    <table class="table" style="background-color: rgba(255,255,255,0.5); border-radius:5px; margin-bottom:20px;">
                         <thead>
                             <tr>
                                 <th>Variables Promedio</th>
@@ -166,7 +194,46 @@
                                 
                             </tr>
                         </tbody>
-                    </table>							
+                    </table>	
+                                            
+                            <div style="background-color:rgba(255,255,255,0.5); width:100%; ;margin-bottom:20px; border-radius:5px;" class="infoVariables">
+                                <div class="variableDesplegable" id="varDanza">Danzabilidad<i class="fas fa-plus"></i></div>
+                                <div class="variableInfo">
+                                    <p>Esta variable describe que tan "bailable" es la canción, basado en un conjuto de elementos musicales como el tempo, la estabilidad rítmica, la potencia de los beats y su regularidad general. Un valor de 0 representa nada bailabre y un 100 es muy bailable.</p>
+                                </div>
+                                
+                                <div class="variableDesplegable" id="varEnergia">Energía promedio<i class="fas fa-plus"></i></div> 
+                                <div class="variableInfo">
+                                    <p>Energía es una medida del 0 al 100 y representa una medición perceptual de la intensidad y que tan activa es la canción. Generalmente los tracks con alta energía se perciben rápidos, intensos y ruidosos. Por ejemplo, el death metal tiene una energía alta, mientras que Bach en general tiene un valor bajo en esta escala.</p>
+                                </div>
+                                
+                                <div class="variableDesplegable" id="varPopularidad">Popularidad<i class="fas fa-plus"></i></div>  
+                                <div class="variableInfo">
+                                    <p>Nivel de popularidad de la canción basado en el número de reproducciones que tiene a nivel global. Toma en cuenta parámetros como el número de seguidores del artista y personas que han escuchado la canción.</p>
+                                </div>
+                                
+                                <div class="variableDesplegable" id="varAcustica">Música acústica<i class="fas fa-plus"></i></div>  
+                                <div class="variableInfo"><p>Medida del 0 al 100 que mide el nivel de instrumentos acústicos utilizados en la canción. El 100 representa que la pieza es interpretada totalmente con instrumentos acústicos.</p>
+                                </div>
+                                
+                                <div class="variableDesplegable" id="varInstrumentalidad">Instrumentalidad<i class="fas fa-plus"></i></div>
+                                <div class="variableInfo">
+                                    <p>Predice si un track contiene lineas vocales o no. El rap o los generos con niveles altos de música hablada se clasifican como "vocales". Este valor va del 0 al 100. Mientas mayor sea el valor, menor la cantidad de habla o "vocal" que se tiene.</p>
+                                </div>
+                                
+                                <div class="variableDesplegable" id="varVivo">Música en vivo<i class="fas fa-plus"></i></div> 
+                                <div class="variableInfo">
+                                    <p>Detecta la presencia de audiencia en la grabación. Mientras mayor sea el nivel de música en vivo representa mayor probabilidad de que sea una presentación en vivo. Un valor mayor a 80 indica casi de forma segura que el track fue grabado en vivo.</p>
+                                </div>
+                                
+                                <div class="variableDesplegable" style="border-bottom:none;" id="varPositivismo">Positivismo<i class="fas fa-plus"></i></div>  
+                                <div class="variableInfo">
+                                    <p>Valor del 0 al 100 que describe que tan positiva es la canción. Los tracks con un índice de positivismo alto se identifican como más felices, eufóricos y agradables, mientras que los tracks con valores bajos de positivismo se identifican como más tristes o depresivos.</p>
+                                </div>
+                            
+                            </div>                
+                                            
+                            
 									</div>
 								</div>
                             </div>
@@ -177,16 +244,16 @@
                                 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             
-                            <!--<h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:5px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #503047; border-radius:5px 5px 0 0; padding-bottom:5px;">
+                            <!--<h2 style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:5px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #5296B9; border-radius:5px 5px 0 0; padding-bottom:5px;">
                                 Top 50
-                                <div style="float: right; background-color:#503047; font-size:30px; cursor: pointer;" id="guardarTOP50">
+                                <div style="float: right; background-color:#5296B9; font-size:30px; cursor: pointer;" id="guardarTOP50">
                                     <i class="fas fa-arrow-down"></i>
                                 </div>
                             </h2>-->
                             
                             <h2 style="">
                                 
-                                <div style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:5px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #503047; border-radius:5px 5px 0 0; padding-bottom:5px;">
+                                <div style="text-align:center; font-family: 'Kanit', sans-serif; margin-bottom:5px; margin-top:0px; color:#FFF; font-size: 40px; background-color: #5296B9; border-radius:5px 5px 0 0; padding-bottom:5px;">
                                     <p style="margin-bottom:0px;">Top 50</p>
                                     <!--<span class="glyphicon glyphicon-download-alt" style="float: right;margin:-37px 12px 0 0;font-size: 20px;cursor:pointer;" id="guardarTOP50"></span>-->
                                     <i class="far fa-arrow-alt-circle-down" style="font-size:30px; cursor:pointer; float:right; margin:-34px 15px 0 0" id="guardarTOP50"></i>
@@ -195,7 +262,7 @@
                                 </div>
                             </h2>
                             
-                            <div style="background-color:black; border-radius: 0 0 5px 5px; margin-bottom:10px; color: #aaa;background-color: rgba(80, 48, 71, 0.8); font-size:15px;">
+                            <div style="background-color:black; border-radius: 0 0 5px 5px; margin-bottom:10px; color: #ccc;background-color: rgba(82,150,185,0.8); font-size:15px;">
                                 
                                 <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="short_term">1 mes</div>
                                 <div style="width:32%; display:inline-block;padding:5px 0" class="timeFilter" id="medium_term">6 meses</div>
@@ -231,13 +298,13 @@
                                             </span>   
                                         <!--</form>-->
                                         
-                                        <span class="be-post-title" style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.name %></span> 
+                                        <span class="be-post-title" style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.name %></span> 
                                         
-                                        <span style="color:#503047; font-size:120%; overflow:hidden; max-height:20px;">
+                                        <span style="color:#5296B9; font-size:120%; overflow:hidden; max-height:20px;">
                                             Popularidad: <%=records.popularity%> 
                                         </span>
                                         <div class="author-post">
-                                            <span style="color:#503047; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artists[0].name%></span>
+                                            <span style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artists[0].name%></span>
                                         </div>
                                     </div>
                                         
@@ -268,13 +335,13 @@
                                         </span>   
                                         <!-- </form> -->
                                         
-                                        <span class="be-post-title" style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.nombre %></span> 
+                                        <span class="be-post-title" style="color:#5296B9; font-size:20px; font-family:'Kanit', sans-serif; overflow:hidden; max-height:60px;"><%= records.nombre %></span> 
                                        
-                                        <span style="color:#503047; font-size:120%; overflow:hidden; max-height:20px;">
+                                        <span style="color:#5296B9; font-size:120%; overflow:hidden; max-height:20px;">
                                             Popularidad: <%=records.popularidad%> 
                                         </span>
                                         <div class="author-post">
-                                            <span style="color:#503047; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artistas%></span>
+                                            <span style="color:#5296B9; font-size:150%; overflow:hidden; max-height:20px;">Por <%=records.artistas%></span>
                                         </div>
                                     </div>
                                         
@@ -345,10 +412,10 @@
                                                 
                                                 <%    if(usuario[1]){        
                                                 %>
-                                                      <img src="<%=usuario[1]%>" style="height:100%; border-radius:50%;"> 
+                                                      <img src="<%=usuario[1]%>" style="height:100%; border-radius:50%; width:20px;"> 
                                                 <%
                                                     }else{ %>
-                                                       <img src="img/Perfil.png" style="height:100%; border-radius:50%;">  
+                                                       <img src="img/Perfil.png" style="height:100%; border-radius:50%; width:20px;">  
                                                  <%   }
                                                 })
                                             %>
@@ -358,12 +425,12 @@
                                             <%usuarios.forEach(function(usuario,index){ 
                                                 if(usuario[0] && usuario[1]){        
                                             %>
-                                                  <li><img src="<%=usuario[1]%>" style="height:15px; border-radius:50%; float:left;"><%=usuario[0]%></li> 
+                                                  <li><img src="<%=usuario[1]%>" style="height:20px;width:20px; border-radius:50%; float:left;"><%=usuario[0]%></li> 
                                             <%
                                                 }else if(usuario[0]){ %>
-                                                   <li><img src="img/Perfil.png" style="height:15px; border-radius:50%; float:left;"><%=usuario[0]%></li>  
+                                                   <li><img src="img/Perfil.png" style="height:20px;width:20px; border-radius:50%; float:left;"><%=usuario[0]%></li>  
                                             <%    }else if(usuario[1]){ %>
-                                                    <li><img src="<%=usuario[1]%>" style="height:15px; border-radius:50%; float:left;">Anónimo</li> 
+                                                    <li><img src="<%=usuario[1]%>" style="height:20px;width:20px; border-radius:50%; float:left;">Anónimo</li> 
                                             <% }
                                                 })
                                                 %>
@@ -542,8 +609,8 @@
                                             </div>
                                             <div class="col-xs-6" style="width:33.333%; margin:0; padding:0;">
                                                 <div class="nav-tab-item  " style="width:100%; margin:0; padding:0;" id="btnTop50">
-                                                    <span style="padding:10px 0 0 0;"><i class="fas fa-music" style="font-size:20px; color:#503047"></i></span>
-                                                    <span style="font-size:10px; padding:5px 0 5px 0;color:#503047">Top 50</span>
+                                                    <span style="padding:10px 0 0 0;"><i class="fas fa-music" style="font-size:20px; color:#5296B9"></i></span>
+                                                    <span style="font-size:10px; padding:5px 0 5px 0;color:#5296B9">Top 50</span>
                                                 </div>
                                             </div>
                                             <div class="col-xs-6" style="width:33.333%; margin:0; padding:0;">
@@ -636,28 +703,23 @@
 <script type="text/javascript" src="/script/procesosServidorCliente.js"></script> 
 
 <script>
+    
+//Cambiar las imagenes de fondo
 
     $('#btnPerfil').on('click',function(){
         $('#fondoIphone').css("background","url('img/fondo4.png') no-repeat");
         $('#fondoIphone').css("background-position","center");
         $('#fondoIphone').css("background-size","cover");
-        /*$('body').css("background","url('img/fondo4.png') no-repeat");
-        $('body').css("background-size","cover");
-        $('body').css("background-attachment","fixed");
-        $('body').css("width","100%");
-        $('body').css("background-position","center");*/
+        
         
         window.scrollTo(0,0);
     });
     
     $('#btnTop50').on('click',function(){
-        $('#fondoIphone').css("background","url('img/fondo7.png') no-repeat");
+        $('#fondoIphone').css("background","url('img/propuesta.jpg') no-repeat");
         $('#fondoIphone').css("background-position","center");
         $('#fondoIphone').css("background-size","cover");
-        /*$('body').css("background","url('img/fondo7.png') no-repeat");
-        $('body').css("background-size","cover");
-        $('body').css("background-attachment","fixed");
-        $('body').css("width","100%");*/
+        
         
         window.scrollTo(0,0);
         
@@ -668,11 +730,7 @@
         $('#fondoIphone').css("background","url('img/fondo2.jpg') no-repeat");
         $('#fondoIphone').css("background-position","center");
         $('#fondoIphone').css("background-size","cover");
-        /*$('body').css("background","url('img/fondo2.jpg') no-repeat");
-        $('body').css("background-size","cover");
-        $('body').css("background-attachment","fixed");
-        $('body').css("width","100%");
-        $('body').css("background-position","center");*/
+        
         
         window.scrollTo(0,0);
     });
@@ -690,21 +748,13 @@
             $('#fondoIphone').css("background","url('img/fondo8.png') no-repeat");
             $('#fondoIphone').css("background-position","center");
             $('#fondoIphone').css("background-size","cover");
-            /*$('body').css("background","url('img/fondo8.png') no-repeat");
-            $('body').css("background-position","0 100%");
-            $('body').css("background-size","cover");
-            $('body').css("background-attachment","fixed");
-            $('body').css("width","100%");*/
+            
         }else{  
             
             $('#fondoIphone').css("background","url('img/fondo9.png') no-repeat");
             $('#fondoIphone').css("background-position","center");
             $('#fondoIphone').css("background-size","cover");
-            /*$('body').css("background","url('img/fondo9.png') no-repeat");
-            $('body').css("background-position","center");
-            $('body').css("background-size","cover");
-            $('body').css("background-attachment","fixed");
-            $('body').css("width","100%");*/
+            
         }
         
         
@@ -718,8 +768,7 @@
     if(iOS){
                 
         $('#content-block').css("margin-top","50px");
-        //$('body').css("background","none");
-        //$('#fondoIphone').css("display","block");
+        
 
     }
     
@@ -773,6 +822,37 @@
         }
         
     })
+    
+    
+//Desplegar la información de las variables de spotify
+    
+    var ch = 0;//variable para cambiar el ícono de más a menos
+    var cb = 0;
+    var ca = 0;
+    
+    $('.variableDesplegable').on('click',function(){
+        
+        ca = $(this).attr("id");
+        
+        console.log(cb)
+        $('#'+cb).next().css("display","none");
+        $('#'+cb).children().removeClass("fas fa-minus");
+        $('#'+cb).children().addClass("fas fa-plus");
+        
+        $(this).next().animate({height:'toggle'});
+        ch = $(this).children().attr("class");
+        if(ch == "fas fa-plus"){
+            $(this).children().removeClass("fas fa-plus");
+            $(this).children().addClass("fas fa-minus");
+            if(cb == ca){
+                cb = $(this).attr("id");
+            }
+        }else{
+            $(this).children().removeClass("fas fa-minus");
+            $(this).children().addClass("fas fa-plus");
+        }
+    })
+
  
 
 </script>

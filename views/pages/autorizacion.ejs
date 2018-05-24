@@ -9,6 +9,9 @@
       
       <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+      <script type="text/javascript" src="/script/animacionfondo.js"></script>
+
   </head>
 
 
@@ -20,7 +23,7 @@
             }
 
          .contenedor{
-                    background-color: rgba(255, 255, 255, 0.8);
+                    background-color: rgba(255, 255, 255, 0.3 );
                     border-radius: 15px 50px 30px;
                 }
         .text-overflow {
@@ -40,7 +43,7 @@
      
         p, h4, h3 {
                 text-align: center;
-                color:#313638;
+                color:black;
             }
         
          hr {
@@ -54,13 +57,37 @@
 
          }
         
-        
+    /**** Imagen de fondo de escritorio */
+     
     body {
         background-image: url("/img/backgroundNew.jpg");
         background-size: 100%;
         background-attachment: fixed;
         background-repeat: no-repeat;
         }    
+     
+     /**** Fondo de sección de TEAM */
+     
+     #team {
+         background-image: url("/img/3133.jpg"); 
+         background-size: cover; 
+         background-attachment: fixed; 
+         padding-bottom: 30px; 
+         padding-left: 10%; 
+         padding-right: 10%; 
+         font-family: 'Quicksand', sans-serif;
+     }
+     
+     /**** Fonde gradiente */
+     
+     #gradient
+        {
+          width: 100%;
+          height: cover;
+          padding: 0px;
+          margin: 0px;
+        }
+     
       #login, #loggedin {
         display: none;
       }
@@ -181,14 +208,14 @@
       <!-- Heaader de la página principal-->
       
      <header style="background-color:#c8553d; height:60px;">
-		<div class="container-fluid custom-container"  style="height:60px; width:cover">
+		<div class="container-fluid custom-container" style="height:60px; width:cover">
 			<div class="row"  style="height:60px;">
 
                                  
     <% if(nombre != undefined){ %>   
                 
           
-        <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs navboton2" style="text-align: center;">
+        <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs navboton2" id="gradient" style="text-align: center;">
                 <a href="#one">
                     <img src="img/PlystNameWhite.png" align="middle" style="height:80%; margin-top:5px;">
                 </a>    
@@ -284,12 +311,13 @@ Pruébalo</a>
 		</div>
 	</header> 
       
-
       
       <!----------------- Imagen en pequeño------------------------>
     
+        
+        
       <div class="col-xs-12 hidden-sm hidden-md hidden-lg" style="width:100%; padding: 0; margin-top:0px; max-height: 300px;">
-            <img src="img/backgroundNew.jpg" style="width:100%; background-size:100%;">
+          <img src="img/backgroundNew.jpg" style="width:100%; background-size:100%;">
       </div>
         
       <!----------------- Cuadro de acceso------------------------>
@@ -435,15 +463,67 @@ Pruébalo</a>
       
       <!-- About us -->
       
-      <!-- YouTube Videos --->
+        <!-- Quienes somos --->
       
       <!--Tamaño grande -->
       
-      <section class="col-lg-12 col-md-12 hidden-sm hidden-xs" style="background-color:rgba(255,255,255,1); padding-bottom: 30px; padding-left: 10%; padding-right: 10%;">
+      <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs" style="background-color:rgba(255,255,255,1); padding-bottom: 10px; padding-left: 10%; padding-right: 10%;">
+      
+        <h1 class="text-center" style="color:#c8553d; font-family: 'Quicksand', sans-serif; font-size:50px;">Sobre nosotros</h1>
+          <hr align="center">
+          <h2 class="text-center" style="color: black; font-size: 20px; padding-top:20px; font-family: 'Quicksand', sans-serif; line-height: 1.6;">"Somos una start-up mexicana de tecnología especializada en el desarrollo de aplicaciones web, buscando innovar la forma en la que se hacen playlists, tomando en cuenta los gustos de todos."</h2><br>
+          
+            
+          <br>
+       
+      </section>
+  
+      <!-- TEAM --->
+      
+      <!--Tamaño grande -->
+      
+      <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs" id="team">
+      
+        <h1 class="text-center" style="color:black; font-size:50px;">TEAM</h1>
+          <hr align="center">
+          
+          <div>
+                <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Diego Ignacio Ortega.</h2>
+                <p style="color:black;text-align:right;">Web development.</p>
+          </div>
+          <div>
+                <h2 class="text-left" style="color: black; font-size: 30px; padding-top:10px; width:100%;">David Suriel García.</h2>
+                <p style="color:black;text-align:left;">Web development.</p>
+          </div>
+          <div>
+                <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Alexis Guerrero.</h2>
+                <p style="color:black;text-align:right;">Web development.</p>
+          </div>
+          <div>
+                <h2 class="text-left" style="color: black; font-size: 30px; padding-top:10px; width:100%;">David Barrientos.</h2>
+                <p style="color:black;text-align:left;">Web development.</p>
+          </div>
+          <div>
+                <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Gerardo Vignau.</h2>
+                <p style="color:black;text-align:right;">Business intelligence.</p>
+          </div>
+          <div>
+                <h2 class="text-left" style="color: black; font-size: 30px; padding-top:10px; width:100%;">Arturo Rojas.</h2>
+                <p style="color:black;text-align:left;">Business intelligence.</p>
+          </div>
+
+       
+      </section>
+      
+        <!-- YouTube Videos --->
+      
+      <!--Tamaño grande -->
+      
+      <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs" style="background-color:rgba(255,255,255,1); padding-bottom: 30px; padding-left: 10%; padding-right: 10%;">
       
         <h1 class="text-center" style="color:black; font-family: 'Quicksand', sans-serif; font-size:50px;">VIDEOS</h1>
           <hr align="center">
-          <h2 class="text-center" style="color: rgba(51,51,51,0.5); font-size: 20px;">Conoce más sobre nosotros.</h2><br>
+          <h2 class="text-center" style="color: rgba(51,51,51,0.5); font-size: 20px;">Descubre como funciona PlystMe.</h2><br>
             <ol text-align="center">
                 <li>
                      <iframe align="left"  width="45%" height="315" src="https://www.youtube.com/embed/1RAY8xf6elg?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -457,7 +537,6 @@ Pruébalo</a>
       </section>
       
     
-      
     <script id="user-profile-template" type="text/x-handlebars-template">
       <h1>Logged in as {{display_name}}</h1>
       <div class="media">
