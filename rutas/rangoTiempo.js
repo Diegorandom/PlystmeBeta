@@ -8,11 +8,12 @@ router.get('/rango', function(req, res, error){
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
     position = req.sessions.position;
-    objetosGlobales[position].rango = req.query.filter
-    objetosGlobales[position].cambioRango = true
-    console.log('Rango de Tiempo seleccionado -> ', objetosGlobales[position].rango)
     
     if(objetosGlobales[position] != undefined || objetosGlobales[position].rango != undefined || objetosGlobales[position].cambioRango != undefined || position != undefined ){
+        
+        objetosGlobales[position].rango = req.query.filter
+        objetosGlobales[position].cambioRango = true
+        console.log('Rango de Tiempo seleccionado -> ', objetosGlobales[position].rango)
     
         if(objetosGlobales[position].rango == "long_term"){
             objetosGlobales[0].session
