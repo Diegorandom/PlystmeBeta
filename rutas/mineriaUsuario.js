@@ -198,11 +198,11 @@ router.get('/mineria', function(req, res, error){
             console.log("index de cancion analizada del usuario")
             console.log(index)
             /*Después de terminar el primer proceso con todos los tracks extraídos se comienza a hacer el harvesting de las características del track*/
-            if(body.items.length == objetosGlobales[position].track_uri.length){
+            if(body.items.length == objetosGlobales[position].track_uri){
 
             console.log("URI de track a analizar")
             console.log(objetosGlobales[position].track_uri)
-    
+
             //SE GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
 
             /*Se obtienen las características del track en cuestión con el endpoint del módulo de Node.js que me conecta con la BD de Spotify, el siguuiente proceso requiere todas las caraceristicas de todos los tracks de un jalón*/
@@ -215,13 +215,7 @@ router.get('/mineria', function(req, res, error){
 
                  /*Debe iterarse sobre todas las posiciones del arreglo datosTrack para extraer el contenido de cada track solicitado*/
                  datosTrack.body.audio_features.forEach(function(data, index){
-                     
-               var revisionNodo = function(){
-                objetosGlobales[0].session
-                .run('MATCH (n:track {uri:{track_uri}}) RETURN n', {track_uri:data.uri} )
-                .then(function(nodo){
-                if(nodo.records.length>=1){
-                       
+
                  var danceability_bd = parseFloat(data.danceability);
                  var energia_bd = parseFloat(data.energy);
                  var fundamental_bd = parseFloat(data.key); 
@@ -264,19 +258,7 @@ router.get('/mineria', function(req, res, error){
                         
                     })
 
-                  }else{
-                      revisionNodo()
-                  }
-                
-                      
-                })
-                .catch(function(err){
-                    console.log(err);
-                    res.render('pages/error', {error:err})
-                }) 
-             }
-                 
-            })   
+                })   
 
               }, function(err) {
                 done(err);
