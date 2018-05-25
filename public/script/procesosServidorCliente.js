@@ -452,7 +452,7 @@ var referenciaBD="noGuardado"
                        var iDiv = document.createElement('div');
                         iDiv.id = 'pool' + index;
                         iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; "
+                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
 
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
@@ -486,7 +486,7 @@ var referenciaBD="noGuardado"
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
+                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px;color:black;text-align:left;"
                         
                         span.innerHTML = item[0]
                         
@@ -504,7 +504,7 @@ var referenciaBD="noGuardado"
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
                         span2.innerHTML="Popularidad: " + item[5]
                         
-                        innerDiv.appendChild(span2)
+                        //innerDiv.appendChild(span2)
                         
                         var div2 = document.createElement("div")
                         div2.className="author-post"
@@ -512,8 +512,8 @@ var referenciaBD="noGuardado"
                         innerDiv.appendChild(div2)
                         
                         var span3= document.createElement("span")
-                        span3.style="color:#503047; font-size:150%;max-height:20px;"
-                        span3.innerHTML="Por " + item[2]
+                        span3.style="color:#777; font-size:120%;max-height:20px;"
+                        span3.innerHTML=item[2]
                         
                         div2.appendChild(span3)
 
@@ -591,7 +591,7 @@ var referenciaBD="noGuardado"
                        var iDiv = document.createElement('div');
                         iDiv.id = 'pool' + index;
                         iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; "
+                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
 
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
@@ -625,7 +625,7 @@ var referenciaBD="noGuardado"
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
+                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px;color:black;text-align:left;"
                         
                         span.innerHTML = item[0]
                         
@@ -643,7 +643,7 @@ var referenciaBD="noGuardado"
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
                         span2.innerHTML="Popularidad: " + item[5]
                         
-                        innerDiv.appendChild(span2)
+                        //innerDiv.appendChild(span2)
                         
                         var div2 = document.createElement("div")
                         div2.className="author-post"
@@ -651,8 +651,8 @@ var referenciaBD="noGuardado"
                         innerDiv.appendChild(div2)
                         
                         var span3= document.createElement("span")
-                        span3.style="color:#503047; font-size:150%;max-height:20px;"
-                        span3.innerHTML="Por " + item[2]
+                        span3.style="color:#777; font-size:120%;max-height:20px;"
+                        span3.innerHTML=item[2]
                         
                         div2.appendChild(span3)
 
@@ -753,7 +753,7 @@ var referenciaBD="noGuardado"
                        var iDiv = document.createElement('div');
                         iDiv.id = 'pool' + index;
                         iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; "
+                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
 
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
@@ -789,7 +789,7 @@ var referenciaBD="noGuardado"
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
+                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px;color:black;text-align:left;"
                         
                         span.innerHTML = item[0]
                         
@@ -807,7 +807,7 @@ var referenciaBD="noGuardado"
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
                         span2.innerHTML="Popularidad: " + item[5]
                         
-                        innerDiv.appendChild(span2)
+                        //innerDiv.appendChild(span2)
                         
                         var div2 = document.createElement("div")
                         div2.className="author-post"
@@ -815,8 +815,8 @@ var referenciaBD="noGuardado"
                         innerDiv.appendChild(div2)
                         
                         var span3= document.createElement("span")
-                        span3.style="color:#503047; font-size:150%;max-height:20px;"
-                        span3.innerHTML="Por " + item[2]
+                        span3.style="color:#777; font-size:120%;max-height:20px;"
+                        span3.innerHTML= item[2]
                         
                         div2.appendChild(span3)
 
@@ -899,7 +899,7 @@ var referenciaBD="noGuardado"
                        var iDiv = document.createElement('div');
                         iDiv.id = 'pool' + index;
                         iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; "
+                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
 
                         // Create the inner div before appending to the body
                         var innerDiv = document.createElement('div');
@@ -935,7 +935,7 @@ var referenciaBD="noGuardado"
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
+                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px;color:black;text-align:left;"
                         
                         span.innerHTML = item[0]
                         
@@ -953,7 +953,7 @@ var referenciaBD="noGuardado"
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
                         span2.innerHTML="Popularidad: " + item[5]
                         
-                        innerDiv.appendChild(span2)
+                        //innerDiv.appendChild(span2)
                         
                         var div2 = document.createElement("div")
                         div2.className="author-post"
@@ -961,8 +961,8 @@ var referenciaBD="noGuardado"
                         innerDiv.appendChild(div2)
                         
                         var span3= document.createElement("span")
-                        span3.style="color:#503047; font-size:150%;max-height:20px;"
-                        span3.innerHTML="Por " + item[2]
+                        span3.style="color:#777; font-size:120%;max-height:20px;"
+                        span3.innerHTML= item[2]
                         
                         div2.appendChild(span3)
 
@@ -1081,7 +1081,7 @@ $('.timeFilter').on('click',function(){
            var iDiv = document.createElement('div');
             iDiv.id = 'track' + index;
             iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-            iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; "
+            iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
 
             // Create the inner div before appending to the body
             var innerDiv = document.createElement('div');
@@ -1110,7 +1110,7 @@ $('.timeFilter').on('click',function(){
 
             var span = document.createElement("span")
             span.className="be-post-title"
-            span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
+            span.style="color:black; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px; text-align:left;color:black;"
 
             span.innerHTML = item.name
 
@@ -1128,7 +1128,7 @@ $('.timeFilter').on('click',function(){
             span2.style="color:#503047; font-size:120%;max-height:20px;"
             span2.innerHTML="Popularidad: " + item.popularity
 
-            innerDiv.appendChild(span2)
+            //innerDiv.appendChild(span2)
 
             var div2 = document.createElement("div")
             div2.className="author-post"
@@ -1141,8 +1141,8 @@ $('.timeFilter').on('click',function(){
             })
 
             var span3= document.createElement("span")
-            span3.style="color:#503047; font-size:150%;max-height:20px;"
-            span3.innerHTML="Por " + artistas
+            span3.style="color:#777; font-size:120%;max-height:20px;"
+            span3.innerHTML= + artistas
 
             div2.appendChild(span3)
 
@@ -1225,7 +1225,7 @@ $('.timeFilter').on('click',function(){
            var iDiv = document.createElement('div');
             iDiv.id = 'track' + index;
             iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-            iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:0px; height:400px !important; "
+            iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
 
             // Create the inner div before appending to the body
             var innerDiv = document.createElement('div');
@@ -1254,7 +1254,7 @@ $('.timeFilter').on('click',function(){
 
             var span = document.createElement("span")
             span.className="be-post-title"
-            span.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif; max-height:60px;"
+            span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px;color:black;text-align:left;"
 
             span.innerHTML = item.name
 
@@ -1264,7 +1264,7 @@ $('.timeFilter').on('click',function(){
             span2.style="color:#503047; font-size:120%;max-height:20px;"
             span2.innerHTML="Popularidad: " + item.popularity
 
-            innerDiv.appendChild(span2)
+            //innerDiv.appendChild(span2)
 
             var div2 = document.createElement("div")
             div2.className="author-post"
@@ -1277,8 +1277,8 @@ $('.timeFilter').on('click',function(){
             })
 
             var span3= document.createElement("span")
-            span3.style="color:#503047; font-size:150%;max-height:20px;"
-            span3.innerHTML="Por " + artistas
+            span3.style="color:#777; font-size:120%;max-height:20px;"
+            span3.innerHTML= artistas
 
             div2.appendChild(span3)
 

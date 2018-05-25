@@ -626,7 +626,7 @@ form.input-search { position: relative; margin-bottom: 50px; }
 
 .be-img-block { overflow: hidden; display: block; }
 
-.be-post .be-img-block { margin-bottom: 15px; position: relative; }
+.be-post .be-img-block { margin-bottom: 5px; position: relative; }
 
 .be-post .be-img-block img { width: 100%; height: auto; position: relative; -webkit-transition: all ease-out 0.3s; transition: all 0.3s; }
 
@@ -634,11 +634,11 @@ form.input-search { position: relative; margin-bottom: 50px; }
 
 .be-post .be-img-block:after { content: ""; position: absolute; bottom: 0; left: 15px; width: 0; height: 300px; border-style: solid; border-width: 0 15px 15px 15px; border-color: transparent transparent rgba(255,255,255,0.5) transparent; border-radius:0px; }
 
-.be-post-title { position: relative; display: block; font-size: 13px; line-height: 20px; font-family: 'Conv_helveticaneuecyr-bold'; color: #262626; border-bottom: 1px solid #edeff2; margin: 0 15px 10px 15px; cursor: pointer; min-height: 52px; padding-bottom: 11px; overflow: hidden; text-overflow: ellipsis; }
+.be-post-title { position: relative; display: block; font-size: 13px; line-height: 20px; font-family: 'Conv_helveticaneuecyr-bold'; color: #262626; border-bottom: 1px solid #edeff2; margin: 0 15px 10px 15px; cursor: pointer; min-height: 30px; padding-bottom: 11px; overflow: hidden; text-overflow: ellipsis; }
 
 a.be-post-title:hover { color: #0D58C8; }
 
-.author-post { padding: 0 15px; font-size: 11px; line-height: 15px; color: #b4b7c1; margin-bottom: 20px; }
+.author-post { padding: 5px 15px; font-size: 11px; line-height: 15px; color: #b4b7c1; margin-bottom: 20px; text-align: left;}
 
 .author-post a { color: #262626; font-family: 'Conv_helveticaneuecyr-bold'; }
 
@@ -646,7 +646,7 @@ a.be-post-title:hover { color: #0D58C8; }
 
 .author-post a:hover { color: #0D58C8; }
 
-.be-post > span { color: #b4b7c1; display: block; font-size: 11px; line-height: 20px; padding: 0px; margin-bottom: 15px; }
+.be-post > span { color: #b4b7c1; display: block; font-size: 11px; line-height: 20px; padding-bottom: 5px; margin-bottom: 0px; }
 
 .info-block { background: #F6F6F6; padding: 20px 15px; font-size: 10px; color: #b4b7c1 !important; }
 
