@@ -198,7 +198,7 @@ router.get('/mineria', function(req, res, error){
             console.log("index de cancion analizada del usuario")
             console.log(index)
             /*Después de terminar el primer proceso con todos los tracks extraídos se comienza a hacer el harvesting de las características del track*/
-            if(body.items.length == objetosGlobales[position].track_uri){
+            if(body.items.length == index+1){
 
             console.log("URI de track a analizar")
             console.log(objetosGlobales[position].track_uri)
