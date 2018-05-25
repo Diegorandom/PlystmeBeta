@@ -293,13 +293,12 @@ router.get('/mineria', function(req, res, error){
                             res.render('pages/error', {error:err})
                         })
                     
-                     })   
-                }
-                
+                     }
+                })   
                 
                 harvesting()
-            
             }
+            
 
             /*El siguiente IF cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
             if(body.items.length == index+1){
