@@ -976,7 +976,18 @@ $('.timeFilter').on('click',function(){
     
     console.log('filter -> ', filter)
     
-    $.get('/rango',{filter:filter, cambioRango:true}, function(data, status){
+    $.get('/rango',{filter:filter, cambioRango:true}, function(data, status, error){
+    if(error == true){
+        $.get('/error', function(data, status, error){
+            console.log(data)
+            console.log(status)
+            if(status=="sucess"){
+                console.log('TOKEN REFRESCADO')
+            }else if(error ==true){
+                window.location.replace("http://plystme.com/perfil");
+            }
+        })
+    }
     console.log(data)
     console.log(status)
     if(status === "success"){
@@ -1106,7 +1117,8 @@ $('.timeFilter').on('click',function(){
                     })
            
         }
-    }else{
+    }
+        else{
         console.log(data);
         console.log(data)
         document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar TOP 50, ups!"
@@ -1125,7 +1137,7 @@ $('.timeFilter').on('click',function(){
         
     }
 
-})
+    })
     
 })
 
