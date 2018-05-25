@@ -41,9 +41,10 @@ router.post('/preferencias', function(req, res, error) {
                 console.log(body)
                 console.log(error)
                 /*Se reinicia el proceso para ver si ahora si jala esta cosa*/
-                    console.log('comienza petición a api')
-                    console.log('Obteniendo preferencias del id --> ', objetosGlobales[position].userid )
+                    
                     setTimeout(function(){
+                         console.log('comienza petición a api')
+                        console.log('Obteniendo preferencias del id --> ', objetosGlobales[position].userid )
                          Test(options)
                     }, 1000);
                     

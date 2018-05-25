@@ -184,7 +184,9 @@ var referenciaBD="noGuardado"
     /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con el perfil de preferencias del usuario*/
     function chequeoFBD(){
         $.post('/chequeoBD', function(data,status){
+            console.log('Datos del usuario ->', data)
             if(status == "success" && data == "guardado"){
+                console.log('Se llama a preferencias')
                 preferencias()
                 referenciaBD = data
             }
