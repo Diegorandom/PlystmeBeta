@@ -240,6 +240,15 @@ var referenciaBD="noGuardado"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
+                    
+                    $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
+                    
                 }
 
             }else{
@@ -249,6 +258,15 @@ var referenciaBD="noGuardado"
                 setTimeout(function(){
                     document.getElementById('nuevoPlaylist').style.display="none"
                 }, 2000);
+                
+                $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
+                
             }
 
         })
@@ -285,6 +303,15 @@ var referenciaBD="noGuardado"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
+                    
+                    $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
+                    
                 }
 
             }else{
@@ -295,6 +322,14 @@ var referenciaBD="noGuardado"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
+                
+                $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
             }
 
         })
@@ -325,6 +360,15 @@ var referenciaBD="noGuardado"
                         setTimeout(function(){
                             document.getElementById('nuevoPlaylist').style.display="none"
                         }, 2000);
+                        
+                        $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
+                        
                     }     
                 }else{
                     console.log('ERROR DE ORIGEN')
@@ -334,6 +378,15 @@ var referenciaBD="noGuardado"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
+                    
+                    $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
+                    
                 } 
                 
             })
@@ -590,6 +643,15 @@ var referenciaBD="noGuardado"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
+                    
+                    $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
+                    
                 }
                 }else{
                     console.log(data)
@@ -598,6 +660,15 @@ var referenciaBD="noGuardado"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
+                    
+                    $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
+                    
                 }
                     
                 
@@ -862,6 +933,14 @@ var referenciaBD="noGuardado"
                         setTimeout(function(){
                             document.getElementById('nuevoPlaylist').style.display="none"
                         }, 2000);
+                        
+                        $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
                     }
                 }else{
                     console.log(data)
@@ -870,6 +949,15 @@ var referenciaBD="noGuardado"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
+                    
+                    $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
+                    
                 }
                 
             })
@@ -1008,6 +1096,15 @@ $('.timeFilter').on('click',function(){
             setTimeout(function(){
                 document.getElementById('nuevoPlaylist').style.display="none"
             }, 2000);
+           
+           $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
+           
         }
     }else{
         console.log(data);
@@ -1017,6 +1114,15 @@ $('.timeFilter').on('click',function(){
         setTimeout(function(){
             document.getElementById('nuevoPlaylist').style.display="none"
         }, 2000);
+        
+        $.get('/error', function(data, status){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }
+                    })
+        
     }
 
 })
@@ -1121,6 +1227,15 @@ $('.timeFilter').on('click',function(){
             setTimeout(function(){
                 document.getElementById('nuevoPlaylist').style.display="none"
             }, 2000);
+           
+           $.get('/error', function(data, status){
+                console.log(data)
+                console.log(status)
+                if(status=="sucess"){
+                    console.log('TOKEN REFRESCADO')
+                }
+            })
+           
         }
     }else{
         console.log(data);
@@ -1130,6 +1245,15 @@ $('.timeFilter').on('click',function(){
         setTimeout(function(){
             document.getElementById('nuevoPlaylist').style.display="none"
         }, 2000);
+        
+        $.get('/error', function(data, status){
+            console.log(data)
+            console.log(status)
+            if(status=="sucess"){
+                console.log('TOKEN REFRESCADO')
+            }
+        })
+        
     }
 
 })

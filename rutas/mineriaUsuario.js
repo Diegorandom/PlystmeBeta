@@ -39,7 +39,7 @@ router.get('/mineria', function(req, res, next){
     /*Se hace la solicitud de información del usuario*/
     request.get(options2, function(error, response, body){     
         if(error == true){
-            res.render('pages/error', {error:error})
+            res.redirect('/refresingToken')
         }else{
 
         /*Por cada uno de los tracks del usuario se correo un proceso para gaurdar esta información en la BD*/    
@@ -180,11 +180,11 @@ router.get('/mineria', function(req, res, next){
                 console.log('Este track ya está registrado (no debería ser más de 1)')
             }
          })
-         .catch(function(err){
-            console.log(err);
-            res.render('pages/error', {error:err})
-            
-        }) 
+                 .catch(function(err){
+                    console.log(err);
+                    res.render('pages/error', {error:err})
+
+                }) 
 
               //TERMINA DE GUARDARSE INFORMACIÓN DEL TRACK Y COMIENZA A PROCRESARCE EL ALGORITMO
 
@@ -228,9 +228,9 @@ router.get('/mineria', function(req, res, next){
 
                 /*Se revisa las caracteristicas del track ya han sido guardadas, en caso contrario se guardan en la BD*/
                  objetosGlobales[0].session
-                    .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) RETURN n', {track_uri:data.uri})
+                    .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) OR  NOT EXISTS(n.energia) OR NOT EXISTS(n.fundamental) OR NOT EXISTS(n.amplitud) OR NOT EXISTS(n.modo) OR NOT EXISTS(n.speechiness) OR NOT EXISTS(n.acousticness) OR NOT EXISTS(n.instrumentalness) OR NOT EXISTS(n.positivismo) OR NOT EXISTS(n.tempo) OR NOT EXISTS(n.compas) OR NOT EXISTS(n.liveness) RETURN n', {track_uri:data.uri})
                     .then(function(resultado){
-                        console.log("1 = Debe guardarse la info, 0 = no pasa nada")
+                        console.log("1 = Debe guardarse la info, 0 = no pasa nada -> ", resultado.records.length)
 
 
                         if(resultado.records.length>=1){

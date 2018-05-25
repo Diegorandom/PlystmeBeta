@@ -87,6 +87,10 @@ router.get('/perfil', function(request, response, error) {
                         console.log('Cambio de rango')
                         objetosGlobales[position].cambioRango = false;
                         response.send(objetosGlobales[position].seedTracks)
+                    }else if(objetosGlobales[position].refreshing == true){
+                        console.log('Cambio de rango')
+                        objetosGlobales[position].refreshing = false;
+                        response.send("TOKEN REFRESCADO")
                     }else{
                         console.log('Cargando perfil')
                         response.render('pages/author-login.ejs', objetosGlobales[position]); 

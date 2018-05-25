@@ -24,10 +24,12 @@ router.get('/DatosBD', function(req, res, error) {
 
              //Index de importancia
                 /*Se extrae el index de importancia de la relación entre usuarios y tracks por propiedades. Con este index de importancia se ordena la posición de cada uno de los nodos de track que serán guardados en la propiedad seedTracks de objetosGlobales[position]*/
-                if(records._fields[1] < 50){
-                    objetosGlobales[position].seedTracks[records._fields[1]-1] = records._fields[0].properties;
+             
+                objetosGlobales[position].seedTracks[records._fields[1]-1] = records._fields[0].properties;
+            
+                    
                    // objetosGlobales[position].track_uri_ref2[records._fields[1]-1]= records._fields[0].properties.spotifyid;
-                }else{
+                if(tracks.records.length == index+1){
                     /*Una vez guardado el perfil de datos del usuario en el objeto apropiado, se redirije al perfil en la interfaz*/     
                         res.redirect('/perfil#' +
                           querystring.stringify({

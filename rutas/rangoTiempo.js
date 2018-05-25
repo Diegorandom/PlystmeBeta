@@ -12,49 +12,41 @@ router.get('/rango', function(req, res, error){
     objetosGlobales[position].cambioRango = true
     console.log('Rango de Tiempo seleccionado -> ', objetosGlobales[position].rango)
     
-    if(objetosGlobales[position].rango == "long_term"){
-        objetosGlobales[0].session
-        .run('MATCH (n)<-[:Escuchado {rangoTiempo:{rangoTiempo}}]-(t) RETURN count(t)',{rangoTiempo:objetosGlobales[position].rango})
-        .then(function(conteo){
-            if(conteo>0){
-              res.redirect('/DatosBD')
-            }else{
+    if(objetosGlobales[position] != undefined || objetosGlobales[position].rango != undefined || objetosGlobales[position].cambioRango != undefined || position != undefined ){
+    
+        if(objetosGlobales[position].rango == "long_term"){
+            objetosGlobales[0].session
+            .run('MATCH (n)<-[:Escuchado {rangoTiempo:{rangoTiempo}}]-(t) RETURN count(t)',{rangoTiempo:objetosGlobales[position].rango})
+            .then(function(conteo){
                 res.redirect('/mineria');
-            }
-        })
-        .catch(function(err){
-            console.log(err);
-            res.redirect('/error',{error:err})
-        })
-    }else if(objetosGlobales[position].rango == "medium_term"){
-        objetosGlobales[0].session
-        .run('MATCH (n)<-[:Escuchado {rangoTiempo:{rangoTiempo}}]-(t) RETURN count(t)',{rangoTiempo:objetosGlobales[position].rango})
-        .then(function(conteo){
-            if(conteo>0){
-              res.redirect('/DatosBD')
-            }else{
+            })
+            .catch(function(err){
+                console.log(err);
+                res.redirect('/error',{error:err})
+            })
+        }else if(objetosGlobales[position].rango == "medium_term"){
+            objetosGlobales[0].session
+            .run('MATCH (n)<-[:Escuchado {rangoTiempo:{rangoTiempo}}]-(t) RETURN count(t)',{rangoTiempo:objetosGlobales[position].rango})
+            .then(function(conteo){
                 res.redirect('/mineria');
-            }
-        })
-        .catch(function(err){
-            console.log(err);
-            res.redirect('/error',{error:err})
-        })
-        
-    }else if(objetosGlobales[position].rango == "short_term"){
-        objetosGlobales[0].session
-        .run('MATCH (n)<-[:Escuchado {rangoTiempo:{rangoTiempo}}]-(t) RETURN count(t)', {rangoTiempo:objetosGlobales[position].rango})
-        .then(function(conteo){
-            if(conteo>0){
-              res.redirect('/DatosBD')
-            }else{
+            })
+            .catch(function(err){
+                console.log(err);
+                res.redirect('/error',{error:err})
+            })
+
+        }else if(objetosGlobales[position].rango == "short_term"){
+            objetosGlobales[0].session
+            .run('MATCH (n)<-[:Escuchado {rangoTiempo:{rangoTiempo}}]-(t) RETURN count(t)', {rangoTiempo:objetosGlobales[position].rango})
+            .then(function(conteo){
+                console.log('Conteo -> ', conteo)
                 res.redirect('/mineria');
-            }
-        })
-        .catch(function(err){
-            console.log(err);
-            res.render('/error',{error:err})
-        })
+            })
+            .catch(function(err){
+                console.log(err);
+                res.render('/error',{error:err})
+            })
+        }
     }
     
 })
