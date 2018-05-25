@@ -200,6 +200,9 @@ router.get('/mineria', function(req, res, error){
             /*Después de terminar el primer proceso con todos los tracks extraídos se comienza a hacer el harvesting de las características del track*/
             if(body.items.length == objetosGlobales[position].track_uri.length){
                 
+                /*Debe iterarse sobre todas las posiciones del arreglo datosTrack para extraer el contenido de cada track solicitado*/
+                datosTrack.body.audio_features.forEach(function(data, index){
+                
                 var harvesting = function(){
                     console.log("URI de track a analizar")
                     console.log(objetosGlobales[position].track_uri)
@@ -218,8 +221,7 @@ router.get('/mineria', function(req, res, error){
                                  console.log('Largo de Datos de tracks')
                                  console.log(datosTrack.body.audio_features.length)
 
-                                 /*Debe iterarse sobre todas las posiciones del arreglo datosTrack para extraer el contenido de cada track solicitado*/
-                                 datosTrack.body.audio_features.forEach(function(data, index){
+                                 
 
                                  var danceability_bd = parseFloat(data.danceability);
                                  var energia_bd = parseFloat(data.energy);
@@ -263,7 +265,7 @@ router.get('/mineria', function(req, res, error){
 
                                     })
 
-                                })   
+                               
 
                               }, function(err) {
                                 done(err);
@@ -290,6 +292,8 @@ router.get('/mineria', function(req, res, error){
                             console.log(err);
                             res.render('pages/error', {error:err})
                         })
+                    
+                     })   
                 }
                 
                 
