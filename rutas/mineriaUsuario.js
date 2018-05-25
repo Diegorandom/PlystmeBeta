@@ -294,9 +294,10 @@ router.get('/mineria', function(req, res, error){
                         })
                     
                      }
-                })   
+                
                 
                 harvesting()
+                 })  
             }
             
 
