@@ -15,7 +15,7 @@ if(error == true || objetosGlobales == undefined || position == undefined){
 }else{    
     
     /*Se declara el nombre del playlist que será guardado en Spotify, esto debe convertir a custom by user cuando se lance la versión de usuario*/    
-    var playlistname = "FIESTA ATMOS"
+    var playlistname = "Plyst Me"
     console.log('playlistname = ' + playlistname);
     console.log('userids = ' + objetosGlobales[position].userid);
 

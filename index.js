@@ -5,6 +5,9 @@ NO BORRAR!
 
 Todos los cambios nuevos al código deben ser apropiadamente comentados y documentados.
 
+Tasa límite de Spotify Documentación 
+https://stackoverflow.com/questions/30548073/spotify-web-api-rate-limits
+
 */
 
 // NODE MODULES
@@ -267,6 +270,8 @@ app.use(require('./rutas/refreshingToken'));
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function(req, res, error){
     
+    console.log('ERROR EN LA PLATAFORMA')
+    
     var objetosGlobales = request.app.get('objetosGlobales');
     var position = request.app.get('position');
     position = request.sessions.position;
@@ -276,6 +281,7 @@ app.get('/error', function(req, res, error){
         response.redirect('/callback')
     }else{
         console.log('Refresh token es NULL')
+        
         res.render('pages/error', {error:error})
     } 
     

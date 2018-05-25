@@ -18,6 +18,7 @@ router.get('/rango', function(req, res, error){
             objetosGlobales[0].session
             .run('MATCH (n)<-[:Escuchado {rangoTiempo:{rangoTiempo}}]-(t) RETURN count(t)',{rangoTiempo:objetosGlobales[position].rango})
             .then(function(conteo){
+                console.log('Comienza minería de datos - Rango largo')
                 res.redirect('/mineria');
             })
             .catch(function(err){
@@ -28,6 +29,7 @@ router.get('/rango', function(req, res, error){
             objetosGlobales[0].session
             .run('MATCH (n)<-[:Escuchado {rangoTiempo:{rangoTiempo}}]-(t) RETURN count(t)',{rangoTiempo:objetosGlobales[position].rango})
             .then(function(conteo){
+                console.log('Comienza minería de datos - Rango mediano')
                 res.redirect('/mineria');
             })
             .catch(function(err){
@@ -39,7 +41,7 @@ router.get('/rango', function(req, res, error){
             objetosGlobales[0].session
             .run('MATCH (n)<-[:Escuchado {rangoTiempo:{rangoTiempo}}]-(t) RETURN count(t)', {rangoTiempo:objetosGlobales[position].rango})
             .then(function(conteo){
-                console.log('Conteo -> ', conteo)
+                console.log('Comienza minería de datos - Rango largo')
                 res.redirect('/mineria');
             })
             .catch(function(err){
