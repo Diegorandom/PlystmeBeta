@@ -216,6 +216,7 @@ router.get('/mineria', function(req, res, error){
                  /*Debe iterarse sobre todas las posiciones del arreglo datosTrack para extraer el contenido de cada track solicitado*/
                  datosTrack.body.audio_features.forEach(function(data, index){
                      
+               var revisionNodo = function(){
                 objetosGlobales[0].session
                 .run('MATCH (n:track {uri:{track_uri}}) RETURN n', {track_uri:data.uri} )
                 .then(function(nodo){
@@ -263,14 +264,19 @@ router.get('/mineria', function(req, res, error){
                         
                     })
 
+                  }else{
+                      revisionNodo()
                   }
+                
+                      
                 })
                 .catch(function(err){
                     console.log(err);
                     res.render('pages/error', {error:err})
                 }) 
+             }
                  
-                })   
+            })   
 
               }, function(err) {
                 done(err);
