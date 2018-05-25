@@ -186,7 +186,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                             
                             objetosGlobales[position].mensaje = "nuevo_login";
                 
-                            res.redirect('/DatosBD');  
+                            res.redirect('/mineria');
                      
                         }else{
                             console.log('No se pudo determinar si es un usuario nuevo o registrado')
@@ -331,7 +331,8 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                             
                             objetosGlobales[position].mensaje = "nuevo_login";
                 
-                            res.redirect('/DatosBD');  
+                            // mount the router on the app
+                            res.redirect('/mineria'); 
                      
                         }else{
                             console.log('No se pudo determinar si es un usuario nuevo o registrado')
