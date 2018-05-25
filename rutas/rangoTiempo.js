@@ -50,6 +50,8 @@ router.get('/rango', function(req, res, error){
                 res.render('/error',{error:err})
             })
         }
+    }else{
+        res.redirect('refreshingToken')
     }
     
 })

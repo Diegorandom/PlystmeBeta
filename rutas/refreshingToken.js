@@ -10,10 +10,13 @@ router.post('/refreshingToken', function(request, response, error) {
     position = request.sessions.position;
     console.log('apuntador del objeto', position);
     
-    if(objetosGlobales[position].refresh_token != null){
+    if(objetosGlobales[position] != undefined && objetosGlobales[position].refresh_token != null ){
         response.redirect('/callback')
-    }else{
+    }else if(objetosGlobales[0] != undefined){
+        response.redirect('/login')
         console.log('Refresh token es NULL')
+    }else{
+        response.redirect('/error')
     }    
     
 })
@@ -25,9 +28,10 @@ router.get('/refreshingToken', function(request, response, error) {
     position = request.sessions.position;
     console.log('apuntador del objeto', position);
     
-    if(objetosGlobales[position].refresh_token != null){
+    if(objetosGlobales[position] != undefined || objetosGlobales[position].refresh_token != null ){
         response.redirect('/callback')
     }else{
+        response.redirect('/login')
         console.log('Refresh token es NULL')
     } 
     

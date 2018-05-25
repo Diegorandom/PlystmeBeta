@@ -18,12 +18,16 @@ var cookieParser = require('cookie-parser');
 
 console.log('Llegamos a la ruta de mineria de datos de usuario')
 
-router.get('/mineria', function(req, res, next){
-               
+router.get('/mineria', function(req, res, error){
     console.log('entramos a la ruta')
     var objetosGlobales = req.app.get('objetosGlobales');
-    var position = req.app.get('position');
+    var position = req.app.get('position'); 
     position = req.sessions.position;
+    
+    if(error == true || objetosGlobales == undefined || position == undefined || objetosGlobales[position]==null){
+        res.redirect('/login');
+    }else{
+    
     console.log('apuntador del objeto', position);  
 
      //PROCESO DE HARVESTING DE INFORMACIÓN DE USUARIO
@@ -38,7 +42,7 @@ router.get('/mineria', function(req, res, next){
 
     /*Se hace la solicitud de información del usuario*/
     request.get(options2, function(error, response, body){     
-        if(error == true){
+        if(error == true || body == undefined || body.items == undefined){
             res.redirect('/refresingToken')
         }else{
 
@@ -289,8 +293,9 @@ router.get('/mineria', function(req, res, next){
 
         }
 
-
+        
     }); 
+    }
 })
 
 //Finaliza proceso
