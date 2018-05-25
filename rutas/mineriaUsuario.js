@@ -24,6 +24,8 @@ router.get('/mineria', function(req, res, error){
     var position = req.app.get('position'); 
     position = req.sessions.position;
     
+    
+    
     if(error == true || objetosGlobales == undefined || position == undefined || objetosGlobales[position]==null){
         res.redirect('/login');
     }else{
@@ -257,6 +259,18 @@ router.get('/mineria', function(req, res, error){
                         res.render('pages/error', {error:err})
                         
                     })
+                 
+                 
+                    /*El siguiente IF cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
+                    if(datosTrack.body.audio_features.length == index+1){
+                            objetosGlobales[position].bdEstado="guardado"
+                            console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
+                        }else{
+                            console.log('Aun no se termina de guardar la informacion en la BD')
+                            console.log("index: ", index+1, "body.items.length ", body.items.length)
+                        }
+
+                   });
 
                 })   
 
@@ -278,16 +292,7 @@ router.get('/mineria', function(req, res, error){
 
          }
 
-        /*El siguiente IF cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
-        if(body.items.length == index+1){
-                objetosGlobales[position].bdEstado="guardado"
-                console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
-            }else{
-                console.log('Aun no se termina de guardar la informacion en la BD')
-                console.log("index: ", index+1, "body.items.length ", body.items.length)
-            }
-
-       });
+        
 
 
 
