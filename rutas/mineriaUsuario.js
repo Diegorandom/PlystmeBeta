@@ -220,7 +220,7 @@ router.get('/mineria', function(req, res, error){
                 objetosGlobales[0].session
                 .run('MATCH (n:track {uri:{track_uri}}) RETURN n', {track_uri:data.uri} )
                 .then(function(nodo){
-                if(nodo.records.length>=){
+                if(nodo.records.length>=1){
                        
                  var danceability_bd = parseFloat(data.danceability);
                  var energia_bd = parseFloat(data.energy);
