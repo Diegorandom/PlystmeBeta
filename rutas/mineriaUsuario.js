@@ -199,118 +199,107 @@ router.get('/mineria', function(req, res, error){
             console.log(index)
             /*Después de terminar el primer proceso con todos los tracks extraídos se comienza a hacer el harvesting de las características del track*/
             if(body.items.length == objetosGlobales[position].track_uri.length){
+
+            console.log("URI de track a analizar")
+            console.log(objetosGlobales[position].track_uri)
+    
+            //SE GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
+
+            /*Se obtienen las características del track en cuestión con el endpoint del módulo de Node.js que me conecta con la BD de Spotify, el siguuiente proceso requiere todas las caraceristicas de todos los tracks de un jalón*/
+             objetosGlobales[0].spotifyApi.getAudioFeaturesForTracks(objetosGlobales[position].track_uri)
+              .then(function(datosTrack) {
+                 console.log('Datos extraídos de los 50 tracks')
+                 console.log(datosTrack)
+                 console.log('Largo de Datos de tracks')
+                 console.log(datosTrack.body.audio_features.length)
+
+                 /*Debe iterarse sobre todas las posiciones del arreglo datosTrack para extraer el contenido de cada track solicitado*/
+                 datosTrack.body.audio_features.forEach(function(data, index){
+                     
+                objetosGlobales[0].session
+                .run('MATCH (n:track {uri:{track_uri}}) RETURN n', {track_uri:data.uri} )
+                .then(function(nodo){
+                if(nodo.records.length>=){
+                       
+                 var danceability_bd = parseFloat(data.danceability);
+                 var energia_bd = parseFloat(data.energy);
+                 var fundamental_bd = parseFloat(data.key); 
+                 var amplitud_bd = parseFloat(data.loudness);
+                 var modo_bd = parseFloat(data.mode);
+                 var dialogo_bd =parseFloat(data.speechiness);
+                 var acustica_bd = parseFloat(data.acousticness);
+                 var instrumental_bd = parseFloat(data.instrumentalness);
+                 var audiencia_bd = parseFloat(data.liveness);
+                 var positivismo_bd = parseFloat(data.valence);
+                 var tempo_bd = parseFloat(data.tempo);
+                 var firma_tiempo_bd = parseFloat(data.time_signature);
+                 var duracion_bd =  parseFloat(data.duration_ms);
+
+                /*Se revisa las caracteristicas del track ya han sido guardadas, en caso contrario se guardan en la BD*/
+                 objetosGlobales[0].session
+                    .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) OR  NOT EXISTS(n.energia) OR NOT EXISTS(n.fundamental) OR NOT EXISTS(n.amplitud) OR NOT EXISTS(n.modo) OR NOT EXISTS(n.speechiness) OR NOT EXISTS(n.acousticness) OR NOT EXISTS(n.instrumentalness) OR NOT EXISTS(n.positivismo) OR NOT EXISTS(n.tempo) OR NOT EXISTS(n.compas) OR NOT EXISTS(n.liveness) RETURN n', {track_uri:data.uri})
+                    .then(function(resultado){
+                        console.log("1 = Debe guardarse la info, 0 = no pasa nada -> ", resultado.records.length)
+
+
+                        if(resultado.records.length>=1){
+                            /*Query en neo4j para guardar las características del track en el nodo correspondiente*/
+                             objetosGlobales[0].session
+                                .run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:data.uri })
+                                .then(function(resultado){
+                                    console.log('Se guardaron las caracteristicas del track')
+                                })
+                                 .catch(function(err){
+                                    console.log(err);
+                                    res.render('pages/error', {error:err})
+                                    
+                                })
+                        }
+
+                    })
+                     .catch(function(err){
+                        console.log(err);
+                        res.render('pages/error', {error:err})
+                        
+                    })
+
+                  }
+                })
+                .catch(function(err){
+                    console.log(err);
+                    res.render('pages/error', {error:err})
+                }) 
+                 
+                })   
+
+              }, function(err) {
+                done(err);
+                 console.log("err: " + err );
+                 res.render('pages/error', {error:err});
+                 
+              });
+            console.log(''); 
+
+            /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
+              res.redirect('/perfil#' +
+                  querystring.stringify({
+                    access_token: objetosGlobales[position].access_token,
+                    refresh_token: objetosGlobales[position].refresh_token
+                  })); 
                 
-                /*Debe iterarse sobre todas las posiciones del arreglo datosTrack para extraer el contenido de cada track solicitado*/
-                datosTrack.body.audio_features.forEach(function(data, index){
-                
-                var harvesting = function(){
-                    console.log("URI de track a analizar")
-                    console.log(objetosGlobales[position].track_uri)
 
-                    objetosGlobales[0].session
-                        .run('MATCH (n:track {uri:{track_uri}}) RETURN n', {track_uri:data.uri} )
-                        .then(function(nodo){
-                            if(nodo.records.length>=1){
-                                //SE GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
+         }
 
-                            /*Se obtienen las características del track en cuestión con el endpoint del módulo de Node.js que me conecta con la BD de Spotify, el siguuiente proceso requiere todas las caraceristicas de todos los tracks de un jalón*/
-                             objetosGlobales[0].spotifyApi.getAudioFeaturesForTracks(objetosGlobales[position].track_uri)
-                              .then(function(datosTrack) {
-                                 console.log('Datos extraídos de los 50 tracks')
-                                 console.log(datosTrack)
-                                 console.log('Largo de Datos de tracks')
-                                 console.log(datosTrack.body.audio_features.length)
-
-                                 
-
-                                 var danceability_bd = parseFloat(data.danceability);
-                                 var energia_bd = parseFloat(data.energy);
-                                 var fundamental_bd = parseFloat(data.key); 
-                                 var amplitud_bd = parseFloat(data.loudness);
-                                 var modo_bd = parseFloat(data.mode);
-                                 var dialogo_bd =parseFloat(data.speechiness);
-                                 var acustica_bd = parseFloat(data.acousticness);
-                                 var instrumental_bd = parseFloat(data.instrumentalness);
-                                 var audiencia_bd = parseFloat(data.liveness);
-                                 var positivismo_bd = parseFloat(data.valence);
-                                 var tempo_bd = parseFloat(data.tempo);
-                                 var firma_tiempo_bd = parseFloat(data.time_signature);
-                                 var duracion_bd =  parseFloat(data.duration_ms);
-
-                                /*Se revisa las caracteristicas del track ya han sido guardadas, en caso contrario se guardan en la BD*/
-                                 objetosGlobales[0].session
-                                    .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) OR  NOT EXISTS(n.energia) OR NOT EXISTS(n.fundamental) OR NOT EXISTS(n.amplitud) OR NOT EXISTS(n.modo) OR NOT EXISTS(n.speechiness) OR NOT EXISTS(n.acousticness) OR NOT EXISTS(n.instrumentalness) OR NOT EXISTS(n.positivismo) OR NOT EXISTS(n.tempo) OR NOT EXISTS(n.compas) OR NOT EXISTS(n.liveness) RETURN n', {track_uri:data.uri})
-                                    .then(function(resultado){
-                                        console.log("1 = Debe guardarse la info, 0 = no pasa nada -> ", resultado.records.length)
-
-
-                                        if(resultado.records.length>=1){
-                                            /*Query en neo4j para guardar las características del track en el nodo correspondiente*/
-                                             objetosGlobales[0].session
-                                                .run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:data.uri })
-                                                .then(function(resultado){
-                                                    console.log('Se guardaron las caracteristicas del track')
-                                                })
-                                                 .catch(function(err){
-                                                    console.log(err);
-                                                    res.render('pages/error', {error:err})
-
-                                                })
-                                        }
-
-                                    })
-                                     .catch(function(err){
-                                        console.log(err);
-                                        res.render('pages/error', {error:err})
-
-                                    })
-
-                               
-
-                              }, function(err) {
-                                done(err);
-                                 console.log("err: " + err );
-                                 res.render('pages/error', {error:err});
-
-                              });
-                            console.log(''); 
-
-                            /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
-                              res.redirect('/perfil#' +
-                                  querystring.stringify({
-                                    access_token: objetosGlobales[position].access_token,
-                                    refresh_token: objetosGlobales[position].refresh_token
-                                  })); 
-                            }else{
-                                harvesting()
-                            }
-
-                        /**/
-
-                        })
-                        .catch(function(err){
-                            console.log(err);
-                            res.render('pages/error', {error:err})
-                        })
-                    
-                     }
-                
-                
-                harvesting()
-                 })  
+        /*El siguiente IF cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
+        if(body.items.length == index+1){
+                objetosGlobales[position].bdEstado="guardado"
+                console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
+            }else{
+                console.log('Aun no se termina de guardar la informacion en la BD')
+                console.log("index: ", index+1, "body.items.length ", body.items.length)
             }
-            
 
-            /*El siguiente IF cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
-            if(body.items.length == index+1){
-                    objetosGlobales[position].bdEstado="guardado"
-                    console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
-                }else{
-                    console.log('Aun no se termina de guardar la informacion en la BD')
-                    console.log("index: ", index+1, "body.items.length ", body.items.length)
-                }
-
-           });
+       });
 
 
 
