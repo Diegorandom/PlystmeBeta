@@ -60,7 +60,7 @@ No se debe cambiar nada de la estructura de configuración de la base de datos.
 */
 
 if(graphenedbURL == undefined){
-	var driver = neo4j.driver('bolt://localhost', neo4j.auth.basic('neo4j', 'mdl'));
+	var driver = neo4j.driver('bolt://hobby-gbcebfemnffigbkefemgfaal.dbs.graphenedb.com:24786', neo4j.auth.basic('app91002402-MWprOS', 'b.N1zF4KnI6xoa.Kt5xmDPgVvFuO0CG'));
 	objetosGlobales[0].session = driver.session();
 }else{
 	var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass));

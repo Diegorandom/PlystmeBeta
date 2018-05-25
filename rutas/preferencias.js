@@ -41,7 +41,12 @@ router.post('/preferencias', function(req, res, error) {
                 console.log(body)
                 console.log(error)
                 /*Se reinicia el proceso para ver si ahora si jala esta cosa*/
-                    Test(options)
+                    console.log('comienza petición a api')
+                    console.log('Obteniendo preferencias del id --> ', objetosGlobales[position].userid )
+                    setTimeout(function(){
+                         Test(options)
+                    }, 1000);
+                    
                 }else{
                     /*Proceso en caso de que la API funcione #blessed. Se guarda el perfil en el objeto del usuario y se manda a la interfaz*/
                     console.log('La API jaló, alabado sea el señor')
