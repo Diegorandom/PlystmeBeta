@@ -241,11 +241,13 @@ var referenciaBD="noGuardado"
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                     
-                    $.get('/error', function(data, status){
+                    $.get('/error', function(data, status, error){
                         console.log(data)
                         console.log(status)
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
+                        }else if(error ==true){
+                            window.location.replace("http://plystme.com/perfil");
                         }
                     })
                     
@@ -259,13 +261,15 @@ var referenciaBD="noGuardado"
                     document.getElementById('nuevoPlaylist').style.display="none"
                 }, 2000);
                 
-                $.get('/error', function(data, status){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }
-                    })
+                $.get('/error', function(data, status, error){
+                    console.log(data)
+                    console.log(status)
+                    if(status=="sucess"){
+                        console.log('TOKEN REFRESCADO')
+                    }else if(error ==true){
+                        window.location.replace("http://plystme.com/perfil");
+                    }
+                })
                 
             }
 
@@ -304,11 +308,13 @@ var referenciaBD="noGuardado"
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                     
-                    $.get('/error', function(data, status){
+                    $.get('/error', function(data, status, error){
                         console.log(data)
                         console.log(status)
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
+                        }else if(error ==true){
+                            window.location.replace("http://plystme.com/perfil");
                         }
                     })
                     
@@ -323,13 +329,15 @@ var referenciaBD="noGuardado"
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                 
-                $.get('/error', function(data, status){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }
-                    })
+                $.get('/error', function(data, status, error){
+                    console.log(data)
+                    console.log(status)
+                    if(status=="sucess"){
+                        console.log('TOKEN REFRESCADO')
+                    }else if(error ==true){
+                        window.location.replace("http://plystme.com/perfil");
+                    }
+                })
             }
 
         })
@@ -361,13 +369,15 @@ var referenciaBD="noGuardado"
                             document.getElementById('nuevoPlaylist').style.display="none"
                         }, 2000);
                         
-                        $.get('/error', function(data, status){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }
-                    })
+                        $.get('/error', function(data, status, error){
+                            console.log(data)
+                            console.log(status)
+                            if(status=="sucess"){
+                                console.log('TOKEN REFRESCADO')
+                            }else if(error ==true){
+                                window.location.replace("http://plystme.com/perfil");
+                            }
+                        })
                         
                     }     
                 }else{
@@ -379,11 +389,13 @@ var referenciaBD="noGuardado"
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                     
-                    $.get('/error', function(data, status){
+                    $.get('/error', function(data, status, error){
                         console.log(data)
                         console.log(status)
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
+                        }else if(error ==true){
+                            window.location.replace("http://plystme.com/perfil");
                         }
                     })
                     
@@ -515,11 +527,27 @@ var referenciaBD="noGuardado"
                        
                    })
                    }else{
-                        window.location.replace('http://www.plystme.com/error')
+                       $.get('/error', function(data, status, error){
+                            console.log(data)
+                            console.log(status)
+                            if(status=="sucess"){
+                                console.log('TOKEN REFRESCADO')
+                            }else if(error ==true){
+                                window.location.replace("http://plystme.com/perfil");
+                            }
+                        })
                     }
                 }else{
                     console.log(data);
-                    window.location.replace('http://www.plystme.com/error')
+                    $.get('/error', function(data, status, error){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }else if(error ==true){
+                            window.location.replace("http://plystme.com/perfil");
+                        }
+                    })
                 }
                 
             })
@@ -644,11 +672,13 @@ var referenciaBD="noGuardado"
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                     
-                    $.get('/error', function(data, status){
+                    $.get('/error', function(data, status, error){
                         console.log(data)
                         console.log(status)
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
+                        }else if(error ==true){
+                            window.location.replace("http://plystme.com/perfil");
                         }
                     })
                     
@@ -661,11 +691,13 @@ var referenciaBD="noGuardado"
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                     
-                    $.get('/error', function(data, status){
+                    $.get('/error', function(data, status, error){
                         console.log(data)
                         console.log(status)
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
+                        }else if(error ==true){
+                            window.location.replace("http://plystme.com/perfil");
                         }
                     })
                     
@@ -797,10 +829,26 @@ var referenciaBD="noGuardado"
                        console.log('Nueva canción desplegada')
                    })
                     }else{
-                        window.location.replace('http://www.plystme.com/error')
+                        $.get('/error', function(data, status, error){
+                            console.log(data)
+                            console.log(status)
+                            if(status=="sucess"){
+                                console.log('TOKEN REFRESCADO')
+                            }else if(error ==true){
+                                window.location.replace("http://plystme.com/perfil");
+                            }
+                        })
                     }
                 }else{
-                    window.location.replace('http://www.plystme.com/error')
+                    $.get('/error', function(data, status, error){
+                        console.log(data)
+                        console.log(status)
+                        if(status=="sucess"){
+                            console.log('TOKEN REFRESCADO')
+                        }else if(error ==true){
+                            window.location.replace("http://plystme.com/perfil");
+                        }
+                    })
                 }
                 
             })
@@ -934,13 +982,15 @@ var referenciaBD="noGuardado"
                             document.getElementById('nuevoPlaylist').style.display="none"
                         }, 2000);
                         
-                        $.get('/error', function(data, status){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }
-                    })
+                        $.get('/error', function(data, status, error){
+                            console.log(data)
+                            console.log(status)
+                            if(status=="sucess"){
+                                console.log('TOKEN REFRESCADO')
+                            }else if(error ==true){
+                                window.location.replace("http://plystme.com/perfil");
+                            }
+                        })
                     }
                 }else{
                     console.log(data)
@@ -950,11 +1000,13 @@ var referenciaBD="noGuardado"
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                     
-                    $.get('/error', function(data, status){
+                    $.get('/error', function(data, status, error){
                         console.log(data)
                         console.log(status)
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
+                        }else if(error ==true){
+                            window.location.replace("http://plystme.com/perfil");
                         }
                     })
                     
@@ -1108,13 +1160,15 @@ $('.timeFilter').on('click',function(){
                 document.getElementById('nuevoPlaylist').style.display="none"
             }, 2000);
            
-           $.get('/error', function(data, status){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }
-                    })
+           $.get('/error', function(data, status, error){
+                console.log(data)
+                console.log(status)
+                if(status=="sucess"){
+                    console.log('TOKEN REFRESCADO')
+                }else if(error ==true){
+                    window.location.replace("http://plystme.com/perfil");
+                }
+            })
            
         }
     }
@@ -1127,13 +1181,15 @@ $('.timeFilter').on('click',function(){
             document.getElementById('nuevoPlaylist').style.display="none"
         }, 2000);
         
-        $.get('/error', function(data, status){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }
-                    })
+        $.get('/error', function(data, status, error){
+            console.log(data)
+            console.log(status)
+            if(status=="sucess"){
+                console.log('TOKEN REFRESCADO')
+            }else if(error ==true){
+                window.location.replace("http://plystme.com/perfil");
+            }
+        })
         
     }
 
@@ -1240,13 +1296,15 @@ $('.timeFilter').on('click',function(){
                 document.getElementById('nuevoPlaylist').style.display="none"
             }, 2000);
            
-           $.get('/error', function(data, status){
-                console.log(data)
-                console.log(status)
-                if(status=="sucess"){
-                    console.log('TOKEN REFRESCADO')
-                }
-            })
+           $.get('/error', function(data, status, error){
+            console.log(data)
+            console.log(status)
+            if(status=="sucess"){
+                console.log('TOKEN REFRESCADO')
+            }else if(error ==true){
+                window.location.replace("http://plystme.com/perfil");
+            }
+        })
            
         }
     }else{
@@ -1258,11 +1316,13 @@ $('.timeFilter').on('click',function(){
             document.getElementById('nuevoPlaylist').style.display="none"
         }, 2000);
         
-        $.get('/error', function(data, status){
+        $.get('/error', function(data, status, error){
             console.log(data)
             console.log(status)
             if(status=="sucess"){
                 console.log('TOKEN REFRESCADO')
+            }else if(error ==true){
+                window.location.replace("http://plystme.com/perfil");
             }
         })
         
