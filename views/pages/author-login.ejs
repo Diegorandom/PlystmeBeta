@@ -770,6 +770,12 @@
     $('.variableDesplegable').on('click',function(){
 
         
+        if(ca != $(this).attr("id")){
+            $('#'+ca).next().animate({height:"toggle"});
+            $('#'+ca).children().removeClass("fas fa-minus");
+            $('#'+ca).children().addClass("fas fa-plus");
+        }
+        
         
         if($(this).children().attr("class") == "fas fa-plus"){
             $(this).next().animate({height:"toggle"});
@@ -781,6 +787,7 @@
             $(this).next().animate({height:"toggle"});
             $(this).children().removeClass("fas fa-minus");
             $(this).children().addClass("fas fa-plus");
+            ca = 0;
         }
         
         
