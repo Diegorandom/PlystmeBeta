@@ -457,14 +457,14 @@ var referenciaBD="noGuardado"
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            usuariosFotos.appendChild(img)
+                            usuariosFotos.appendChild(imgU)
                         }else{
                            var usuariosFotos = document.getElementById('usuariosFotos')
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            usuariosFotos.appendChild(img) 
+                            usuariosFotos.appendChild(imgU) 
                         }
                         
                         var listaUsuarios = document.getElementById('usuarios')
@@ -676,7 +676,7 @@ var referenciaBD="noGuardado"
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            usuariosFotos.appendChild(img) 
+                            usuariosFotos.appendChild(imgU) 
                         }
                         
                         var listaUsuarios = document.getElementById('usuarios')
@@ -1434,7 +1434,7 @@ $('.timeFilter').on('click',function(){
 
             var span3= document.createElement("span")
             span3.style="color:#777; font-size:120%;max-height:20px;"
-            span3.innerHTML= + artistas
+            span3.innerHTML= artistas
 
             div2.appendChild(span3)
 

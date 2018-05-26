@@ -29,8 +29,6 @@ router.get('/perfil', function(request, response, error) {
                 /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/           
                          
                 /*Filtrado de usuarios repetidos*/
-                
-                
                 var repetido = false
                   
             if(objetosGlobales[position].usuarios.length == 0){

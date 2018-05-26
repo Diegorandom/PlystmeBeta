@@ -313,7 +313,7 @@
                                             </div>
                                            
                                             <ul id="usuarios" style="display:none; padding:5px;">
-                                            
+                                                
                                             </ul>
                                             
                                         
@@ -386,6 +386,8 @@
                                             
                                             <div style="width:100%; height: 30px; background-color:#588b8b; border-radius: 0 0 5px 5px; padding: 5px 0;" id="usuariosFotos2">
                                             </div>
+                                            
+                                            
                                             
                                             <ul id="usuarios2" style="display:none; padding:5px;">
                                             
@@ -695,7 +697,8 @@
     
     //version movil
     
-    $('#mostrarUsuarios2').on('click',function(){
+    $('#usuariosDentro2').on('click',function(){
+        console.log("usuarios2 click");
         $('#usuarios2').animate({height:'toggle'});
         if(fas == 0){
             $('#usuariosDentro2 i').removeClass("fas fa-chevron-circle-down");
