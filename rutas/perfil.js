@@ -88,13 +88,18 @@ router.get('/perfil', function(request, response, error) {
                         objetosGlobales[position].cambioRango = false;
                         response.send(objetosGlobales[position].seedTracks)
                     }else if(objetosGlobales[position].refreshing == true){
-                        console.log('Cambio de rango')
+                        console.log('Refrescando Tokens')
                         objetosGlobales[position].refreshing = false;
                         response.send("TOKEN REFRESCADO")
+                    }else if(objetosGlobales[position].refreshingUsers == true){
+                        console.log('Refrescando usuarios en el pool')
+                        console.log(objetosGlobales[position].usuarios)
+                        objetosGlobales[position].refreshingUsers = false
+                        response.send(objetosGlobales[position].usuarios)
                     }else{
-                        console.log('Cargando perfil')
-                        response.render('pages/author-login.ejs', objetosGlobales[position]); 
-                    }
+                    console.log('Cargando perfil')
+                    response.render('pages/author-login.ejs', objetosGlobales[position]); 
+                }
                 }
         }
         })

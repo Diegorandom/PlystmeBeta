@@ -344,6 +344,10 @@ var referenciaBD="noGuardado"
 
         })
     })
+    
+    
+        
+    
         /*Lo mismo de arriba pero en versión para móvil*/
         document.getElementById('createPlaylist2').addEventListener('click', function(){
             $.get('/create/playlist', function(data, status){
@@ -406,10 +410,92 @@ var referenciaBD="noGuardado"
             })
         })
      
+        
+        function checkUrl(url) {
+            console.log('Checando URL -> ', url)
+            $.get(url)
+                .done(function() { 
+                    return true
+                    // Do something now you know the image exists.
+
+                }).fail(function() { 
+                    return false
+                    // Image doesn't exist - do something else.
+
+                })
+        } 
+        
+
+        
+
         /*Proceso para entrar a un pool determinado*/
         document.getElementById('enterPool').addEventListener('click', function() {
             
             $('#usuariosDentro').css("display","block");
+            
+            $.get('/usuarios', function(data, status){
+               
+            console.log(data)
+            console.log(status)
+                        
+                        
+                        
+            if(status === "success"){
+                if(data != undefined){
+                    data.forEach(function(usuario,index){
+                        if(checkUrl(usuario[1])==false){
+                            usuario[1] = false
+                        }
+                        
+                        if(usuario[1]){ 
+                            var usuariosFotos = document.getElementById('usuariosFotos')
+                            var imgU= document.createElement("img")
+                            imgU.src=usuario[1]
+                            imgU.alt="omg"
+                            imgU.style="height:100%; border-radius:50%; width:20px;"
+                            usuariosFotos.appendChild(img)
+                        }else{
+                           var usuariosFotos = document.getElementById('usuariosFotos')
+                            var imgU= document.createElement("img")
+                            imgU.src="img/Perfil.png"
+                            imgU.alt="omg"
+                            imgU.style="height:100%; border-radius:50%; width:20px;"
+                            usuariosFotos.appendChild(img) 
+                        }
+                        
+                        var listaUsuarios = document.getElementById('usuarios')
+                        
+                        if(usuario[0] && usuario[1]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = usuario[1]
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = usuario[0]
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }else if(usuario[0]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = "img/Perfil.png"
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = usuario[0]
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }else if(usuario[1]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = usuario[1]
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = "Anónimo"
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }
+                        
+                    })
+                }
+            }
+                
+            }) 
             
             $.get( '/pool', function(data, status) {
                 console.log(data)
@@ -559,6 +645,69 @@ var referenciaBD="noGuardado"
         document.getElementById('btnActualizar').addEventListener('click', function() {
             console.log('Actualizando POOL2')
            
+            $.get('/usuarios', function(data, status){
+               
+            console.log(data)
+            console.log(status)
+                        
+                        
+                        
+            if(status === "success"){
+                if(data != undefined){
+                    data.forEach(function(usuario,index){
+                        if(checkUrl(usuario[1])==false){
+                            usuario[1] = false
+                        }
+                        
+                        if(usuario[1]){ 
+                            var usuariosFotos = document.getElementById('usuariosFotos')
+                            var imgU= document.createElement("img")
+                            imgU.src=usuario[1]
+                            imgU.alt="omg"
+                            imgU.style="height:100%; border-radius:50%; width:20px;"
+                            usuariosFotos.appendChild(img)
+                        }else{
+                           var usuariosFotos = document.getElementById('usuariosFotos')
+                            var imgU= document.createElement("img")
+                            imgU.src="img/Perfil.png"
+                            imgU.alt="omg"
+                            imgU.style="height:100%; border-radius:50%; width:20px;"
+                            usuariosFotos.appendChild(img) 
+                        }
+                        
+                        var listaUsuarios = document.getElementById('usuarios')
+                        
+                        if(usuario[0] && usuario[1]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = usuario[1]
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = usuario[0]
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }else if(usuario[0]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = "img/Perfil.png"
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = usuario[0]
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }else if(usuario[1]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = usuario[1]
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = "Anónimo"
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }
+                        
+                    })
+                }
+            }
+                
+            }) 
             
             $.get( '/pool', function(data, status) {
                 console.log(data)
@@ -714,6 +863,75 @@ var referenciaBD="noGuardado"
             
             $('#usuariosDentro2').css("display","block");
             
+            
+            $.get('/usuarios', function(data, status){
+            
+            console.log(status)    
+            console.log(data)
+                        
+            if(status === "success"){
+                if(data != undefined){
+                    data.forEach(function(usuario,index){
+                        
+                        if(checkUrl(usuario[1])==false){
+                            console.log(usuario[1], " No válido")
+                            usuario[1] = false
+                        }
+                        
+                        var usuariosFotos = document.getElementById('usuariosFotos2')
+                        
+                        if(usuario[1]){ 
+                            var imgU= document.createElement("img")
+                            imgU.src=usuario[1]
+                            imgU.alt="omg"
+                            imgU.style="height:100%; border-radius:50%; width:20px;"
+                            usuariosFotos.appendChild(imgU)
+                            
+                        }else{
+                            var imgU= document.createElement("img")
+                            imgU.src="img/Perfil.png"
+                            imgU.alt="omg"
+                            imgU.style="height:100%; border-radius:50%; width:20px;"
+                            usuariosFotos.appendChild(imgU) 
+                        }
+                        
+                        var listaUsuarios = document.getElementById('usuarios2')
+                        
+                        if(usuario[0] && usuario[1]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = usuario[1]
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = usuario[0]
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }else if(usuario[0]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = "img/Perfil.png"
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = usuario[0]
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }else if(usuario[1]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = usuario[1]
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = "Anónimo"
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }
+                        
+                        
+                        
+                    })
+                }
+            }
+                
+            }) 
+            
+            
             $.get( '/pool', function(data, status) {
                 console.log(data)
                 console.log(status)
@@ -859,6 +1077,74 @@ var referenciaBD="noGuardado"
         /*Lo mismo que btnActualizar pero para movil*/
         document.getElementById('btnActualizar2').addEventListener('click', function() {
             console.log('Actualizando POOL2')
+            
+            
+            $.get('/usuarios', function(data, status){
+            
+            console.log(status)    
+            console.log(data)
+            
+                        
+            if(status === "success"){
+                if(data != undefined){
+                    data.forEach(function(usuario,index){
+                        if(checkUrl(usuario[1])==false){
+                            usuario[1] = false
+                        }
+                        
+                        var usuariosFotos = document.getElementById('usuariosFotos2')
+                        
+                        if(usuario[1]){ 
+                            var imgU= document.createElement("img")
+                            imgU.src=usuario[1]
+                            imgU.alt="omg"
+                            imgU.style="height:100%; border-radius:50%; width:20px;"
+                            usuariosFotos.appendChild(imgU)
+                            
+                        }else{
+                            var imgU= document.createElement("img")
+                            imgU.src="img/Perfil.png"
+                            imgU.alt="omg"
+                            imgU.style="height:100%; border-radius:50%; width:20px;"
+                            usuariosFotos.appendChild(imgU) 
+                        }
+                        
+                        var listaUsuarios = document.getElementById('usuarios2')
+                        
+                        if(usuario[0] && usuario[1]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = usuario[1]
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = usuario[0]
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }else if(usuario[0]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = "img/Perfil.png"
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = usuario[0]
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }else if(usuario[1]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = usuario[1]
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = "Anónimo"
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }
+                        
+                        
+                        
+                    })
+                }
+            }
+                
+            }) 
+            
             
             $.get( '/pool', function(data, status) {
                 console.log(data)

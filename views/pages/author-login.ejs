@@ -305,64 +305,17 @@
                                         
                                         <div id="usuariosDentro" style="width:40%; background-color:white; border-radius:5px; display:none; padding: 5px 0 0 0;" >
                                         
-                                            
-                                            
-                                            
-                                            Usuarios dentro <div style="background-color:#588b8b;border-radius:50%; color:white; width:20px; display:inline-block; margin-bottom: 5px;"><%=usuarios.length%></div>
+                                            Usuarios dentro <div style="background-color:#588b8b;border-radius:50%; color:white; width:20px; display:inline-block; margin-bottom: 5px; "><%=usuarios.length%></div>
                                             <i class="fas fa-chevron-circle-down" id="mostrarUsuarios"></i>
                                             
                                             <div style="width:100%; height: 30px; background-color:#588b8b; border-radius: 0 0 5px 5px; padding: 5px 0;" id="usuariosFotos">
                                                 
-                                                
-                                            <%usuarios.forEach(function(usuario,index){ %>
-                                                <script>
-                                                    function checkUrl(url) {
-                                                            var request = false;
-                                                            if (window.XMLHttpRequest) {
-                                                                    request = new XMLHttpRequest;
-                                                            } else if (window.ActiveXObject) {
-                                                                    request = new ActiveXObject("Microsoft.XMLHttp");
-                                                            }
-
-                                                            if (request) {
-                                                                    request.open("GET", url);
-                                                                    if (request.status == 200) { return true; }
-                                                            }
-
-                                                            return false;
-                                                    }
-
-                                                    if(checkUrl(<%=usuario[1]%>)==false){
-                                                        <%=usuario[1]%> = false
-                                                    }
-                                                </script>
-                                                
-                                                <%    if(usuario[1]){        
-                                                %>
-                                                      <img src="<%=usuario[1]%>" style="height:100%; border-radius:50%; width:20px;"> 
-                                                <%
-                                                    }else{ %>
-                                                       <img src="img/Perfil.png" style="height:100%; border-radius:50%; width:20px;">  
-                                                 <%   }
-                                                })
-                                            %>
                                             </div>
+                                           
+                                            <ul id="usuarios" style="display:none; padding:5px;">
                                             
-                                            <ul style="display:none; padding:5px;">
-                                            <%usuarios.forEach(function(usuario,index){ 
-                                                if(usuario[0] && usuario[1]){        
-                                            %>
-                                                  <li><img src="<%=usuario[1]%>" style="height:20px;width:20px; border-radius:50%; float:left;"><%=usuario[0]%></li> 
-                                            <%
-                                                }else if(usuario[0]){ %>
-                                                   <li><img src="img/Perfil.png" style="height:20px;width:20px; border-radius:50%; float:left;"><%=usuario[0]%></li>  
-                                            <%    }else if(usuario[1]){ %>
-                                                    <li><img src="<%=usuario[1]%>" style="height:20px;width:20px; border-radius:50%; float:left;">Anónimo</li> 
-                                            <% }
-                                                })
-                                                %>
-                                                
                                             </ul>
+                                            
                                         
                                         </div>
                                         
@@ -429,20 +382,15 @@
                                         <div id="usuariosDentro2" style="width:60%; background-color:white; border-radius:5px; display:none; padding: 5px 0 0 0;" >
                                         
                                             Usuarios dentro <div style="background-color:#588b8b;border-radius:50%; color:white; width:20px; display:inline-block; margin-bottom: 5px;"><%=usuarios.length%></div>
-                                            <i class="fas fa-chevron-circle-down" id="mostrarUsuarios2"></i>
+                                            <i class="fas fa-chevron-circle-down"></i>
                                             
-                                            <div style="width:100%; height: 30px; background-color:#588b8b; border-radius: 0 0 5px 5px; padding: 5px 0;" id="usuariosFotos">
-                                            <%usuarios.forEach(function(usuario,index){ %>
-                                                  <img src="<%=usuario[1]%>" style="height:100%; border-radius:50%;width:20px"> 
-                                            <%})%>
+                                            <div style="width:100%; height: 30px; background-color:#588b8b; border-radius: 0 0 5px 5px; padding: 5px 0;" id="usuariosFotos2">
                                             </div>
                                             
-                                            <ul style="display:none; padding:5px;">
-                                            <%usuarios.forEach(function(usuario,index){ %>
-                                                  <li><img src="<%=usuarios[1]%>" style="height:15px; border-radius:50%; float:left;width:20px"><%=usuario[0]%></li> 
-                                            <%})%>
+                                            <ul id="usuarios2" style="display:none; padding:5px;">
+                                            
                                             </ul>
-                                        
+                                            
                                         </div>
 
                                         <br>
@@ -730,7 +678,7 @@
     
     //Version escritorio
     $('#mostrarUsuarios').on('click',function(){
-        $('#usuariosDentro ul').animate({height:'toggle'});
+        $('#usuarios').animate({height:'toggle'});
         if(fas == 0){
             $('#usuariosDentro i').removeClass("fas fa-chevron-circle-down");
             $('#usuariosDentro i').addClass("fas fa-chevron-circle-up");
@@ -748,7 +696,7 @@
     //version movil
     
     $('#mostrarUsuarios2').on('click',function(){
-        $('#usuariosDentro2 ul').animate({height:'toggle'});
+        $('#usuarios2').animate({height:'toggle'});
         if(fas == 0){
             $('#usuariosDentro2 i').removeClass("fas fa-chevron-circle-down");
             $('#usuariosDentro2 i').addClass("fas fa-chevron-circle-up");
