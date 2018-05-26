@@ -12,8 +12,10 @@ router.post('/preferencias', function(req, res, error) {
     position = req.sessions.position;
     console.log('apuntador del objeto en preferencias', position);
     
+    var contadorErroresApi = 0;
+    
     /*Revisión de errores de origen*/
-    if(error == true || objetosGlobales[position] == undefined){ res.render('pages/error')}else{ 
+    if(error == true || objetosGlobales[position] == undefined || objetosGlobales[position] == null){ res.render('pages/error')}else{ 
     
         //Comienza request de perfil de preferencias
         console.log('comienza petición a api')
@@ -29,24 +31,32 @@ router.post('/preferencias', function(req, res, error) {
               body: { spotifyid: objetosGlobales[position].userid },
               json: true };
 
+        
 
         /*Función de request de perfil de preferencias de usuario*/
         function Test(options){
             console.log('La API de preferencias ha sido llamada')
             request(options, function (error, response, body) {
                 console.log('La API de preferencias respondió algo')
-                if (error == true || body == undefined || body.profile == undefined) {
+                if (error == true || body == undefined || body.profile == undefined || objetosGlobales[position] == null) {
                 /**Proceso En caso de que la API esté valiendo verga como casi nunca pasa. Se imprimen errores*/
                 console.log("API dormida zzzzz ugh!")
                 console.log(body)
                 console.log(error)
                 /*Se reinicia el proceso para ver si ahora si jala esta cosa*/
-                    
-                    setTimeout(function(){
-                         console.log('comienza petición a api')
-                        console.log('Obteniendo preferencias del id --> ', objetosGlobales[position].userid )
-                         Test(options)
-                    }, 1000);
+                
+                contadorErroresApi += 1;
+                
+                    if(contadorErroresApi == 10){
+                        contadorErroresApi = 0
+                        res.send('Error')
+                    }else{
+                        setTimeout(function(){
+                             console.log('comienza petición a api')
+                            console.log('Obteniendo preferencias del id --> ', objetosGlobales[position].userid )
+                             Test(options)
+                        }, 1000);
+                    }
                     
                 }else{
                     /*Proceso en caso de que la API funcione #blessed. Se guarda el perfil en el objeto del usuario y se manda a la interfaz*/

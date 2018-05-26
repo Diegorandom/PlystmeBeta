@@ -175,8 +175,12 @@ var referenciaBD="noGuardado"
                 
                 trDuracion.appendChild(durT)
                 trDuracion.appendChild(dur)
-            }else{
-                setTimeout(preferencias,1000)
+            }else if(data == "Error" || error == true){
+                 document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar Preferencias"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                    }, 2000);
             }
         })
     }
