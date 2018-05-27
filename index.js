@@ -271,23 +271,8 @@ app.use(require('./rutas/usuarios'));
 
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function(req, res, error){
-    
-    console.log('ERROR EN LA PLATAFORMA')
-    
-    var objetosGlobales = request.app.get('objetosGlobales');
-    var position = request.app.get('position');
-    position = request.sessions.position;
-    console.log('apuntador del objeto', position);
-    
-    if(objetosGlobales[position].refresh_token != null){
-        response.redirect('/callback')
-    }else{
-        console.log('Refresh token es NULL')
-        
-        res.render('pages/error', {error:error})
-    } 
-    
-    
+    console.log('ERROR EN LA PLATAFORMA')    
+    res.render('pages/error', {error:error})
 })
 
 /*Configuración de puerto de la app*/

@@ -31,7 +31,7 @@ var referenciaBD="noGuardado"
                         data: {
                             labels: ["Danzabilidad", "Energía Promedio", "Popularidad de Música", "Música Acustica", "Instrumentalidad", "Música en Vivo","Positivismo"],
                             datasets: [{
-                                label: 'Preferencias',
+                                label: 'Preferencias Promedio',
                                 data: [data.danceability*100, data.energia*100, data.popularidadAvg, data.acustica*100, data.instrumental*100, data.audiencia*100,data.positivismo*100],
                                 backgroundColor: [
                                     'rgba(200, 85, 61, 0.7)'
@@ -446,10 +446,19 @@ var referenciaBD="noGuardado"
                         
             if(status === "success"){
                 if(data != undefined){
+                    
+                    var contadorU = document.getElementById('contadorU')
+                    var cont= document.createElement("span")
+                    cont.id="contador"
+                    cont.innerHTML = data.length
+                    contadorU.appendChild(cont)
+                    
                     data.forEach(function(usuario,index){
                         if(checkUrl(usuario[1])==false){
                             usuario[1] = false
                         }
+                        
+                        
                         
                         if(usuario[1]){ 
                             var usuariosFotos = document.getElementById('usuariosFotos')
@@ -457,6 +466,8 @@ var referenciaBD="noGuardado"
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
+                            imgU.id="imgUsuario"
+                            
                             usuariosFotos.appendChild(imgU)
                         }else{
                            var usuariosFotos = document.getElementById('usuariosFotos')
@@ -464,6 +475,7 @@ var referenciaBD="noGuardado"
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
+                            imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
@@ -647,7 +659,7 @@ var referenciaBD="noGuardado"
     
      /*Proceso para actualizar un playlist*/
         document.getElementById('btnActualizar').addEventListener('click', function() {
-            console.log('Actualizando POOL2')
+            console.log('Actualizando POOL1')
            
             $.get('/usuarios', function(data, status){
                
@@ -658,51 +670,69 @@ var referenciaBD="noGuardado"
                         
             if(status === "success"){
                 if(data != undefined){
+                    
+                    var contadorU = document.getElementById('contadorU')
+                    document.getElementById("contador").remove();
+                    var cont= document.createElement("span")
+                    cont.id="contador"
+                    cont.innerHTML = data.length
+                    contadorU.appendChild(cont)
+                    
                     data.forEach(function(usuario,index){
                         if(checkUrl(usuario[1])==false){
                             usuario[1] = false
                         }
                         
-                        if(usuario[1]){ 
+                        if(usuario[1]){
                             var usuariosFotos = document.getElementById('usuariosFotos')
+                            document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            usuariosFotos.appendChild(img)
+                            imgU.id="imgUsuario"
+                            usuariosFotos.appendChild(imgU)
                         }else{
                            var usuariosFotos = document.getElementById('usuariosFotos')
+                           document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
+                            imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
                         var listaUsuarios = document.getElementById('usuarios')
                         
                         if(usuario[0] && usuario[1]){
+                            document.getElementById("listaUsuario").remove();
                             var bullet = document.createElement('li')
                             var imgL = document.createElement("img")
                             imgL.src = usuario[1]
                             imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                             bullet.innerHTML = usuario[0]
+                            bullet.id="listaUsuario"
                             bullet.appendChild(imgL)
                             listaUsuarios.appendChild(bullet)
                         }else if(usuario[0]){
+                            document.getElementById("listaUsuario").remove();
                             var bullet = document.createElement('li')
                             var imgL = document.createElement("img")
                             imgL.src = "img/Perfil.png"
                             imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                             bullet.innerHTML = usuario[0]
+                            bullet.id="listaUsuario"
                             bullet.appendChild(imgL)
                             listaUsuarios.appendChild(bullet)
                         }else if(usuario[1]){
+                            document.getElementById("listaUsuario").remove();
                             var bullet = document.createElement('li')
                             var imgL = document.createElement("img")
                             imgL.src = usuario[1]
                             imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                             bullet.innerHTML = "Anónimo"
+                            bullet.id="listaUsuario"
                             bullet.appendChild(imgL)
                             listaUsuarios.appendChild(bullet)
                         }
@@ -875,6 +905,14 @@ var referenciaBD="noGuardado"
                         
             if(status === "success"){
                 if(data != undefined){
+                    
+                    
+                    var contadorU2 = document.getElementById('contadorU2')
+                    var cont= document.createElement("span")
+                    cont.id="contador"
+                    cont.innerHTML = data.length
+                    contadorU2.appendChild(cont)
+                    
                     data.forEach(function(usuario,index){
                         
                         if(checkUrl(usuario[1])==false){
@@ -889,6 +927,7 @@ var referenciaBD="noGuardado"
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
+                            imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU)
                             
                         }else{
@@ -896,6 +935,7 @@ var referenciaBD="noGuardado"
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
+                            imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
@@ -1087,56 +1127,74 @@ var referenciaBD="noGuardado"
             
             console.log(status)    
             console.log(data)
-            
                         
             if(status === "success"){
                 if(data != undefined){
                     data.forEach(function(usuario,index){
+                        
+                        var contadorU2 = document.getElementById('contadorU2')
+                        document.getElementById("contador").remove();
+                        var cont= document.createElement("span")
+                        cont.id="contador"
+                        cont.innerHTML = data.length
+                        contadorU2.appendChild(cont)
+                        
                         if(checkUrl(usuario[1])==false){
+                            console.log(usuario[1], " No válido")
                             usuario[1] = false
                         }
                         
                         var usuariosFotos = document.getElementById('usuariosFotos2')
                         
                         if(usuario[1]){ 
+                            document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
+                            imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU)
                             
                         }else{
+                            document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
+                            imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
                         var listaUsuarios = document.getElementById('usuarios2')
                         
                         if(usuario[0] && usuario[1]){
+                            document.getElementById("listaUsuario").remove();
                             var bullet = document.createElement('li')
                             var imgL = document.createElement("img")
                             imgL.src = usuario[1]
                             imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                             bullet.innerHTML = usuario[0]
                             bullet.appendChild(imgL)
+                            bullet.id="listaUsuario"
                             listaUsuarios.appendChild(bullet)
                         }else if(usuario[0]){
+                            document.getElementById("listaUsuario").remove();
                             var bullet = document.createElement('li')
                             var imgL = document.createElement("img")
                             imgL.src = "img/Perfil.png"
                             imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                             bullet.innerHTML = usuario[0]
+                            bullet.id="listaUsuario"
                             bullet.appendChild(imgL)
                             listaUsuarios.appendChild(bullet)
                         }else if(usuario[1]){
+                            document.getElementById("listaUsuario").remove();
                             var bullet = document.createElement('li')
                             var imgL = document.createElement("img")
                             imgL.src = usuario[1]
                             imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                             bullet.innerHTML = "Anónimo"
+                            bullet.id="listaUsuario"
                             bullet.appendChild(imgL)
                             listaUsuarios.appendChild(bullet)
                         }
@@ -1147,7 +1205,7 @@ var referenciaBD="noGuardado"
                 }
             }
                 
-            }) 
+            })
             
             
             $.get( '/pool', function(data, status) {
@@ -1495,7 +1553,7 @@ $('.timeFilter').on('click',function(){
     console.log(data)
     console.log(status)
     if(status === "success"){
-        if(data != undefined){
+        if(data != undefined || data != "Error"){
 
     console.log('El playlist ha cambiado')
        data.forEach(function(item,index){
@@ -1580,24 +1638,14 @@ $('.timeFilter').on('click',function(){
            console.log('Nueva canción desplegada')
 
        })
-       }else{
+       }else if(data == "Error"){
             console.log(data)
             document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar TOP 50"
             document.getElementById('nuevoPlaylist').style.display="block"
             setTimeout(function(){
                 document.getElementById('nuevoPlaylist').style.display="none"
             }, 2000);
-           
-           $.get('/error', function(data, status, error){
-            console.log(data)
-            console.log(status)
-            if(status=="sucess"){
-                console.log('TOKEN REFRESCADO')
-            }else if(error ==true){
-                window.location.replace("http://plystme.com/perfil");
-            }
-        })
-           
+            
         }
     }else{
         console.log(data);
@@ -1625,9 +1673,3 @@ $('.timeFilter').on('click',function(){
 
 var ua = navigator.userAgent;
 var isiPad = /iPad/i.test(ua) || /iPhone OS 3_1_2/i.test(ua) || /iPhone OS 3_2_2/i.test(ua);
-
-
-
-        
-        
-

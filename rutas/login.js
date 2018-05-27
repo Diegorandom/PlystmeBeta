@@ -7,10 +7,11 @@ var querystring = require('querystring');
 /*PROCESO QUE CREA LA CONFIGURACIÓN PARA COMENZAR LA CONEXION CON LA API DE SPOTIFY*/
 
 router.get('/login', function(req, res, error) {
-if(error == true){ res.render('pages/error',{error:error})}else{
     var objetosGlobales = req.app.get('objetosGlobales');
     var generateRandomString = req.app.get('generateRandomString')
-  
+    
+if(error == true || objetosGlobales == undefined || objetosGlobales == null){ res.render('pages/error',{error:error})}else{
+    
 var state = generateRandomString(16);
   res.cookie(objetosGlobales[0].stateKey, state);
 

@@ -168,7 +168,7 @@ router.get('/refreshingToken', function(request, response, error) {
     position = request.sessions.position;
     console.log('apuntador del objeto', position);
     
-    if(objetosGlobales[position] != undefined || objetosGlobales[position].refresh_token != null ){
+    if(objetosGlobales[position] != undefined ){
       /*EN CASO DE QUE LA VARIABLE CODE SEA NULA, UTILIZAMOS EL EL REFRESH TOKEN PARA ENTRAR AL SISTEMA DE SPOTOFY*/
       
       console.log('SOLICITANDO NUEVO ACCESS TOKEN')
@@ -313,7 +313,7 @@ router.get('/refreshingToken', function(request, response, error) {
  
 
     }else{
-        response.redirect('/login')
+        response.send('Error')
         console.log('Refresh token es NULL')
     } 
     

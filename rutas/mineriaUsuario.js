@@ -47,7 +47,7 @@ router.get('/mineria', function(req, res, error){
         }else{
 
         /*Por cada uno de los tracks del usuario se correo un proceso para gaurdar esta información en la BD*/    
-        var i = 0, artistaId = [];
+        var i = 0, artistaId = [], contadorTracks = 0;
 
         body.items.forEach(function(record, index){
 
@@ -85,6 +85,15 @@ router.get('/mineria', function(req, res, error){
                     .run('CREATE (n:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, reproducible:{reproducible}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen},artistaId:{artistaId}})', { album:record.album.name, nombre:record.name, artistas:artistas, duracion:record.duration_ms, Cont_explicito:record.explicit, externalurls:record.external_urls.spotify, href:record.href, spotifyid:record.id, reproducible:record.is_playable, popularidad:record.popularity, previewUrl:record.preview_url, uri:record.uri, albumImagen:record.album.images[0].url, artistaId:record.artists[0].id })
                     .then(function(resultado_create){
                         console.log('Se Guardo con éxito la información de este track');
+                        contadorTracks += 1;
+                        
+                        objetosGlobales[position].track_uri[index] = record.uri.substring(14);
+                        
+                        if(body.items.length == contadorTracks){
+                              /*Se extrae el uri (ID) del track para requerir las caracteristicas del track y guardarlas en la BD*/
+                            console.log('Se comienza a llamar la funcion de revision de caracteristicas de los tracks guardados')
+                            caracteristicas(objetosGlobales,position,res)
+                        }
 
                 /*Este IF revisa si el id del artista en el track RECIEN GUARDADO ya existe en la BD, en caso de que no sea así hace el proceso de guardarlo y conectarlo*/
                 if(artistaId.indexOf(record.artists[0].id) == -1){        
@@ -182,6 +191,12 @@ router.get('/mineria', function(req, res, error){
             }else if(checktrack.records.length>=1){
                 /**En caso de que el track ya esté registrado, significa que este ya se procesó y cnectó apropiadamente */
                 console.log('Este track ya está registrado (no debería ser más de 1)')
+                contadorTracks += 1
+                if(body.items.length == contadorTracks){
+                      /*Se extrae el uri (ID) del track para requerir las caracteristicas del track y guardarlas en la BD*/
+                    console.log('Se comienza a llamar la funcion de revision de caracteristicas de los tracks guardados')
+                    caracteristicas(objetosGlobales,position,res)
+                }
             }
          })
                  .catch(function(err){
@@ -192,19 +207,61 @@ router.get('/mineria', function(req, res, error){
 
               //TERMINA DE GUARDARSE INFORMACIÓN DEL TRACK Y COMIENZA A PROCRESARCE EL ALGORITMO
 
-             /*Se extrae el uri (ID) del track para requerir las caracteristicas del track y guardarlas en la BD*/
-            objetosGlobales[position].track_uri[index] = record.uri.substring(14);
+          
+       });
 
-            console.log("index de cancion analizada del usuario")
-            console.log(index)
-            /*Después de terminar el primer proceso con todos los tracks extraídos se comienza a hacer el harvesting de las características del track*/
-            if(body.items.length == index+1){
 
+
+        }
+
+        
+    }); 
+    }
+})
+
+
+ function caracteristicas(objetosGlobales, position, res){
+                
+     
+            //SE GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
+                
             console.log("URI de track a analizar")
             console.log(objetosGlobales[position].track_uri)
-
-            //SE GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
-
+            
+            var arregloURI = objetosGlobales[position].track_uri.length;
+     
+            if(objetosGlobales[position].track_uri.length == 0){
+                objetosGlobales[position].bdEstado="guardado"
+                        console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
+                        
+                        //SE TERMINA ANÁLISIS DE CARACTERÍSTICAS
+                          /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
+                          res.redirect('/perfil#' +
+                              querystring.stringify({
+                                access_token: objetosGlobales[position].access_token,
+                                refresh_token: objetosGlobales[position].refresh_token
+                              })); 
+            }else{
+            
+              objetosGlobales[position].track_uri.forEach(function(dataURI, index){
+                  
+                    
+             /*Se revisa las caracteristicas del track ya han sido guardadas, en caso contrario se guardan en la BD*/
+             objetosGlobales[0].session
+                .run('MATCH (n:track {spotifyid:{track_uri}}) RETURN n', {track_uri:dataURI})
+                .then(function(resultado){
+                    console.log("Se el conteo es 1 = FALTA INFORMACIÓN DEL TRACK EN LA BD -> SE SOLICITARÁ SU INFORMACIÓN, 0 = no pasa nada -> ", resultado.records.length)
+                    
+           if(resultado.records.length==0){
+               
+               var indiceT = objetosGlobales[position].track_uri.indexOf(dataURI);
+               if(indiceT > -1){
+                   objetosGlobales[position].track_uri.splice(indiceT,1)
+               }
+           }
+                       
+            if(arregloURI == index+1 && objetosGlobales[position].track_uri.length>0){ 
+            arregloURI = 0;
             /*Se obtienen las características del track en cuestión con el endpoint del módulo de Node.js que me conecta con la BD de Spotify, el siguuiente proceso requiere todas las caraceristicas de todos los tracks de un jalón*/
              objetosGlobales[0].spotifyApi.getAudioFeaturesForTracks(objetosGlobales[position].track_uri)
               .then(function(datosTrack) {
@@ -250,6 +307,23 @@ router.get('/mineria', function(req, res, error){
                                     
                                 })
                         }
+                     
+                     
+                      /*El siguiente IF cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
+                        if(datosTrack.body.audio_features.length == index+1){
+                                objetosGlobales[position].bdEstado="guardado"
+                                console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
+                                //SE TERMINA ANÁLISIS DE CARACTERÍSTICAS
+                                  /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
+                                  res.redirect('/perfil#' +
+                                      querystring.stringify({
+                                        access_token: objetosGlobales[position].access_token,
+                                        refresh_token: objetosGlobales[position].refresh_token
+                                      })); 
+                            }else{
+                                console.log('Aun no se termina de guardar la informacion en la BD')
+                                console.log("index: ", index+1, "body.items.length ", datosTrack.body.audio_features.length)
+                            }
 
                     })
                      .catch(function(err){
@@ -258,14 +332,7 @@ router.get('/mineria', function(req, res, error){
                         
                     })
                  
-                 /*El siguiente IF cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
-                if(datosTrack.body.audio_features.length == index+1){
-                        objetosGlobales[position].bdEstado="guardado"
-                        console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
-                    }else{
-                        console.log('Aun no se termina de guardar la informacion en la BD')
-                        console.log("index: ", index+1, "body.items.length ", body.items.length)
-                    }
+                
 
                 })   
 
@@ -277,28 +344,31 @@ router.get('/mineria', function(req, res, error){
               });
             console.log(''); 
 
-            /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
-              res.redirect('/perfil#' +
-                  querystring.stringify({
-                    access_token: objetosGlobales[position].access_token,
-                    refresh_token: objetosGlobales[position].refresh_token
-                  })); 
+            
+             }else if(arregloURI == index+1 && objetosGlobales[position].track_uri.length == 0){
+                  /*El siguiente IF cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
                 
+                        objetosGlobales[position].bdEstado="guardado"
+                        console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
+                        
+                        //SE TERMINA ANÁLISIS DE CARACTERÍSTICAS
+                          /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
+                          res.redirect('/perfil#' +
+                              querystring.stringify({
+                                access_token: objetosGlobales[position].access_token,
+                                refresh_token: objetosGlobales[position].refresh_token
+                              })); 
+                        
+                   
+             }
+            })
 
-         }
-
-        
-
-       });
-
-
-
+             
+             //Finaliza análisis individual de tracks
+         })
         }
-
-        
-    }); 
-    }
-})
+                
+         }
 
 //Finaliza proceso
 module.exports = router;
