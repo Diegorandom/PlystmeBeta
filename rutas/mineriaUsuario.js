@@ -48,13 +48,15 @@ router.get('/mineria', function(req, res, error){
 
         /*Por cada uno de los tracks del usuario se correo un proceso para gaurdar esta información en la BD*/    
         var i = 0, artistaId = [], contadorTracks = 0;
+        objetosGlobales[position].track_uri = []
 
+        console.log('Número de canciones regresadas por API de Spotify -> ', body.items.length)    
+            
         body.items.forEach(function(record, index){
 
             //SE GUARDA LA INFORMACION DE CADA TRACK EN UNA POSICION DE SEEDTRACKS DENTRO de OBJETOSGLOBALES
             if(index <= 50){
                 objetosGlobales[position].seedTracks[index] = record;
-                //objetosGlobales[position].track_uri_ref2[index] = record.uri.substring(14);
             }
 
             /*Se consulta si el track ya existe en la BD*/
@@ -69,10 +71,10 @@ router.get('/mineria', function(req, res, error){
 
                 console.log('')
                 console.log('se realizó la consulta a la base de datos')
+                console.log('0 = No existe en la BD, 1 Si existe -> ', checktrack.records.length);
 
-            console.log('');
-
-            if(checktrack.records.length<1){
+            if(checktrack.records.length==0){
+                objetosGlobales[position].track_uri.push(record.uri.substring(14));
 
                 // en caso de que el track no exista en la BD: SE GUARDA LA INFORMACIÓN DEL TRACK EN LA BASE DE DATOS
 
@@ -87,9 +89,8 @@ router.get('/mineria', function(req, res, error){
                         console.log('Se Guardo con éxito la información de este track');
                         contadorTracks += 1;
                         
-                        objetosGlobales[position].track_uri[index] = record.uri.substring(14);
-                        
                         if(body.items.length == contadorTracks){
+                            console.log('Se han terminado de guardar -> ', body.items.length, " tracks = -> ", contadorTracks)
                               /*Se extrae el uri (ID) del track para requerir las caracteristicas del track y guardarlas en la BD*/
                             console.log('Se comienza a llamar la funcion de revision de caracteristicas de los tracks guardados')
                             caracteristicas(objetosGlobales,position,res)
@@ -226,7 +227,9 @@ router.get('/mineria', function(req, res, error){
             //SE GUARDA LA INFORMACIÓN DEL TRACKS EN LA BASE DE DATOS
                 
             console.log("URI de track a analizar")
+            console.log(objetosGlobales[position].track_uri.length)
             console.log(objetosGlobales[position].track_uri)
+            console.log(objetosGlobales[position].track_uri.length)
             
             var arregloURI = objetosGlobales[position].track_uri.length;
      
@@ -243,14 +246,15 @@ router.get('/mineria', function(req, res, error){
                               })); 
             }else{
             
+                console.log('Por cada trackUri se revisará si existe en la BD')
               objetosGlobales[position].track_uri.forEach(function(dataURI, index){
                   
                     
              /*Se revisa las caracteristicas del track ya han sido guardadas, en caso contrario se guardan en la BD*/
              objetosGlobales[0].session
-                .run('MATCH (n:track {spotifyid:{track_uri}}) RETURN n', {track_uri:dataURI})
+                .run('MATCH (n:track {spotifyid:{track_uri}}) WHERE NOT EXISTS(n.danceability) OR  NOT EXISTS(n.energia) OR NOT EXISTS(n.fundamental) OR NOT EXISTS(n.amplitud) OR NOT EXISTS(n.modo) OR NOT EXISTS(n.speechiness) OR NOT EXISTS(n.acousticness) OR NOT EXISTS(n.instrumentalness) OR NOT EXISTS(n.positivismo) OR NOT EXISTS(n.tempo) OR NOT EXISTS(n.compas) OR NOT EXISTS(n.liveness) RETURN n', {track_uri:dataURI})
                 .then(function(resultado){
-                    console.log("Se el conteo es 1 = FALTA INFORMACIÓN DEL TRACK EN LA BD -> SE SOLICITARÁ SU INFORMACIÓN, 0 = no pasa nada -> ", resultado.records.length)
+                    console.log("Se el conteo es 1 = El nodo necesita recopilar información, 0 = Nodo con info completa -> ", resultado.records.length)
                     
            if(resultado.records.length==0){
                
@@ -271,7 +275,7 @@ router.get('/mineria', function(req, res, error){
                  console.log(datosTrack.body.audio_features.length)
 
                  /*Debe iterarse sobre todas las posiciones del arreglo datosTrack para extraer el contenido de cada track solicitado*/
-                 datosTrack.body.audio_features.forEach(function(data, index){
+                 datosTrack.body.audio_features.forEach(function(data, indexTrack){
 
                  var danceability_bd = parseFloat(data.danceability);
                  var energia_bd = parseFloat(data.energy);
@@ -310,7 +314,7 @@ router.get('/mineria', function(req, res, error){
                      
                      
                       /*El siguiente IF cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
-                        if(datosTrack.body.audio_features.length == index+1){
+                        if(datosTrack.body.audio_features.length == indexTrack+1){
                                 objetosGlobales[position].bdEstado="guardado"
                                 console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
                                 //SE TERMINA ANÁLISIS DE CARACTERÍSTICAS
@@ -322,7 +326,7 @@ router.get('/mineria', function(req, res, error){
                                       })); 
                             }else{
                                 console.log('Aun no se termina de guardar la informacion en la BD')
-                                console.log("index: ", index+1, "body.items.length ", datosTrack.body.audio_features.length)
+                                console.log("index: ", indexTrack+1, "body.items.length ", datosTrack.body.audio_features.length)
                             }
 
                     })
@@ -361,6 +365,11 @@ router.get('/mineria', function(req, res, error){
                         
                    
              }
+            })
+             .catch(function(err){
+                console.log(err);
+                res.send('Error')
+
             })
 
              
