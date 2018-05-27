@@ -449,7 +449,7 @@ var referenciaBD="noGuardado"
                     
                     var contadorU = document.getElementById('contadorU')
                     var cont= document.createElement("span")
-                    cont.id="contador"
+                    cont.id="contadorSpan"
                     cont.innerHTML = data.length
                     contadorU.appendChild(cont)
                     
@@ -460,8 +460,9 @@ var referenciaBD="noGuardado"
                         
                         
                         
+                           var usuariosFotos = document.getElementById('usuariosFotos')
+                        
                         if(usuario[1]){ 
-                            var usuariosFotos = document.getElementById('usuariosFotos')
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
@@ -470,7 +471,6 @@ var referenciaBD="noGuardado"
                             
                             usuariosFotos.appendChild(imgU)
                         }else{
-                           var usuariosFotos = document.getElementById('usuariosFotos')
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
@@ -684,9 +684,9 @@ var referenciaBD="noGuardado"
                     usuariosDentro.appendChild(listaUsuarios)
                     
                     var contadorU = document.getElementById('contadorU')
-                        document.getElementById("contador").remove();
+                        document.getElementById("contadorSpan").remove();
                         var cont= document.createElement("span")
-                        cont.id="contador"
+                        cont.id="contadorSpan"
                         cont.innerHTML = data.length
                         contadorU.appendChild(cont)
                     
@@ -917,7 +917,7 @@ var referenciaBD="noGuardado"
                     
                     var contadorU2 = document.getElementById('contadorU2')
                     var cont= document.createElement("span")
-                    cont.id="contador"
+                    cont.id="contadorSpan"
                     cont.innerHTML = data.length
                     contadorU2.appendChild(cont)
                     
@@ -935,7 +935,7 @@ var referenciaBD="noGuardado"
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario"
+                            imgU.id="imgUsuario2"
                             usuariosFotos.appendChild(imgU)
                             
                         }else{
@@ -943,7 +943,7 @@ var referenciaBD="noGuardado"
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario"
+                            imgU.id="imgUsuario2"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
@@ -1152,9 +1152,9 @@ var referenciaBD="noGuardado"
                     usuariosDentro2.appendChild(listaUsuarios)
                     
                      var contadorU2 = document.getElementById('contadorU2')
-                        document.getElementById("contador").remove();
+                        document.getElementById("contadorSpan").remove();
                         var cont= document.createElement("span")
-                        cont.id="contador"
+                        cont.id="contadorSpan"
                         cont.innerHTML = data.length
                         contadorU2.appendChild(cont)
                     
@@ -1168,12 +1168,12 @@ var referenciaBD="noGuardado"
                         var usuariosFotos = document.getElementById('usuariosFotos2')
                         
                         if(usuario[1]){ 
-                            document.getElementById("imgUsuario").remove();
+                            document.getElementById("imgUsuario2").remove();
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario"
+                            imgU.id="imgUsuario2"
                             usuariosFotos.appendChild(imgU)
                             
                         }else{
@@ -1182,7 +1182,7 @@ var referenciaBD="noGuardado"
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario"
+                            imgU.id="imgUsuario2"
                             usuariosFotos.appendChild(imgU) 
                         }
                                                 
