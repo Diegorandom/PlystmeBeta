@@ -94,6 +94,12 @@
     @media screen and (max-width:550px){
         #btnCrear2, #enterPool2{
             width: 90% !important;
+        }    
+    }
+    
+    @media screen and (max-width:500px){
+        #usuariosDentro2{
+            width: 80% !important;
         }
     }
     
@@ -644,28 +650,46 @@
     
     
 //Ocultar los botones de entrar y crear playlist
+    var inPool = 0;
+    var inPool2 = 0;
+    var StoBresize = 0;
+    var BtoSresize = 0;
     
     var width,height;
     window.onresize = window.onload = function() {
         width = this.innerWidth;
         height = this.innerHeight;
+        if(width > 991 && inPool2 != 0 && StoBresize == 0){
+            $('#enterPool').click();
+            StoBresize = 1;
+            BtoSresize = 1;
+        }
+        
+        if(width < 991 && inPool1 != 0 && BtoSresize == 0){
+            $('#enterPool2').click();
+            BtoSresize = 1;
+            StoBresize = 1;
+        }
     }
     
     $('#enterPool').on('click',function(){
         $('#enterPool').css("display","none");
         $('#btnCrear').css("display","none");
+        inPool1 = 1;
     })
     $('#enterPool2').on('click',function(){
         $('#enterPool2').css("display","none");
         $('#btnCrear2').css("display","none");
+        inPool2 = 1;
     })
     
     $('#btnCrear').on('click',function(){
-        console.log(ancho);
+        console.log(width);
     })    
     $('#btnCrear2').on('click',function(){
-        console.log(ancho);
+        console.log(height);
     })
+    
     
     
 //Mostrar usuarios dentro de la playlist
