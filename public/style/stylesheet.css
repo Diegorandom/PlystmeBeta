@@ -622,7 +622,9 @@ form.input-search { position: relative; margin-bottom: 50px; }
 	06 - POST BLOCK
 ==================================
 */
-.be-post { border: 1px solid #edeff2; border-radius: 2px; width: 100%; margin-bottom: 30px !important; }
+span{color:rgb(119, 119, 119);}
+
+.be-post { border: 1px solid #edeff2; border-radius: 2px; width: 100%; margin-bottom: 30px !important; background-color:rgba(255,255,255,0.9);}
 
 .be-img-block { overflow: hidden; display: block; }
 
@@ -638,7 +640,7 @@ form.input-search { position: relative; margin-bottom: 50px; }
 
 a.be-post-title:hover { color: #0D58C8; }
 
-.author-post { padding: 5px 15px; font-size: 11px; line-height: 15px; color: #b4b7c1; margin-bottom: 20px; text-align: left;}
+.author-post { padding: 5px 15px; font-size: 12px; line-height: 15px; color: #b4b7c1; margin-bottom: 20px; text-align: left;}
 
 .author-post a { color: #262626; font-family: 'Conv_helveticaneuecyr-bold'; }
 
@@ -646,7 +648,7 @@ a.be-post-title:hover { color: #0D58C8; }
 
 .author-post a:hover { color: #0D58C8; }
 
-.be-post > span { color: #b4b7c1; display: block; font-size: 11px; line-height: 20px; padding-bottom: 5px; margin-bottom: 0px; }
+.be-post > span { color: black; display: block; font-size: 11px; line-height: 20px; padding-bottom: 5px; margin-bottom: 0px; text-align: left; font-size: 15px;font-family: 'Kanit', sans-serif;}
 
 .info-block { background: #F6F6F6; padding: 20px 15px; font-size: 10px; color: #b4b7c1 !important; }
 

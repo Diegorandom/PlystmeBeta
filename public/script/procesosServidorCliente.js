@@ -595,7 +595,7 @@ var referenciaBD="noGuardado"
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px;color:black;text-align:left;"
+                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
                         
                         span.innerHTML = item[0]
                         
@@ -823,7 +823,7 @@ var referenciaBD="noGuardado"
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px;color:black;text-align:left;"
+                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
                         
                         span.innerHTML = item[0]
                         
@@ -1072,7 +1072,7 @@ var referenciaBD="noGuardado"
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px;color:black;text-align:left;"
+                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
                         
                         span.innerHTML = item[0]
                         
@@ -1309,7 +1309,7 @@ var referenciaBD="noGuardado"
                         
                         var span = document.createElement("span")
                         span.className="be-post-title"
-                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px;color:black;text-align:left;"
+                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
                         
                         span.innerHTML = item[0]
                         
@@ -1484,7 +1484,7 @@ $('.timeFilter').on('click',function(){
 
             var span = document.createElement("span")
             span.className="be-post-title"
-            span.style="color:black; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px; text-align:left;color:black;"
+            span.style="color:black; font-size:15px; font-family:'Kanit', sans-serif; height:40px; text-align:left;color:black;"
 
             span.innerHTML = item.name
 
@@ -1628,7 +1628,7 @@ $('.timeFilter').on('click',function(){
 
             var span = document.createElement("span")
             span.className="be-post-title"
-            span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; max-height:80px;color:black;text-align:left;"
+            span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
 
             span.innerHTML = item.name
 
@@ -1694,6 +1694,13 @@ $('.timeFilter').on('click',function(){
 
 })
 
-
+    //Detecta si el usuario es un iPad
 var ua = navigator.userAgent;
 var isiPad = /iPad/i.test(ua) || /iPhone OS 3_1_2/i.test(ua) || /iPhone OS 3_2_2/i.test(ua);
+    //Detecta si el navegador es safari
+var is_safari = navigator.userAgent.indexOf("Safari") > -1;
+if ((is_chrome)&&(is_safari)) { is_safari = false; }
+
+    if((isIpad) || (is_safari)){
+        $('.be-post').css("background-color","rgba(255,255,255,0.9)");
+    }
