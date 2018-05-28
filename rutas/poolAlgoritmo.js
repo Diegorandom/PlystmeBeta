@@ -81,7 +81,7 @@ router.get('/pool', function(req, res, error){
                     
                     /*Si los errores en la API persisten por más de 1 minuto se manda a la pantalla de error*/
                     if(conteoErrores > 60){
-                        res.render('pages/error', {error: error})
+                        res.send("Error")
                     }
                     
                     });

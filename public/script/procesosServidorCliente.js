@@ -474,14 +474,14 @@ var referenciaBD="noGuardado"
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario"
+                            imgU.className="imgUsuario"
                             usuariosFotos.appendChild(imgU)
                         }else{
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario"
+                            imgU.className="imgUsuario"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
@@ -689,16 +689,15 @@ var referenciaBD="noGuardado"
                     cont.id="contadorSpan"
                     cont.innerHTML = data.length
                     contadorU.appendChild(cont)
-                    
-                    
-                   var cantUsers =  data.length
                    
-                   console.log('CantUser -> ', cantUsers)
+                    var totalId = document.getElementsByClassName("imgUsuario").length;
                     
-                   for(var i = 0; i<= cantUsers; i++){
-                       document.getElementById("imgUsuario").remove();
-                   }
-                       
+                    console.log("# de IDs a eliminar -> ",  totalId)
+                    
+                    for(var i=0; i<totalId; i++){
+                        document.getElementsByClassName("imgUsuario").remove();
+                    }
+                    
                     data.forEach(function(usuario,index){
                         console.log('Modificando usuarios -> Indice ', index)
                         
@@ -715,14 +714,14 @@ var referenciaBD="noGuardado"
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario"
+                            imgU.className="imgUsuario"
                             usuariosFotos.appendChild(imgU)
                         }else{
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario"
+                            imgU.className="imgUsuario"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
