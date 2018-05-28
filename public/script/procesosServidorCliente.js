@@ -453,6 +453,12 @@ var referenciaBD="noGuardado"
                     cont.innerHTML = data.length
                     contadorU.appendChild(cont)
                     
+                     var usuariosDentro = document.getElementById('usuariosDentro')
+                    var listaUsuarios = document.createElement('ul')
+                    listaUsuarios.id="usuarios"
+                    listaUsuarios.style="display:none; padding:5px;"
+                    usuariosDentro.appendChild(listaUsuarios)
+                    
                     data.forEach(function(usuario,index){
                         if(checkUrl(usuario[1])==false){
                             usuario[1] = false
@@ -479,11 +485,6 @@ var referenciaBD="noGuardado"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
-                         var usuariosDentro = document.getElementById('usuariosDentro')
-                        var listaUsuarios = document.createElement('ul')
-                        listaUsuarios.id="usuarios"
-                        listaUsuarios.style="display:none; padding:5px;"
-                        usuariosDentro.appendChild(listaUsuarios)
                         
                         if(usuario[0] && usuario[1]){
                             var bullet = document.createElement('li')
@@ -921,6 +922,12 @@ var referenciaBD="noGuardado"
                     cont.innerHTML = data.length
                     contadorU2.appendChild(cont)
                     
+                    var usuariosDentro2 = document.getElementById('usuariosDentro2')
+                    var listaUsuarios2 = document.createElement('ul')
+                    listaUsuarios2.id="usuarios2"
+                    listaUsuarios2.style="display:none; padding:5px;"
+                    usuariosDentro2.appendChild(listaUsuarios2)
+                    
                     data.forEach(function(usuario,index){
                         
                         if(checkUrl(usuario[1])==false){
@@ -947,11 +954,7 @@ var referenciaBD="noGuardado"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
-                        var usuariosDentro2 = document.getElementById('usuariosDentro2')
-                        var listaUsuarios = document.createElement('ul')
-                        listaUsuarios.id="usuarios2"
-                        listaUsuarios.style="display:none; padding:5px;"
-                        usuariosDentro2.appendChild(listaUsuarios)
+                        
                         
                         if(usuario[0] && usuario[1]){
                             var bullet = document.createElement('li')
@@ -960,7 +963,7 @@ var referenciaBD="noGuardado"
                             imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                             bullet.innerHTML = usuario[0]
                             bullet.appendChild(imgL)
-                            listaUsuarios.appendChild(bullet)
+                            listaUsuarios2.appendChild(bullet)
                         }else if(usuario[0]){
                             var bullet = document.createElement('li')
                             var imgL = document.createElement("img")
@@ -968,7 +971,7 @@ var referenciaBD="noGuardado"
                             imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                             bullet.innerHTML = usuario[0]
                             bullet.appendChild(imgL)
-                            listaUsuarios.appendChild(bullet)
+                            listaUsuarios2.appendChild(bullet)
                         }else if(usuario[1]){
                             var bullet = document.createElement('li')
                             var imgL = document.createElement("img")
@@ -976,7 +979,7 @@ var referenciaBD="noGuardado"
                             imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                             bullet.innerHTML = "Anónimo"
                             bullet.appendChild(imgL)
-                            listaUsuarios.appendChild(bullet)
+                            listaUsuarios2.appendChild(bullet)
                         }
                         
                         
@@ -1143,13 +1146,12 @@ var referenciaBD="noGuardado"
             if(status === "success"){
                 if(data != undefined){
                     
-                     document.getElementById("usuarios2").remove();
-                    
+                    document.getElementById("usuarios2").remove();
                     var usuariosDentro2 = document.getElementById('usuariosDentro2')
-                    var listaUsuarios = document.createElement('ul')
-                    listaUsuarios.id="usuarios2"
-                    listaUsuarios.style="display:none; padding:5px;"
-                    usuariosDentro2.appendChild(listaUsuarios)
+                    var listaUsuarios2 = document.createElement('ul')
+                    listaUsuarios2.id="usuarios2"
+                    listaUsuarios2.style="display:none; padding:5px;"
+                    usuariosDentro2.appendChild(listaUsuarios2)
                     
                      var contadorU2 = document.getElementById('contadorU2')
                         document.getElementById("contadorSpan").remove();
@@ -1195,7 +1197,7 @@ var referenciaBD="noGuardado"
                             imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                             bullet.innerHTML = usuario[0]
                             bullet.appendChild(imgL)
-                            listaUsuarios.appendChild(bullet)
+                            listaUsuarios2.appendChild(bullet)
                         }else if(usuario[0]){
                             var bullet = document.createElement('li')
                             var imgL = document.createElement("img")
@@ -1204,7 +1206,7 @@ var referenciaBD="noGuardado"
                             bullet.innerHTML = usuario[0]
                             bullet.id="listaUsuario"
                             bullet.appendChild(imgL)
-                            listaUsuarios.appendChild(bullet)
+                            listaUsuarios2.appendChild(bullet)
                         }else if(usuario[1]){
                             var bullet = document.createElement('li')
                             var imgL = document.createElement("img")
@@ -1213,7 +1215,7 @@ var referenciaBD="noGuardado"
                             bullet.innerHTML = "Anónimo"
                             bullet.id="listaUsuario"
                             bullet.appendChild(imgL)
-                            listaUsuarios.appendChild(bullet)
+                            listaUsuarios2.appendChild(bullet)
                         }
                         
                         
