@@ -1701,6 +1701,4 @@ var isiPad = /iPad/i.test(ua) || /iPhone OS 3_1_2/i.test(ua) || /iPhone OS 3_2_2
 var is_safari = navigator.userAgent.indexOf("Safari") > -1;
 if ((is_chrome)&&(is_safari)) { is_safari = false; }
 
-    if((isIpad) || (is_safari)){
-        $('.be-post').css("background-color","rgba(255,255,255,0.9)");
-    }
+    
