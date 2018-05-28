@@ -453,7 +453,7 @@ var referenciaBD="noGuardado"
                     cont.innerHTML = data.length
                     contadorU.appendChild(cont)
                     
-                     var usuariosDentro = document.getElementById('usuariosDentro')
+                    var usuariosDentro = document.getElementById('usuariosDentro')
                     var listaUsuarios = document.createElement('ul')
                     listaUsuarios.id="usuarios"
                     listaUsuarios.style="display:none; padding:5px;"
@@ -461,12 +461,13 @@ var referenciaBD="noGuardado"
                     
                     data.forEach(function(usuario,index){
                         if(checkUrl(usuario[1])==false){
+                            console.log(usuario[1], " No válido")
                             usuario[1] = false
                         }
                         
                         
                         
-                           var usuariosFotos = document.getElementById('usuariosFotos')
+                        var usuariosFotos = document.getElementById('usuariosFotos')
                         
                         if(usuario[1]){ 
                             var imgU= document.createElement("img")
@@ -474,7 +475,6 @@ var referenciaBD="noGuardado"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
                             imgU.id="imgUsuario"
-                            
                             usuariosFotos.appendChild(imgU)
                         }else{
                             var imgU= document.createElement("img")
@@ -691,18 +691,24 @@ var referenciaBD="noGuardado"
                     contadorU.appendChild(cont)
                     
                     
-                   
-                        
+                   var cantUsers =  $("label[id=imgUsuario]").length
+                    
+                   for(var i = 0; i<= cantUsers; i++){
+                       document.getElementById("imgUsuario").remove();
+                   }
+                       
                     data.forEach(function(usuario,index){
+                        console.log('Modificando usuarios -> Indice ', index)
                         
                         if(checkUrl(usuario[1])==false){
+                            console.log(usuario[1], " No válido")
                             usuario[1] = false
                         }
                         
                         var usuariosFotos = document.getElementById('usuariosFotos')
                         
                         if(usuario[1]){
-                            document.getElementById("imgUsuario").remove();
+                            
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
@@ -710,7 +716,6 @@ var referenciaBD="noGuardado"
                             imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU)
                         }else{
-                            document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
@@ -1180,7 +1185,8 @@ var referenciaBD="noGuardado"
                             imgU.id="imgUsuario2"
                             usuariosFotos2.appendChild(imgU)
                             
-                        }else{document.getElementById("imgUsuario2").remove();
+                        }else{
+                            document.getElementById("imgUsuario2").remove();
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
