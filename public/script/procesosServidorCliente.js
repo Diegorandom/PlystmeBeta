@@ -690,6 +690,9 @@ var referenciaBD="noGuardado"
                         cont.id="contadorSpan"
                         cont.innerHTML = data.length
                         contadorU.appendChild(cont)
+                        
+                        document.getElementById("imgUsuario").remove();
+                    
                     
                     data.forEach(function(usuario,index){
                         
@@ -699,9 +702,10 @@ var referenciaBD="noGuardado"
                             usuario[1] = false
                         }
                         
-                        if(usuario[1]){
+                        
                             var usuariosFotos = document.getElementById('usuariosFotos')
-                            document.getElementById("imgUsuario").remove();
+                        
+                        if(usuario[1]){
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
@@ -709,8 +713,6 @@ var referenciaBD="noGuardado"
                             imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU)
                         }else{
-                           var usuariosFotos = document.getElementById('usuariosFotos')
-                           document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
@@ -918,7 +920,7 @@ var referenciaBD="noGuardado"
                     
                     var contadorU2 = document.getElementById('contadorU2')
                     var cont= document.createElement("span")
-                    cont.id="contadorSpan"
+                    cont.id="contadorSpan2"
                     cont.innerHTML = data.length
                     contadorU2.appendChild(cont)
                     
@@ -935,7 +937,7 @@ var referenciaBD="noGuardado"
                             usuario[1] = false
                         }
                         
-                        var usuariosFotos = document.getElementById('usuariosFotos2')
+                        var usuariosFotos2 = document.getElementById('usuariosFotos2')
                         
                         if(usuario[1]){ 
                             var imgU= document.createElement("img")
@@ -943,7 +945,7 @@ var referenciaBD="noGuardado"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
                             imgU.id="imgUsuario2"
-                            usuariosFotos.appendChild(imgU)
+                            usuariosFotos2.appendChild(imgU)
                             
                         }else{
                             var imgU= document.createElement("img")
@@ -951,7 +953,7 @@ var referenciaBD="noGuardado"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
                             imgU.id="imgUsuario2"
-                            usuariosFotos.appendChild(imgU) 
+                            usuariosFotos2.appendChild(imgU) 
                         }
                         
                         
@@ -1154,11 +1156,13 @@ var referenciaBD="noGuardado"
                     usuariosDentro2.appendChild(listaUsuarios2)
                     
                      var contadorU2 = document.getElementById('contadorU2')
-                        document.getElementById("contadorSpan").remove();
+                        document.getElementById("contadorSpan2").remove();
                         var cont= document.createElement("span")
-                        cont.id="contadorSpan"
+                        cont.id="contadorSpan2"
                         cont.innerHTML = data.length
                         contadorU2.appendChild(cont)
+                        
+                        document.getElementById("imgUsuario2").remove();
                     
                     data.forEach(function(usuario,index){
                         
@@ -1167,25 +1171,23 @@ var referenciaBD="noGuardado"
                             usuario[1] = false
                         }
                         
-                        var usuariosFotos = document.getElementById('usuariosFotos2')
+                        var usuariosFotos2 = document.getElementById('usuariosFotos2')
                         
                         if(usuario[1]){ 
-                            document.getElementById("imgUsuario2").remove();
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
                             imgU.id="imgUsuario2"
-                            usuariosFotos.appendChild(imgU)
+                            usuariosFotos2.appendChild(imgU)
                             
                         }else{
-                            document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
                             imgU.id="imgUsuario2"
-                            usuariosFotos.appendChild(imgU) 
+                            usuariosFotos2.appendChild(imgU) 
                         }
                                                 
                         
