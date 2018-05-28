@@ -676,7 +676,6 @@ var referenciaBD="noGuardado"
             if(status === "success"){
                 if(data != undefined){
                     
-                                
                     document.getElementById("usuarios").remove();
                     var usuariosDentro = document.getElementById('usuariosDentro')
                     var listaUsuarios = document.createElement('ul')
@@ -685,28 +684,24 @@ var referenciaBD="noGuardado"
                     usuariosDentro.appendChild(listaUsuarios)
                     
                     var contadorU = document.getElementById('contadorU')
-                        document.getElementById("contadorSpan").remove();
-                        var cont= document.createElement("span")
-                        cont.id="contadorSpan"
-                        cont.innerHTML = data.length
-                        contadorU.appendChild(cont)
-                        
-                        
+                    document.getElementById("contadorSpan").remove();
+                    var cont= document.createElement("span")
+                    cont.id="contadorSpan"
+                    cont.innerHTML = data.length
+                    contadorU.appendChild(cont)
                     
                     
+                    document.getElementById("imgUsuario").remove();
+                        
                     data.forEach(function(usuario,index){
-                        
-                        
                         
                         if(checkUrl(usuario[1])==false){
                             usuario[1] = false
                         }
                         
-                        
-                            var usuariosFotos = document.getElementById('usuariosFotos')
+                        var usuariosFotos = document.getElementById('usuariosFotos')
                         
                         if(usuario[1]){
-                            document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
@@ -714,7 +709,6 @@ var referenciaBD="noGuardado"
                             imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU)
                         }else{
-                            document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
