@@ -702,20 +702,20 @@ var referenciaBD="noGuardado"
                         var usuariosFotos = document.getElementById('usuariosFotos')
                         
                         if(usuario[1]){
-                            document.getElementById("imgUsuario"+index).remove();
+                            document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario"+index
+                            imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU)
                         }else{
-                            document.getElementById("imgUsuario"+index).remove();
+                            document.getElementById("imgUsuario").remove();
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario"+index
+                            imgU.id="imgUsuario"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
