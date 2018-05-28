@@ -691,7 +691,9 @@ var referenciaBD="noGuardado"
                     contadorU.appendChild(cont)
                     
                     
-                   var cantUsers =  $("label[id=imgUsuario]").length
+                   var cantUsers =  data.length
+                   
+                   console.log('CantUser -> ', cantUsers)
                     
                    for(var i = 0; i<= cantUsers; i++){
                        document.getElementById("imgUsuario").remove();
