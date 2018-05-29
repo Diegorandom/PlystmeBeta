@@ -135,8 +135,8 @@ var referenciaBD="noGuardado"
                 var tono = document.createElement('td')
                 tono.innerHTML = data.fundamental
                 
-                tr.appendChild(tonoT)
-                tr.appendChild(tono)
+                //tr.appendChild(tonoT)
+                //tr.appendChild(tono)
                 
                 var trModo = document.getElementById('modo');
                 
@@ -155,8 +155,8 @@ var referenciaBD="noGuardado"
                 var modo = document.createElement('td')
                 modo.innerHTML = data.modo
                 
-                trModo.appendChild(modoT)
-                trModo.appendChild(modo)
+                //trModo.appendChild(modoT)
+                //trModo.appendChild(modo)
                 
                 var trVol = document.getElementById('vol')
                 
@@ -166,8 +166,8 @@ var referenciaBD="noGuardado"
                 var vol = document.createElement('td')
                 vol.innerHTML = data.amplitud.toFixed(1) + ' dB'
                 
-                trVol.appendChild(volT)
-                trVol.appendChild(vol)
+                //trVol.appendChild(volT)
+                //trVol.appendChild(vol)
                 
                 var trTempo = document.getElementById('tempo')
                 
@@ -177,8 +177,8 @@ var referenciaBD="noGuardado"
                 var tempo = document.createElement('td')
                 tempo.innerHTML = data.tempo + " BPM"
                 
-                trTempo.appendChild(tempoT)
-                trTempo.appendChild(tempo)
+                //trTempo.appendChild(tempoT)
+                //trTempo.appendChild(tempo)
                 
                 var trBeats = document.getElementById('beats')
                 
@@ -188,8 +188,8 @@ var referenciaBD="noGuardado"
                 var beats = document.createElement('td')
                 beats.innerHTML = data.firma_tiempo
                 
-                trBeats.appendChild(beatsT)
-                trBeats.appendChild(beats)
+                //trBeats.appendChild(beatsT)
+                //trBeats.appendChild(beats)
                 
                 var trDuracion = document.getElementById('duracion')
                 
@@ -199,8 +199,8 @@ var referenciaBD="noGuardado"
                 var dur = document.createElement('td')
                 dur.innerHTML = Math.floor(data.duracion/60000) +":" +Math.ceil((data.duracion%60000/60000)*60) +' minutos'
                 
-                trDuracion.appendChild(durT)
-                trDuracion.appendChild(dur)
+                //trDuracion.appendChild(durT)
+                //trDuracion.appendChild(dur)
             }else if(data == "Error" || error == true){
                  document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar Preferencias"
                     document.getElementById('nuevoPlaylist').style.display="block"
@@ -1722,11 +1722,7 @@ $('.timeFilter').on('click',function(){
 
 })
 
-    //Detecta si el usuario es un iPad
-var ua = navigator.userAgent;
-var isiPad = /iPad/i.test(ua) || /iPhone OS 3_1_2/i.test(ua) || /iPhone OS 3_2_2/i.test(ua);
-    //Detecta si el navegador es safari
-var is_safari = navigator.userAgent.indexOf("Safari") > -1;
-if ((is_chrome)&&(is_safari)) { is_safari = false; }
+
+
 
     
