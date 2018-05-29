@@ -29,9 +29,10 @@
                 };
                 
                 console.log("Posición del usuario -> ", pos)
-                
+                 
+               
                 $('#fijarUbicacion').on('click',function(){
-                    $.post("/posicionUsuario", pos, function(status, data, error){
+                    $.get("/posicionUsuarios", {pos:pos}, function(status, data, error){
                         if(error == true || data == undefined || status != "success"){
                             console.log('error al enviar posición')
                             console.log(data)
@@ -40,6 +41,8 @@
                         }else{
                             console.log(data)
                             console.log(status)
+                            enterPool()
+                            enterPool2()
                         }
                     })
                 })

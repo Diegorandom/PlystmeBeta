@@ -145,13 +145,13 @@ if( app.get('port') == 5000 ){
     console.log(objetosGlobales[0].redirect_uri);
 }else{
     console.log("Corriendo en servidor web con uri de redireccionamiento: ");
-    objetosGlobales[0].redirect_uri = 'http://www.plystme.com/callback'; // Your redirect uri
+    objetosGlobales[0].redirect_uri = 'https://www.plystme.com/callback'; // Your redirect uri
 
     //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
     objetosGlobales[0].spotifyApi = new SpotifyWebApi({
         clientId: 'b590c1e14afd46a69891549457267135',
         clientSecret: config.sessionSecret,
-        redirectUri: 'http://www.plystme.com/callback' 
+        redirectUri: 'https://www.plystme.com/callback' 
     });
     console.log(objetosGlobales[0].redirect_uri);
 };
@@ -268,6 +268,7 @@ app.use(require('./rutas/DatosBD'));
 app.use(require('./rutas/refreshingToken'));
 
 app.use(require('./rutas/usuarios'));
+app.use(require('./rutas/posicionUsuarios'));
 
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function(req, res, error){

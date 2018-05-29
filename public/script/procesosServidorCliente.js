@@ -459,7 +459,7 @@ var referenciaBD="noGuardado"
         
 
         /*Proceso para entrar a un pool determinado*/
-        document.getElementById('enterPool').addEventListener('click', function() {
+        document.getElementById('enterPool').addEventListener('click', function enterPool() {
             
             $('#usuariosDentro').css("display","block");
             
@@ -934,7 +934,7 @@ var referenciaBD="noGuardado"
         })
         
         /*Lo mismo que enterPool pero para movil*/
-        document.getElementById('enterPool2').addEventListener('click', function() {
+        document.getElementById('enterPool2').addEventListener('click', function enterPool2() {
             
             $('#usuariosDentro2').css("display","block");
             
