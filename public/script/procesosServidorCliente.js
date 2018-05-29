@@ -1,3 +1,29 @@
+/*
+
+Note that HTTP cache may be involved too. You need to set proper cache related HTTP headers on server to cache only those resources that need to be cached. You can also do forced reload to instuct browser to ignore HTTP cache: window.location.reload( true ). But I don't think that it is best solution.
+
+For more information check:
+
+Working with BFCache article on MDN
+WebKit Page Cache II – The unload Event by Brady Eidson
+pageshow event reference on MDN
+Ajax, back button and DOM updates question
+JavaScript - bfcache/pageshow event - event.persisted always set to false? question
+
+https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
+
+window.addEventListener( "pageshow", function ( event ) {
+  var historyTraversal = event.persisted || 
+                         ( typeof window.performance != "undefined" && 
+                              window.performance.navigation.type === 2 );
+  if ( historyTraversal ) {
+    // Handle page restore.
+    window.location.reload();
+  }
+});
+
+*/
+
 
 var referenciaBD="noGuardado"
 
@@ -1143,9 +1169,12 @@ var referenciaBD="noGuardado"
         document.getElementById('btnActualizar2').addEventListener('click', function() {
             console.log('Actualizando POOL2')
             
-            
-            $.get('/usuarios', function(data, status){
-            
+            $.get('/usuarios', function(data, status, error){
+            if(error == true){
+                
+            }
+                
+                
             console.log(status)    
             console.log(data)
                         
@@ -1238,7 +1267,6 @@ var referenciaBD="noGuardado"
             }
                 
             })
-            
             
             $.get( '/pool', function(data, status) {
                 console.log(data)
@@ -1411,22 +1439,14 @@ $('.timeFilter').on('click',function(){
     console.log('filter -> ', filter)
     
     $.get('/rango',{filter:filter, cambioRango:true}, function(data, status, error){
-    if(error == true){
-        $.get('/error', function(data, status, error){
-            console.log(data)
-            console.log(status)
-            if(status=="sucess"){
-                console.log('TOKEN REFRESCADO')
-            }else if(error ==true){
-                window.location.replace("http://plystme.com/perfil");
-            }
-        })
-    }
-    console.log(data)
-    console.log(status)
-    if(status === "success"){
-        if(data != undefined){
-            
+    
+        console.log(status)
+        
+    if(error == true || data == "Error"){
+        window.location.replace("http://plystme.com/perfil");
+    }else if(status === "success"){
+        if(data != undefined && data != "Error"){
+         console.log(data)
         /*Proceso entrar a un pool, se configuran los botones que serán las opciones dentro del pool
         var botonPool = document.getElementById('btnActualizar')
         botonPool.innerHTML = "Actualizar Playlist"

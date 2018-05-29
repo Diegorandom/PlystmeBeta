@@ -8,10 +8,11 @@ router.get('/rango', function(req, res, error){
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
     position = req.sessions.position;
-    objetosGlobales[position].rango = req.query.filter
-    objetosGlobales[position].cambioRango = true
     
     if(objetosGlobales[position] != undefined || position != undefined ){
+        
+        objetosGlobales[position].rango = req.query.filter
+        objetosGlobales[position].cambioRango = true
         
         console.log('Rango de Tiempo seleccionado -> ', objetosGlobales[position].rango)
     
@@ -33,7 +34,7 @@ router.get('/rango', function(req, res, error){
            
         }
     }else{
-        res.redirect('/refreshingToken')
+        res.send('Error')
     }
     
 })
