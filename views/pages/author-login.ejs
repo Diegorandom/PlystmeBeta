@@ -20,6 +20,9 @@
         <link rel="preload" href="img/fondo2.jpg">
         <link rel="preload" href="img/propuesta.jpg">
         
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtA2WyXGMPMY9Nk642s_bSkEEp_5tguoU&callback=initMap"
+        async defer></script>
+        
         
 	</head>
     
@@ -158,7 +161,7 @@
 						</div>
 						<div class="be-user-statistic" style="border-radius:5px;">
 							
-							<div class="stat-row clearfix"  style="background-color:#d5573b; border-radius:5px;"><i class="fas fa-users" style="font-size:20px;"></i>   Seguidores de Spotify<span class="stat-counter"> <%=followers%></span></div>
+							<div class="stat-row clearfix"  style="background-color:#d5573b; border-radius:5px;"><i class="fas fa-users" style="font-size:20px;"></i>   Seguidores de Spotify<span class="stat-counter" style="color:white;"> <%=followers%></span></div>
 							
 						</div>
 					</div>
@@ -175,7 +178,7 @@
                         <canvas id="myChart" width="100%" height="100%" style="background-color:rgba(255, 255, 255, 0.5); border-radius:5px; max-width:800px; margin: 0 auto;"></canvas>
                                             <br> 
                     
-                    <table class="table" style="background-color: rgba(255,255,255,0.5); border-radius:5px; margin-bottom:20px;">
+                    <!--<table class="table" style="background-color: rgba(255,255,255,0.5); border-radius:5px; margin-bottom:20px;">
                         <thead>
                             <tr>
                                 <th>Variables Promedio</th>
@@ -202,7 +205,7 @@
                                 
                             </tr>
                         </tbody>
-                    </table>	
+                    </table>-->	
                                             
                             <div style="background-color:rgba(255,255,255,0.5); width:100%; ;margin-bottom:20px; border-radius:5px;" class="infoVariables">
                                 <div class="variableDesplegable" id="varDanza">Danzabilidad<i class="fas fa-plus"></i></div>
@@ -323,14 +326,12 @@
                                          <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:49%; border:none; background-color:#FFF;display:none; color:#588b8b;" id="btnActualizar">
                                         </button>
                                         
-                                        <!--<button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:49%; border:none; background-color:#FFF;display:none; color:#588b8b;" id="createPlaylist">
-                                            <i class="far far fa-save" style="font-size:20px; color:#588b8b; margin-left:5px;"></i> Guardar Playlist En Spotify 
-                                        </button>-->
-                                        
-                                        
-                                        
                                         <br>
-                                    
+                                        
+                                        <div id="mensajeUbicacion" style="color:black; font-size:40px; background-color:white; font-family:'Kanit',sans-serif; display:none; margin-top:-30px;">¿Dónde es tu fiesta?</div>
+                                        
+                                        <div id="map" style="height:350px; display:none;"></div>
+                                        <button id="fijarUbicacion" style="Width:300px; height:50px; background-color:#588b8b; border-radius:5px; margin-top:20px; display:none; font-size:20px; color:white; font-family:'Kanit', sans-serif;">Fijar ubicación</button>
                                         
                                         <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(88, 139, 139, 0.85);border-radius:5px; border: 3px solid white; color:white; display:inline-block;" id="btnCrear">
                                             
@@ -680,7 +681,11 @@
     })
     
     $('#btnCrear').on('click',function(){
-        console.log(width);
+        $('#enterPool').css("display","none");
+        $('#btnCrear').css("display","none");
+        $('#mensajeUbicacion').css("display","block");
+        $('#map').css("display","block");
+        $('#fijarUbicacion').css("display","block");
     })    
     $('#btnCrear2').on('click',function(){
         console.log(height);
@@ -762,6 +767,64 @@
 
 </script>
 
-                        
+<!--Mapa-->
+
+<script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+    
+    $('#btnCrear').on('click',function(){
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 18
+        });
+        var infoWindow = new google.maps.InfoWindow({map: map});
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            //infoWindow.setPosition(pos);
+            //infoWindow.setContent('');
+            map.setCenter(pos);
+                var image = 'img/logo_atmos.png';
+                var beachMarker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                icon: image,
+                draggable: true,
+                animation: google.maps.Animation.DROP
+                });
+              
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+        
+        
+           
+    });
+
+      
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtA2WyXGMPMY9Nk642s_bSkEEp_5tguoU&callback=initMap">
+    </script>
 
      
