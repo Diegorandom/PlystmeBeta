@@ -948,7 +948,7 @@ var referenciaBD="noGuardado"
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario2"
+                            imgU.className="imgUsuario2"
                             usuariosFotos2.appendChild(imgU)
                             
                         }else{
@@ -956,7 +956,7 @@ var referenciaBD="noGuardado"
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario2"
+                            imgU.className="imgUsuario2"
                             usuariosFotos2.appendChild(imgU) 
                         }
                         
@@ -1166,8 +1166,15 @@ var referenciaBD="noGuardado"
                         cont.innerHTML = data.length
                         contadorU2.appendChild(cont)
                         
-                        
+                         var totalId = document.getElementsByClassName("imgUsuario2").length;
                     
+                        console.log("# de IDs a eliminar -> ",  totalId)
+
+                        for(var i=0; i<totalId; i++){
+                            document.getElementsByClassName("imgUsuario2").remove();
+                        }
+
+                        
                     data.forEach(function(usuario,index){
                         
                         if(checkUrl(usuario[1])==false){
@@ -1178,21 +1185,19 @@ var referenciaBD="noGuardado"
                         var usuariosFotos2 = document.getElementById('usuariosFotos2')
                         
                         if(usuario[1]){ 
-                            document.getElementById("imgUsuario2").remove();
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario2"
+                            imgU.className="imgUsuario2"
                             usuariosFotos2.appendChild(imgU)
                             
                         }else{
-                            document.getElementById("imgUsuario2").remove();
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.id="imgUsuario2"
+                            imgU.className="imgUsuario2"
                             usuariosFotos2.appendChild(imgU) 
                         }
                                                 
