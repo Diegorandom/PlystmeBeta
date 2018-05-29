@@ -299,7 +299,7 @@
                            
                             
                             
-                           <div class="tab-info" id="fiestaTab">
+                           <div class="tab-info" id="fiestaTab" style="margin-top:20px;">
 								<div class="row" style="margin-bottom:100px;">
                                     <div class="col-lg-12 col-md-12 hidden-xs hidden-sm">
                             
@@ -402,8 +402,17 @@
                                             <i class="far far fa-save" style="font-size:20px; color:#588b8b; margin-left:5px;"></i> Guardar Playlist En Spotify 
                                         </button>-->
                                         
+                                        <!-- Fijar ubicación en modo celular -->
                                         
+                                        <br>
                                         
+                                         <div id="mensajeUbicacion2" style="color:white; font-size:30px; background-color:none; font-family:'Kanit',sans-serif; display:none; margin-top:-30px;">¿Dónde es tu fiesta?</div><br>
+                                        
+                                        <div id="map2" style="height:300px; display:none;"></div>
+                                        
+                                        <button id="fijarUbicacion2" style="Width:200px; height:50px; background-color:#588b8b; border-radius:5px; margin-top:20px; display:none; font-size:20px; color:white; font-family:'Kanit', sans-serif;">Fijar ubicación</button>
+                                        
+                                        <!-- Termina sección mapa -->
                                         
                                         <button  type="submit" value="Submit" class="be-button-vidget " style="width:55%;height:250px; background-color:rgba(88, 139, 139, 0.85);border-radius:5px; border: 3px solid white; color:white;" id="btnCrear2">
                                             
@@ -688,6 +697,11 @@
         $('#fijarUbicacion').css("display","block");
     })    
     $('#btnCrear2').on('click',function(){
+        $('#enterPool2').css("display","none");
+        $('#btnCrear2').css("display","none");
+        $('#mensajeUbicacion2').css("display","block");
+        $('#map2').css("display","block");
+        $('#fijarUbicacion2').css("display","block");
         console.log(height);
     })
     
