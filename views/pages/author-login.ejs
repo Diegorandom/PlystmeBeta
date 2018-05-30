@@ -337,6 +337,14 @@
                                         
                                         <button id="fijarUbicacion" style="Width:300px; height:50px; background-color:#588b8b; border-radius:5px; margin-top:20px; display:none; font-size:20px; color:white; font-family:'Kanit', sans-serif;">Fijar ubicación</button>
                                         
+                                        <br>
+                                        
+                                        <!-- Botón para salir en patalla grande -->
+                                        
+                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#900;" id="salirPlaylist3"> 
+                                            Salir
+                                        </button>
+                                        
                                         <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(88, 139, 139, 0.85);border-radius:5px; border: 3px solid white; color:white; display:inline-block;" id="btnCrear">
                                             
                                             <i class="fas fa-plus-square" style="margin-top:10px;  font-size:80px;"></i>
@@ -704,6 +712,7 @@
         $('#mensajeUbicacion').css("display","block");
         $('#map').css("display","block");
         $('#fijarUbicacion').css("display","block");
+        $('#salirPlaylist3').css("display","block");
     })    
     $('#btnCrear2').on('click',function(){
         $('#enterPool2').css("display","none");
@@ -711,6 +720,14 @@
         $('#mensajeUbicacion2').css("display","block");
         $('#map2').css("display","block");
         $('#fijarUbicacion2').css("display","block");
+        $('#salirPlaylist3').css("display","block");
+        console.log(height);
+    })
+    
+    $('#fijarUbicacion').on('click',function(){
+        $('#mensajeUbicacion').css("display","none");
+        $('#map').css("display","none");       
+        $('#fijarUbicacion').css("display","none");
         console.log(height);
     })
     
@@ -805,6 +822,16 @@
         $('#usuariosDentro2').css("display","none");
         $('#btnCrear2').css("display","inline-block");
         $('#enterPool2').css("display","inline-block");
+    })
+    
+    $('#salirPlaylist3').on('click',function(){
+        $('#mensajeUbicacion').css("display","none");
+        $('#map').css("display","none");
+        $('#fijarUbicacion').css("display","none");
+        $('#btnActualizar').css("display","none");
+        $('#salirPlaylist3').css("display","none");
+        $('#btnCrear').css("display","inline-block");
+        $('#enterPool').css("display","inline-block");
     })
 
 
