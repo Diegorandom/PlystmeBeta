@@ -10,7 +10,7 @@ var position = req.sessions.position;
     
 if(error == true || objetosGlobales == undefined || position == undefined){
     console.log('error en el proceso de guardar playlist')
-    res.send('ERRORORIGEN')
+    res.send('Error Global')
 }else{    
     
     /*Se declara el nombre del playlist que será guardado en Spotify, esto debe convertir a custom by user cuando se lance la versión de usuario*/    
@@ -81,8 +81,7 @@ if(error == true || objetosGlobales == undefined || position == undefined){
                                   }, function(err) {
                                     /*En caso de que el segundo grupo de canciones del playlist falle en guardar se manda el mensaje de que se guardó el playlist (las primeras 50 canciones)*/
                                     console.log('Error al momento de agregar segundos 50 tracks a playlist. paso #2', err);
-                                    res.send(err)
-                                    res.send('ERRORORIGEN')
+                                    res.send('Error SpotifyApi')
                                   });
                         }else{
                             console.log('Creación de playlist exitosa con 50 canciones max')
@@ -91,13 +90,13 @@ if(error == true || objetosGlobales == undefined || position == undefined){
 
                       }, function(err) {
                         console.log('Error al momento de agregar primeras 50 tracks a playlist. paso #1', err);
-                        res.send('ERRORORIGEN')
+                        res.send('Error SpotifyApi')
                         })
 
             },function(error){
                 console.log(error);
                 /*Error al crear playlist en Spotify*/
-                res.send('ERRORORIGEN')
+                res.send('Error SpotifyApi')
             });
 
         

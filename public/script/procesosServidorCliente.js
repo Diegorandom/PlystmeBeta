@@ -4,6 +4,8 @@ $.ajaxSetup({
 });
 
 var referenciaBD="noGuardado"
+var erroresPreferenciasGlobal = 0
+var erroresPreferenciasSuri = 0
 
 
 /*Se agrega funcion custom a la clase de Element.prototype para crear una funcion REMOVE que será usada más adelante*/
@@ -27,6 +29,8 @@ var referenciaBD="noGuardado"
             console.log(status)
             /*Si la obtención de datos es existosa se despliega el perfil de preferencias en un gráfico de radar*/
             if(status == "success" && data != undefined){
+                erroresPreferenciasGlobal = 0
+                erroresPreferenciasSuri = 0
                 console.log('Preferencias exitoso')
                 console.log(data.danceability)
                 
@@ -180,12 +184,38 @@ var referenciaBD="noGuardado"
                 
                 //trDuracion.appendChild(durT)
                 //trDuracion.appendChild(dur)
-            }else if(data == "Error" || error == true){
-                 document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar Preferencias"
+                
+            }else if(data == "Error Global" || error == true){
+                
+                document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar preferenias"
                     document.getElementById('nuevoPlaylist').style.display="block"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);
+                    }, 3000);
+                
+                erroresPreferenciasGlobal += 1
+                console.log('Error global al procesar preferencias -> ', erroresPreferenciasGlobal)
+                
+                if(erroresPreferenciasGlobal > 5){
+                    location.reload();
+                }
+                
+                }else if(data == 'Error SuriApi'){
+                    
+                     document.getElementById('nuevoPlaylist').innerHTML="Error de SuriApi!"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                    }, 3000);
+                
+                erroresPreferenciasSuri += 1
+                console.log('Error global al procesar preferencias -> ', erroresPreferenciasSuri)
+                
+            
+                if(erroresPreferenciasSuri > 5){
+                    location.reload();
+                }
+                
             }
         })
     }
@@ -220,6 +250,9 @@ var referenciaBD="noGuardado"
      
     /*Inicio de proceso de obtención de perfil de preferencias*/
      chequeoBDLoop();
+
+    var erroresGuardarTopGlobal = 0
+    var erroresGuardarTopSpotify = 0
      
     document.getElementById('guardarTOP50').addEventListener('click', function(){
         $.get('/guardar/top50', function(data, status){
@@ -236,6 +269,9 @@ var referenciaBD="noGuardado"
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
 
+                    erroresGuardarTopSpotify
+                    erroresGuardarTopGlobal
+                    
                 }else if(data=="ActualizacionTop50"){
                     /*Si se actualizó el playlist, se despliega un mensaje*/
                     console.log("mensaje -> ", data)
@@ -244,44 +280,42 @@ var referenciaBD="noGuardado"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
-                }else if(data=="ERRORORIGEN"){
-                    console.log('ERROR DE ORIGEN')
-                     document.getElementById('nuevoPlaylist').innerHTML="Error al guardar TOP 50"
+                    
+                    erroresGuardarTopSpotify = 0
+                    erroresGuardarTopGlobal = 0
+                    
+                }else if(data=="Error Global"){
+                    document.getElementById('nuevoPlaylist').innerHTML="Error del sistema al guardar TOP 50"
                     document.getElementById('nuevoPlaylist').style.display="block"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);
+                    }, 3000);
                     
-                    $.get('/error', function(data, status, error){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }else if(error ==true){
-                            window.location.replace("http://plystme.com/perfil");
-                        }
-                    })
+                    erroresGuardarTopGlobal += 1
+                    console.log('Error Global -> ', erroresGuardarTopGlobal)
                     
+                   if(erroresGuardarTopGlobal >5){
+                       location.reload();
+                   }
+                      
+                }else if(data == "Error SpotifyApi"){
+                   document.getElementById('nuevoPlaylist').innerHTML="Error del Spotify al guardar TOP 50"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                    }, 3000);
+                    
+                    erroresGuardarTopSpotifyl += 1
+                    console.log('Error Global -> ', erroresGuardarTopSpotify)
+                    
+                   if(erroresGuardarTopSpotify >5){
+                       location.reload();
+                   } 
                 }
 
             }else{
                 console.log('ERROR DE ORIGEN')
-                 document.getElementById('nuevoPlaylist').innerHTML="Error al guardar TOP 50"
-                document.getElementById('nuevoPlaylist').style.display="block"
-                setTimeout(function(){
-                    document.getElementById('nuevoPlaylist').style.display="none"
-                }, 2000);
-                
-                $.get('/error', function(data, status, error){
-                    console.log(data)
-                    console.log(status)
-                    if(status=="sucess"){
-                        console.log('TOKEN REFRESCADO')
-                    }else if(error ==true){
-                        window.location.replace("http://plystme.com/perfil");
-                    }
-                })
-                
+                location.reload();
             }
 
         })
@@ -325,7 +359,7 @@ var referenciaBD="noGuardado"
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            window.location.replace("http://plystme.com/perfil");
+                            location.reload();
                         }
                     })
                     
@@ -346,7 +380,7 @@ var referenciaBD="noGuardado"
                     if(status=="sucess"){
                         console.log('TOKEN REFRESCADO')
                     }else if(error ==true){
-                        window.location.replace("http://plystme.com/perfil");
+                        location.reload();
                     }
                 })
             }
@@ -390,7 +424,7 @@ var referenciaBD="noGuardado"
                             if(status=="sucess"){
                                 console.log('TOKEN REFRESCADO')
                             }else if(error ==true){
-                                window.location.replace("http://plystme.com/perfil");
+                                location.reload();
                             }
                         })
                         
@@ -410,7 +444,7 @@ var referenciaBD="noGuardado"
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            window.location.replace("http://plystme.com/perfil");
+                            location.reload();
                         }
                     })
                     
@@ -647,7 +681,7 @@ var referenciaBD="noGuardado"
                             if(status=="sucess"){
                                 console.log('TOKEN REFRESCADO')
                             }else if(error ==true){
-                                window.location.replace("http://plystme.com/perfil");
+                                location.reload();
                             }
                         })
                     }
@@ -659,7 +693,7 @@ var referenciaBD="noGuardado"
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            window.location.replace("http://plystme.com/perfil");
+                            location.reload();
                         }
                     })
                 }
@@ -883,7 +917,7 @@ var referenciaBD="noGuardado"
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            window.location.replace("http://plystme.com/perfil");
+                            location.reload();
                         }
                     })
                     
@@ -902,7 +936,7 @@ var referenciaBD="noGuardado"
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            window.location.replace("http://plystme.com/perfil");
+                            location.reload();
                         }
                     })
                     
@@ -1125,7 +1159,7 @@ var referenciaBD="noGuardado"
                             if(status=="sucess"){
                                 console.log('TOKEN REFRESCADO')
                             }else if(error ==true){
-                                window.location.replace("http://plystme.com/perfil");
+                                location.reload();
                             }
                         })
                     }
@@ -1136,7 +1170,7 @@ var referenciaBD="noGuardado"
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            window.location.replace("http://plystme.com/perfil");
+                            location.reload();
                         }
                     })
                 }
@@ -1377,7 +1411,7 @@ var referenciaBD="noGuardado"
                             if(status=="sucess"){
                                 console.log('TOKEN REFRESCADO')
                             }else if(error ==true){
-                                window.location.replace("http://plystme.com/perfil");
+                                location.reload();
                             }
                         })
                     }
@@ -1395,7 +1429,7 @@ var referenciaBD="noGuardado"
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            window.location.replace("http://plystme.com/perfil");
+                            location.reload();
                         }
                     })
                     
@@ -1406,7 +1440,10 @@ var referenciaBD="noGuardado"
         
         
         //Botones de filtro de tiempo en top 50
-
+        
+        
+var ErroresTopRango = 0
+var ErroresSpotify = 0
 var filter = $('.filterSelected').attr('id'); //variable que indica el filtro de tiempo seleccionado
 
 
@@ -1423,10 +1460,27 @@ $('.timeFilter').on('click',function(){
     
         console.log(status)
         
-    if(error == true || data == "Error"){
-        window.location.replace("http://plystme.com/perfil");
+    if(error == true || data == "Error" || data == "Error BD"){
+        //Mensaje de error
+        
+        document.getElementById('nuevoPlaylist').innerHTML="Error al consultar la Base de Datos, intenta de nuevo!"
+        document.getElementById('nuevoPlaylist').style.display="block"
+        setTimeout(function(){
+            document.getElementById('nuevoPlaylist').style.display="none"
+        }, 4000);
+        
+        ErroresTopRango += 1;
+        console.log('Error registrados en el sistema -> ', ErroresTopRango )
+        
+        if(ErroresTopRango > 5){
+            location.reload();
+        }
+        
     }else if(status === "success"){
-        if(data != undefined && data != "Error"){
+        if(data != undefined && data != "Error" && data != "Error BD" && data != "Error SpotifyApi"){
+            
+        ErroresTopRango = 0
+            
          console.log(data)
         /*Proceso entrar a un pool, se configuran los botones que serán las opciones dentro del pool
         var botonPool = document.getElementById('btnActualizar')
@@ -1441,6 +1495,9 @@ $('.timeFilter').on('click',function(){
 
     console.log('El playlist ha cambiado')
        data.forEach(function(item,index){
+           
+           ErroresTopRango = 0
+           
            /*Se quitan las canciones viejas si es que existen*/
            if(document.getElementById("track"+index) !== null){
                 document.getElementById("track"+index).remove();
@@ -1535,27 +1592,42 @@ $('.timeFilter').on('click',function(){
            console.log('Nueva canción desplegada')
 
        })
-       }else{
-            console.log(data)
-            document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar TOP 50, ups!"
+       }else if(data == "Error BD"){
+            
+           //Mensaje de error
+        
+            document.getElementById('nuevoPlaylist').innerHTML="Error al consultar la Base de Datos, intenta de nuevo!"
             document.getElementById('nuevoPlaylist').style.display="block"
             setTimeout(function(){
                 document.getElementById('nuevoPlaylist').style.display="none"
-            }, 2000);
+            }, 4000);
+
+            ErroresTopRango += 1;
+            console.log('Error registrados en el sistema -> ', ErroresTopRango )
+
+            if(ErroresTopRango > 5){
+                location.reload();
+            }
+         
+        }else if(data == "Error SpotifyApi"){
+            
+            document.getElementById('nuevoPlaylist').innerHTML="Error al conectar con Spotify, intenta de nuevo!"
+            document.getElementById('nuevoPlaylist').style.display="block"
+            setTimeout(function(){
+                document.getElementById('nuevoPlaylist').style.display="none"
+            }, 4000);
+            
+            ErroresSpotify += 1;
+            console.log('Error registrados en el sistema por Spotify -> ', ErroresSpotify )
+
+            if(ErroresSpotify > 5){
+                location.reload();
+            }
            
-           $.get('/error', function(data, status, error){
-                console.log(data)
-                console.log(status)
-                if(status=="sucess"){
-                    console.log('TOKEN REFRESCADO')
-                }else if(error ==true){
-                    window.location.replace("http://plystme.com/perfil");
-                }
-            })
-           
+        }else if(data == "Error Global"){
+             location.reload();
         }
-    }
-        else{
+    }else{
         console.log(data);
         console.log(data)
         document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar TOP 50, ups!"
@@ -1570,7 +1642,7 @@ $('.timeFilter').on('click',function(){
             if(status=="sucess"){
                 console.log('TOKEN REFRESCADO')
             }else if(error ==true){
-                window.location.replace("http://plystme.com/perfil");
+                location.reload();
             }
         })
         
@@ -1595,6 +1667,9 @@ $(window).bind("load", function() {
        data.forEach(function(item,index){
            /*Se quitan las canciones viejas si es que existen*/
            if(document.getElementById("track"+index) !== null){
+               
+               ErroresTopRango = 0;
+               
                 document.getElementById("track"+index).remove();
                 console.log("Depuración de playlist")
                 /*Despliegue de mensaje de que hay un nuevo playlist*/
@@ -1674,14 +1749,39 @@ $(window).bind("load", function() {
            console.log('Nueva canción desplegada')
 
        })
-       }else if(data == "Error"){
-            console.log(data)
-            document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar TOP 50"
+       }else if(data == "Error" || data == "Error BD"){
+            //Mensaje de error
+        
+            document.getElementById('nuevoPlaylist').innerHTML="Error al consultar la Base de Datos, intenta de nuevo!"
             document.getElementById('nuevoPlaylist').style.display="block"
             setTimeout(function(){
                 document.getElementById('nuevoPlaylist').style.display="none"
-            }, 2000);
+            }, 4000);
+
+            ErroresTopRango += 1;
+            console.log('Error registrados en el sistema -> ', ErroresTopRango )
+
+            if(ErroresTopRango > 5){
+                location.reload();
+            }
             
+        }else if(data == "Error SpotifyApi"){
+            
+            document.getElementById('nuevoPlaylist').innerHTML="Error al conectar con Spotify, intenta de nuevo!"
+            document.getElementById('nuevoPlaylist').style.display="block"
+            setTimeout(function(){
+                document.getElementById('nuevoPlaylist').style.display="none"
+            }, 4000);
+            
+            ErroresSpotify += 1;
+            console.log('Error registrados en el sistema por Spotify -> ', ErroresSpotify )
+
+            if(ErroresSpotify > 5){
+                location.reload();
+            }
+            
+        }else if(data == "Error Global"){
+             location.reload();
         }
     }else{
         console.log(data);
@@ -1698,7 +1798,7 @@ $(window).bind("load", function() {
             if(status=="sucess"){
                 console.log('TOKEN REFRESCADO')
             }else if(error ==true){
-                window.location.replace("http://plystme.com/perfil");
+                location.reload();
             }
         })
         

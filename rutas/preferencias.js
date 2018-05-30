@@ -15,7 +15,9 @@ router.post('/preferencias', function(req, res, error) {
     var contadorErroresApi = 0;
     
     /*Revisión de errores de origen*/
-    if(error == true || objetosGlobales[position] == undefined || objetosGlobales[position] == null){ res.render('pages/error')}else{ 
+    if(error == true || objetosGlobales[position] == undefined || objetosGlobales[position] == null){ 
+        res.send("Error Global")                                                                                           
+    }else{ 
     
         //Comienza request de perfil de preferencias
         console.log('comienza petición a api')
@@ -47,9 +49,9 @@ router.post('/preferencias', function(req, res, error) {
                 
                 contadorErroresApi += 1;
                 
-                    if(contadorErroresApi == 10){
+                    if(contadorErroresApi == 3){
                         contadorErroresApi = 0
-                        res.send('Error')
+                        res.send('Error SuriApi')
                     }else{
                         setTimeout(function(){
                              console.log('comienza petición a api')

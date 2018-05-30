@@ -25,7 +25,7 @@ router.get('/mineria', function(req, res, error){
     position = req.sessions.position;
     
     if(error == true || objetosGlobales == undefined || position == undefined || objetosGlobales[position]==null){
-        res.redirect('/error');
+        res.send('Error Global')
     }else{
     
     console.log('apuntador del objeto', position);  
@@ -43,7 +43,7 @@ router.get('/mineria', function(req, res, error){
     /*Se hace la solicitud de información del usuario*/
     request.get(options2, function(error, response, body){     
         if(error == true || body == undefined || body.items == undefined){
-            res.redirect('/refresingToken')
+            res.send('Error SpotifyApi')
         }else{
 
         /*Por cada uno de los tracks del usuario se correo un proceso para gaurdar esta información en la BD*/    
@@ -131,21 +131,21 @@ router.get('/mineria', function(req, res, error){
                                                     })
                                                     .catch(function(err){
                                                     console.log(err);
-                                                    res.redirect('/error',{error:err})
+                                                    res.send('Error BD')
                                                     
                                                     }) 
 
                                             })
                                              .catch(function(err){
                                             console.log(err);
-                                            res.redirect('/error',{error:err})
+                                            res.send('Error BD')
                                             
                                             })
 
                                         })
                                         .catch(function(err){
                                         console.log(err);
-                                        res.redirect('/error',{error:err})
+                                        res.send('Error BD')
                                         
                                         })
 
@@ -159,7 +159,7 @@ router.get('/mineria', function(req, res, error){
                                     })
                                      .catch(function(err){
                                         console.log(err);
-                                        res.redirect('/error',{error:err})
+                                        res.send('Error BD')
                                         
                                     })
 
@@ -177,7 +177,7 @@ router.get('/mineria', function(req, res, error){
                         })
                          .catch(function(err){
                         console.log(err);
-                        res.render('pages/error', {error:err})
+                        res.send('Error BD')
                         
                         })
                 }
@@ -185,7 +185,7 @@ router.get('/mineria', function(req, res, error){
             })
             .catch(function(err){
                 console.log(err);
-                res.render('pages/error', {error:err})
+                res.send('Error BD')
                 
             })
 
@@ -202,7 +202,7 @@ router.get('/mineria', function(req, res, error){
          })
                  .catch(function(err){
                     console.log(err);
-                    res.render('pages/error', {error:err})
+                    res.send('Error BD')
 
                 }) 
 
@@ -311,7 +311,7 @@ router.get('/mineria', function(req, res, error){
                                 })
                                  .catch(function(err){
                                     console.log(err);
-                                    res.render('pages/error', {error:err})
+                                    res.send('Error BD')
                                     
                                 })
                         }
@@ -340,7 +340,7 @@ router.get('/mineria', function(req, res, error){
                     })
                      .catch(function(err){
                         console.log(err);
-                        res.render('pages/error', {error:err})
+                        res.send('Error BD')
                         
                     })
                  
@@ -351,7 +351,7 @@ router.get('/mineria', function(req, res, error){
               }, function(err) {
                 done(err);
                  console.log("err: " + err );
-                 res.render('pages/error', {error:err});
+                 res.send('Error SpotifyApi')
                  
               });
             console.log(''); 
@@ -380,7 +380,7 @@ router.get('/mineria', function(req, res, error){
             })
              .catch(function(err){
                 console.log(err);
-                res.send('Error')
+                res.send('Error BD')
 
             })
 
