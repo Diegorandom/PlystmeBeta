@@ -3,7 +3,9 @@ var router = new express.Router();
 var request = require("request");
 
 router.get('/idle', function(req,res,error){
-    if(error==true){
+    var objetosGlobales = req.app.get('objetosGlobales');
+    
+    if(error==true || objetosGlobales == undefined || objetosGlobales == null){
         res.render('pages/error',{error:error})
     }else{
         /*Esta funcion se llama cuando un conteo desde el cliente se termina y detona que los datos del usuario se conviertan en NULL. ES UNA DEPURACION */
