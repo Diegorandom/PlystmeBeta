@@ -239,11 +239,15 @@ router.get('/mineria', function(req, res, error){
                         
                         //SE TERMINA ANÁLISIS DE CARACTERÍSTICAS
                           /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
+                           var preventCache = Date.now()
+                        console.log(preventCache)
                           res.redirect('/perfil#' +
                               querystring.stringify({
                                 access_token: objetosGlobales[position].access_token,
-                                refresh_token: objetosGlobales[position].refresh_token
+                                refresh_token: objetosGlobales[position].refresh_token,
+                                preventCache: preventCache
                               })); 
+                         
             }else{
             
                 console.log('Por cada trackUri se revisará si existe en la BD')
@@ -319,11 +323,15 @@ router.get('/mineria', function(req, res, error){
                                 console.log('YA SE TERMINÓ DE GUARDAR LA INFORMACION EN LA BASE DE DATOS')
                                 //SE TERMINA ANÁLISIS DE CARACTERÍSTICAS
                                   /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
-                                  res.redirect('/perfil#' +
-                                      querystring.stringify({
-                                        access_token: objetosGlobales[position].access_token,
-                                        refresh_token: objetosGlobales[position].refresh_token
-                                      })); 
+                                   var preventCache = Date.now()
+                        console.log(preventCache)
+                          res.redirect('/perfil#' +
+                              querystring.stringify({
+                                access_token: objetosGlobales[position].access_token,
+                                refresh_token: objetosGlobales[position].refresh_token,
+                                preventCache: preventCache
+                              })); 
+                         
                             }else{
                                 console.log('Aun no se termina de guardar la informacion en la BD')
                                 console.log("index: ", indexTrack+1, "body.items.length ", datosTrack.body.audio_features.length)
@@ -357,10 +365,14 @@ router.get('/mineria', function(req, res, error){
                         
                         //SE TERMINA ANÁLISIS DE CARACTERÍSTICAS
                           /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
+                        
+                        var preventCache = Date.now()
+                        console.log(preventCache)
                           res.redirect('/perfil#' +
                               querystring.stringify({
                                 access_token: objetosGlobales[position].access_token,
-                                refresh_token: objetosGlobales[position].refresh_token
+                                refresh_token: objetosGlobales[position].refresh_token,
+                                preventCache: preventCache
                               })); 
                         
                    

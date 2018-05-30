@@ -10,6 +10,12 @@ router.get('/perfil', function(request, response, error) {
     position = request.sessions.position;
     console.log('apuntador del objeto', position);
     
+    response
+    .set('Cache-Control', 'no-store')
+    
+    response.setHeader( "Pragma", "no-cache" );
+    response.setHeader( "Cache-Control", "no-store" );
+    
     /*Si hay error se renderiza*/
     if(error==true || objetosGlobales[position] == undefined){
         response.render('pages/error',{error:error})
@@ -82,10 +88,12 @@ router.get('/perfil', function(request, response, error) {
                     console.log(objetosGlobales[position].usuarios)
                     
                     if(objetosGlobales[position].cambioRango==true){
+                        console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
                         console.log('Cambio de rango')
                         objetosGlobales[position].cambioRango = false;
+                        console.log('Regreso a estado original de cambioRango -> ', objetosGlobales[position].cambioRango)
+                        
                         response.send(objetosGlobales[position].seedTracks)
-                        console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
                     }else if(objetosGlobales[position].refreshing == true){
                         console.log('Refrescando Tokens')
                         objetosGlobales[position].refreshing = false;

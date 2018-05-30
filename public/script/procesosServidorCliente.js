@@ -1,31 +1,10 @@
-/*
 
-Note that HTTP cache may be involved too. You need to set proper cache related HTTP headers on server to cache only those resources that need to be cached. You can also do forced reload to instuct browser to ignore HTTP cache: window.location.reload( true ). But I don't think that it is best solution.
-
-For more information check:
-
-Working with BFCache article on MDN
-WebKit Page Cache II – The unload Event by Brady Eidson
-pageshow event reference on MDN
-Ajax, back button and DOM updates question
-JavaScript - bfcache/pageshow event - event.persisted always set to false? question
-
-https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
-
-window.addEventListener( "pageshow", function ( event ) {
-  var historyTraversal = event.persisted || 
-                         ( typeof window.performance != "undefined" && 
-                              window.performance.navigation.type === 2 );
-  if ( historyTraversal ) {
-    // Handle page restore.
-    window.location.reload();
-  }
+$.ajaxSetup({
+  cache: false
 });
 
-*/
-
-
 var referenciaBD="noGuardado"
+
 
 /*Se agrega funcion custom a la clase de Element.prototype para crear una funcion REMOVE que será usada más adelante*/
      Element.prototype.remove = function() {
@@ -1438,6 +1417,8 @@ $('.timeFilter').on('click',function(){
     
     console.log('filter -> ', filter)
     
+    
+    
     $.get('/rango',{filter:filter, cambioRango:true}, function(data, status, error){
     
         console.log(status)
@@ -1599,9 +1580,12 @@ $('.timeFilter').on('click',function(){
     
 })
 
-
+$(window).bind("load", function() {
     filter = $('.filterSelected').attr('id');
-    $.get('/rango',{filter:filter, cambioRango:true}, function(data, status){
+    
+    $.ajax({url: '/rango?_=' + new Date().getTime(), data:{filter:filter, cambioRango:true}, success: rango, cache: false});
+    
+    function rango(data, status){
     console.log(data)
     console.log(status)
     if(status === "success"){
@@ -1720,8 +1704,10 @@ $('.timeFilter').on('click',function(){
         
     }
 
+}
+    
+    
 })
-
 
 
 

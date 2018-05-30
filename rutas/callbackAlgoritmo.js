@@ -177,11 +177,14 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                             }) 
                             
                              /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
-                              res.redirect('/perfil#' +
-                                  querystring.stringify({
-                                    access_token: objetosGlobales[position].access_token,
-                                    refresh_token: objetosGlobales[position].refresh_token
-                                  })); 
+                               var preventCache = Date.now()
+                                console.log(preventCache)
+                                  res.redirect('/perfil#' +
+                                      querystring.stringify({
+                                        access_token: objetosGlobales[position].access_token,
+                                        refresh_token: objetosGlobales[position].refresh_token,
+                                        preventCache: preventCache
+                                      })); 
                           
                         }else if(checkid_result.records.length >= 1){
                             console.log('Este usuario ya está registrado (no debería ser más de 1)')
@@ -192,11 +195,14 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                             objetosGlobales[position].mensaje = "nuevo_login";
                 
                              /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
-                              res.redirect('/perfil#' +
-                                  querystring.stringify({
-                                    access_token: objetosGlobales[position].access_token,
-                                    refresh_token: objetosGlobales[position].refresh_token
-                                  })); 
+                               var preventCache = Date.now()
+                                console.log(preventCache)
+                                  res.redirect('/perfil#' +
+                                      querystring.stringify({
+                                        access_token: objetosGlobales[position].access_token,
+                                        refresh_token: objetosGlobales[position].refresh_token,
+                                        preventCache: preventCache
+                                      })); 
 
                         }else{
                             console.log('No se pudo determinar si es un usuario nuevo o registrado')
