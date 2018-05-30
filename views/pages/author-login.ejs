@@ -121,7 +121,7 @@
 	<!-- MAIN CONTENT -->
 	<div id="content-block" style="margin-top:0px;">
         <div style="width:100px; height:100px;background-color:white; display:none" id="mostrarEnIpad"></div>
-		<div class="container be-detail-container">
+		<div class="container be-detail-container" style="margin-top:20px;">
 			<div class="row">
 				
                 
@@ -325,6 +325,10 @@
                                          <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:49%; border:none; background-color:#FFF;display:none; color:#588b8b;" id="btnActualizar">
                                         </button>
                                         
+                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#900;" id="salirPlaylist">
+                                            Salir del Playlist
+                                        </button>
+                                        
                                         <br>
                                         
                                         <div id="mensajeUbicacion" style="color:black; font-size:40px; background-color:white; font-family:'Kanit',sans-serif; display:none; margin-top:-30px;">¿Dónde es tu fiesta?</div>
@@ -396,6 +400,9 @@
                                         <br>
                                         
                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#588b8b;" id="btnActualizar2">
+                                            
+                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:50%; border:none; background-color:#FFF;display:none; color:#900;" id="salirPlaylist2">
+                                            Salir del Playlist
                                         </button>
                                         
                                         <!--<button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:80%; border:none; background-color:#FFF;display:none; color:#588b8b;" id="createPlaylist2">
@@ -656,7 +663,7 @@
     
     
 //Ocultar los botones de entrar y crear playlist
-    var inPool = 0;
+    var inPool1 = 0;
     var inPool2 = 0;
     var StoBresize = 0;
     var BtoSresize = 0;
@@ -681,11 +688,13 @@
     $('#enterPool').on('click',function(){
         $('#enterPool').css("display","none");
         $('#btnCrear').css("display","none");
+        $('#salirPlaylist').css("display","block");
         inPool1 = 1;
     })
     $('#enterPool2').on('click',function(){
         $('#enterPool2').css("display","none");
         $('#btnCrear2').css("display","none");
+        $('#salirPlaylist2').css("display","block");
         inPool2 = 1;
     })
     
@@ -777,8 +786,37 @@
         
         
     })
+    
+    
+//Funcionalidad del boton salir del playlist
+    
+    $('#salirPlaylist').on('click',function(){
+        $('.pool').css("display","none");
+        $('#btnActualizar').css("display","none");
+        $('#salirPlaylist').css("display","none");
+        $('#usuariosDentro').css("display","none");
+        $('#btnCrear').css("display","inline-block");
+        $('#enterPool').css("display","inline-block");
+    })
+    $('#salirPlaylist2').on('click',function(){
+        $('.pool').css("display","none");
+        $('#btnActualizar2').css("display","none");
+        $('#salirPlaylist2').css("display","none");
+        $('#usuariosDentro2').css("display","none");
+        $('#btnCrear2').css("display","inline-block");
+        $('#enterPool2').css("display","inline-block");
+    })
 
 
 </script>
     
     <script type="text/javascript" src="/script/mapa.js"></script> 
+
+
+
+
+
+
+
+
+
