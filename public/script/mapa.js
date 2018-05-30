@@ -32,7 +32,7 @@
                  
                
                 $('#fijarUbicacion').on('click',function(){
-                    $.get("/posicionUsuarios", {pos:pos}, function(status, data, error){
+                   /* $.get("/posicionUsuarios", {pos:pos}, function(status, data, error){
                         if(error == true || data == undefined || status != "success"){
                             console.log('error al enviar posición')
                             console.log(data)
@@ -44,9 +44,14 @@
                             enterPool()
                             enterPool2()
                         }
-                    })
-                })
+                    }) */
+                }) 
                 
+                
+                // Construct the circle for each value in citymap.
+                  // Note: We scale the area of the circle based on the population.
+                
+                   
                 //infoWindow.setPosition(pos);
                 //infoWindow.setContent('');
                 map.setCenter(pos);
@@ -57,7 +62,8 @@
                     icon: image,
                     draggable: true,
                     animation: google.maps.Animation.DROP
-                    });
+                    
+                    }); 
 
               }, function() {
                 handleLocationError(true, infoWindow, map.getCenter());
