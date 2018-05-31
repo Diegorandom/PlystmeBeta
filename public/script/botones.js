@@ -96,14 +96,12 @@
         $('#btnCrear').css("display","none");
         $('#salirPlaylist').css("display","block");
         inPool1 = 1;
-        $('.pool').css("display","block");
     })
     $('#enterPool2').on('click',function(){
         $('#enterPool2').css("display","none");
         $('#btnCrear2').css("display","none");
         $('#salirPlaylist2').css("display","block");
         inPool2 = 1;
-        $('.pool').css("display","block");
     })
     
     $('#btnCrear').on('click',function(){
@@ -129,14 +127,8 @@
     $('#fijarUbicacion').on('click',function(){
         console.log('Se activa fijarUbicacion')
         
-        $('#mensajeUbicacion').css("display","none");
-        $('#map').css("display","none");       
-        $('#fijarUbicacion').css("display","none");        
-        $('#btnRegresar').css("display","none");
-        $('#EliminarPlaylist').css("display","block");
-        $('.pool').css("display","block");
-        $('#enterPool').click();
-        $('#salirPlaylist').css("display","none");
+        enterPool();
+        
     })
     
     $('#fijarUbicacion2').on('click',function(){
@@ -148,7 +140,6 @@
         $('#btnRegresar').css("display","none");
         $('#EliminarPlaylist2').css("display","block");
         $('#enterPool2').click();
-        $('.pool').css("display","block");
         $('#salirPlaylist2').css("display","none");
         $('#btnRegresar2').css("display","none");
         
@@ -230,26 +221,7 @@
     
 //Funcionalidad del boton salir del playlist
     
-    $('#salirPlaylist').on('click',function(){
-        $('.pool').css("display","none");
-        $('#btnActualizar').css("display","none");
-        $('#salirPlaylist').css("display","none");
-        $('#usuariosDentro').css("display","none");
-        $('#contadorSpan').remove();
-        $('#usuariosFotos img').remove();
-        $('#btnCrear').css("display","inline-block");
-        $('#enterPool').css("display","inline-block");
-    })
-    $('#salirPlaylist2').on('click',function(){
-        $('.pool').css("display","none");
-        $('#btnActualizar2').css("display","none");
-        $('#salirPlaylist2').css("display","none");
-        $('#usuariosDentro2').css("display","none");
-        $('#btnCrear2').css("display","inline-block");
-        $('#enterPool2').css("display","inline-block");
-        $('#contadorSpan2').remove();
-        $('#usuariosFotos2 img').remove();
-    })
+
     
     // Botón REGRESAR en la pantalla de MAPA donde se fija la posición
     
@@ -275,29 +247,7 @@
     
     // Botón ELIMINAR Playlist en la playlist del HOST para regresar a la pantalla principal
     
-    $('#EliminarPlaylist').on('click',function(){
-        $('#EliminarPlaylist').css("display","none");
-        $('#fijarUbicacion').css("display","none");
-        $('#btnCrear').css("display","inline-block");
-        $('#enterPool').css("display","inline-block");
-        $('.pool').css("display","none");
-        $('#btnActualizar').css("display","none");
-        $('#usuariosDentro').css("display","none");
-        $('#contadorSpan').remove();
-        $('#usuariosFotos img').remove();
-    })
-    
-    $('#EliminarPlaylist2').on('click',function(){
-        $('#EliminarPlaylist2').css("display","none");
-        $('#fijarUbicacion2').css("display","none");
-        $('#btnCrear2').css("display","inline-block");
-        $('#enterPool2').css("display","inline-block");
-        $('.pool').css("display","none");
-        $('#btnActualizar2').css("display","none");
-        $('#usuariosDentro2').css("display","none");
-        $('#contadorSpan2').remove();
-        $('#usuariosFotos2 img').remove();
-    })
+
 
 
     

@@ -469,10 +469,8 @@ var erroresPreferenciasSuri = 0
         } 
         
 
-        
-
-        /*Proceso para entrar a un pool determinado*/
-        document.getElementById('enterPool').addEventListener('click', function enterPool() {
+    
+        function enterPool() {
             
             console.log('Entramos a pool de Escritorio')
             
@@ -701,6 +699,13 @@ var erroresPreferenciasSuri = 0
                 }
                 
             })
+        }
+
+        
+
+        /*Proceso para entrar a un pool determinado*/
+        document.getElementById('enterPool').addEventListener('click', function(){
+            enterPool()
         })
     
      /*Proceso para actualizar un playlist*/
