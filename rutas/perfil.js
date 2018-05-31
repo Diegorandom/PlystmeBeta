@@ -9,10 +9,7 @@ router.get('/perfil', function(request, response, error) {
     var position = request.app.get('position');
     position = request.sessions.position;
     console.log('apuntador del objeto', position);
-    
-    response
-    .set('Cache-Control', 'no-store')
-    
+        
     response.setHeader( "Pragma", "no-cache" );
     response.setHeader( "Cache-Control", "no-store" );
     

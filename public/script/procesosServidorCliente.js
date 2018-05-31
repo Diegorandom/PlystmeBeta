@@ -197,7 +197,7 @@ var erroresPreferenciasSuri = 0
                 console.log('Error global al procesar preferencias -> ', erroresPreferenciasGlobal)
                 
                 if(erroresPreferenciasGlobal > 5){
-                    location.reload();
+                    location.reload(true);
                 }
                 
                 }else if(data == 'Error SuriApi'){
@@ -213,7 +213,7 @@ var erroresPreferenciasSuri = 0
                 
             
                 if(erroresPreferenciasSuri > 5){
-                    location.reload();
+                    location.reload(true);
                 }
                 
             }
@@ -295,7 +295,7 @@ var erroresPreferenciasSuri = 0
                     console.log('Error Global -> ', erroresGuardarTopGlobal)
                     
                    if(erroresGuardarTopGlobal >5){
-                       location.reload();
+                       location.reload(true);
                    }
                       
                 }else if(data == "Error SpotifyApi"){
@@ -309,13 +309,13 @@ var erroresPreferenciasSuri = 0
                     console.log('Error Global -> ', erroresGuardarTopSpotify)
                     
                    if(erroresGuardarTopSpotify >5){
-                       location.reload();
+                       location.reload(true);
                    } 
                 }
 
             }else{
                 console.log('ERROR DE ORIGEN')
-                location.reload();
+                location.reload(true);
             }
 
         })
@@ -359,7 +359,7 @@ var erroresPreferenciasSuri = 0
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            location.reload();
+                            location.reload(true);
                         }
                     })
                     
@@ -380,7 +380,7 @@ var erroresPreferenciasSuri = 0
                     if(status=="sucess"){
                         console.log('TOKEN REFRESCADO')
                     }else if(error ==true){
-                        location.reload();
+                        location.reload(true);
                     }
                 })
             }
@@ -424,7 +424,7 @@ var erroresPreferenciasSuri = 0
                             if(status=="sucess"){
                                 console.log('TOKEN REFRESCADO')
                             }else if(error ==true){
-                                location.reload();
+                                location.reload(true);
                             }
                         })
                         
@@ -444,7 +444,7 @@ var erroresPreferenciasSuri = 0
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            location.reload();
+                            location.reload(true);
                         }
                     })
                     
@@ -681,7 +681,7 @@ var erroresPreferenciasSuri = 0
                             if(status=="sucess"){
                                 console.log('TOKEN REFRESCADO')
                             }else if(error ==true){
-                                location.reload();
+                                location.reload(true);
                             }
                         })
                     }
@@ -693,7 +693,7 @@ var erroresPreferenciasSuri = 0
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            location.reload();
+                            location.reload(true);
                         }
                     })
                 }
@@ -917,7 +917,7 @@ var erroresPreferenciasSuri = 0
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            location.reload();
+                            location.reload(true);
                         }
                     })
                     
@@ -936,7 +936,7 @@ var erroresPreferenciasSuri = 0
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            location.reload();
+                            location.reload(true);
                         }
                     })
                     
@@ -1159,7 +1159,7 @@ var erroresPreferenciasSuri = 0
                             if(status=="sucess"){
                                 console.log('TOKEN REFRESCADO')
                             }else if(error ==true){
-                                location.reload();
+                                location.reload(true);
                             }
                         })
                     }
@@ -1170,7 +1170,7 @@ var erroresPreferenciasSuri = 0
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            location.reload();
+                            location.reload(true);
                         }
                     })
                 }
@@ -1411,7 +1411,7 @@ var erroresPreferenciasSuri = 0
                             if(status=="sucess"){
                                 console.log('TOKEN REFRESCADO')
                             }else if(error ==true){
-                                location.reload();
+                                location.reload(true);
                             }
                         })
                     }
@@ -1429,7 +1429,7 @@ var erroresPreferenciasSuri = 0
                         if(status=="sucess"){
                             console.log('TOKEN REFRESCADO')
                         }else if(error ==true){
-                            location.reload();
+                            location.reload(true);
                         }
                     })
                     
@@ -1473,7 +1473,7 @@ $('.timeFilter').on('click',function(){
         console.log('Error registrados en el sistema -> ', ErroresTopRango )
         
         if(ErroresTopRango > 5){
-            location.reload();
+            location.reload(true);
         }
         
     }else if(status === "success"){
@@ -1606,7 +1606,7 @@ $('.timeFilter').on('click',function(){
             console.log('Error registrados en el sistema -> ', ErroresTopRango )
 
             if(ErroresTopRango > 5){
-                location.reload();
+                location.reload(true);
             }
          
         }else if(data == "Error SpotifyApi"){
@@ -1621,11 +1621,11 @@ $('.timeFilter').on('click',function(){
             console.log('Error registrados en el sistema por Spotify -> ', ErroresSpotify )
 
             if(ErroresSpotify > 5){
-                location.reload();
+                location.reload(true);
             }
            
         }else if(data == "Error Global"){
-             location.reload();
+             location.reload(true);
         }
     }else{
         console.log(data);
@@ -1642,7 +1642,7 @@ $('.timeFilter').on('click',function(){
             if(status=="sucess"){
                 console.log('TOKEN REFRESCADO')
             }else if(error ==true){
-                location.reload();
+                location.reload(true);
             }
         })
         
@@ -1762,7 +1762,7 @@ $(window).bind("load", function() {
             console.log('Error registrados en el sistema -> ', ErroresTopRango )
 
             if(ErroresTopRango > 5){
-                location.reload();
+                location.reload(true);
             }
             
         }else if(data == "Error SpotifyApi"){
@@ -1777,11 +1777,11 @@ $(window).bind("load", function() {
             console.log('Error registrados en el sistema por Spotify -> ', ErroresSpotify )
 
             if(ErroresSpotify > 5){
-                location.reload();
+                location.reload(true);
             }
             
         }else if(data == "Error Global"){
-             location.reload();
+             location.reload(true);
         }
     }else{
         console.log(data);
@@ -1798,7 +1798,7 @@ $(window).bind("load", function() {
             if(status=="sucess"){
                 console.log('TOKEN REFRESCADO')
             }else if(error ==true){
-                location.reload();
+                location.reload(true);
             }
         })
         
