@@ -35,7 +35,9 @@ var mapa = document.createElement('script')
                 var userid = data
                 console.log("userid -> ", userid)
                 
-                creacionMapa(userid)
+                var tipomap = "map"
+                
+                creacionMapa(userid,tipomap)
 
             }
 
@@ -70,7 +72,9 @@ var mapa = document.createElement('script')
                 var userid = data
                 console.log("userid -> ", userid)
                 
-                creacionMapa(userid)
+                 var tipomap = "map2"
+                
+                creacionMapa(userid,tipomap)
 
             }
 
@@ -90,11 +94,11 @@ var mapa = document.createElement('script')
 
 
 
-     function creacionMapa(userid){
+     function creacionMapa(userid,tipomap){
             console.log('Creación de mapa..')
            
 
-                var map = new google.maps.Map(document.getElementById('map'), {
+                var map = new google.maps.Map(document.getElementById(tipomap), {
                   center: {lat: -34.397, lng: 150.644},
                   zoom: 18
                 });
