@@ -30,14 +30,14 @@ $(document).ready(function() {
     
             socket.on('monitoreo', function(msg) {
                
-                 if(msg!=null){
-                     navigator.geolocation.getCurrentPosition(function(position) {
-                    posString = position.coords.latitude.toString.toString() + ":" position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });
+                //if(msg!=null){
+                //     navigator.geolocation.getCurrentPosition(function(position) {
+                //    posString = position.coords.latitude.toString.toString() + ":" position.coords.longitude.toString();
+                //    pos = {
+                //        'lat' : position.coords.latitude, 
+                //        'lng' : position.coords.longitude
+                //    }
+                //});
                 
                 socket.emit('leave', {room: posString, user: <%=userid%>, position: pos});
                 }
@@ -72,7 +72,7 @@ $(document).ready(function() {
                 var playlist = msg.data;
             });
 
-            $('#enterPool').onClick(function(event) {
+            $('#').on(function(event) {
                    
                 /// Llamada a la posición del usuario, se manda posición en STRING y en Objeto para la comparación en el servidor.
                 
@@ -89,7 +89,7 @@ $(document).ready(function() {
             });
             
     
-            $('#SalirPlaylist').onClick(function(event) {
+            $('#').on(function(event) {
                 
                 // Botón para salir de la playlist 
                 
@@ -105,12 +105,12 @@ $(document).ready(function() {
                 return false;
             });
     
-            $('#fijarUbicacion').onClick(function(event){
+            $('#').on(function(event){
                 // Recibir variables de POS FIJA de MAPA.JS para crear la fiesta. 
                 socket.emit('create_party',{room: $('#coordenates').val()});//proceso para crear una fiesta 
                 return false;
             });
-            $('#EliminarPlaylist').onClick(function(event){
+            $('#').on(function(event){
                 // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
                 socket.emit('delete_party',{room: $('#coord_delete').val()});//proceso para eliminar una fiesta
                 return false;

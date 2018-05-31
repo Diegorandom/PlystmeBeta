@@ -10,8 +10,7 @@ var mapa = document.createElement('script')
         var contenedorMapa = document.getElementById('mapa')
         contenedorMapa.appendChild(mapa)
 
-    $('#btnCrear').on('click',function(){
-        
+    $('#btnCrear').on('click',function(){        
         
         
         function creacionMapa(){
@@ -73,7 +72,7 @@ var mapa = document.createElement('script')
 
                         }); 
                       
-                      return pos;
+                      //return pos;
 
                   }, function() {
                     handleLocationError(true, infoWindow, map.getCenter());
