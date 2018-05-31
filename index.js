@@ -268,17 +268,13 @@ app.use(require('./rutas/DatosBD'));
 app.use(require('./rutas/refreshingToken'));
 
 app.use(require('./rutas/usuarios'));
-
 app.use(require('./rutas/posicionUsuarios'));
-
-//app.use(require("./rutas/socket"));
 
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function(req, res, error){
     console.log('ERROR EN LA PLATAFORMA')    
     res.render('pages/error', {error:error})
 })
-
 
 /*Configuración de puerto de la app*/
 app.listen(app.get('port'), function() {
