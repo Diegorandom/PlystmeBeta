@@ -437,7 +437,7 @@
                                         
                                         <!-- Termina sección mapa -->
                                         
-                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:55%;height:250px; background-color:rgba(88, 139, 139, 0.85);border-radius:5px; border: 3px solid white; color:white;" id="btnCrear2">
+                                        <button  type="submit" value="Submit" class="be-button-vidget " style="width:55%;height:250px; background-color:rgba(88, 139, 139, 0.85);border-radius:5px; border: 3px solid white; color:white; margin:-40px 0 20px 0;" id="btnCrear2">
                                             
                                             <i class="fas fa-plus-square" style="margin-top:10px;  font-size:80px;"></i>
 
@@ -713,6 +713,7 @@
         $('#btnCrear2').css("display","none");
         $('#salirPlaylist2').css("display","block");
         inPool2 = 1;
+        $('.pool').css("display","block");
     })
     
     $('#btnCrear').on('click',function(){
@@ -744,6 +745,19 @@
         $('#enterPool').click();
         $('.pool').css("display","block");
         $('#salirPlaylist').css("display","none");
+        
+        console.log(height);
+    })
+    
+    $('#fijarUbicacion2').on('click',function(){
+        $('#mensajeUbicacion2').css("display","none");
+        $('#map2').css("display","none");       
+        $('#fijarUbicacion2').css("display","none");        
+        $('#salirPlaylist3').css("display","none");
+        $('#EliminarPlaylist2').css("display","block");
+        $('#enterPool2').click();
+        $('.pool').css("display","block");
+        $('#salirPlaylist2').css("display","none");
         
         console.log(height);
     })
