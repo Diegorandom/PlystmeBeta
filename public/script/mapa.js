@@ -35,10 +35,8 @@ var mapa = document.createElement('script')
                 var userid = data
                 console.log("userid -> ", userid)
                 
-                var pos = creacionMapa()
+                creacionMapa(userid)
 
-                //Una vez obtenido el userid, éste se pasa a la función sockets() para que sea utilizado
-                sockets(userid, pos)
             }
 
         }
@@ -49,65 +47,34 @@ var mapa = document.createElement('script')
 
         
         $('#btnCrear2').on('click',function(){
-        
-        function creacionMapa(){
-        
-            var map = new google.maps.Map(document.getElementById('map2'), {
-              center: {lat: -34.397, lng: 150.644},
-              zoom: 18
-            });
-            var infoWindow = new google.maps.InfoWindow({map: map});
+ 
+  
+        var userid = null
 
-            // Try HTML5 geolocation.
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(function(position) {
-                var pos = {
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude
-                };
-                
-                console.log("Posición del usuario -> ", pos)
-                
-                $('#fijarUbicacion').on('click',function(){
-                    $.post("/posicionUsuario", pos, function(status, data, error){
-                        if(error == true || data == undefined || status != "success"){
-                            console.log('error al enviar posición')
-                            console.log(data)
-                            console.log(status)
-                            console.log(error)
-                        }else{
-                            console.log(data)
-                            console.log(status)
-                        }
-                    })
-                })
-                
-                //infoWindow.setPosition(pos);
-                //infoWindow.setContent('');
-                map.setCenter(pos);
-                    var image = 'img/PositionMarker.png';
-                    var beachMarker = new google.maps.Marker({
-                    position: pos,
-                    map: map,
-                    icon: image,
-                    draggable: true,
-                    animation: google.maps.Animation.DROP
-                    });
+        //Request de ajax para obtener userid de servidor Node.js
+        $.ajax({url: '/userid', success:idCallback, cache: false});
+        
+     
+        function idCallback(data, status, error){
+    
+            //Control de errores
+            if(error == true || data == "Error Global" || status != "success"){
+                document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+                document.getElementById('nuevoPlaylist').style.display="block"
+                setTimeout(function(){
+                    document.getElementById('nuevoPlaylist').style.display="none"
+                    location.reload(true);
+                }, 3000);
 
-              }, function() {
-                handleLocationError(true, infoWindow, map.getCenter());
-              });
-            } else {
-              // Browser doesn't support Geolocation
-              handleLocationError(false, infoWindow, map.getCenter());
+            }else{
+                var userid = data
+                console.log("userid -> ", userid)
+                
+                creacionMapa(userid)
+
             }
-        }
-        
-        setTimeout(creacionMapa,1000)
-        
-        
-        
-        
+
+        }        
            
     });
 
@@ -123,7 +90,7 @@ var mapa = document.createElement('script')
 
 
 
-     function creacionMapa(){
+     function creacionMapa(userid){
             console.log('Creación de mapa..')
            
 
@@ -160,7 +127,8 @@ var mapa = document.createElement('script')
 
                         }); 
                       
-                      return pos;
+                     //Una vez obtenido el userid, éste se pasa a la función sockets() para que sea utilizado
+                    sockets(userid, pos)
 
                   }, function() {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -193,7 +161,6 @@ La infraestructura de los sockets se encuentra toda contenida en la función soc
      
             namespace = '/test';
             var posString = null;
-            var pos = null; 
 
             //     http[s]://<domain>:<port>[/<namespace>]
             var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server

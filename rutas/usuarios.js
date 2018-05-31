@@ -22,6 +22,7 @@ router.get('/userid', function(request, response, error) {
     if(error == true || objetosGlobales == undefined || position == undefined){
         response.send('Error Global')
     }else{
+        console.log("userid -> ", objetosGlobales[position].userid)
         response.send(objetosGlobales[position].userid)
     }
     
