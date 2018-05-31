@@ -439,6 +439,10 @@
                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:40%; border-radius:30px; background-color:#FFF; display:none; color:#900;" id="regresar"> 
                                             Regresar
                                         </button>
+                                            
+                                        <button  type="submit" value="Submit" class="be-button-vidget" style="margin:-15px auto 20px; width:40%; border-radius:30px; background-color:#FFF; display:none; color:#900;" id="EliminarPlaylist2"> 
+                                            Eliminar Playlist
+                                        </button>
                                         
                                         <!-- Termina sección mapa -->
                                         
@@ -751,7 +755,6 @@
         $('.pool').css("display","block");
         $('#salirPlaylist').css("display","none");
         
-        console.log(height);
     })
     
     $('#fijarUbicacion2').on('click',function(){
@@ -763,8 +766,8 @@
         $('#enterPool2').click();
         $('.pool').css("display","block");
         $('#salirPlaylist2').css("display","none");
+        $('#regresar').css("display","none");
         
-        console.log(height);
     })
     
     
@@ -877,13 +880,13 @@
     })
     
     $('#regresar').on('click',function(){
-        $('#mensajeUbicacion').css("display","none");
-        $('#map').css("display","none");
-        $('#fijarUbicacion').css("display","none");
-        $('#btnActualizar').css("display","none");
-        $('#salirPlaylist3').css("display","none");
-        $('#btnCrear').css("display","inline-block");
-        $('#enterPool').css("display","inline-block");
+        $('#mensajeUbicacion2').css("display","none");
+        $('#map2').css("display","none");
+        $('#fijarUbicacion2').css("display","none");
+        $('#btnActualizar2').css("display","none");
+        $('#regresar').css("display","none");
+        $('#btnCrear2').css("display","inline-block");
+        $('#enterPool2').css("display","inline-block");
     })
     
     // Botón ELIMINAR Playlist en la playlist del HOST para regresar a la pantalla principal
@@ -898,6 +901,18 @@
         $('#usuariosDentro').css("display","none");
         $('#contadorSpan').remove();
         $('#usuariosFotos img').remove();
+    })
+    
+    $('#EliminarPlaylist2').on('click',function(){
+        $('#EliminarPlaylist2').css("display","none");
+        $('#fijarUbicacion2').css("display","none");
+        $('#btnCrear2').css("display","inline-block");
+        $('#enterPool2').css("display","inline-block");
+        $('.pool').css("display","none");
+        $('#btnActualizar2').css("display","none");
+        $('#usuariosDentro2').css("display","none");
+        $('#contadorSpan2').remove();
+        $('#usuariosFotos2 img').remove();
     })
 
 

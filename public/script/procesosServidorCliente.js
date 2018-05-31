@@ -1044,7 +1044,7 @@ var erroresPreferenciasSuri = 0
                     
                     var botonPool = document.getElementById('btnActualizar2')
                     botonPool.innerHTML = "Actualizar Playlist"
-                    botonPool.style="width:80%; border: none; background-color:#FFF; margin:0 auto 20px auto; color:#588b8b;"
+                    botonPool.style="width:80%; border: none; background-color:#FFF; margin:0px auto 0px auto; color:#588b8b;"
                     var icono = document.createElement('i')
                     icono.className ="fas fa-sync-alt"
                     icono.style="font-size:20px; color:#588b8b; margin-left:5px;"
@@ -1289,7 +1289,7 @@ var erroresPreferenciasSuri = 0
                     
                     var botonPool = document.getElementById('btnActualizar2')
                     botonPool.innerHTML = "Actualizar Playlist"
-                    botonPool.style="width:80%; border: none; background-color:#FFF; margin:0 auto 20px auto; color:#588b8b;"
+                    botonPool.style="width:80%; border: none; background-color:#FFF; margin:0 auto 0px auto; color:#588b8b;"
                     var icono = document.createElement('i')
                     icono.className ="fas fa-sync-alt"
                     icono.style="font-size:20px; color:#588b8b; margin-left:5px;"
