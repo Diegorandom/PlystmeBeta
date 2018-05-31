@@ -474,6 +474,8 @@ var erroresPreferenciasSuri = 0
         /*Proceso para entrar a un pool determinado*/
         document.getElementById('enterPool').addEventListener('click', function enterPool() {
             
+            console.log('Entramos a pool de Escritorio')
+            
             $('#usuariosDentro').css("display","block");
             
             $.get('/usuarios', function(data, status){
@@ -951,6 +953,8 @@ var erroresPreferenciasSuri = 0
             
             $('#usuariosDentro2').css("display","block");
             
+            
+            console.log('Entramos a pool de Móvil')
             
             $.get('/usuarios', function(data, status){
             
