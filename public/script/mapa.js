@@ -13,6 +13,11 @@ var mapa = document.createElement('script')
     $('#btnCrear').on('click',function(){        
         
         
+        var userid = null
+
+        //Request de ajax para obtener userid de servidor Node.js
+        $.ajax({url: '/userid', success:idCallback, cache: false});
+        
         function creacionMapa(){
             console.log('Creación de mapa..')
            
@@ -61,10 +66,6 @@ var mapa = document.createElement('script')
                 }
             
         }
-        
-        
-        
-               
         
         function idCallback(data, status, error){
     

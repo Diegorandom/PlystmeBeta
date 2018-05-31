@@ -9,10 +9,7 @@ La infraestructura de los sockets se encuentra toda contenida en la función soc
 
 */
 
-var userid = null
 
-//Request de ajax para obtener userid de servidor Node.js
-$.ajax({url: '/userid', success:idCallback, cache: false});
 
     
  function sockets() {
@@ -80,7 +77,7 @@ $.ajax({url: '/userid', success:idCallback, cache: false});
                 var playlist = msg.data;
             });
 
-            $('#').on(function(event) {
+            $('#enterPool').on('click',function(event) {
                    
                 /// Llamada a la posición del usuario, se manda posición en STRING y en Objeto para la comparación en el servidor.
                 
@@ -97,7 +94,7 @@ $.ajax({url: '/userid', success:idCallback, cache: false});
             });
             
     
-            $('#').on(function(event) {
+            $('#salirPlaylist').on('click',function(event) {
                 
                 // Botón para salir de la playlist 
                 
@@ -113,12 +110,12 @@ $.ajax({url: '/userid', success:idCallback, cache: false});
                 return false;
             });
     
-            $('#').on(function(event){
+            $('#fijarUbicacion').on('click', function(event){
                 // Recibir variables de POS FIJA de MAPA.JS para crear la fiesta. 
                 socket.emit('create_party',{room: pos});//proceso para crear una fiesta 
                 return false;
             });
-            $('#').on(function(event){
+            $('#salirPlaylist3').on('click', function(event){
                 // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
                 socket.emit('delete_party',{room: pos});//proceso para eliminar una fiesta
                 return false;
