@@ -1441,223 +1441,7 @@ var erroresPreferenciasSuri = 0
         
         //Botones de filtro de tiempo en top 50
         
-        
-var ErroresTopRango = 0
-var ErroresSpotify = 0
-var filter = $('.filterSelected').attr('id'); //variable que indica el filtro de tiempo seleccionado
-
-
-$('.timeFilter').on('click',function(){
-    $('.timeFilter').removeClass("filterSelected");
-    $(this).addClass("filterSelected");
-    filter = $('.filterSelected').attr('id');
-    
-    console.log('filter -> ', filter)
-    
-    
-    
-    $.get('/rango',{filter:filter, cambioRango:true}, function(data, status, error){
-    
-        console.log(status)
-        
-    if(error == true || data == "Error" || data == "Error BD"){
-        //Mensaje de error
-        
-        document.getElementById('nuevoPlaylist').innerHTML="Error al consultar la Base de Datos, intenta de nuevo!"
-        document.getElementById('nuevoPlaylist').style.display="block"
-        setTimeout(function(){
-            document.getElementById('nuevoPlaylist').style.display="none"
-        }, 4000);
-        
-        ErroresTopRango += 1;
-        console.log('Error registrados en el sistema -> ', ErroresTopRango )
-        
-        if(ErroresTopRango > 5){
-            location.reload(true);
-        }
-        
-    }else if(status === "success"){
-        if(data != undefined && data != "Error" && data != "Error BD" && data != "Error SpotifyApi"){
-            
-        ErroresTopRango = 0
-            
-         console.log(data)
-        /*Proceso entrar a un pool, se configuran los botones que serán las opciones dentro del pool
-        var botonPool = document.getElementById('btnActualizar')
-        botonPool.innerHTML = "Actualizar Playlist"
-        botonPool.style="width:50%; border: none; background-color:#FFF; margin:0 auto 20px auto; color:#588b8b; display:inline-block;"
-        var icono = document.createElement('i')
-        icono.className ="fas fa-sync-alt"
-        icono.style="font-size:20px; color:#588b8b; margin-left:5px;"
-        botonPool.appendChild(icono)
-
-    document.getElementById('createPlaylist').style.display="block" */
-
-    console.log('El playlist ha cambiado')
-       data.forEach(function(item,index){
-           
-           ErroresTopRango = 0
-           
-           /*Se quitan las canciones viejas si es que existen*/
-           if(document.getElementById("track"+index) !== null){
-                document.getElementById("track"+index).remove();
-                console.log("Depuración de playlist")
-                /*Despliegue de mensaje de que hay un nuevo playlist*/
-                if(index == 1){/*
-                    console.log('cargando mensaje')
-                    document.getElementById('nuevoPlaylist').style.display="block"
-                    console.log(data)
-                    setTimeout(function(){
-                        document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);*/
-                }
-
-           }
-
-           /*Se colocan las canciones en el playlist por primera vez */
-            playlist = data
-
-           console.log(item)
-           var iDiv = document.createElement('div');
-            iDiv.id = 'track' + index;
-            iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-            iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
-
-            // Create the inner div before appending to the body
-            var innerDiv = document.createElement('div');
-            innerDiv.className = 'be-post';
-            innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
-
-            // The variable iDiv is still good... Just append to it.
-            iDiv.appendChild(innerDiv);
-
-            var boton = document.createElement("span")
-            boton.className="be-img-block"
-            boton.form="trackprofile"
-            boton.type="submit"
-            boton.name="index"
-            boton.value= index
-            boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
-
-            innerDiv.appendChild(boton)
-
-            var img= document.createElement("img")
-            img.src=item.album.images[0].url
-            img.alt="omg"
-            img.style=""
-
-            boton.appendChild(img)
-
-            var span = document.createElement("span")
-            span.className="be-post-title"
-            span.style="color:black; font-size:15px; font-family:'Kanit', sans-serif; height:40px; text-align:left;color:black;"
-
-            span.innerHTML = item.name
-
-            innerDiv.appendChild(span)
-
-            /*var a = document.createElement('a')
-            a.className="close"
-            a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
-            a.id="fadeOut" + index
-            a.innerHTML ="&times;"
-
-            innerDiv.appendChild(a)*/
-
-            var span2 = document.createElement("span")
-            span2.style="color:#503047; font-size:120%;max-height:20px;"
-            span2.innerHTML="Popularidad: " + item.popularity
-
-            //innerDiv.appendChild(span2)
-
-            var div2 = document.createElement("div")
-            div2.className="author-post"
-
-            innerDiv.appendChild(div2)
-            
-            var artistas = "";
-            item.artists.forEach(function(artista,index){
-                artistas = artistas + " " +artista.name;
-            })
-
-            var span3= document.createElement("span")
-            span3.style="color:#777; font-size:120%;max-height:20px;"
-            span3.innerHTML= artistas
-
-            div2.appendChild(span3)
-
-            // Then append the whole thing onto the body
-            document.getElementsByClassName('top')[0].appendChild(iDiv);
-
-           console.log('Nueva canción desplegada')
-
-       })
-       }else if(data == "Error BD"){
-            
-           //Mensaje de error
-        
-            document.getElementById('nuevoPlaylist').innerHTML="Error al consultar la Base de Datos, intenta de nuevo!"
-            document.getElementById('nuevoPlaylist').style.display="block"
-            setTimeout(function(){
-                document.getElementById('nuevoPlaylist').style.display="none"
-            }, 4000);
-
-            ErroresTopRango += 1;
-            console.log('Error registrados en el sistema -> ', ErroresTopRango )
-
-            if(ErroresTopRango > 5){
-                location.reload(true);
-            }
-         
-        }else if(data == "Error SpotifyApi"){
-            
-            document.getElementById('nuevoPlaylist').innerHTML="Error al conectar con Spotify, intenta de nuevo!"
-            document.getElementById('nuevoPlaylist').style.display="block"
-            setTimeout(function(){
-                document.getElementById('nuevoPlaylist').style.display="none"
-            }, 4000);
-            
-            ErroresSpotify += 1;
-            console.log('Error registrados en el sistema por Spotify -> ', ErroresSpotify )
-
-            if(ErroresSpotify > 5){
-                location.reload(true);
-            }
-           
-        }else if(data == "Error Global"){
-             location.reload(true);
-        }
-    }else{
-        console.log(data);
-        console.log(data)
-        document.getElementById('nuevoPlaylist').innerHTML="Error al desplegar TOP 50, ups!"
-        document.getElementById('nuevoPlaylist').style.display="block"
-        setTimeout(function(){
-            document.getElementById('nuevoPlaylist').style.display="none"
-        }, 2000);
-        
-        $.get('/error', function(data, status, error){
-            console.log(data)
-            console.log(status)
-            if(status=="sucess"){
-                console.log('TOKEN REFRESCADO')
-            }else if(error ==true){
-                location.reload(true);
-            }
-        })
-        
-    }
-
-    })
-    
-})
-
-$(window).bind("load", function() {
-    filter = $('.filterSelected').attr('id');
-    
-    $.ajax({url: '/rango?_=' + new Date().getTime(), data:{filter:filter, cambioRango:true}, success: rango, cache: false});
-    
-    function rango(data, status){
+  function rango(data, status){
     console.log(data)
     console.log(status)
     if(status === "success"){
@@ -1804,9 +1588,29 @@ $(window).bind("load", function() {
         
     }
 
-}
+}        
+        
+var ErroresTopRango = 0
+var ErroresSpotify = 0
+var filter = $('.filterSelected').attr('id'); //variable que indica el filtro de tiempo seleccionado
+
+
+$('.timeFilter').on('click',function(){
+    $('.timeFilter').removeClass("filterSelected");
+    $(this).addClass("filterSelected");
+    filter = $('.filterSelected').attr('id');
     
+    console.log('filter -> ', filter)
     
+    $.ajax({url: '/rango?_=' + new Date().getTime(), data:{filter:filter, cambioRango:true}, success: rango, cache: false});
+    
+})
+
+$(window).bind("load", function() {
+    filter = $('.filterSelected').attr('id');
+    
+    $.ajax({url: '/rango?_=' + new Date().getTime(), data:{filter:filter, cambioRango:true}, success: rango, cache: false});
+
 })
 
 
