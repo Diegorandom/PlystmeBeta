@@ -14,44 +14,12 @@ var userid = null
 //Request de ajax para obtener userid de servidor Node.js
 $.ajax({url: '/userid', success:idCallback, cache: false});
 
-function idCallback(data, status, error){
     
-    //Control de errores
-    if(error == true || data == "Error Global" || status != "success"){
-        document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
-        document.getElementById('nuevoPlaylist').style.display="block"
-        setTimeout(function(){
-            document.getElementById('nuevoPlaylist').style.display="none"
-            location.reload(true);
-        }, 3000);
-        
-    }else{
-        var userid = data
-        console.log("userid -> ", userid)
-        
-        //Una vez obtenido el userid, éste se pasa a la función sockets() para que sea utilizado
-        sockets(userid)
-    }
-    
-}
-    
-
  function sockets() {
  
             namespace = '/test';
             var posString = null;
             var pos = null; 
-
- 
-            /*
-            var spotifyid = "####";
-            var coords_actuales = "xx:yy"
-            var coords_fiesta = ''
-            if (coords_actuales != coords_fiesta){
-                socket.emit('leave', {room: coords_fiesta, user: spotifyid});
-            }
-            */
-
 
             //     http[s]://<domain>:<port>[/<namespace>]
             var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
@@ -147,12 +115,12 @@ function idCallback(data, status, error){
     
             $('#').on(function(event){
                 // Recibir variables de POS FIJA de MAPA.JS para crear la fiesta. 
-                socket.emit('create_party',{room: $('#coordenates').val()});//proceso para crear una fiesta 
+                socket.emit('create_party',{room: pos});//proceso para crear una fiesta 
                 return false;
             });
             $('#').on(function(event){
                 // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
-                socket.emit('delete_party',{room: $('#coord_delete').val()});//proceso para eliminar una fiesta
+                socket.emit('delete_party',{room: pos});//proceso para eliminar una fiesta
                 return false;
             });
         }

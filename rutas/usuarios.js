@@ -14,7 +14,6 @@ router.get('/usuarios', function(request, response, error) {
     
 })
 
-
 router.get('/userid', function(request, response, error) {
     var objetosGlobales = request.app.get('objetosGlobales');
     var position = request.app.get('position');

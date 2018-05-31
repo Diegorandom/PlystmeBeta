@@ -60,6 +60,7 @@ router.get('/mineria', function(req, res, error){
             }
 
             /*Se consulta si el track ya existe en la BD*/
+            console.log('Comenzando consulta con BD')
              objetosGlobales[0].session
                 .run('MATCH (n:track {spotifyid:{id}}) RETURN n', {id:record.id})
                 .then(function(checktrack){
@@ -203,6 +204,7 @@ router.get('/mineria', function(req, res, error){
                  .catch(function(err){
                     console.log(err);
                     res.send('Error BD')
+                    throw BreakException;
 
                 }) 
 

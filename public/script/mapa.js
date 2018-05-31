@@ -32,31 +32,9 @@ var mapa = document.createElement('script')
                     };
 
                     console.log("Posición del usuario -> ", pos)
-
-
-                    $('#fijarUbicacion').on('click',function(){
-                       /* $.get("/posicionUsuarios", {pos:pos}, function(status, data, error){
-                            if(error == true || data == undefined || status != "success"){
-                                console.log('error al enviar posición')
-                                console.log(data)
-                                console.log(status)
-                                console.log(error)
-                            }else{
-                                console.log(data)
-                                console.log(status)
-                                enterPool()
-                                enterPool2()
-                            }
-                        }) */
-                        
-                        
-                        
-                        
-                    }) 
-
-
+                    
                     // Construct the circle for each value in citymap.
-                      // Note: We scale the area of the circle based on the population.
+                    // Note: We scale the area of the circle based on the population.
 
 
                     //infoWindow.setPosition(pos);
@@ -72,7 +50,7 @@ var mapa = document.createElement('script')
 
                         }); 
                       
-                      //return pos;
+                      return pos;
 
                   }, function() {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -85,8 +63,32 @@ var mapa = document.createElement('script')
         }
         
         
-        creacionMapa()
+        
                
+        
+        function idCallback(data, status, error){
+    
+            //Control de errores
+            if(error == true || data == "Error Global" || status != "success"){
+                document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+                document.getElementById('nuevoPlaylist').style.display="block"
+                setTimeout(function(){
+                    document.getElementById('nuevoPlaylist').style.display="none"
+                    location.reload(true);
+                }, 3000);
+
+            }else{
+                var userid = data
+                console.log("userid -> ", userid)
+                
+                var pos = creacionMapa()
+
+                //Una vez obtenido el userid, éste se pasa a la función sockets() para que sea utilizado
+                sockets(userid, pos)
+            }
+
+        }
+        
     });
 
 
