@@ -263,6 +263,14 @@ La infraestructura de los sockets se encuentra toda contenida en la función soc
                 socket.emit('create_party',{room: pos});//proceso para crear una fiesta 
                 return false;
             });
+     
+     
+            $('#fijarUbicacion2').on('click', function(event){
+                // Recibir variables de POS FIJA de MAPA.JS para crear la fiesta. 
+                socket.emit('create_party',{room: pos});//proceso para crear una fiesta 
+                return false;
+            });
+     
             $('#salirPlaylist3').on('click', function(event){
                 // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
                 socket.emit('delete_party',{room: pos});//proceso para eliminar una fiesta
