@@ -557,7 +557,7 @@ var erroresPreferenciasSuri = 0
                 
             }) 
             
-            $.get( '/pool', function(data, status) {
+            $.get( '/pool',  function(data, status) {
                 console.log(data)
                 console.log(status)
                 if(status === "success"){
@@ -1441,11 +1441,11 @@ var erroresPreferenciasSuri = 0
         
         //Botones de filtro de tiempo en top 50
         
-  function rango(data, status){
+  function rango(data, status, error){
     console.log(data)
     console.log(status)
     if(status === "success"){
-        if(data != undefined || data != "Error"){
+        if(data != undefined || data != "Error BD" || error != true || data != "Error"){
 
     console.log('El playlist ha cambiado')
        data.forEach(function(item,index){
@@ -1533,7 +1533,7 @@ var erroresPreferenciasSuri = 0
            console.log('Nueva canción desplegada')
 
        })
-       }else if(data == "Error" || data == "Error BD"){
+       }else if(data == "Error" || data == "Error BD" || error == true){
             //Mensaje de error
         
             document.getElementById('nuevoPlaylist').innerHTML="Error al consultar la Base de Datos, intenta de nuevo!"

@@ -203,7 +203,7 @@ router.get('/mineria', function(req, res, error){
                  .catch(function(err){
                     console.log(err);
                     res.send('Error BD')
-
+                    throw BreakException;
                 }) 
 
               //TERMINA DE GUARDARSE INFORMACIÓN DEL TRACK Y COMIENZA A PROCRESARCE EL ALGORITMO
