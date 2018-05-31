@@ -49,6 +49,10 @@ var mapa = document.createElement('script')
                                 enterPool2()
                             }
                         }) */
+                        
+                        
+                        
+                        
                     }) 
 
 
