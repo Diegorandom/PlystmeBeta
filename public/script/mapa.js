@@ -298,7 +298,3 @@ La infraestructura de los sockets se encuentra toda contenida en la función soc
                 return false;
             });
         }
-
-
-
-
