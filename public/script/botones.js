@@ -134,10 +134,9 @@
         $('#fijarUbicacion').css("display","none");        
         $('#btnRegresar').css("display","none");
         $('#EliminarPlaylist').css("display","block");
-        $('#enterPool').click();
         $('.pool').css("display","block");
+        $('#enterPool').click();
         $('#salirPlaylist').css("display","none");
-        
     })
     
     $('#fijarUbicacion2').on('click',function(){
