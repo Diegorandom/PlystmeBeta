@@ -10,21 +10,26 @@ La infraestructura de los sockets se encuentra toda contenida en la función soc
 */
 
 var userid = null
+
+//Request de ajax para obtener userid de servidor Node.js
 $.ajax({url: '/userid', success:idCallback, cache: false});
 
 function idCallback(data, status, error){
+    
+    //Control de errores
     if(error == true || data == "Error Global" || status != "success"){
         document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
         document.getElementById('nuevoPlaylist').style.display="block"
         setTimeout(function(){
             document.getElementById('nuevoPlaylist').style.display="none"
+            location.reload(true);
         }, 3000);
-        
-        location.reload(true);
         
     }else{
         var userid = data
         console.log("userid -> ", userid)
+        
+        //Una vez obtenido el userid, éste se pasa a la función sockets() para que sea utilizado
         sockets(userid)
     }
     
