@@ -72,6 +72,8 @@ var mapa = document.createElement('script')
                         animation: google.maps.Animation.DROP
 
                         }); 
+                      
+                      return pos;
 
                   }, function() {
                     handleLocationError(true, infoWindow, map.getCenter());
