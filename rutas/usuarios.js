@@ -14,5 +14,20 @@ router.get('/usuarios', function(request, response, error) {
     
 })
 
+
+router.get('/userid', function(request, response, error) {
+    var objetosGlobales = request.app.get('objetosGlobales');
+    var position = request.app.get('position');
+    position = request.sessions.position;
+    
+    if(error == true || objetosGlobales == undefined || position == undefined){
+        response.send('Error Global')
+    }else{
+        response.send(objetosGlobales[position].userid)
+    }
+    
+    
+})
+
 //Termina request de perfil     
 module.exports = router;
