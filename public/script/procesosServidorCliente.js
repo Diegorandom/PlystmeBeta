@@ -960,7 +960,6 @@ var erroresPreferenciasSuri = 0
             
             console.log('Vamos a vaciar el pool de Escritorio')
             
-            $('#usuariosDentro').css("display","none");
             
             $.get('/pool', function(data, status){
                
@@ -973,6 +972,12 @@ var erroresPreferenciasSuri = 0
                 if(data != undefined){
                     
                     console.log('El playlist se va a vaciar')
+                    
+                    //eliminar contador de usuarios
+                    document.getElementById("contadorSpan").remove();
+                    //eliminar fotos de usuarios
+                    document.getElementsByClassName("imgUsuario").remove();
+                    
                    data.forEach(function(item,index){
                        /*Se eliminan las canciones viejas*/
                        if(document.getElementById("pool"+index) !== null){

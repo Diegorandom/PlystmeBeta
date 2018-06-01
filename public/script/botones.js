@@ -234,7 +234,14 @@
     
 //Funcionalidad del boton salir del playlist
     
-
+    $('#salirPlaylist').on('click',function(){
+        vaciarPool();
+        $('#btnActualizar').css("display","none");
+        $(this).css("display","none");
+        $('#btnCrear').css("display","inline-block");
+        $('#enterPool').css("display","inline-block");
+        $('#usuariosDentro').css("display","none");
+    })
     
     // Botón REGRESAR en la pantalla de MAPA donde se fija la posición
     
@@ -260,9 +267,13 @@
     
     // Botón ELIMINAR Playlist en la playlist del HOST para regresar a la pantalla principal
     
-    $('#salirPlaylist').on('click',function(){
-        
+    $('#EliminarPlaylist').on('click',function(){
         vaciarPool();
+        $('#btnActualizar').css("display","none");
+        $(this).css("display","none");
+        $('#btnCrear').css("display","inline-block");
+        $('#enterPool').css("display","inline-block");
+        $('#usuariosDentro').css("display","none");
     })
 
 
