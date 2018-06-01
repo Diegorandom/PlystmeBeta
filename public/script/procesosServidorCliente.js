@@ -1002,7 +1002,9 @@ var erroresPreferenciasSuri = 0
 
         
         /*Lo mismo que enterPool pero para movil*/
-        document.getElementById('enterPool2').addEventListener('click', function enterPool2() {
+
+        
+        function enterPool2() {
             
             $('#usuariosDentro2').css("display","block");
             
@@ -1233,7 +1235,7 @@ var erroresPreferenciasSuri = 0
                 }
                 
             })
-        })
+        }
         
         /*Lo mismo que btnActualizar pero para movil*/
         document.getElementById('btnActualizar2').addEventListener('click', function() {

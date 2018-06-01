@@ -102,6 +102,7 @@
         $('#btnCrear2').css("display","none");
         $('#salirPlaylist2').css("display","block");
         inPool2 = 1;
+        enterPool2();
     })
     
     $('#btnCrear').on('click',function(){
@@ -143,18 +144,15 @@
     })
     
     $('#fijarUbicacion2').on('click',function(){
-        console.log('Se activa fijarUbicacion2')
+        console.log('Se activa fijarUbicacion2');
         
-        enterPool()
+        enterPool2();
         
+        $('#map2').css("display","none");
         $('#mensajeUbicacion2').css("display","none");
-        $('#map2').css("display","none");       
-        $('#fijarUbicacion2').css("display","none");        
-        $('#btnRegresar').css("display","none");
-        
-        $('#EliminarPlaylist2').css("display","block");
-        $('#salirPlaylist2').css("display","none");
         $('#btnRegresar2').css("display","none");
+        $('#EliminarPlaylist2').css("display","block");
+        $(this).css("display","none");
         
     })
     
