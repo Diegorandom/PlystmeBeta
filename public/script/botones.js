@@ -260,7 +260,10 @@
     
     // Botón ELIMINAR Playlist en la playlist del HOST para regresar a la pantalla principal
     
-
+    $('#salirPlaylist').on('click',function(){
+        
+        vaciarPool();
+    })
 
 
     

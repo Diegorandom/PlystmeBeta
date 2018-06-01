@@ -952,6 +952,49 @@ var erroresPreferenciasSuri = 0
                 
             })
         })
+
+        
+    /* Proceso para vaciar un playlist */
+
+    function vaciarPool() {
+            
+            console.log('Vamos a vaciar el pool de Escritorio')
+            
+            $('#usuariosDentro').css("display","none");
+            
+            $.get('/pool', function(data, status){
+               
+            console.log(data)
+            console.log(status)
+                        
+                        
+                        
+            if(status === "success"){
+                if(data != undefined){
+                    
+                    console.log('El playlist se va a vaciar')
+                   data.forEach(function(item,index){
+                       /*Se eliminan las canciones viejas*/
+                       if(document.getElementById("pool"+index) !== null){
+                            document.getElementById("pool"+index).remove();
+                            console.log("Depuración de playlist")
+                            /*Mensaje de actualizacion de playlist*/
+                            if(index == 1){
+                                console.log('cargando mensaje')
+                                document.getElementById('nuevoPlaylist').innerHTML="Eliminando Playlist..."
+                                document.getElementById('nuevoPlaylist').style.display="block"
+                                console.log(data)
+                                setTimeout(function(){
+                                    document.getElementById('nuevoPlaylist').style.display="none"
+                                }, 2000);
+                            }
+                            
+                       }
+                   })              
+        }}})}
+        
+            
+
         
         /*Lo mismo que enterPool pero para movil*/
         document.getElementById('enterPool2').addEventListener('click', function enterPool2() {
