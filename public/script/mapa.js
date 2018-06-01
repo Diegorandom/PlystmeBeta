@@ -99,7 +99,7 @@ var mapa = document.createElement('script')
            
 
                 var map = new google.maps.Map(document.getElementById(tipomap), {
-                  center: {lat: -34.397, lng: 150.644},
+                  center: {lat: 19.4326018, lng: -99.1332049},
                   zoom: 18
                 });
                 var infoWindow = new google.maps.InfoWindow({map: map});
@@ -260,14 +260,14 @@ La infraestructura de los sockets se encuentra toda contenida en la función soc
     
             $('#fijarUbicacion').on('click', function(event){
                 // Recibir variables de POS FIJA de MAPA.JS para crear la fiesta. 
-                socket.emit('create_party',{room: pos});//proceso para crear una fiesta 
+                socket.emit('create_party',{room: pos, user:userid});//proceso para crear una fiesta 
                 return false;
             });
      
      
             $('#fijarUbicacion2').on('click', function(event){
                 // Recibir variables de POS FIJA de MAPA.JS para crear la fiesta. 
-                socket.emit('create_party',{room: pos});//proceso para crear una fiesta 
+                socket.emit('create_party',{room: pos, user:userid});//proceso para crear una fiesta 
                 return false;
             });
      

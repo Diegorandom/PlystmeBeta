@@ -58,6 +58,12 @@ router.get('/pool', function(req, res, error){
                             Test(options)
                         },1000);
                         conteoErrores += 1;
+                        
+                        /*Si los errores en la API persisten por más de 1 minuto se manda a la pantalla de error*/
+                    if(conteoErrores > 30){
+                        res.send("Error")
+                    }
+                        
                     }else{
                         /*En caso de que la API esté funcionando apropiadamente se llena el arreglo del pool de la posicion 0 [posicion neutral] del arreglo objetosGlobales con los IDs de los usuarios*/
                         console.log("API funcionando, GRACIAS A DIOS ALV PRRO!...");	
@@ -79,11 +85,6 @@ router.get('/pool', function(req, res, error){
                         console.log(objetosGlobales[position].playlist)
                     }
                     
-                    /*Si los errores en la API persisten por más de 1 minuto se manda a la pantalla de error*/
-                    if(conteoErrores > 60){
-                        res.send("Error")
-                    }
-                    
                     });
             };
 
@@ -94,7 +95,7 @@ router.get('/pool', function(req, res, error){
     })
     }else{
         error = error + 'objetosGlobales[position] -> INDEFINIDO'
-        res.render('pages/error', {error:error})
+        res.send('Error Origen Pool')
     }
 });
 
