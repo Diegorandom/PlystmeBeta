@@ -240,6 +240,17 @@
         $('#enterPool').css("display","inline-block");
         $('#usuariosDentro').css("display","none");
     })
+
+    $('#salirPlaylist2').on('click',function(){
+        vaciarPool2();
+        $('#btnActualizar2').css("display","none");
+        $(this).css("display","none");
+        $('#btnCrear2').css("display","inline-block");
+        $('#enterPool2').css("display","inline-block");
+        $('#usuariosDentro2').css("display","none");
+    })
+
+
     
     // Botón REGRESAR en la pantalla de MAPA donde se fija la posición
     
@@ -272,6 +283,15 @@
         $('#btnCrear').css("display","inline-block");
         $('#enterPool').css("display","inline-block");
         $('#usuariosDentro').css("display","none");
+    })
+
+    $('#EliminarPlaylist2').on('click',function(){
+        vaciarPool2();
+        $('#btnActualizar2').css("display","none");
+        $(this).css("display","none");
+        $('#btnCrear2').css("display","inline-block");
+        $('#enterPool2').css("display","inline-block");
+        $('#usuariosDentro2').css("display","none");
     })
 
 

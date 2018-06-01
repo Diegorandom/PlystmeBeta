@@ -997,6 +997,49 @@ var erroresPreferenciasSuri = 0
                        }
                    })              
         }}})}
+
+
+    function vaciarPool2() {
+            
+            console.log('Vamos a vaciar el pool de movil')
+            
+            
+            $.get('/pool', function(data, status){
+               
+            console.log(data)
+            console.log(status)
+                        
+                        
+                        
+            if(status === "success"){
+                if(data != undefined){
+                    
+                    console.log('El playlist se va a vaciar en movil')
+                    
+                    //eliminar contador de usuarios
+                    document.getElementById("contadorSpan2").remove();
+                    //eliminar fotos de usuarios
+                    document.getElementsByClassName("imgUsuario2").remove();
+                    
+                   data.forEach(function(item,index){
+                       /*Se eliminan las canciones viejas*/
+                       if(document.getElementById("pool"+index) !== null){
+                            document.getElementById("pool"+index).remove();
+                            console.log("Depuración de playlist en movil")
+                            /*Mensaje de actualizacion de playlist*/
+                            if(index == 1){
+                                console.log('cargando mensaje')
+                                document.getElementById('nuevoPlaylist').innerHTML="Eliminando Playlist..."
+                                document.getElementById('nuevoPlaylist').style.display="block"
+                                console.log(data)
+                                setTimeout(function(){
+                                    document.getElementById('nuevoPlaylist').style.display="none"
+                                }, 2000);
+                            }
+                            
+                       }
+                   })              
+        }}})}
         
             
 
