@@ -129,17 +129,30 @@
         
         enterPool();
         
+         $('#mensajeUbicacion').css("display","none");
+        $('#map').css("display","none");       
+        $('#fijarUbicacion').css("display","none");        
+        $('#btnRegresar').css("display","none");
+        
+        $('#EliminarPlaylist').css("display","block");
+        $('#salirPlaylist').css("display","none");
+        $('#btnRegresar').css("display","none");
+
+        
+        
     })
     
     $('#fijarUbicacion2').on('click',function(){
         console.log('Se activa fijarUbicacion2')
         
+        enterPool()
+        
         $('#mensajeUbicacion2').css("display","none");
         $('#map2').css("display","none");       
         $('#fijarUbicacion2').css("display","none");        
         $('#btnRegresar').css("display","none");
+        
         $('#EliminarPlaylist2').css("display","block");
-        $('#enterPool2').click();
         $('#salirPlaylist2').css("display","none");
         $('#btnRegresar2').css("display","none");
         
