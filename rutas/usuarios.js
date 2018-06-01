@@ -9,8 +9,14 @@ router.get('/usuarios', function(request, response, error) {
     var position = request.app.get('position');
     position = request.sessions.position;
     
-    objetosGlobales[position].refreshingUsers = true;
-    response.redirect('/perfil')
+    if(objetosGlobales != undefined || position != undefined || objetosGlobales[position] != undefined){
+        objetosGlobales[position].refreshingUsers = true;
+        response.redirect('/perfil')
+    }else{
+        console.log('Error con variables globales...')
+        res.send("Error Origen Usuarios")
+    }
+    
     
 })
 
