@@ -1547,7 +1547,7 @@ var erroresPreferenciasSuri = 0
     console.log(data)
     console.log(status)
     if(status === "success"){
-        if(data != undefined || data != "Error BD" || error != true || data != "Error"){
+        if(data != undefined && data != "Error BD" && error != true && data != "Error"){
 
     console.log('El playlist ha cambiado')
        data.forEach(function(item,index){
