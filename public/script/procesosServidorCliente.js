@@ -196,7 +196,7 @@ var erroresPreferenciasSuri = 0
                 erroresPreferenciasGlobal += 1
                 console.log('Error global al procesar preferencias -> ', erroresPreferenciasGlobal)
                 
-                if(erroresPreferenciasGlobal > 5){
+                if(erroresPreferenciasGlobal > 2){
                     location.reload(true);
                 }
                 
@@ -212,7 +212,7 @@ var erroresPreferenciasSuri = 0
                 console.log('Error global al procesar preferencias -> ', erroresPreferenciasSuri)
                 
             
-                if(erroresPreferenciasSuri > 5){
+                if(erroresPreferenciasSuri > 2){
                     location.reload(true);
                 }
                 
@@ -294,7 +294,7 @@ var erroresPreferenciasSuri = 0
                     erroresGuardarTopGlobal += 1
                     console.log('Error Global -> ', erroresGuardarTopGlobal)
                     
-                   if(erroresGuardarTopGlobal >5){
+                   if(erroresGuardarTopGlobal >2){
                        location.reload(true);
                    }
                       
@@ -308,7 +308,7 @@ var erroresPreferenciasSuri = 0
                     erroresGuardarTopSpotifyl += 1
                     console.log('Error Global -> ', erroresGuardarTopSpotify)
                     
-                   if(erroresGuardarTopSpotify >5){
+                   if(erroresGuardarTopSpotify >2){
                        location.reload(true);
                    } 
                 }
@@ -1285,10 +1285,6 @@ var erroresPreferenciasSuri = 0
             console.log('Actualizando POOL2')
             
             $.get('/usuarios', function(data, status, error){
-            if(error == true){
-                
-            }
-                
                 
             console.log(status)    
             console.log(data)
@@ -1546,8 +1542,10 @@ var erroresPreferenciasSuri = 0
   function rango(data, status, error){
     console.log(data)
     console.log(status)
+    
+    
     if(status === "success"){
-        if(data != undefined && data != "Error BD" && error != true && data != "Error"){
+        if(data != undefined && data != "Error BD" && error != true && data != "Error" && typeof data == 'object'){
 
     console.log('El playlist ha cambiado')
        data.forEach(function(item,index){
@@ -1647,7 +1645,7 @@ var erroresPreferenciasSuri = 0
             ErroresTopRango += 1;
             console.log('Error registrados en el sistema -> ', ErroresTopRango )
 
-            if(ErroresTopRango > 5){
+            if(ErroresTopRango > 2){
                 location.reload(true);
             }
             
@@ -1662,7 +1660,7 @@ var erroresPreferenciasSuri = 0
             ErroresSpotify += 1;
             console.log('Error registrados en el sistema por Spotify -> ', ErroresSpotify )
 
-            if(ErroresSpotify > 5){
+            if(ErroresSpotify > 2){
                 location.reload(true);
             }
             

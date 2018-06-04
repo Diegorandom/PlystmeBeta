@@ -9,7 +9,7 @@ router.get('/rango', function(req, res, error){
     var position = req.app.get('position');
     position = req.sessions.position;
     
-    if(objetosGlobales[position] != undefined || position != undefined ){
+    if(objetosGlobales[position] != undefined && position != undefined ){
         
         objetosGlobales[position].rango = req.query.filter
         objetosGlobales[position].cambioRango = true

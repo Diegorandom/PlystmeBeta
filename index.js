@@ -1,16 +1,17 @@
-/*
+/*DOCUMENTACIÓN DE ATMOS -> PLYSTME.COM
 Código por Diego Ignacio Ortega
 Derechos reservados ALV PRROO!
 NO BORRAR!
 
 Todos los cambios nuevos al código deben ser apropiadamente comentados y documentados.
 
-Tasa límite de Spotify Documentación 
+Tasa límite de requests Spotify - Documentación 
 https://stackoverflow.com/questions/30548073/spotify-web-api-rate-limits
 
-*/
+ NODE MODULES
 
-// NODE MODULES
+Estos módulos descargados del Node Package Manager son piezas de Middleware que soportan las funciones más básicas del sistema completo. Llamar módulos de node en index no interviene en las diferentes rutas del sistema
+*/
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var cookieParser = require('cookie-parser');
@@ -28,15 +29,17 @@ var DelayedResponse = require('http-delayed-response')
 
 
 /* 
-Documentación de Index
+Documentación de Código
 
-El objeto jsonDatosInit es la variable constructor con la cual se construye la estructura de datos de los usuarios.
-Este objeto construye el usuario neutral con el cual funciona la plataforma cuando un usuario que no está registrado en el sistema entra. 
+El objeto jsonDatosInit es la variable constructor con la cual se define la estructura de datos de los usuarios.
+Este objeto construye el usuario inicial con el cual funciona la plataforma cuando un usuario que no está registrado en el sistema entra a la página principal.
 */
 var jsonDatosInit = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:[], track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0, pool:[], playlist:[], popularidadAvg:0, usuarios:[], bdEstado:"noGuardado", rango:"long_term", cambioRango:false, refresh_token:null, refreshing:false, refreshingUsers:false}
 
+/*Se asigna position = 0 para que el sistema siempre arranque funcionando con la estructura inicial del objeto Global que contiene a todos los usuarios*/
 var position = 0;
 
+/*Se inicializa objetosGlobales como un arreglo que después se convertirá en un arreglo de objetos json*/
 var objetosGlobales=[];
 
 objetosGlobales[0] = jsonDatosInit;
@@ -99,14 +102,6 @@ Infraestructura web rápida, minimalista y flexible para Node.js
 
 Aplicaciones web
 Express es una infraestructura de aplicaciones web Node.js mínima y flexible que proporciona un conjunto sólido de características para las aplicaciones web y móviles.
-API
-Con miles de métodos de programa de utilidad HTTP y middleware a su disposición, la creación de una API sólida es rápida y sencilla.
-Rendimiento
-Express proporciona una delgada capa de características de aplicación web básicas, que no ocultan las características de Node.js que tanto ama y conoce.
-LoopBack
-Desarrolle aplicaciones basadas en modelos con una infraestructura basada en Express.
-Encontrará más información en loopback.io.
-
 */
 var app = express();
 
@@ -259,15 +254,23 @@ app.use(require('./rutas/otrosProcesos'))
 /*Ambiente de SUPERCOLLIDER - no utilizada por el momento*/
 app.use(require("./rutas/environmentSC"));
 
+/*Ruta de donde se extrae la información del usuario de Spotify hacia nuestra propia BD*/
 app.use(require('./rutas/mineriaUsuario'));
 
+
+/*Ruta donde se administra el tipo de minería necesaria dado que se escoge un rango de tiempo para Top 50 diferente*/
 app.use(require('./rutas/rangoTiempo'));
 
+/*Ruta para procesos con BD que no se usa actualmente*/
 app.use(require('./rutas/DatosBD'));
 
+/*Proceso para refrescar token de Spotify (en proceso)*/
 app.use(require('./rutas/refreshingToken'));
 
+/*Ruta para obtener el arreglo con el número de usuarios, sus nombre y fotos, de nuestra BD*/
 app.use(require('./rutas/usuarios'));
+
+/*Ruta no utilizada*/
 app.use(require('./rutas/posicionUsuarios'));
 
 /*Ruta para llamar la pagina de error para tests*/
