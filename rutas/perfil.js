@@ -104,7 +104,7 @@ router.get('/perfil', function(request, response, error) {
                          console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
                     }else{
                     console.log('Cargando perfil')
-                    response.render('pages/author-login.ejs', objetosGlobales[position]); 
+                    response.render('pages/perfilUI.ejs', objetosGlobales[position]); 
                     console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
                     }
                      
