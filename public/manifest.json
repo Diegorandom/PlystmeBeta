@@ -1,7 +1,7 @@
 {
     "name": "Plyst Me",
     "short_name": "Plyst",
-    "start_url":"",
+    "start_url":"/",
     "scope": "./",
     "icons":[
         {
