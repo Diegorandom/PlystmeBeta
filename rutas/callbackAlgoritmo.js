@@ -151,7 +151,6 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
              .writeTransaction(tx => tx.run('MATCH (n:usuario) WHERE n.spotifyid={spotifyid} RETURN n', {spotifyid:jsonDatos.userid}))
              
             promesaMatchUsuario.then(function(checkid_result){ 
-                objetosGlobales[0].session[0].close();
                  console.log('')
                  console.log('se realizó la consulta a la base de datos')
                  
@@ -174,6 +173,17 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                 objetosGlobales[0].session[0].close();
                                 console.log('Se creó con éxito el nodo del usuario');
                                
+                                /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
+                               var preventCache = Date.now()
+                                console.log(preventCache)
+                              res.redirect('/perfil#' +
+                                  querystring.stringify({
+                                    access_token: objetosGlobales[position].access_token,
+                                    refresh_token: objetosGlobales[position].refresh_token,
+                                    preventCache: preventCache
+                                  })); 
+                                
+                                
                                  })
                             promesaCrearUsuario.catch(function(err){
                                 console.log(err);
@@ -181,15 +191,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
 
                             }) 
                             
-                             /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
-                               var preventCache = Date.now()
-                                console.log(preventCache)
-                                  res.redirect('/perfil#' +
-                                      querystring.stringify({
-                                        access_token: objetosGlobales[position].access_token,
-                                        refresh_token: objetosGlobales[position].refresh_token,
-                                        preventCache: preventCache
-                                      })); 
+                             
                             
                         }else if(checkid_result.records.length >= 1){
                             console.log('Este usuario ya está registrado (no debería ser más de 1)')
