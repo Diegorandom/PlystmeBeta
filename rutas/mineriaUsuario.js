@@ -20,6 +20,7 @@ console.log('Llegamos a la ruta de mineria de datos de usuario')
 
 router.get('/mineria', function(req, res, error){
     console.log('entramos a la ruta')
+    var driver = req.app.get('driver')
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position'); 
     position = req.sessions.position;
@@ -59,10 +60,31 @@ router.get('/mineria', function(req, res, error){
                 objetosGlobales[position].seedTracks[index] = record;
             }
 
+            objetosGlobales[0].session[index] = driver.session();
+            
+             /*
+            Ejemplo de transacciones con Neo4j ->
+            
+            const session = driver.session();
+            const writeTxPromise = session.writeTransaction(tx => tx.run('CREATE (a:Person {name: $name})', {'name': personName}));
+
+            writeTxPromise.then(result => {
+              session.close();
+
+              if (result) {
+                console.log('Person created');
+              }
+            });
+            
+            */
+            
             /*Se consulta si el track ya existe en la BD*/
-             objetosGlobales[0].session
-                .run('MATCH (n:track {spotifyid:{id}}) RETURN n', {id:record.id})
+             const promesaTrackId =  objetosGlobales[0].session[index]
+                .writeTransaction(tx => tx.run('MATCH (n:track {spotifyid:{id}}) RETURN n', {id:record.id}))
+             
+                promesaTrackId
                 .then(function(checktrack){
+                objetosGlobales[0].session[index].close();
                  var artistas = [];
                 /*Agrupación de los artistas de la canción en un arreglo que será usado después para guardar estos en la BD*/
                  for(var i = 0; i < record.artists.length; i++){
@@ -83,9 +105,12 @@ router.get('/mineria', function(req, res, error){
                     console.log('Se creará nuevo record en base de datos');
 
                 /*Proceso de guardar datos generales del track en la BD*/
-                    objetosGlobales[0].session
-                    .run('CREATE (n:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, reproducible:{reproducible}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen},artistaId:{artistaId}})', { album:record.album.name, nombre:record.name, artistas:artistas, duracion:record.duration_ms, Cont_explicito:record.explicit, externalurls:record.external_urls.spotify, href:record.href, spotifyid:record.id, reproducible:record.is_playable, popularidad:record.popularity, previewUrl:record.preview_url, uri:record.uri, albumImagen:record.album.images[0].url, artistaId:record.artists[0].id })
+                    const promesaBasicTrack = objetosGlobales[0].session[index]
+                    .writeTransaction(tx => tx.run('CREATE (n:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, reproducible:{reproducible}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen},artistaId:{artistaId}})', { album:record.album.name, nombre:record.name, artistas:artistas, duracion:record.duration_ms, Cont_explicito:record.explicit, externalurls:record.external_urls.spotify, href:record.href, spotifyid:record.id, reproducible:record.is_playable, popularidad:record.popularity, previewUrl:record.preview_url, uri:record.uri, albumImagen:record.album.images[0].url, artistaId:record.artists[0].id }))
+                    
+                    promesaBasicTrack
                     .then(function(resultado_create){
+                        objetosGlobales[0].session[index].close();
                         console.log('Se Guardo con éxito la información de este track');
                         contadorTracks += 1;
                         
@@ -101,9 +126,12 @@ router.get('/mineria', function(req, res, error){
                     artistaId.push(record.artists[0].id)    
 
                     /*Se revisa si el artista ya existe en la BD*/
-                    objetosGlobales[0].session
-                        .run('MATCH (n:artista {artistaId: {spotifyId}}) RETURN n', {spotifyId: record.artists[0].id})
+                    const promesaArtista = objetosGlobales[0].session[index]
+                        .writeTransaction(tx => tx.run('MATCH (n:artista {artistaId: {spotifyId}}) RETURN n', {spotifyId: record.artists[0].id}))
+                    
+                        promesaArtista
                         .then(function(artistaBusqueda){
+                            objetosGlobales[0].session[index].close();
 
                             console.log("artistaBusqueda.records.length")
                             console.log(artistaBusqueda.records.length)
@@ -112,23 +140,34 @@ router.get('/mineria', function(req, res, error){
                             if(artistaBusqueda.records.length<1){
 
                                 console.log('Artista Nuevo!')
-                                objetosGlobales[0].session
-                                    .run('CREATE (n:artista {artistaId: {spotifyId}, nombre:{nombre}})', {spotifyId: record.artists[0].id, nombre: record.artists[0].name})
+                                const promesaCrearArtista = objetosGlobales[0].session[index]
+                                   .writeTransaction(tx => tx.run('CREATE (n:artista {artistaId: {spotifyId}, nombre:{nombre}})', {spotifyId: record.artists[0].id, nombre: record.artists[0].name}))
+                                
+                                    promesaCrearArtista
                                     .then(function(artistaCreado){
+                                        objetosGlobales[0].session[index].close();
                                         console.log('Artista Creado en la BD')
 
                                         /*Se crea la relación entre los tracks y el usuario en BD*/
-                                        objetosGlobales[0].session
-                                            .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}})  CREATE (n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, rangoTiempo:objetosGlobales[position].rango })
+                                        const promesaRelacionTrackBd = objetosGlobales[0].session[index]
+                                            .writeTransaction(tx => tx.run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}})  CREATE (n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, rangoTiempo:objetosGlobales[position].rango }))
+                                        
+                                        promesaRelacionTrackBd
                                             .then(function(resultado){
+                                            objetosGlobales[0].session[index].close();
                                                 console.log("Se conecto exitosamente el track con el usuario")
 
                                                 /*Se crea la relación entre track y artista en BD*/
-                                                objetosGlobales[0].session
-                                                    .run('MATCH (n:track {artistaId:{spotifyId}}), (o:artista {artistaId:{spotifyId} }) CREATE (n)-[:interpretadoPor]->(o) ', {spotifyId: record.artists[0].id, rangoTiempo:objetosGlobales[position].rango})
+                                                const promesaRelacionTrackArtista = objetosGlobales[0].session[index]
+                                                    .writeTransaction(tx=> tx.run('MATCH (n:track {artistaId:{spotifyId}}), (o:artista {artistaId:{spotifyId} }) CREATE (n)-[:interpretadoPor]->(o) ', {spotifyId: record.artists[0].id, rangoTiempo:objetosGlobales[position].rango}))
+                                                
+                                                promesaRelacionTrackArtista
                                                     .then(function(resultadoUnion){
+                                                        objetosGlobales[0].session[index].close();
                                                         console.log("Union de artista existente con track existente exitoso")
                                                     })
+                                                
+                                                promesaRelacionTrackArtista
                                                     .catch(function(err){
                                                     console.log(err);
                                                     res.send('Error BD')
@@ -136,27 +175,34 @@ router.get('/mineria', function(req, res, error){
                                                     }) 
 
                                             })
+                                        
+                                        promesaRelacionTrackBd
                                              .catch(function(err){
-                                            console.log(err);
-                                            res.send('Error BD')
-                                            
+                                                console.log(err);
+                                                res.send('Error BD')
                                             })
 
                                         })
+                                    
+                                        promesaCrearArtista
                                         .catch(function(err){
-                                        console.log(err);
-                                        res.send('Error BD')
-                                        
+                                            console.log(err);
+                                            res.send('Error BD')
                                         })
 
                             }else{
-                                /*Si el track existe en la BD se para directamente a conectar la relación entre track e usuario*/
-                                objetosGlobales[0].session
-                                    .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}), (o:artista {spotifyId:{spotifyId} }) CREATE (o)<-[:interpretadoPor]-(n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, spotifyId: record.artists[0].id, rangoTiempo:objetosGlobales[position].rango  })
+                                /*Si el track existe en la BD se pasa directamente a conectar la relación entre track e usuario*/
+                               const promesaRelacionTrackUsuario = objetosGlobales[0].session[index]
+                                    .writeTransaction(tx => tx.run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}), (o:artista {spotifyId:{spotifyId} }) CREATE (o)<-[:interpretadoPor]-(n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, spotifyId: record.artists[0].id, rangoTiempo:objetosGlobales[position].rango  }))
+                               
+                               promesaRelacionTrackUsuario
                                     .then(function(resultado){
+                                        objetosGlobales[0].session[index].close();
                                         console.log("Se conecto exitosamente el track con el usuario")
 
                                     })
+                               
+                                promesaRelacionTrackUsuario
                                      .catch(function(err){
                                         console.log(err);
                                         res.send('Error BD')
@@ -166,15 +212,27 @@ router.get('/mineria', function(req, res, error){
                             }
 
                         })
+                        
+                        promesaArtista
+                            .catch(function(err){
+                                console.log(err);
+                                res.send('Error BD')
+
+                            })
 
                 }else{
-                    /*En caso de que el artista ya fue procesado y por lo tanto conectado con otros tracks y con el track en proceso, solo hace falta conecta el usuario con el nuevo track*/
-                    objetosGlobales[0].session
-                        .run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, rangoTiempo:objetosGlobales[position].rango  })
+                    /*En caso de que el artista ya fue procesado y por lo tanto conectado con otros tracks y con el track en proceso, solo hace falta conectar el usuario con el nuevo track*/
+                    const promesaConectarUsuarioTrack =  objetosGlobales[0].session[index]
+                        .writeTransaction(tx => tx.run('MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)', {spotifyidUsuario:objetosGlobales[position].userid, spotifyid:record.id, index:index+1, rangoTiempo:objetosGlobales[position].rango  }))
+                    
+                    promesaConectarUsuarioTrack
                         .then(function(resultado){
+                            objetosGlobales[0].session[index].close();
                             console.log("Se conecto exitosamente el track con el usuario")
 
                         })
+                    
+                    promesaConectarUsuarioTrack
                          .catch(function(err){
                         console.log(err);
                         res.send('Error BD')
@@ -183,6 +241,7 @@ router.get('/mineria', function(req, res, error){
                 }
 
             })
+            promesaBasicTrack
             .catch(function(err){
                 console.log(err);
                 res.send('Error BD')
@@ -200,7 +259,9 @@ router.get('/mineria', function(req, res, error){
                 }
             }
          })
-                 .catch(function(err){
+                
+                promesaTrackId
+                .catch(function(err){
                     console.log(err);
                     res.send('Error BD')
                     throw Error
@@ -220,6 +281,13 @@ router.get('/mineria', function(req, res, error){
     }
 })
 
+
+
+
+
+
+
+/*FUNCIÓN DE CARACTERÍSTICAS*/
 
  function caracteristicas(objetosGlobales, position, res){
                 
@@ -254,10 +322,13 @@ router.get('/mineria', function(req, res, error){
               objetosGlobales[position].track_uri.forEach(function(dataURI, index){
                   
                     
-             /*Se revisa las caracteristicas del track ya han sido guardadas, en caso contrario se guardan en la BD*/
-             objetosGlobales[0].session
-                .run('MATCH (n:track {spotifyid:{track_uri}}) WHERE NOT EXISTS(n.danceability) OR  NOT EXISTS(n.energia) OR NOT EXISTS(n.fundamental) OR NOT EXISTS(n.amplitud) OR NOT EXISTS(n.modo) OR NOT EXISTS(n.speechiness) OR NOT EXISTS(n.acousticness) OR NOT EXISTS(n.instrumentalness) OR NOT EXISTS(n.positivismo) OR NOT EXISTS(n.tempo) OR NOT EXISTS(n.compas) OR NOT EXISTS(n.liveness) RETURN n', {track_uri:dataURI})
+             /*Se revisan si las caracteristicas del track ya han sido guardadas*/
+            const promesaRevisionCaract = objetosGlobales[0].session[index]
+                .writeTransaction(tx => tx.run('MATCH (n:track {spotifyid:{track_uri}}) WHERE NOT EXISTS(n.danceability) OR  NOT EXISTS(n.energia) OR NOT EXISTS(n.fundamental) OR NOT EXISTS(n.amplitud) OR NOT EXISTS(n.modo) OR NOT EXISTS(n.speechiness) OR NOT EXISTS(n.acousticness) OR NOT EXISTS(n.instrumentalness) OR NOT EXISTS(n.positivismo) OR NOT EXISTS(n.tempo) OR NOT EXISTS(n.compas) OR NOT EXISTS(n.liveness) RETURN n', {track_uri:dataURI}))
+            
+            promesaRevisionCaract
                 .then(function(resultado){
+                    objetosGlobales[0].session[index].close();
                     console.log("Se el conteo es 1 = El nodo necesita recopilar información, 0 = Nodo con info completa -> ", resultado.records.length)
                     
            if(resultado.records.length==0){
@@ -295,26 +366,31 @@ router.get('/mineria', function(req, res, error){
                  var firma_tiempo_bd = parseFloat(data.time_signature);
                  var duracion_bd =  parseFloat(data.duration_ms);
 
-                /*Se revisa las caracteristicas del track ya han sido guardadas, en caso contrario se guardan en la BD*/
-                 objetosGlobales[0].session
+                /*Se revisa las caracteristicas del track ya han sido guardadas
+                objetosGlobales[0].session 
                     .run('MATCH (n:track {uri:{track_uri}}) WHERE NOT EXISTS(n.danceability) OR  NOT EXISTS(n.energia) OR NOT EXISTS(n.fundamental) OR NOT EXISTS(n.amplitud) OR NOT EXISTS(n.modo) OR NOT EXISTS(n.speechiness) OR NOT EXISTS(n.acousticness) OR NOT EXISTS(n.instrumentalness) OR NOT EXISTS(n.positivismo) OR NOT EXISTS(n.tempo) OR NOT EXISTS(n.compas) OR NOT EXISTS(n.liveness) RETURN n', {track_uri:data.uri})
                     .then(function(resultado){
                         console.log("1 = Debe guardarse la info, 0 = no pasa nada -> ", resultado.records.length)
 
 
-                        if(resultado.records.length>=1){
+                        if(resultado.records.length>=1){  */
                             /*Query en neo4j para guardar las características del track en el nodo correspondiente*/
-                             objetosGlobales[0].session
-                                .run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:data.uri })
+                            const promesaGuardarCaract = objetosGlobales[0].session[index]
+                                .writeTransaction (tx => tx.run('MATCH (n:track {uri:{track_uri}}) SET n.danceability={danceability}, n.energia={energia}, n.fundamental={fundamental}, n.amplitud={amplitud}, n.modo={modo}, n.speechiness={dialogo}, n.acousticness={acustica}, n.instrumentalness={instrumental}, n.positivismo={positivismo}, n.tempo={tempo}, n.compas={firma_tiempo}, n.liveness={audiencia} RETURN n', {danceability:danceability_bd, energia:energia_bd,  fundamental: fundamental_bd, amplitud:amplitud_bd, modo:modo_bd, dialogo:dialogo_bd, acustica:acustica_bd, instrumental:instrumental_bd, audiencia:audiencia_bd, positivismo:positivismo_bd, tempo:tempo_bd, firma_tiempo:firma_tiempo_bd, track_uri:data.uri }))
+                            
+                            promesaGuardarCaract
                                 .then(function(resultado){
+                                    objetosGlobales[0].session[index].close();
                                     console.log('Se guardaron las caracteristicas del track')
                                 })
+                            
+                             promesaGuardarCaract
                                  .catch(function(err){
                                     console.log(err);
                                     res.send('Error BD')
                                     
                                 })
-                        }
+                       /* } */
                      
                      
                       /*El siguiente IF cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
@@ -337,12 +413,12 @@ router.get('/mineria', function(req, res, error){
                                 console.log("index: ", indexTrack+1, "body.items.length ", datosTrack.body.audio_features.length)
                             }
 
-                    })
+                   /* })
                      .catch(function(err){
                         console.log(err);
                         res.send('Error BD')
                         
-                    })
+                    }) */
                  
                 
 
@@ -378,6 +454,8 @@ router.get('/mineria', function(req, res, error){
                    
              }
             })
+            
+        promesaRevisionCaract
              .catch(function(err){
                 console.log(err);
                 res.send('Error BD')

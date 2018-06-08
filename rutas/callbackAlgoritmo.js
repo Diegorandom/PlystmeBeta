@@ -33,6 +33,7 @@ router.use(methodOverride());
 
 var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
     /*Configuracion de variables globales y position desde cookies*/
+    var driver = req.app.get('driver')
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
     var positionRefresh = req.sessions.position;
@@ -143,11 +144,14 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
             
             console.log('Comienza proceso de revisión en base de datos para verificar si es un usuario nuevo o ya está regitrado \n');
             console.log('');
+                
             
             /*Se consulta si el usuario ya existe en la base de datos*/
-             objetosGlobales[0].session
-            .run('MATCH (n:usuario) WHERE n.spotifyid={spotifyid} RETURN n', {spotifyid:jsonDatos.userid})
-            .then(function(checkid_result){ 
+             const promesaMatchUsuario = objetosGlobales[0].session[0]
+             .writeTransaction(tx => tx.run('MATCH (n:usuario) WHERE n.spotifyid={spotifyid} RETURN n', {spotifyid:jsonDatos.userid}))
+             
+            promesaMatchUsuario.then(function(checkid_result){ 
+                objetosGlobales[0].session[0].close();
                  console.log('')
                  console.log('se realizó la consulta a la base de datos')
                  
@@ -158,19 +162,20 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                     /*En caso de que el usuario nuevo se comienza a guardar su información en la base de datos*/
                         if(checkid_result.records.length< 1){ 
                             console.log(' \n el usuario es nuevo \n');
-                            console.log('')
                             console.log('Se creará nuevo record en base de datos');
                             objetosGlobales[position].mensaje = "nuevo_usuario";
                             
                             
                             /*Se crea el nodo del usuario en la BD*/
-                            objetosGlobales[0].session
-                            .run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:objetosGlobales[position].userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url })
-                            .then(function(resultado_create){
+                            const promesaCrearUsuario = objetosGlobales[0].session[0]
+                            .writeTransaction(tx => tx.run('CREATE (n:usuario {pais:{pais}, nombre:{nombre}, email:{email}, external_urls:{external_urls}, seguidores:{followers}, spotifyid:{spotifyid}, imagen_url: {imagen_url} })', { pais:objetosGlobales[position].pais, nombre:objetosGlobales[position].nombre, email:objetosGlobales[position].email, external_urls:objetosGlobales[position].external_urls.spotify, spotifyid:objetosGlobales[position].userid, followers:objetosGlobales[position].followers, imagen_url:objetosGlobales[position].imagen_url }))
+                            
+                            promesaCrearUsuario.then(function(resultado_create){
+                                objetosGlobales[0].session[0].close();
                                 console.log('Se creó con éxito el nodo del usuario');
-
+                               
                                  })
-                            .catch(function(err){
+                            promesaCrearUsuario.catch(function(err){
                                 console.log(err);
                                 res.render('pages/error', {error:err})
 
@@ -185,7 +190,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                         refresh_token: objetosGlobales[position].refresh_token,
                                         preventCache: preventCache
                                       })); 
-                          
+                            
                         }else if(checkid_result.records.length >= 1){
                             console.log('Este usuario ya está registrado (no debería ser más de 1)')
                             
@@ -202,14 +207,18 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                                         access_token: objetosGlobales[position].access_token,
                                         refresh_token: objetosGlobales[position].refresh_token,
                                         preventCache: preventCache
-                                      })); 
+                                      }));
+                            
+                           
 
                         }else{
                             console.log('No se pudo determinar si es un usuario nuevo o registrado')
                             res.render('pages/error', {error:'No se pudo determinar si es un usuario nuevo o registrado'})
+                            
                         }
              })
-            .catch(function(err){
+            
+            promesaMatchUsuario.catch(function(err){
                 console.log(err);
                 res.render('pages/error', {error:err})
             }) 
