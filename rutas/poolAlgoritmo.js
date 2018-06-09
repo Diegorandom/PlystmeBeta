@@ -4,6 +4,7 @@ var request = require("request");
 
 /*Proceso para entrar a un pool*/
 router.get('/pool', function(req, res, error){
+    
     console.log("Llegamos al pool")
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
@@ -15,25 +16,19 @@ router.get('/pool', function(req, res, error){
     var conteoErrores = 0;
     
     /*El arreglo pool se llena con los IDs de los usuarios*/
-    var pool = [];
-    
-    objetosGlobales.forEach(function(item, index){
-        
-        
-        if(index != 0 && objetosGlobales[index] != null){
-              pool.push(objetosGlobales[index].userid)
-              pool = pool.filter(function(item, pos, self) {
-                return self.indexOf(item) == pos;
-              })
-            /*Filtrado de usuarios repetidos*/
-            function onlyUnique(value, index, self) { 
-                return self.indexOf(value) === index;
-            }
-            pool = pool.filter( onlyUnique );
+    var pool = req.query.usersId;
+                    
+        pool = pool.filter(function(item, pos, self) {
+            return self.indexOf(item) == pos;
+        })
+        /*Filtrado de usuarios repetidos*/
+        function onlyUnique(value, index, self) { 
+            return self.indexOf(value) === index;
         }
+        pool = pool.filter( onlyUnique );
+        
         
         /*Cuando el index del forEach esté en su última posición, es decir todos los IDs han sido guardados, entonces se comienza el proceso de requerir las recomendaciones a la API del suri*/
-        if(index == objetosGlobales.length-1){
             console.log("pool")
             console.log(pool)
             /*Argumentos necesarios para establecer comunicación con la API del suriel*/
@@ -91,8 +86,7 @@ router.get('/pool', function(req, res, error){
             /*Comienza proceso de comunicación con la API de Suriel en el endpoint del POOL*/
             Test(options);
             
-        }
-    })
+      
     }else{
         error = error + 'objetosGlobales[position] -> INDEFINIDO'
         res.send('Error Origen Pool')
