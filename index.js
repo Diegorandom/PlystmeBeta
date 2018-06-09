@@ -278,6 +278,11 @@ app.get('/error', function(req, res, error){
     console.log('ERROR EN LA PLATAFORMA')    
     res.render('pages/error', {error:error})
 })
+/*Ruta para prubeas del Suri*/
+app.get('/pruebas', function(req, res, error){
+    console.log('Pruebas')    
+    res.render('pages/pruebas')
+})
 
 /*Configuración de puerto de la app*/
 app.listen(app.get('port'), function() {

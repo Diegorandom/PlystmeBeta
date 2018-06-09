@@ -705,7 +705,7 @@ var erroresPreferenciasSuri = 0
 
         /*Proceso para entrar a un pool determinado*/
         document.getElementById('enterPool').addEventListener('click', function(){
-            enterPool()
+            //enterPool()
         })
     
      /*Proceso para actualizar un playlist*/
@@ -961,28 +961,26 @@ var erroresPreferenciasSuri = 0
             console.log('Vamos a vaciar el pool de Escritorio')
             
             
-            $.get('/pool', function(data, status){
-               
-            console.log(data)
-            console.log(status)
-                        
-                        
-                        
-            if(status === "success"){
+            $.ajax({url: '/pool?_=' + new Date().getTime(), data:{usersId:usuariosdentro}, success:poolPlaylist, cache: false});
+              function poolPlaylist(data, status, error){
+                    
+                console.log(data)
+                console.log(status)
+                           if(status === "success"){
                 if(data != undefined){
                     
-                    console.log('El playlist se va a vaciar')
+                    console.log('El playlist se va a vaciar en escritorio')
                     
-                    //eliminar contador de usuarios
-                    document.getElementById("contadorSpan").remove();
+                    //eliminar contador de usuarios, por ahora esta comentado hasta tener el
+                    //document.getElementById("contadorSpan").remove();
                     //eliminar fotos de usuarios
-                    document.getElementsByClassName("imgUsuario").remove();
+                    //document.getElementsByClassName("imgUsuario").remove();
                     
                    data.forEach(function(item,index){
                        /*Se eliminan las canciones viejas*/
                        if(document.getElementById("pool"+index) !== null){
                             document.getElementById("pool"+index).remove();
-                            console.log("Depuración de playlist")
+                            console.log("Depuración de playlist en escritorio")
                             /*Mensaje de actualizacion de playlist*/
                             if(index == 1){
                                 console.log('cargando mensaje')
@@ -996,7 +994,10 @@ var erroresPreferenciasSuri = 0
                             
                        }
                    })              
-        }}})}
+        }}
+                
+            }
+    }
 
 
     function vaciarPool2() {
