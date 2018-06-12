@@ -11,8 +11,9 @@ var mapa = document.createElement('script')
         var contenedorMapa = document.getElementById('mapa')
         contenedorMapa.appendChild(mapa)
 
-    $('#btnCrear').on('click',function(){        
+   function btnCrear(){        
         
+        console.log('Creando Evento')
         
         var userid = null
 
@@ -43,7 +44,7 @@ var mapa = document.createElement('script')
 
         }
         
-    });
+    };
 
 
 
@@ -164,35 +165,21 @@ var posfija = {'lat' : 0.0, 'lng' : 0.0};
 var usariosdentro = null;
 
 
-var namespace = '/test';
-var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
+var socket = io();
 
+socket.on('conexionServidor', (msg) => {
+    console.log(msg)
+    socket.emit('EventoConexion', {data: 'Estoy Conectado!'});
+});
 
  function sockets(userid, pos) {
  
             console.log('userid -> ', userid  )
             console.log('pos -> ', pos)
-     
-            //var namespace = '/test';
-            //var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
-
-     
-            //namespace = '/test';
-            //var posString = null;
-
-            //     http[s]://<domain>:<port>[/<namespace>]
       
-            //var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
-            //var socket = io.connect('http://localhost:5000'+namespace); //local
-
-            socket.on('connect', function() {
-                socket.emit('my_event', {data: 'I\'m connected!'});
-            });
-
-             
-            //Función para abrir el canal de escuha
+            /*usersId recibe un arreglo con los usuarios que se encuentran en el evento para despues procesar esta lista en poolAlgoritmo y recibir la lista de canciones que serán procesadas en la funcion poolPlaylist para que se desplieguen en el cliente*/
      
-            socket.on('playlist', function(msg){
+            socket.on('usersId', function(msg){
                 console.log(msg); //Para recibir la playlist
                 //var playlist = msg.playlist;
                 // Variable: "playlist" contiene un arreglo de usersid dentro de la fiesta "room", este arreglo cambia cuando se une un nuevo usuario a la playlist.
@@ -497,18 +484,7 @@ var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
             
         }
 
-            function fijarUbicacion (){
-                // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
-                /*navigator.geolocation.getCurrentPosition(function(position) {
-                    //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });*/
-                var namespace = '/test';
-                
-                var userid = null
+function fijarUbicacion (){
 
                 //Request de ajax para obtener userid de servidor Node.js
                 $.ajax({url: '/userid', success:idEliminar, cache: false});
@@ -529,27 +505,21 @@ var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
                     var userid = data
                     console.log("userid -> ", userid)
                 
-                    
-                    //var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
-                
-                    
+                        
                     navigator.geolocation.getCurrentPosition(function(position) {
-                    //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
                     pos = {
                         'lat' : position.coords.latitude, 
                         'lng' : position.coords.longitude
                     }
                     });
-                    //Se va a guardar posfija para eliminar fiesta
-                    posfija = pos;
-                    console.log(pos);
-                    socket.emit('create_party',{room: userid, position: posfija, user: userid});//proceso para crear una fiesta
+                    
+                    socket.emit('crearEvento',{posicion:pos, userId: userid});//proceso para crear una fiesta
 
-                    console.log(pos);
+                    /*console.log(pos);
                     socket.emit('getroom', {position: posfija, user: userid}); // entrar a la fiesta que el mismo creo
                     return false;
 
-                    console.log(pos);
+                    console.log(pos);*/
                     
                 }              
                   
@@ -559,64 +529,64 @@ var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
 
                     
 
-            function eliminarplaylist (){
-                // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
-                /*navigator.geolocation.getCurrentPosition(function(position) {
-                    //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });*/
-                //var namespace = '/test';
-                
-                var userid = null
+    function eliminarplaylist (){
+        // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
+        /*navigator.geolocation.getCurrentPosition(function(position) {
+            //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
+            pos = {
+                'lat' : position.coords.latitude, 
+                'lng' : position.coords.longitude
+            }
+        });*/
+        //var namespace = '/test';
 
-                //Request de ajax para obtener userid de servidor Node.js
-                $.ajax({url: '/userid', success:idEliminar, cache: false});
-                
-                
-                function idEliminar (data, status, error) {
-                    
-                    if(error == true || data == "Error Global" || status != "success"){
-                document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
-                document.getElementById('nuevoPlaylist').style.display="block"
-                setTimeout(function(){
-                    document.getElementById('nuevoPlaylist').style.display="none"
-                    location.reload(true);
-                }, 3000);
+        var userid = null
 
-                }else{
-                    
-                    var userid = data
-                    console.log("userid -> ", userid)
-                
-                    
-                    //var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
+        //Request de ajax para obtener userid de servidor Node.js
+        $.ajax({url: '/userid', success:idEliminar, cache: false});
 
-                    console.log('se va a eliminar la fiesta');
-                    console.log(posfija);
-                    socket.emit('delete_party',{room: userid, position: posfija, user: userid});//proceso para eliminar una fiesta
-                    return false;
-                    console.log('Se elimino fiesta');
-                    
-                }                 
-               
-                    
-                }               
-                
-            };
-     
-            $('#EliminarPlayslit2').on('click', function(event){
-                // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });
-                socket.emit('delete_party',{room: userid, position: pos, user: userid});//proceso para eliminar una fiesta
-                return false;
-                console.log('Se elimino fiesta');
-            });
+
+        function idEliminar (data, status, error) {
+
+            if(error == true || data == "Error Global" || status != "success"){
+        document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+        document.getElementById('nuevoPlaylist').style.display="block"
+        setTimeout(function(){
+            document.getElementById('nuevoPlaylist').style.display="none"
+            location.reload(true);
+        }, 3000);
+
+        }else{
+
+            var userid = data
+            console.log("userid -> ", userid)
+
+
+            //var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
+
+            console.log('se va a eliminar la fiesta');
+            console.log(posfija);
+            socket.emit('delete_party',{room: userid, position: posfija, user: userid});//proceso para eliminar una fiesta
+            return false;
+            console.log('Se elimino fiesta');
+
+        }                 
+
+
+        }               
+
+    };
+
+    $('#EliminarPlayslit2').on('click', function(event){
+        // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
+        navigator.geolocation.getCurrentPosition(function(position) {
+            //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
+            pos = {
+                'lat' : position.coords.latitude, 
+                'lng' : position.coords.longitude
+            }
+        });
+        socket.emit('delete_party',{room: userid, position: pos, user: userid});//proceso para eliminar una fiesta
+        return false;
+        console.log('Se elimino fiesta');
+    });

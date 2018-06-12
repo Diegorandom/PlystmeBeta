@@ -12,23 +12,26 @@ router.get('/pool', function(req, res, error){
     
     if(objetosGlobales[position] != undefined){
     
-    /*En caso de que el conteo de errores de la API sobrepase un threshold, se manda a la página de error para evitar consumo de servidor inútil ALV*/
+    /*En caso de que el conteo de errores de la API sobrepase un threshold, se manda a la página de error para evitar consumo de recursos de servidor inútil ALV*/
     var conteoErrores = 0;
     
     /*El arreglo pool se llena con los IDs de los usuarios*/
     var pool = req.query.usersId;
-                    
+                  
+        /*Primer filtro para repetidos*/
         pool = pool.filter(function(item, pos, self) {
             return self.indexOf(item) == pos;
         })
-        /*Filtrado de usuarios repetidos*/
+        /*Segundo Filtrado de usuarios repetidos*/
         function onlyUnique(value, index, self) { 
             return self.indexOf(value) === index;
         }
+        
+        /*Asignacion de pool filtado después de segundo filtrado*/
         pool = pool.filter( onlyUnique );
         
         
-        /*Cuando el index del forEach esté en su última posición, es decir todos los IDs han sido guardados, entonces se comienza el proceso de requerir las recomendaciones a la API del suri*/
+        /*Comienza el proceso de requerir las recomendaciones a la API del suri*/
             console.log("pool")
             console.log(pool)
             /*Argumentos necesarios para establecer comunicación con la API del suriel*/
@@ -54,17 +57,17 @@ router.get('/pool', function(req, res, error){
                         },1000);
                         conteoErrores += 1;
                         
-                        /*Si los errores en la API persisten por más de 1 minuto se manda a la pantalla de error*/
+                        /*Si los errores en la API persisten por más de 30 segundos se manda a la pantalla de error*/
                     if(conteoErrores > 30){
                         res.send("Error")
                     }
                         
                     }else{
-                        /*En caso de que la API esté funcionando apropiadamente se llena el arreglo del pool de la posicion 0 [posicion neutral] del arreglo objetosGlobales con los IDs de los usuarios*/
                         console.log("API funcionando, GRACIAS A DIOS ALV PRRO!...");	
                         console.log(body);
                         console.log(objetosGlobales)
                         console.log(body)
+                        
                         /*La lista de canciones recomendadas es enviada al cliente*/
                         console.log('Despliegue de playlist exitosa')
                         res.send(body.listaCanciones); 

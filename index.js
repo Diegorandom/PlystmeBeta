@@ -12,7 +12,16 @@ https://stackoverflow.com/questions/30548073/spotify-web-api-rate-limits
 
 Estos módulos descargados del Node Package Manager son piezas de Middleware que soportan las funciones más básicas del sistema completo. Llamar módulos de node en index no interviene en las diferentes rutas del sistema
 */
-var express = require('express'); // Express web server framework
+var express = require('express')
+//make sure you keep this order
+var app = express();
+ // Express web server framework
+//make sure you keep this order
+// Express web server framework
+
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
 var request = require('request'); // "Request" library
 var cookieParser = require('cookie-parser');
 var fs = require("fs");
@@ -26,7 +35,6 @@ var neo4j = require('neo4j-driver').v1;
 var sessions = require("client-sessions");
 var idleTimer = require("idle-timer");
 var DelayedResponse = require('http-delayed-response')
-
 
 /* 
 Documentación de Código
@@ -103,7 +111,6 @@ Infraestructura web rápida, minimalista y flexible para Node.js
 Aplicaciones web
 Express es una infraestructura de aplicaciones web Node.js mínima y flexible que proporciona un conjunto sólido de características para las aplicaciones web y móviles.
 */
-var app = express();
 
 //CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
 app.use(logger('dev')); 
@@ -199,11 +206,15 @@ app.set('objetosGlobales',objetosGlobales);
 app.set('position',position);
 app.set('generateRandomString',generateRandomString);
 app.set('driver', driver);
+app.set('io', io)
 
 
 /*
             RUTEO DE TODAS LA FUNCIONES DEL SISTEMA - NO MOVER
 */
+
+/*Ruta de sockets*/
+app.use(require('./rutas/sockets.js'))
 
 /*La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. */
 app.use(require("./rutas/heartbeat"));
@@ -274,18 +285,20 @@ app.use(require('./rutas/usuarios'));
 /*Ruta no utilizada*/
 app.use(require('./rutas/posicionUsuarios'));
 
+/*Ruta para los sockets*/
+//app.use(require('./rutas/sockets.js'))
+
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function(req, res, error){
     console.log('ERROR EN LA PLATAFORMA')    
     res.render('pages/error', {error:error})
 })
-/*Ruta para prubeas del Suri*/
-app.get('/pruebas', function(req, res, error){
-    console.log('Pruebas')    
-    res.render('pages/pruebas')
-})
 
 /*Configuración de puerto de la app*/
-app.listen(app.get('port'), function() {
+server.listen(app.get('port'), function(error) {
+    if(error == true){
+        console.log(error)
+    }
+    
   console.log('Node app is running on port', app.get('port'));
 });

@@ -38,7 +38,7 @@ var erroresPreferenciasSuri = 0
                     var myChart = new Chart(ctx, {
                         type: 'radar',
                         data: {
-                            labels: ["Danzabilidad", "Energía Promedio", "Popularidad de Música", "Música Acustica", "Instrumentalidad", "Música en Vivo","Positivismo"],
+                            labels: ["Danzabilidad", "Energía", "Popularidad", "Presencia acústica", "Instrumentalidad", "Presencia de Público","Positivismo"],
                             datasets: [{
                                 label: 'Preferencias Promedio',
                                 data: [data.danceability*100, data.energia*100, data.popularidadAvg, data.acustica*100, data.instrumental*100, data.audiencia*100,data.positivismo*100],

@@ -112,7 +112,9 @@
         $('#map').css("display","block");
         $('#fijarUbicacion').css("display","block");
         $('#btnRegresar').css("display","block");
+        btnCrear()
     })    
+    
     $('#btnCrear2').on('click',function(){
         $('#enterPool2').css("display","none");
         $('#btnCrear2').css("display","none");

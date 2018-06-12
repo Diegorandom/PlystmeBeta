@@ -25,6 +25,7 @@
     "request": "*",
     "sanitize-html": "^1.14.1",
     "shuffle-array": "^1.0.1",
+    "socket.io": "^2.1.1",
     "spotify-web-api-node": "^2.3.6",
     "supercolliderjs": "*"
   },
