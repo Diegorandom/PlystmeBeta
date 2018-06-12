@@ -131,7 +131,7 @@
         console.log('Se activa fijarUbicacion')
         
         //enterPool();
-        //fijarUbicacion();
+        fijarUbicacion();
         
          $('#mensajeUbicacion').css("display","none");
         $('#map').css("display","none");       

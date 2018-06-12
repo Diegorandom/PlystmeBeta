@@ -412,7 +412,7 @@ socket.on('conexionServidor', (msg) => {
                 return false;
             });
     
-            $('#fijarUbicacion').on('click', function(event){
+           /* $('#fijarUbicacion').on('click', function(event){
                 // Recibir variables de POS FIJA de MAPA.JS para crear la fiesta.
                 
                 navigator.geolocation.getCurrentPosition(function(position) {
@@ -432,7 +432,7 @@ socket.on('conexionServidor', (msg) => {
                 return false;
                 
                 console.log(pos);
-            });
+            }); */
      
      
             $('#fijarUbicacion2').on('click', function(event){
@@ -487,41 +487,45 @@ socket.on('conexionServidor', (msg) => {
 function fijarUbicacion (){
 
                 //Request de ajax para obtener userid de servidor Node.js
-                $.ajax({url: '/userid', success:idEliminar, cache: false});
+                $.ajax({url: '/userid', success:crearEvento, cache: false});
                 
                 
-                function idEliminar (data, status, error) {
+                function crearEvento (data, status, error) {
+                    
+                    console.log('Creando Evento')
                     
                     if(error == true || data == "Error Global" || status != "success"){
-                document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
-                document.getElementById('nuevoPlaylist').style.display="block"
-                setTimeout(function(){
-                    document.getElementById('nuevoPlaylist').style.display="none"
-                    location.reload(true);
-                }, 3000);
-
-                }else{
-                    
-                    var userid = data
-                    console.log("userid -> ", userid)
-                
                         
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                    });
-                    
-                    socket.emit('crearEvento',{posicion:pos, userId: userid});//proceso para crear una fiesta
+                        document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+                        document.getElementById('nuevoPlaylist').style.display="block"
+                        setTimeout(function(){
+                            document.getElementById('nuevoPlaylist').style.display="none"
+                            location.reload(true);
+                        }, 3000);
 
-                    /*console.log(pos);
-                    socket.emit('getroom', {position: posfija, user: userid}); // entrar a la fiesta que el mismo creo
-                    return false;
+                    }else{
 
-                    console.log(pos);*/
-                    
-                }              
+                        var userid = data
+                        console.log("userid -> ", userid)
+
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                        pos = {
+                            'lat' : position.coords.latitude, 
+                            'lng' : position.coords.longitude
+                        }
+                        });
+                        
+                        console.log('Posición de la fiesta -> ', pos)
+
+                        socket.emit('crearEvento', {posicion:pos, userId: userid});//proceso para crear una fiesta
+
+                        /*console.log(pos);
+                        socket.emit('getroom', {position: posfija, user: userid}); // entrar a la fiesta que el mismo creo
+                        return false;
+
+                        console.log(pos);*/
+
+                    }              
                   
                 }               
                 
@@ -562,7 +566,6 @@ function fijarUbicacion (){
             console.log("userid -> ", userid)
 
 
-            //var socket = io.connect('https://atmos-pool.mybluemix.net'+namespace); //server
 
             console.log('se va a eliminar la fiesta');
             console.log(posfija);

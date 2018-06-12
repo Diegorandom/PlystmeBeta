@@ -18,7 +18,6 @@ var app = express();
  // Express web server framework
 //make sure you keep this order
 // Express web server framework
-
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
@@ -195,6 +194,7 @@ app.use(sessions({
 }));
 //Termina configuracion de cookies
 
+
 /*Pieza de middleware que dirije los links a la carpeta donde se alojan los recursos*/
 app.use(express.static(__dirname + '/public'))
 // views is directory for all template files/Directorio de Templates
@@ -206,15 +206,40 @@ app.set('objetosGlobales',objetosGlobales);
 app.set('position',position);
 app.set('generateRandomString',generateRandomString);
 app.set('driver', driver);
-app.set('io', io)
-
 
 /*
             RUTEO DE TODAS LA FUNCIONES DEL SISTEMA - NO MOVER
 */
 
-/*Ruta de sockets*/
-app.use(require('./rutas/sockets.js'))
+/*SOCKETS*/
+
+//console.log('io -> ', io)
+
+server.listen(app.get('port'));
+
+io.on('connection', function(socket) {
+
+    console.log('Nueva conexión');
+
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+      });
+
+    socket.on('EventoConexion', function(mensaje){
+        console.log(mensaje.data)
+    });
+
+    io.emit('conexionServidor', 'Mensaje de prueba de servidor a cliente')
+
+    socket.on('crearEvento', function(msg){
+        console.log('Evento creado')
+        console.log('Posicion del evento -> ', msg.posicion)    
+        console.log('Id del host -> ', msg.userId)    
+    });
+
+})
+
+/*TERMINA SOCKETS*/
 
 /*La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. */
 app.use(require("./rutas/heartbeat"));
@@ -285,20 +310,17 @@ app.use(require('./rutas/usuarios'));
 /*Ruta no utilizada*/
 app.use(require('./rutas/posicionUsuarios'));
 
-/*Ruta para los sockets*/
-//app.use(require('./rutas/sockets.js'))
-
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function(req, res, error){
     console.log('ERROR EN LA PLATAFORMA')    
     res.render('pages/error', {error:error})
 })
 
-/*Configuración de puerto de la app*/
+/*Configuración de puerto de la app
 server.listen(app.get('port'), function(error) {
     if(error == true){
         console.log(error)
     }
     
   console.log('Node app is running on port', app.get('port'));
-});
+});*/
