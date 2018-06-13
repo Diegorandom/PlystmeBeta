@@ -709,7 +709,7 @@ var erroresPreferenciasSuri = 0
         })
     
      /*Proceso para actualizar un playlist*/
-        document.getElementById('btnActualizar').addEventListener('click', function() {
+        /*document.getElementById('btnActualizar').addEventListener('click', function() {
             console.log('Actualizando POOL1')
            
             $.get('/usuarios', function(data, status){
@@ -812,11 +812,11 @@ var erroresPreferenciasSuri = 0
                         
                 console.log('El playlist ha cambiado')
                    data.forEach(function(item,index){
-                       /*Se eliminan las canciones viejas*/
+                       /*Se eliminan las canciones viejas-
                        if(document.getElementById("pool"+index) !== null){
                             document.getElementById("pool"+index).remove();
                             console.log("Depuración de playlist")
-                            /*Mensaje de actualizacion de playlist*/
+                            /*Mensaje de actualizacion de playlist-
                             if(index == 1){
                                 console.log('cargando mensaje')
                                 document.getElementById('nuevoPlaylist').innerHTML="Actualizando Playlist..."
@@ -830,7 +830,7 @@ var erroresPreferenciasSuri = 0
                        }
                       
                        
-                       /*Se despliega la actualizacion del playlist en la interfaz*/
+                       /*Se despliega la actualizacion del playlist en la interfaz/
                         playlist = data
                         
                        console.log(item)
@@ -850,7 +850,7 @@ var erroresPreferenciasSuri = 0
                         /*var form = document.createElement("form")
                         form.method="post"
                         form.action="/track/profile"
-                        form.id="trackprofile" */
+                        form.id="trackprofile" /
                         
                         var boton = document.createElement("span")
                         boton.className="be-img-block"
@@ -883,7 +883,7 @@ var erroresPreferenciasSuri = 0
                         a.id="fadeOut" + index
                         a.innerHTML ="&times;"
                         
-                        innerDiv.appendChild(a)*/
+                        innerDiv.appendChild(a)/
                         
                         var span2 = document.createElement("span")
                         span2.style="color:#503047; font-size:120%;max-height:20px;"
@@ -951,7 +951,7 @@ var erroresPreferenciasSuri = 0
                     
                 
             })
-        })
+        })*/
 
 
     
