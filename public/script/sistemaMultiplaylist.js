@@ -596,7 +596,9 @@ function entrarUbicacion (userid){
 
       
 socket.on('usuarioEntra', function(msg){
-    console.log('Usuario -> ', msg.userId, ' entró a evento -> ', msg.codigoEvento)  
+    console.log('Usuario -> ', msg.userId, ' entró a evento -> ', msg.codigoEvento)
+    var codigoEvento=msg.codigoEvento 
+    
      //Request de ajax para obtener userid de servidor Node.js
     $.ajax({url: '/userid', success:idCallback(userid), cache: false});
 
