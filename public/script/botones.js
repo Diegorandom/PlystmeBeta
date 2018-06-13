@@ -124,12 +124,27 @@
     $('#btnCrear').on('click',function(){
         $('#enterPool').css("display","none");
         $('#btnCrear').css("display","none");
+        $('#crear').css("display","block");
+        btnCrear()
+    })
+
+    $('#regresarDeCrear').on('click', function(){
+        $('#crear').css("display","none");
+        $('#enterPool').css("display","inline-block");
+        $('#btnCrear').css("display","inline-block");
+    })
+
+    $('#crearUbicacion').on('click', function(){
+        $('#crear').css("display","none");
         $('#mensajeUbicacion').css("display","block");
         $('#map').css("display","block");
         $('#fijarUbicacion').css("display","block");
         $('#btnRegresar').css("display","block");
-        btnCrear()
-    })    
+    })
+
+    $('#crearCodigo').on('click', function(){
+        $('#crear').css("display","none");
+    })
     
     $('#btnCrear2').on('click',function(){
         $('#enterPool2').css("display","none");
