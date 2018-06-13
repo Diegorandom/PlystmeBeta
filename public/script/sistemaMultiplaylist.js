@@ -395,6 +395,8 @@ function fijarUbicacion (pos,userid){
         }
     }
     
+}   
+    
      function poolPlaylist(data, status, error){
 
         console.log(data)
@@ -530,7 +532,7 @@ function fijarUbicacion (pos,userid){
         }
 
     }
-}               
+            
 
 
 function entrarCodigo (codigoUsuarioEvento, userid){
@@ -594,7 +596,35 @@ function entrarUbicacion (userid){
 
       
 socket.on('usuarioEntra', function(msg){
-    console.log('Usuario -> ', msg.userId, ' entró a evento -> ', msg.codigoEvento)    
+    console.log('Usuario -> ', msg.userId, ' entró a evento -> ', msg.codigoEvento)  
+     //Request de ajax para obtener userid de servidor Node.js
+    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
+
+    
+    function idCallback(userid){
+        return function(data, status, error){
+
+
+            //Control de errores
+            if(error == true || data == "Error Global" || status != "success"){
+                document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+                document.getElementById('nuevoPlaylist').style.display="block"
+                setTimeout(function(){
+                    document.getElementById('nuevoPlaylist').style.display="none"
+                    //location.reload(true);
+                }, 3000);
+
+            }else{
+                userid = data 
+                var userId = []
+                userId.push(userid)
+                console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
+                
+                $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+            }
+        }
+    }
+    
 })
 
 socket.on('codigoInvalido', function(msg){
