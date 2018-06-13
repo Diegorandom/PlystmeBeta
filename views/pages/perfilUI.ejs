@@ -368,28 +368,39 @@
                                             <p style="font-size:30px; margin-top:20px;">Entra a una playlist</p>
                                         </button>
                                         
-                                       
-                                        <div style="background-color: rgba(255,255,255,0.8); border-radius:5px; height: 200px; position:relative; padding-top:20px; display: none;" id="codigoEvento">
-                                        
-                                            <p style="font-size: 30px; font-family: 'Quicksand', sans-serif;">Ingresa el código de la fiesta</p>
+                            <!-- DIV con los elementos al ingresar a la pantalla de ENTRAR -->
+                                        <div style="position:relative; padding-top:20px; display: none; font-family: 'Quicksand', sans-serif; font-size:30px;" id="codigoEvento">
+                                                                                          
+
+                                                 <button  type="submit" value="Submit" class="be-button-vidget" style="width:49%; height:250px; background-color:rgba(255,255,255,0.85); border-radius:30px; border: 3px solid #588b8b; color:#588b8b; display:inline-block; margin-top:0px; float:left;"  id="entrarUbicacion">
+                                                    <i class="fas fa-map-marker" style="margin-top:10px; font-size:80px;"></i>
+
+                                                    <p style="margin-top:10px;">Entrar con geolocalización</p>
+
+                                                </button>
+                                            
+                                            
+                                            <div style="background-color: rgba(255,255,255,0.85); border-radius:30px; width:49%; height: 250px; border-radius:30px; border: 3px solid #588b8b; color:#588b8b; display:inline-block;">
+                                                 
                                             <form>
                                             
-                                                <input type="text" id="codigo" class="form-control" aria-describedby="helpBlock" style="width:70%; height:50px; font-size:35px;">
-                                                
-                                                <button type="button" class="btn btn-default" style="margin-top:20px; width:105px;" id="formCancelar">Cancelar</button>
+                                                <input type="text" id="codigo" class="form-control" aria-describedby="helpBlock" style="width:49%; height:50px; font-size:45px; margin-top:40px; text-align:center;">
+                                                <!--
+                                                <button type="button" class="btn btn-default" style="margin-top:20px; width:105px;" id="formCancelar">Cancelar</button>-->
 
                                                 
-                                                <button type="button" class="btn btn-primary" style="margin-top:20px; width:105px" id="entrarEvento">Entrar</button>
+                                                <button type="button" class="btn btn-primary" style="margin-top:20px; width:25%; background-color:#588b8b; align:center; margin-right:0px !important;" id="entrarEvento">Entrar</button>
+                                                
+                                                <p style="margin-top: 20px;">Entrar con código</p>
                                             
                                             </form>
                                             
-                                             <button  type="submit" value="Submit" class="be-button-vidget " style="width:49%;height:250px; background-color:rgba(255,255,255,0.85);border-radius:5px; border: 3px solid #588b8b; color:#588b8b; display:inline-block;"  id="entrarUbicacion">
-                                            <i class="fas fa-users" style="margin-top:10px;  font-size:80px;"></i>
-
-                                            <p style="font-size:30px; margin-top:20px;">Entrar por geolocalización</p>
-                                                 
-                                        </button>
-                                            
+                                            </div>
+                                            <br>
+                                            <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 20px auto 0 auto; width:40%; border:none; background-color:#FFF; color:#588b8b; border-radius:30px; font-size: 20px;" id="regresarDeEntrar">
+                                                REGRESAR
+                                            </button>
+                                                                                       
                                         </div>
                                         
                                        
