@@ -96,6 +96,16 @@
         $('#btnCrear').css("display","none");
         $('#salirPlaylist').css("display","block");
         inPool1 = 1;
+        $('#codigoEvento').css("display","block");
+    })
+    $('#entrarEvento').on('click',function(){
+        entrarCodigo($('#codigo').val());
+        $(this).css("display","none");
+        $('#codigoEvento').css("display","none");
+    })
+    $('#entrarUbicacion').on('click',function(){
+        $('#codigoEvento').css("display","none");
+        entrarUbicacion();
     })
     $('#enterPool2').on('click',function(){
         $('#enterPool2').css("display","none");
@@ -131,7 +141,7 @@
         console.log('Se activa fijarUbicacion')
         
         //enterPool();
-        fijarUbicacion();
+        fijarUbicacion(pos);
         
          $('#mensajeUbicacion').css("display","none");
         $('#map').css("display","none");       

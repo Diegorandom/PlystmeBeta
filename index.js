@@ -14,12 +14,6 @@ Estos módulos descargados del Node Package Manager son piezas de Middleware que
 */
 var express = require('express')
 //make sure you keep this order
-var app = express();
- // Express web server framework
-//make sure you keep this order
-// Express web server framework
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
 
 var request = require('request'); // "Request" library
 var cookieParser = require('cookie-parser');
@@ -34,6 +28,11 @@ var neo4j = require('neo4j-driver').v1;
 var sessions = require("client-sessions");
 var idleTimer = require("idle-timer");
 var DelayedResponse = require('http-delayed-response')
+
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
 
 /* 
 Documentación de Código
@@ -211,36 +210,6 @@ app.set('driver', driver);
             RUTEO DE TODAS LA FUNCIONES DEL SISTEMA - NO MOVER
 */
 
-/*SOCKETS*/
-
-//console.log('io -> ', io)
-
-server.listen(app.get('port'));
-
-io.on('connection', function(socket) {
-
-    console.log('Nueva conexión');
-
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
-      });
-
-    socket.on('EventoConexion', function(mensaje){
-        console.log(mensaje.data)
-    });
-
-    io.emit('conexionServidor', 'Mensaje de prueba de servidor a cliente')
-
-    socket.on('crearEvento', function(msg){
-        console.log('Evento creado')
-        console.log('Posicion del evento -> ', msg.posicion)    
-        console.log('Id del host -> ', msg.userId)    
-    });
-
-})
-
-/*TERMINA SOCKETS*/
-
 /*La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. */
 app.use(require("./rutas/heartbeat"));
 
@@ -316,11 +285,82 @@ app.get('/error', function(req, res, error){
     res.render('pages/error', {error:error})
 })
 
-/*Configuración de puerto de la app
+/* INICIA SOCKETS*/
+
+//console.log('io -> ', io.on)
+
+io.on('connection', function(socket) {
+
+    console.log('Nueva conexión con id -> ' + socket.id);
+
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+      });
+
+    socket.on('EventoConexion', function(mensaje){
+        console.log(mensaje.data)
+    });
+
+    io.emit('conexionServidor', 'Mensaje de prueba de servidor a cliente')
+
+    socket.on('crearEvento', function(msg){
+        console.log('Evento creado')
+        console.log('Posicion del evento -> ', msg.posicion)    
+        console.log('Id del host -> ', msg.userId)    
+        var codigoEvento = generateRandomString(4);
+        var userId = msg.userId
+        
+        /*'MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}})  CREATE (n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)'*/
+        
+        const promesaCrearEvento = objetosGlobales[0].session[0]
+             .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)<-[:Host {status:true}]-(n:Evento {codigoEvento:{codigoEvento}, lat:{lat}, lng:{lng}}) Return n', {codigoEvento:codigoEvento, lat:msg.posicion.lat, lng:msg.posicion.lng, spotifyidUsuario:userId}))
+        
+        promesaCrearEvento
+            .then(function(evento){
+                console.log('Evento -> ', evento)
+            })
+        
+        promesaCrearEvento
+             .catch(function(err){
+                console.log(err);
+                res.send('Error crearEvento')
+            })
+        
+       
+        
+        io.to(socket.id).emit('eventoCreado', {codigoEvento: codigoEvento, userId:userId});
+
+        
+    });
+    
+    
+    socket.on('usuarioNuevoCodigo', function(msg){
+        console.log('Un nuevo usario se quiere unir a un evento por código')
+        console.log('Codigo del evento - ', msg.codigoEvento)
+        console.log('UserId del usuario que quiere entrar - ', msg.userId)
+        
+    })
+    
+     socket.on('usuarioNuevoUbicacion', function(msg){
+        console.log('Un nuevo usario se quiere unir a un evento por geolocalización')
+        console.log('UserId del usuario que quiere entrar - ', msg.userId)
+        console.log('Posiciòn del usuario - ', msg.posicion)
+        
+    })
+    
+        
+
+})
+
+
+/*TERMINA SOCKETS*/
+
+/*Configuración de puerto de la app*/
 server.listen(app.get('port'), function(error) {
     if(error == true){
         console.log(error)
     }
     
   console.log('Node app is running on port', app.get('port'));
-});*/
+});
+
