@@ -358,7 +358,7 @@ io.on('connection', function(socket) {
         promesaChecarEvento
             .then(function(codigoBD){
                 console.log('Resultado de búsqueda de código en BD ->', codigoBD.records[0] )
-                if(codigoBD.records[0]._fields == codigoEvento){
+                if(codigoBD.records[0] != undefined){
                     console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
                     socket.join(codigoEvento);
                     io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId});
