@@ -145,10 +145,19 @@ function btnCrear(userid){
 
                   }, function() {
                     handleLocationError(true, infoWindow, map.getCenter());
+                      document.getElementById('nuevoPlaylist').innerHTML="Geolocalizacion no disponible, crear evento por código"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    $('#fijarUbicacion').css("display","none");
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none";
+                    }, 3000);
+                      
+                      
                   });
                 } else {
                   // Browser doesn't support Geolocation
                   handleLocationError(false, infoWindow, map.getCenter());
+                    
                 }
             
         }
@@ -360,8 +369,6 @@ function fijarUbicacion (pos,userid){
     
     function idCallback(userid){
         return function(data, status, error){
-
-
             //Control de errores
             if(error == true || data == "Error Global" || status != "success"){
                 document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
@@ -376,28 +383,53 @@ function fijarUbicacion (pos,userid){
                 console.log("userid -> ", userid)
 
                 console.log('Posición de la fiesta -> ', pos)
+                
+                if(pos != null && pos != undefined){
+                    socket.emit('crearEvento', {posicion:pos, userId: userid});//proceso para crear una fiesta
 
-                socket.emit('crearEvento', {posicion:pos, userId: userid});//proceso para crear una fiesta
+                    socket.on('eventoCreado', function(msg){
+                        console.log('Evento Creado')
+                        var codigoEvento = msg.codigoEvento;
+                        var userId = []
 
-                socket.on('eventoCreado', function(msg){
-                    console.log('Evento Creado')
-                    var codigoEvento = msg.codigoEvento;
-                    var userId = []
+                        userId.push(msg.userId)
 
-                    userId.push(msg.userId)
+                        console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
 
-                    console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
+                        mostrarCodigo(codigoEvento);
+
+                       $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+
+                    })
+                }else{
+                    socket.emit('crearEventoCodigo', {userId:userid})
                     
-                    mostrarCodigo(codigoEvento);
+                    socket.on('eventoCreadoCodigo', function(msg){
+                        console.log('Evento Creado')
+                        var codigoEvento = msg.codigoEvento;
+                        var userId = []
 
-                   $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+                        userId.push(msg.userId)
 
-                })
+                        console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
+
+                        mostrarCodigo(codigoEvento);
+
+                       $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+
+                    })
+                    
+                }
+                
+                
             }
         }
     }
     
 }   
+
+
+
     
      function poolPlaylist(data, status, error){
 
@@ -633,6 +665,10 @@ socket.on('usuarioEntra', function(msg){
 
 socket.on('codigoInvalido', function(msg){
     console.log('Código Invalido -> ', msg.codigoInvalido)
+})
+
+socket.on('nuevoUsuario',function(msg){
+    console.log(msg)
 })
 
  ///////////////////////////////////////////////NO USADO
