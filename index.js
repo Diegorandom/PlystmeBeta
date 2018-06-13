@@ -365,20 +365,40 @@ io.on('connection', function(socket) {
                     socket.join(codigoEvento);
                     io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId});
                     
-                    const promesaNuevoUsuario = objetosGlobales[0].session[0]
-                        .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[:Host]->(n) Return p', {spotifyidUsuario:userId, codigoEvento:codigoEvento}))
-                    
-                    promesaNuevoUsuario
-                        .then(function(unionUsuarioEvento){
-                            console.log('unionUsuarioEvento')
-                            console.log('Nuevo usuario ',userId,' -> añadido a evento en BD-> ', codigoEvento)
+                    const promesaChecarUsuario = objetosGlobales[0].session[0]
+                        .writeTransaction(tx => tx.run('MATCH (n:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario)  WHERE u.spotifyid={spotifyidUsuario} RETURN u.spotifyid', {codigoEvento:codigoEvento, spotifyidUsuario:userId}))
+                        
+                    promesaChecarUsuario
+                        .then(function(usuarioId){
+                        
+                            console.log('usarioId -> ', usuarioId)
+                            if(usuarioId.records[0] == undefined){
+                                console.log('Guardando nuevo invitado en el evento de la BD')
+                                
+                                const promesaNuevoUsuario = objetosGlobales[0].session[0]
+                                    .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[:Invitado]->(n) Return p', {spotifyidUsuario:userId, codigoEvento:codigoEvento}))
+
+                                promesaNuevoUsuario
+                                    .then(function(unionUsuarioEvento){
+                                        console.log('unionUsuarioEvento -> ')
+                                        console.log('Nuevo usuario ',userId,' -> añadido a evento en BD-> ', codigoEvento)
+                                    })
+
+                                 promesaNuevoUsuario
+                                    .catch(function(err){
+                                        console.log(err);
+                                        res.send('Error nuevoUsuario')
+                                    })
+                                
+                            }else{
+                                console.log('El usuario ya está registrado en el evento de la BD')
+                            }
+                            
+                            
+                           /*  */
                         })
                     
-                     promesaNuevoUsuario
-                        .catch(function(err){
-                            console.log(err);
-                            res.send('Error nuevoUsuario')
-                        })
+                        
 
                 }else{
                     console.log('Código Inválido')
