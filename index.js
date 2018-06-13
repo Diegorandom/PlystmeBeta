@@ -340,6 +340,40 @@ io.on('connection', function(socket) {
         
     });
     
+    socket.on('crearEventoCodigo', function(msg){
+        console.log('Evento creado por Código')
+        console.log('Id del host -> ', msg.userId)    
+        var codigoEvento = generateRandomString(4);
+        var userId = msg.userId
+        
+        if(userId != undefined){ 
+            /*Se crea registro del evento en BD*/
+            const promesaCrearEvento = objetosGlobales[0].session[0]
+                 .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host]->(n:Evento {codigoEvento:{codigoEvento}, status:true}) Return n', {codigoEvento:codigoEvento, lat:msg.posicion.lat, lng:msg.posicion.lng, spotifyidUsuario:userId}))
+
+            promesaCrearEvento
+                .then(function(evento){
+                    console.log('Registro de Evento -> ', evento)
+
+                })
+
+            promesaCrearEvento
+                 .catch(function(err){
+                    console.log(err);
+                    res.send('Error crearEvento')
+                })
+
+            /*JOIN crea el room cuyo ID será el código del evento*/
+            socket.join(codigoEvento);
+
+            io.to(socket.id).emit('eventoCreadoCodigo', {codigoEvento: codigoEvento, userId:userId});
+        
+        }else{
+            console.log(" Error = userId -> ", userId, "msg.posicion ->", msg.posicion )
+        }
+        
+    });
+    
     
     /*
     multi rooms
@@ -363,7 +397,6 @@ io.on('connection', function(socket) {
                 if(codigoBD.records[0] != undefined){
                     console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
                     socket.join(codigoEvento);
-                    io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId});
                     
                     const promesaChecarUsuario = objetosGlobales[0].session[0]
                         .writeTransaction(tx => tx.run('MATCH (n:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario)  WHERE u.spotifyid={spotifyidUsuario} RETURN u.spotifyid', {codigoEvento:codigoEvento, spotifyidUsuario:userId}))
@@ -373,6 +406,11 @@ io.on('connection', function(socket) {
                         
                             console.log('usarioId -> ', usuarioId)
                             if(usuarioId.records[0] == undefined){
+                                
+                                io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId});
+                                io.sockets.in(codigoEvento).emit('nuevoUsuario', 'Nuevo invitado');
+
+                                
                                 console.log('Guardando nuevo invitado en el evento de la BD')
                                 
                                 const promesaNuevoUsuario = objetosGlobales[0].session[0]
@@ -389,13 +427,16 @@ io.on('connection', function(socket) {
                                         console.log(err);
                                         res.send('Error nuevoUsuario')
                                     })
+                                 promesaNuevoUsuario
+                                    .catch(function(err){
+                                        console.log(err);
+                                        res.send('Error checarEvento')
+                                    })
                                 
                             }else{
                                 console.log('El usuario ya está registrado en el evento de la BD')
                             }
                             
-                            
-                           /*  */
                         })
                     
                         
