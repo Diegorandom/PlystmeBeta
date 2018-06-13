@@ -387,6 +387,8 @@ function fijarUbicacion (pos,userid){
                     userId.push(msg.userId)
 
                     console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
+                    
+                    mostrarCodigo(codigoEvento);
 
                    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
 
