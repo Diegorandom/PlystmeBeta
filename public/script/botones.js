@@ -94,19 +94,25 @@
     $('#enterPool').on('click',function(){
         $('#enterPool').css("display","none");
         $('#btnCrear').css("display","none");
-        $('#salirPlaylist').css("display","block");
         inPool1 = 1;
-        $('#codigoEvento').css("display","block");
+        $('#entrar').css("display","block");
     })
     $('#entrarEvento').on('click',function(){
         entrarCodigo($('#codigo').val());
         $(this).css("display","none");
-        $('#codigoEvento').css("display","none");
+        $('#entrar').css("display","none");
     })
     $('#entrarUbicacion').on('click',function(){
-        $('#codigoEvento').css("display","none");
+        $('#entrar').css("display","none");
         entrarUbicacion();
     })
+
+    $('#regresarDeEntrar').on('click', function(){
+        $('#entrar').css("display","none");
+        $('#enterPool').css("display","inline-block");
+        $('#btnCrear').css("display","inline-block");
+    })
+
     $('#enterPool2').on('click',function(){
         $('#enterPool2').css("display","none");
         $('#btnCrear2').css("display","none");
