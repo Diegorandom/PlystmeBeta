@@ -1,4 +1,4 @@
-var pos;
+var pos, userid;
 
 // Note: This example requires that you consent to location sharing when
       // prompted by your browser. If you see the error "The Geolocation service
@@ -11,43 +11,47 @@ var mapa = document.createElement('script')
         var contenedorMapa = document.getElementById('mapa')
         contenedorMapa.appendChild(mapa)
 
-   function btnCrear(){        
-        
-        console.log('Creando Evento')
-        
-        var userid = null
+function btnCrear(userid){        
 
-        //Request de ajax para obtener userid de servidor Node.js
-        $.ajax({url: '/userid', success:idCallback, cache: false});
-        
-     
-        function idCallback(data, status, error){
+    console.log('Creando Evento')
+
+    //Request de ajax para obtener userid de servidor Node.js
+    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
+
     
+    function idCallback(userid){
+        return function(data, status, error){
+
+
             //Control de errores
             if(error == true || data == "Error Global" || status != "success"){
                 document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
                 document.getElementById('nuevoPlaylist').style.display="block"
                 setTimeout(function(){
                     document.getElementById('nuevoPlaylist').style.display="none"
-                    location.reload(true);
+                    //location.reload(true);
                 }, 3000);
 
             }else{
-                var userid = data
-                console.log("userid -> ", userid)
-                
+
+                userid = data
+
                 var tipomap = "map"
-                
+                console.log("userid -> ", userid)
                 creacionMapa(userid,tipomap)
 
+
             }
-
         }
-        
-    };
+
+    }
+    
+   
+
+};
 
 
-
+/*
         
         $('#btnCrear2').on('click',function(){
  
@@ -84,6 +88,7 @@ var mapa = document.createElement('script')
     });
 
       
+*/
 
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
@@ -96,6 +101,8 @@ var mapa = document.createElement('script')
 
 
      function creacionMapa(userid,tipomap){
+            userid = userid
+            console.log("userid CM -> ", userid)
             console.log('Creación de mapa..')
            
 
@@ -133,8 +140,8 @@ var mapa = document.createElement('script')
                         }); 
                       
                      //Una vez obtenido el userid, éste se pasa a la función sockets() para que sea utilizado
-                    sockets(userid, pos)
-                    console.log('se manda a llamar socket')
+                    //sockets(userid, pos)
+                    //console.log('se manda a llamar socket')
 
                   }, function() {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -346,277 +353,256 @@ socket.on('conexionServidor', (msg) => {
             
         }
 
-function fijarUbicacion (pos){
+function fijarUbicacion (pos,userid){
+    //Request de ajax para obtener userid de servidor Node.js
+    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
 
-                //Request de ajax para obtener userid de servidor Node.js
-                $.ajax({url: '/userid', success:crearEvento, cache: false});
-                
-                
-                function crearEvento (data, status, error) {
-                    
-                    console.log('Creando Evento')
-                    
-                    if(error == true || data == "Error Global" || status != "success"){
-                        
-                        document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
-                        document.getElementById('nuevoPlaylist').style.display="block"
-                        setTimeout(function(){
-                            document.getElementById('nuevoPlaylist').style.display="none"
-                            location.reload(true);
-                        }, 3000);
-
-                    }else{
-
-                        var userid = data
-                        console.log("userid -> ", userid)
-                        
-                        console.log('Posición de la fiesta -> ', pos)
-
-                        socket.emit('crearEvento', {posicion:pos, userId: userid});//proceso para crear una fiesta
-
-                        
-                        socket.on('eventoCreado', function(msg){
-                            console.log('Evento Creado')
-                            var codigoEvento = msg.codigoEvento;
-                            var userId = []
-                            
-                            userId.push(msg.userId)
-
-                            console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
-                                                        
-                           $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
-
-                            function poolPlaylist(data, status, error){
-
-                            console.log(data)
-                            console.log(status)
-                            if(status === "success"){
-                                if(data != undefined){
-
-
-                                /*Proceso entrar a un pool, se configuran los botones que serán las opciones dentro del pool*/
-                                var botonPool = document.getElementById('btnActualizar')
-                                botonPool.innerHTML = "Actualizar Playlist"
-                                botonPool.style="width:40%; border: none; background-color:#FFF; margin:0 auto 0px auto; color:#588b8b; display:inline-block; border-radius:30px;"
-                                var icono = document.createElement('i')
-                                icono.className ="fas fa-sync-alt"
-                                icono.style="font-size:20px; color:#588b8b; margin-left:5px;"
-                                botonPool.appendChild(icono)
-
-                            document.getElementById('createPlaylist').style.display="block"
-
-                            console.log('El playlist ha cambiado')
-                               data.forEach(function(item,index){
-                                   /*Se quitan las canciones viejas si es que existen*/
-                                   if(document.getElementById("pool"+index) !== null){
-                                        document.getElementById("pool"+index).remove();
-                                        console.log("Depuración de playlist")
-                                        /*Despliegue de mensaje de que hay un nuevo playlist*/
-                                        if(index == 1){
-                                            console.log('cargando mensaje')
-                                            document.getElementById('nuevoPlaylist').style.display="block"
-                                            console.log(data)
-                                            setTimeout(function(){
-                                                document.getElementById('nuevoPlaylist').style.display="none"
-                                            }, 2000);
-                                        }
-
-                                   }
-
-                                   /*Se colocan las canciones en el playlist por primera vez */
-                                    playlist = data
-
-                                   console.log(item)
-                                   var iDiv = document.createElement('div');
-                                    iDiv.id = 'pool' + index;
-                                    iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-                                    iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
-
-                                    // Create the inner div before appending to the body
-                                    var innerDiv = document.createElement('div');
-                                    innerDiv.className = 'be-post';
-                                    innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
-
-                                    // The variable iDiv is still good... Just append to it.
-                                    iDiv.appendChild(innerDiv);
-
-                                    /*var form = document.createElement("form")
-                                    form.method="post"
-                                    form.action="/track/profile"
-                                    form.id="trackprofile" */
-
-                                    var boton = document.createElement("span")
-                                    boton.className="be-img-block"
-                                    boton.form="trackprofile"
-                                    boton.type="submit"
-                                    boton.name="index"
-                                    boton.value= index
-                                    boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
-
-                                    innerDiv.appendChild(boton)
-
-                                    var img= document.createElement("img")
-                                    img.src=item[4]
-                                    img.alt="omg"
-                                    img.style=""
-
-                                    boton.appendChild(img)
-
-                                    var span = document.createElement("span")
-                                    span.className="be-post-title"
-                                    span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
-
-                                    span.innerHTML = item[0]
-
-                                    innerDiv.appendChild(span)
-
-                                    var span2 = document.createElement("span")
-                                    span2.style="color:#503047; font-size:120%;max-height:20px;"
-                                    span2.innerHTML="Popularidad: " + item[5]
-
-                                    //innerDiv.appendChild(span2)
-
-                                    var div2 = document.createElement("div")
-                                    div2.className="author-post"
-
-                                    innerDiv.appendChild(div2)
-
-                                    var span3= document.createElement("span")
-                                    span3.style="color:#777; font-size:120%;max-height:20px;"
-                                    span3.innerHTML=item[2]
-
-                                    div2.appendChild(span3)
-
-                                    // Then append the whole thing onto the body
-                                    document.getElementsByClassName('pool')[0].appendChild(iDiv);
-
-
-
-
-                                   console.log('Nueva canción desplegada')
-
-                               })
-                               }else{
-                                   $.get('/error', function(data, status, error){
-                                        console.log(data)
-                                        console.log(status)
-                                        if(status=="sucess"){
-                                            console.log('TOKEN REFRESCADO')
-                                        }else if(error ==true){
-                                            location.reload(true);
-                                        }
-                                    })
-                                }
-                            }else{
-                                console.log(data);
-                                $.get('/error', function(data, status, error){
-                                    console.log(data)
-                                    console.log(status)
-                                    if(status=="sucess"){
-                                        console.log('TOKEN REFRESCADO')
-                                    }else if(error ==true){
-                                        location.reload(true);
-                                    }
-                                })
-                            }
-
-                        }
-
-                        })
-
-                        /*console.log(pos);
-                        socket.emit('getroom', {position: posfija, user: userid}); // entrar a la fiesta que el mismo creo
-                        return false;
-
-                        console.log(pos);*/
-
-                    }              
-                  
-                }               
-                
-            };
-
-
-function entrarCodigo (codigoEvento){
     
-    $.ajax({url: '/userid', success:enterCodigo, cache: false});
-                
-            
-                function enterCodigo (data, status, error) {
-                    
-                    console.log('Entrando a un evento')
-                    
-                    if(error == true || data == "Error Global" || status != "success"){
-                        
-                        document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+    function idCallback(userid){
+        return function(data, status, error){
+
+
+            //Control de errores
+            if(error == true || data == "Error Global" || status != "success"){
+                document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+                document.getElementById('nuevoPlaylist').style.display="block"
+                setTimeout(function(){
+                    document.getElementById('nuevoPlaylist').style.display="none"
+                    //location.reload(true);
+                }, 3000);
+
+            }else{
+                userid = data
+                console.log("userid -> ", userid)
+
+                console.log('Posición de la fiesta -> ', pos)
+
+                socket.emit('crearEvento', {posicion:pos, userId: userid});//proceso para crear una fiesta
+
+                socket.on('eventoCreado', function(msg){
+                    console.log('Evento Creado')
+                    var codigoEvento = msg.codigoEvento;
+                    var userId = []
+
+                    userId.push(msg.userId)
+
+                    console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
+
+                   $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+
+                })
+            }
+        }
+    }
+    
+     function poolPlaylist(data, status, error){
+
+        console.log(data)
+        console.log(status)
+        if(status === "success"){
+            if(data != undefined){
+
+
+            /*Proceso entrar a un pool, se configuran los botones que serán las opciones dentro del pool*/
+            var botonPool = document.getElementById('btnActualizar')
+            botonPool.innerHTML = "Actualizar Playlist"
+            botonPool.style="width:40%; border: none; background-color:#FFF; margin:0 auto 0px auto; color:#588b8b; display:inline-block; border-radius:30px;"
+            var icono = document.createElement('i')
+            icono.className ="fas fa-sync-alt"
+            icono.style="font-size:20px; color:#588b8b; margin-left:5px;"
+            botonPool.appendChild(icono)
+
+        document.getElementById('createPlaylist').style.display="block"
+
+        console.log('El playlist ha cambiado')
+           data.forEach(function(item,index){
+               /*Se quitan las canciones viejas si es que existen*/
+               if(document.getElementById("pool"+index) !== null){
+                    document.getElementById("pool"+index).remove();
+                    console.log("Depuración de playlist")
+                    /*Despliegue de mensaje de que hay un nuevo playlist*/
+                    if(index == 1){
+                        console.log('cargando mensaje')
                         document.getElementById('nuevoPlaylist').style.display="block"
+                        console.log(data)
                         setTimeout(function(){
                             document.getElementById('nuevoPlaylist').style.display="none"
-                            location.reload(true);
-                        }, 3000);
+                        }, 2000);
+                    }
 
-                    }else{
+               }
 
-                        var userid = data
-                        console.log("userid de usuario a entrar -> ", userid)
-                        console.log("codigo del evento -> ", codigoEvento)
-                            
-                        socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userid});//proceso para crear una fiesta
+               /*Se colocan las canciones en el playlist por primera vez */
+                playlist = data
 
-                        
-}}};
+               console.log(item)
+               var iDiv = document.createElement('div');
+                iDiv.id = 'pool' + index;
+                iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
+                iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
+
+                // Create the inner div before appending to the body
+                var innerDiv = document.createElement('div');
+                innerDiv.className = 'be-post';
+                innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
+
+                // The variable iDiv is still good... Just append to it.
+                iDiv.appendChild(innerDiv);
+
+                /*var form = document.createElement("form")
+                form.method="post"
+                form.action="/track/profile"
+                form.id="trackprofile" */
+
+                var boton = document.createElement("span")
+                boton.className="be-img-block"
+                boton.form="trackprofile"
+                boton.type="submit"
+                boton.name="index"
+                boton.value= index
+                boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
+
+                innerDiv.appendChild(boton)
+
+                var img= document.createElement("img")
+                img.src=item[4]
+                img.alt="omg"
+                img.style=""
+
+                boton.appendChild(img)
+
+                var span = document.createElement("span")
+                span.className="be-post-title"
+                span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
+
+                span.innerHTML = item[0]
+
+                innerDiv.appendChild(span)
+
+                var span2 = document.createElement("span")
+                span2.style="color:#503047; font-size:120%;max-height:20px;"
+                span2.innerHTML="Popularidad: " + item[5]
+
+                //innerDiv.appendChild(span2)
+
+                var div2 = document.createElement("div")
+                div2.className="author-post"
+
+                innerDiv.appendChild(div2)
+
+                var span3= document.createElement("span")
+                span3.style="color:#777; font-size:120%;max-height:20px;"
+                span3.innerHTML=item[2]
+
+                div2.appendChild(span3)
+
+                // Then append the whole thing onto the body
+                document.getElementsByClassName('pool')[0].appendChild(iDiv);
+
+
+
+
+               console.log('Nueva canción desplegada')
+
+           })
+           }else{
+               $.get('/error', function(data, status, error){
+                    console.log(data)
+                    console.log(status)
+                    if(status=="sucess"){
+                        console.log('TOKEN REFRESCADO')
+                    }else if(error ==true){
+                        location.reload(true);
+                    }
+                })
+            }
+        }else{
+            console.log(data);
+            $.get('/error', function(data, status, error){
+                console.log(data)
+                console.log(status)
+                if(status=="sucess"){
+                    console.log('TOKEN REFRESCADO')
+                }else if(error ==true){
+                    location.reload(true);
+                }
+            })
+        }
+
+    }
+}               
+
+
+function entrarCodigo (codigoUsuarioEvento, userid){
+     //Request de ajax para obtener userid de servidor Node.js
+    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
+
+    
+    function idCallback(userid){
+        return function(data, status, error){
+
+
+            //Control de errores
+            if(error == true || data == "Error Global" || status != "success"){
+                document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+                document.getElementById('nuevoPlaylist').style.display="block"
+                setTimeout(function(){
+                    document.getElementById('nuevoPlaylist').style.display="none"
+                    //location.reload(true);
+                }, 3000);
+
+            }else{
+                userid = data
+                console.log("userid de usuario a entrar -> ", userid)
+                console.log("codigo del evento -> ", codigoUsuarioEvento)
+                socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoUsuarioEvento, userId: userid});//proceso para crear una fiesta  
+            }
+        }
+    }
+    
+     
+    
+};
 
   
-function entrarUbicacion (){
+function entrarUbicacion (userid){
     
-    $.ajax({url: '/userid', success:enterUbicacion, cache: false});
-                
-            
-                function enterUbicacion (data, status, error) {
-                    
-                    console.log('Entrando a un evento')
-                    
-                    if(error == true || data == "Error Global" || status != "success"){
-                        
-                        document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
-                        document.getElementById('nuevoPlaylist').style.display="block"
-                        setTimeout(function(){
-                            document.getElementById('nuevoPlaylist').style.display="none"
-                            location.reload(true);
-                        }, 3000);
+    console.log("userid de usuario a entrar -> ", userid)
 
-                    }else{
+     if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+         pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
 
-                        var userid = data
-                        console.log("userid de usuario a entrar -> ", userid)
-                        
-                         if (navigator.geolocation) {
-                          navigator.geolocation.getCurrentPosition(function(position) {
-                             pos = {
-                              lat: position.coords.latitude,
-                              lng: position.coords.longitude
-                            };
-                              
-                            console.log("Posición del usuario ", userid, "que quiere entrar a una fiesta -> ", pos)
-            
-                            socket.emit('usuarioNuevoUbicacion', {posicion:pos, userId: userid});//proceso para crear una fiesta
+        console.log("Posición del usuario ", userid, "que quiere entrar a una fiesta -> ", pos)
 
-    
-                              
-                        }, function() {
-                            handleLocationError(true, infoWindow, map.getCenter());
-                          });
-                        } else {
-                          // Browser doesn't support Geolocation
-                          handleLocationError(false, infoWindow, map.getCenter());
-                        }
+        socket.emit('usuarioNuevoUbicacion', {posicion:pos, userId: userid});//proceso para crear una fiesta
+
+
+    }, function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
 
                         
-}}};
+};
 
-                     
+      
+socket.on('usuarioEntra', function(msg){
+    console.log('Usuario -> ', msg.userId, ' entró a evento -> ', msg.codigoEvento)    
+})
 
-    function eliminarplaylist (){
+socket.on('codigoInvalido', function(msg){
+    console.log('Código Invalido -> ', msg.codigoInvalido)
+})
+
+ ///////////////////////////////////////////////NO USADO
+   /* function eliminarplaylist (){
         // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
         /*navigator.geolocation.getCurrentPosition(function(position) {
             //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
@@ -624,7 +610,7 @@ function entrarUbicacion (){
                 'lat' : position.coords.latitude, 
                 'lng' : position.coords.longitude
             }
-        });*/
+        });
         //var namespace = '/test';
 
         var userid = null
@@ -676,3 +662,4 @@ function entrarUbicacion (){
         return false;
         console.log('Se elimino fiesta');
     });
+*/

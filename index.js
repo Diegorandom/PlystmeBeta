@@ -310,34 +310,71 @@ io.on('connection', function(socket) {
         var codigoEvento = generateRandomString(4);
         var userId = msg.userId
         
-        /*'MATCH (n:track {spotifyid:{spotifyid}}), (m:usuario {spotifyid:{spotifyidUsuario}})  CREATE (n)<-[:Escuchado {importanciaIndex: {index}, rangoTiempo:{rangoTiempo}}]-(m)'*/
-        
-        const promesaCrearEvento = objetosGlobales[0].session[0]
-             .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)<-[:Host {status:true}]-(n:Evento {codigoEvento:{codigoEvento}, lat:{lat}, lng:{lng}}) Return n', {codigoEvento:codigoEvento, lat:msg.posicion.lat, lng:msg.posicion.lng, spotifyidUsuario:userId}))
-        
-        promesaCrearEvento
-            .then(function(evento){
-                console.log('Evento -> ', evento)
-            })
-        
-        promesaCrearEvento
-             .catch(function(err){
-                console.log(err);
-                res.send('Error crearEvento')
-            })
-        
-       
-        
-        io.to(socket.id).emit('eventoCreado', {codigoEvento: codigoEvento, userId:userId});
+        if(userId != undefined || msg.posicion != undefined ){ 
+            /*Se crea registro del evento en BD*/
+            const promesaCrearEvento = objetosGlobales[0].session[0]
+                 .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)<-[:Host {status:true}]-(n:Evento {codigoEvento:{codigoEvento}, lat:{lat}, lng:{lng}}) Return n', {codigoEvento:codigoEvento, lat:msg.posicion.lat, lng:msg.posicion.lng, spotifyidUsuario:userId}))
 
+            promesaCrearEvento
+                .then(function(evento){
+                    console.log('Registro de Evento en-> ', evento)
+
+                })
+
+            promesaCrearEvento
+                 .catch(function(err){
+                    console.log(err);
+                    res.send('Error crearEvento')
+                })
+
+            /*JOIN crea el room cuyo ID será el código del evento*/
+            socket.join(codigoEvento);
+
+            io.to(socket.id).emit('eventoCreado', {codigoEvento: codigoEvento, userId:userId});
+        
+        }else{
+            console.log(" Error = userId -> ", userId, "msg.posicion ->", msg.posicion )
+        }
         
     });
+    
+    
+    /*
+    multi rooms
+    https://gist.github.com/crtr0/2896891
+    */
     
     
     socket.on('usuarioNuevoCodigo', function(msg){
         console.log('Un nuevo usario se quiere unir a un evento por código')
         console.log('Codigo del evento - ', msg.codigoEvento)
         console.log('UserId del usuario que quiere entrar - ', msg.userId)
+        var codigoEvento = msg.codigoEvento;
+        var userId = msg.userId
+        
+        const promesaChecarEvento = objetosGlobales[0].session[0]
+            .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE n.codigoEvento={codigoEvento} RETURN n.codigoEvento', {codigoEvento:codigoEvento}))
+        
+        promesaChecarEvento
+            .then(function(codigoBD){
+                console.log('Resultado de búsqueda de código en BD ->', codigoBD.records[0] )
+                if(codigoBD.records[0]._fields == codigoEvento){
+                    console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
+                    socket.join(codigoEvento);
+                    io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId});
+
+                }else{
+                    console.log('Código Inválido')
+                    io.to(socket.id).emit('codigoInvalido', {codigoInvalido:codigoEvento});
+                }
+        })
+        
+        promesaChecarEvento
+            .catch(function(err){
+                console.log(err);
+                res.send('Error checarEvento')
+            })
+        
         
     })
     
@@ -345,6 +382,22 @@ io.on('connection', function(socket) {
         console.log('Un nuevo usario se quiere unir a un evento por geolocalización')
         console.log('UserId del usuario que quiere entrar - ', msg.userId)
         console.log('Posiciòn del usuario - ', msg.posicion)
+        var userId = msg.userId
+        var lat = msg.posicion.lat
+        var lng = msg.posicion.lng
+        var radio = 0.0005
+        
+        const promesaChecarPosEvento = objetosGlobales[0].session[0]
+            .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE {latUser} < (n.lat+{radio}) AND WHERE {latUser} > (n.lat-{radio}) AND WHERE {lngUser} < (n.lng+{radio}) AND WHERE {lngUser} > (n.lng-{radio}) RETURN n.codigoEvento'))
+            
+        promesaChecarPosEvento 
+            .then(function(codigoEvento){
+                if(codigoEvento != undefined || codigoEvento != null){
+                    socket.join(msg.codigoEvento);
+                    io.to(socket.id).emit('usuarioEntra', {codigoEvento: msg.codigoEvento, userId:userId});
+                }
+            })
+        
         
     })
     

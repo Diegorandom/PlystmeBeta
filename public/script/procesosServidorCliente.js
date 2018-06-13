@@ -141,13 +141,13 @@ var erroresPreferenciasSuri = 0
                 //trModo.appendChild(modoT)
                 //trModo.appendChild(modo)
                 
-                var trVol = document.getElementById('vol')
+                /*var trVol = document.getElementById('vol')
                 
                 var volT = document.createElement('th')
                 volT.innerHTML = "Volumen"
                 
                 var vol = document.createElement('td')
-                vol.innerHTML = data.amplitud.toFixed(1) + ' dB'
+                vol.innerHTML = data.amplitud.toFixed(1) + ' dB'*/
                 
                 //trVol.appendChild(volT)
                 //trVol.appendChild(vol)
