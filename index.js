@@ -349,7 +349,7 @@ io.on('connection', function(socket) {
         if(userId != undefined){ 
             /*Se crea registro del evento en BD*/
             const promesaCrearEvento = objetosGlobales[0].session[0]
-                 .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host]->(n:Evento {codigoEvento:{codigoEvento}, status:true}) Return n', {codigoEvento:codigoEvento, lat:msg.posicion.lat, lng:msg.posicion.lng, spotifyidUsuario:userId}))
+                 .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host]->(n:Evento {codigoEvento:{codigoEvento}, status:true}) Return n', {codigoEvento:codigoEvento, spotifyidUsuario:userId}))
 
             promesaCrearEvento
                 .then(function(evento){

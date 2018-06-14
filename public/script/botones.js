@@ -143,6 +143,7 @@
     })
 
     $('#crearCodigo').on('click', function(){
+        crearCodigo()
         $('#crear').css("display","none");
     })
     
