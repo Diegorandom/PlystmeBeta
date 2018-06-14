@@ -332,6 +332,7 @@
                                             
                                         <div style="width:33%;"></div>
                                         
+                                        <!-- Ya no se despliega el botón de actualizar dado que el proceso se hace automáticamente, por lo tanto su propiedad DISPLAY siempre se mantendrá en NONE-->
                                         <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 0 auto; width:49%; border:none; background-color:#FFF;display:none !important; color:#588b8b;" id="btnActualizar">
                                         </button>
 
@@ -382,25 +383,17 @@
 
                                                  <button  type="submit" value="Submit" class="be-button-vidget" style="width:49%; height:250px; background-color:rgba(255,255,255,0.85); border-radius:30px; border: 3px solid #588b8b; color:#588b8b; display:inline-block; margin-top:0px; float:left;"  id="entrarUbicacion">
                                                     <i class="fas fa-map-marker" style="margin-top:10px; font-size:80px;"></i>
-
                                                     <p style="margin-top:10px;">Entrar con geolocalización</p>
 
                                                 </button>
                                             
-                                            
                                             <div style="background-color: rgba(255,255,255,0.85); border-radius:30px; width:49%; height: 250px; border-radius:30px; border: 3px solid #588b8b; color:#588b8b; display:inline-block;">
                                                  
                                             <form>
-                                            
                                                 <input type="text" id="codigo" class="form-control" aria-describedby="helpBlock" style="width:49%; height:50px; font-size:45px; margin-top:40px; text-align:center;">
                                                 <!--
-                                                <button type="button" class="btn btn-default" style="margin-top:20px; width:105px;" id="formCancelar">Cancelar</button>-->
-
-                                                
-                                                <button type="button" class="btn btn-primary" style="margin-top:20px; width:25%; background-color:#588b8b; align:center; margin-right:0px !important;" id="entrarEvento">Entrar</button>
-                                                
+                                                <button type="button" class="btn btn-default" style="margin-top:20px; width:105px;" id="formCancelar">Cancelar</button>-->                                                <button type="button" class="btn btn-primary" style="margin-top:20px; width:25%; background-color:#588b8b; align:center; margin-right:0px !important;" id="entrarEvento">Entrar</button>
                                                 <p style="margin-top: 20px;">Entrar con código</p>
-                                            
                                             </form>
                                             
                                             </div>
@@ -424,9 +417,7 @@
                                                  
                                             <button  type="submit" value="Submit" class="be-button-vidget" style="width:49%; height:250px; background-color:rgba(255,255,255,0.85); border-radius:30px; border: 3px solid #588b8b; color:#588b8b; display:inline-block; margin-top:0px; float:right;"  id="crearCodigo">
                                                         <i class="fas fa-hashtag" style="margin-top:10px; font-size:80px;"></i>
-
                                                         <p style="margin-top:10px;">Crear evento por código</p>
-
                                             </button>
                                             <br>
                                             <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 20px auto 0 auto; width:40%; border:none; background-color:#FFF; color:#588b8b; border-radius:30px; font-size: 20px;" id="regresarDeCrear">
