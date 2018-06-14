@@ -331,4 +331,14 @@
     })
 
 
+//Mensaje de nuevo usuario ha entrado
+
+    $('#enterPool').on('click',function(){
+        $('#pruebaNuevoUsuario').animate({width:'toggle'});
+        setTimeout(function(){
+            $('#pruebaNuevoUsuario').animate({width:'toggle'});
+        }, 2000);
+    });
+
+
     
