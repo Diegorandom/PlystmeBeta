@@ -668,7 +668,8 @@ socket.on('codigoInvalido', function(msg){
 })
 
 socket.on('nuevoUsuario',function(msg){
-    console.log(msg)
+    console.log(msg.mensaje)
+    console.log(msg.idsEvento)
 })
 
  ///////////////////////////////////////////////NO USADO

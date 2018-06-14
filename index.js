@@ -408,18 +408,32 @@ io.on('connection', function(socket) {
                             if(usuarioId.records[0] == undefined){
                                 
                                 io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId});
-                                io.sockets.in(codigoEvento).emit('nuevoUsuario', 'Nuevo invitado');
-
                                 
                                 console.log('Guardando nuevo invitado en el evento de la BD')
                                 
                                 const promesaNuevoUsuario = objetosGlobales[0].session[0]
                                     .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[:Invitado]->(n) Return p', {spotifyidUsuario:userId, codigoEvento:codigoEvento}))
 
-                                promesaNuevoUsuario
+                                promesaNuevoUsuario 
                                     .then(function(unionUsuarioEvento){
                                         console.log('unionUsuarioEvento -> ')
                                         console.log('Nuevo usuario ',userId,' -> añadido a evento en BD-> ', codigoEvento)
+                                        
+                                        const promesaEventoUsuario= objetosGlobales[0].session[0]
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:codigoEvento})<-[]-(u:usuario) RETURN n.spotifyid'),{ codigoEvento:codigoEvento})
+                                            
+                                        promesaEventoUsuario
+                                            .then(function(ids){
+                                                console.log('Usuarios en evento -> ', ids)
+                                            
+                                                io.sockets.in(codigoEvento).emit('nuevoUsuario', {mensaje:'Nuevo invitado', idsEvento:{ids} });
+                                            })
+                                        promesaNuevoUsuario
+                                            .catch(function(err){
+                                                console.log(err);
+                                                res.send('Error nuevoUsuario')
+                                            })
+                                        
                                     })
 
                                  promesaNuevoUsuario
