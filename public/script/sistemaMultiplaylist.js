@@ -514,6 +514,20 @@ socket.on('nuevoUsuario',function(msg, usuarios){
     
 })
 
+socket.on('saleUsuario',function(msg, usuarios){
+    console.log(msg.mensaje)
+    console.log(msg.idsEvento)
+    usuarios = msg.idsEvento
+    
+    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
+    
+    $('#mensajeNuevoUsuario').animate({width:'toggle'});
+        setTimeout(function(){
+            $('#mensajeNuevoUsuario').animate({width:'toggle'});
+        }, 2000);
+    
+})
+
   function vaciarPool() {
             
         console.log('Vamos a vaciar el pool de Escritorio')
