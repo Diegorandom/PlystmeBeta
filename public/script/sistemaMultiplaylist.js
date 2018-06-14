@@ -630,6 +630,9 @@ function entrarUbicacion (userid){
 
       
 socket.on('usuarioEntra', function(msg){
+    if(msg.mensaje != undefined){
+        console.log(msg.mensaje)
+    }
     console.log('Usuario -> ', msg.userId, ' entró a evento -> ', msg.codigoEvento)
     var codigoEvento=msg.codigoEvento 
  

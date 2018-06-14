@@ -414,7 +414,7 @@ io.on('connection', function(socket) {
 
                                 promesaNuevoUsuario 
                                     .then(function(unionUsuarioEvento){
-                                        console.log('unionUsuarioEvento -> ')
+                                        console.log('unionUsuarioEvento')
                                         console.log('Nuevo usuario ',userId,' -> añadido a evento en BD-> ', codigoEvento)
                                         
                                         const promesaEventoUsuario= objetosGlobales[0].session[0]
@@ -428,7 +428,7 @@ io.on('connection', function(socket) {
                                                 
                                                 io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento});
                                             
-                                                io.sockets.in(codigoEvento).emit('nuevoUsuario', {mensaje:'Nuevo invitado', idsEvento:{idsEvento} });
+                                                socket.to(codigoEvento).emit('nuevoUsuario', {mensaje:'Nuevo invitado', idsEvento:idsEvento });
                                             })
                                         promesaNuevoUsuario
                                             .catch(function(err){
@@ -451,6 +451,24 @@ io.on('connection', function(socket) {
                                 
                             }else{
                                 console.log('El usuario ya está registrado en el evento de la BD')
+                                
+                                const promesaEventoUsuario= objetosGlobales[0].session[0]
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento}),{ codigoEvento:codigoEvento})
+                                            
+                                        promesaEventoUsuario
+                                            .then(function(ids){
+                                                console.log('Usuarios en evento -> ', ids.records[0]._fields)
+                                                
+                                                var idsEvento = ids.records[0]._fields
+                                                
+                                                 io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Usuario ya estaba adentro del evento'});
+                                            
+                                            })
+                                        promesaNuevoUsuario
+                                            .catch(function(err){
+                                                console.log(err);
+                                                res.send('Error nuevoUsuario')
+                                            })
                             }
                             
                         })
