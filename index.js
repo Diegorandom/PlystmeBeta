@@ -393,7 +393,7 @@ io.on('connection', function(socket) {
         
         promesaChecarEvento
             .then(function(codigoBD){
-                console.log('Resultado de búsqueda de código en BD ->', codigoBD.records[0] )
+                console.log('Resultado de búsqueda de código en BD ->', codigoBD.records[0]._fields )
                 if(codigoBD.records[0] != undefined){
                     console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
                     socket.join(codigoEvento);
@@ -404,7 +404,6 @@ io.on('connection', function(socket) {
                     promesaChecarUsuario
                         .then(function(usuarioId){
                         
-                            console.log('usarioId -> ', usuarioId)
                             if(usuarioId.records[0] == undefined){
                                                                 
                                 console.log('Guardando nuevo invitado en el evento de la BD')
@@ -422,13 +421,24 @@ io.on('connection', function(socket) {
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
-                                                console.log('Usuarios en evento -> ', ids.records[0]._fields)
+                                                console.log('Usuarios en evento -> ', ids.records)
                                                 
-                                                var idsEvento = ids.records[0]._fields
+                                                 var idsEvento = []
                                                 
-                                                io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento});
+                                                ids.records.forEach(function(item, index){
+                                                    console.log(ids.records[index]._fields[0])
+                                                    
+                                                    idsEvento.push(ids.records[index]._fields[0])
+                                                    
+                                                    if(ids.records.length == index +1){
+                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Invitado'});
+                                                    }
+                                                    
+                                                })
+                                                
+                                                
+                                                
                                             
-                                                socket.to(codigoEvento).emit('nuevoUsuario', {mensaje:'Nuevo invitado', idsEvento:idsEvento });
                                             })
                                         promesaNuevoUsuario
                                             .catch(function(err){
@@ -457,17 +467,29 @@ io.on('connection', function(socket) {
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
-                                                console.log('Usuarios en evento -> ', ids.records[0]._fields)
+                                                console.log('Usuarios en evento -> ', ids.records)
                                                 
-                                                var idsEvento = ids.records[0]._fields
+                                                 var idsEvento = []
                                                 
-                                                 io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Usuario ya estaba adentro del evento'});
+                                                ids.records.forEach(function(item, index){
+                                                    console.log(ids.records[index]._fields[0])
+                                                    
+                                                    idsEvento.push(ids.records[index]._fields[0])
+                                                    
+                                                    if(ids.records.length == index +1){
+                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Usuario ya estaba adentro del evento'});
+                                                    }
+                                                    
+                                                })
+                                                
+                                                
+                                                
                                             
                                             })
-                                        promesaNuevoUsuario
+                                        promesaEventoUsuario
                                             .catch(function(err){
                                                 console.log(err);
-                                                res.send('Error nuevoUsuario')
+                                                res.send('Error nuevoEventoUsuario')
                                             })
                             }
                             
@@ -537,14 +559,24 @@ io.on('connection', function(socket) {
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
-                                                console.log('ids -> ', ids)
-                                                console.log('Usuarios en evento -> ', ids.records[0]._fields)
+                                                console.log('Usuarios en evento -> ', ids.records)
                                                 
-                                                var idsEvento = ids.records[0]._fields
+                                                 var idsEvento = []
                                                 
-                                                io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento});
+                                                ids.records.forEach(function(item, index){
+                                                    console.log(ids.records[index]._fields[0])
+                                                    
+                                                    idsEvento.push(ids.records[index]._fields[0])
+                                                    
+                                                    if(ids.records.length == index +1){
+                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Invitado'});
+                                                    }
+                                                    
+                                                })
+                                                
+                                                
+                                                
                                             
-                                                socket.to(codigoEvento).emit('nuevoUsuario', {mensaje:'Nuevo invitado', idsEvento:idsEvento });
                                             })
                                         
                                         promesaEventoUsuario
@@ -573,12 +605,23 @@ io.on('connection', function(socket) {
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
-                                                console.log('ids -> ', ids)
-                                                console.log('Usuarios en evento -> ', ids.records[0]._fields)
+                                                console.log('Usuarios en evento -> ', ids.records)
                                                 
-                                                var idsEvento = ids.records[0]._fields
+                                                 var idsEvento = []
                                                 
-                                                 io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Usuario ya estaba adentro del evento'});
+                                                ids.records.forEach(function(item, index){
+                                                    console.log(ids.records[index]._fields[0])
+                                                    
+                                                    idsEvento.push(ids.records[index]._fields[0])
+                                                    
+                                                    if(ids.records.length == index +1){
+                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Usuario ya estaba adentro del evento'});
+                                                    }
+                                                    
+                                                })
+                                                
+                                                
+                                                
                                             
                                             })
                                         promesaEventoUsuario
