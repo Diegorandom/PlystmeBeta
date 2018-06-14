@@ -1,4 +1,4 @@
-var pos, userid;
+var pos, userid, usuarios;
 
 // Note: This example requires that you consent to location sharing when
       // prompted by your browser. If you see the error "The Geolocation service
@@ -51,53 +51,12 @@ function btnCrear(userid){
 };
 
 
-/*
-        
-        $('#btnCrear2').on('click',function(){
- 
-  
-        var userid = null
-
-        //Request de ajax para obtener userid de servidor Node.js
-        $.ajax({url: '/userid', success:idCallback, cache: false});
-        
-     
-        function idCallback(data, status, error){
-    
-            //Control de errores
-            if(error == true || data == "Error Global" || status != "success"){
-                document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
-                document.getElementById('nuevoPlaylist').style.display="block"
-                setTimeout(function(){
-                    document.getElementById('nuevoPlaylist').style.display="none"
-                    location.reload(true);
-                }, 3000);
-
-            }else{
-                var userid = data
-                console.log("userid -> ", userid)
-                
-                 var tipomap = "map2"
-                
-                creacionMapa(userid,tipomap)
-
-            }
-
-        }        
-           
-    });
-
-      
-*/
-
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-          'Error: The Geolocation service failed.' :
-          'Error: Your browser doesn\'t support geolocation.');
-      }
-
-
+  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+      'Error: The Geolocation service failed.' :
+      'Error: Your browser doesn\'t support geolocation.');
+  }
 
 
      function creacionMapa(userid,tipomap){
@@ -186,181 +145,6 @@ socket.on('conexionServidor', (msg) => {
     console.log(msg)
     socket.emit('EventoConexion', {data: 'Estoy Conectado!'});
 });
-
- function sockets(userid, pos) {
- 
-            console.log('userid -> ', userid  )
-            console.log('pos -> ', pos)
-      
-            /*usersId recibe un arreglo con los usuarios que se encuentran en el evento para despues procesar esta lista en poolAlgoritmo y recibir la lista de canciones que serán procesadas en la funcion poolPlaylist para que se desplieguen en el cliente*/
-     
-            socket.on('usersId', function(msg){
-                console.log(msg); //Para recibir la playlist
-                //var playlist = msg.playlist;
-                // Variable: "playlist" contiene un arreglo de usersid dentro de la fiesta "room", este arreglo cambia cuando se une un nuevo usuario a la playlist.
-                /// Se ejecuta la función para mandar al pool el arreglo de los usuarios dentro del room.
-                /// Playlist solo es un objeto, dentro de el mismo se toma el arreglo playlist
-                
-                usuariosdentro = msg.usersid;
-                console.log(usuariosdentro);
-                console.log('Entró un nuevo usuario');
-                
-                
-            });
-     
-           /* 
-            // Función para obtener el room
-            socket.on('room', function(msg){
-                console.log(msg.room); // la playlist, la respuesta del servidor en consola de cliente  
-                room = msg.room; //coordenadas recibidas del servidor
-                console.log(room);
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });
-                console.log(pos);
-                socket.emit('join', {room: room, position:pos, user:userid});                
-            });
-     
-            // Función para saber el status de la conexión    
-            socket.on('monitoreo', function(msg) {
-               
-                if(msg!=null){
-                     navigator.geolocation.getCurrentPosition(function(position) {
-                    //posString = position.coords.latitude.toString.toString() + ":" position.coords.longitude.toString();
-                    //Se manda a llamar la variable pos para actualizar la ubicación
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });                
-                
-                socket.emit('leave', {room: room, user: userid, position: pos});                     
-               }
-            
-                console.log(msg);
-                
-            });
-        
-        
-            socket.on('my_response', function(msg) {
-                
-                // Cada vez que recibe un mensaje de monitoreo imprime la respuesta del servidor
-                                            
-                console.log(msg);  //las resuestas del servidor en consola de cliente
-                var room_local = msg.room
-            });
-    
-            
-
-            $('#enterPool').on('click',function(event) {
-                   
-                /// Llamada a la posición del usuario, se manda posición en STRING y en Objeto para la comparación en el servidor.
-                
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });
-                console.log(pos);
-                console.log('Entrando a una fiesta');
-                socket.emit('getroom', {position: pos, user: userid}); //proceso para unirse a una fiesta
-                return false;
-            });
-            
-    
-            $('#salirPlaylist').on('click',function(event) {
-                
-                // Botón para salir de la playlist 
-                
-                 navigator.geolocation.getCurrentPosition(function(position) {
-                    posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });
-                
-                socket.emit('leave', {room: room, user: userid, position: pos});//proceso para abandonar una fiesta
-                return false;
-            });
-    
-           /* $('#fijarUbicacion').on('click', function(event){
-                // Recibir variables de POS FIJA de MAPA.JS para crear la fiesta.
-                
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });
-                //Se va a guardar posfija para eliminar fiesta
-                posfija = pos;
-                console.log(pos);
-                socket.emit('create_party',{room: userid, position: posfija, user: userid});//proceso para crear una fiesta
-                
-                console.log(pos);
-                socket.emit('getroom', {position: posfija, user: userid}); // entrar a la fiesta que el mismo creo
-                return false;
-                
-                console.log(pos);
-            }); 
-     
-     
-            $('#fijarUbicacion2').on('click', function(event){
-                // Recibir variables de POS FIJA de MAPA.JS para crear la fiesta. 
-                
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });
-                console.log(pos);
-                socket.emit('create_party',{room: userid, position: pos, user:userid});//proceso para crear una fiesta                
-                socket.emit('getroom', {user:userid, position:pos}); // entrar a la fiesta que el mismo creo
-                return false;
-            });
-     
-            $('#EliminarPlayslit').on('click', function(event){
-                // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
-                /*navigator.geolocation.getCurrentPosition(function(position) {
-                    //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });
-                console.log('se va a eliminar la fiesta');
-                console.log(posfija);
-                socket.emit('delete_party',{room: userid, position: posfija, user: userid});//proceso para eliminar una fiesta
-                return false;
-                console.log('Se elimino fiesta');
-            });
-     
-            $('#EliminarPlayslit2').on('click', function(event){
-                // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-                    pos = {
-                        'lat' : position.coords.latitude, 
-                        'lng' : position.coords.longitude
-                    }
-                });
-                socket.emit('delete_party',{room: userid, position: pos, user: userid});//proceso para eliminar una fiesta
-                return false;
-                console.log('Se elimino fiesta');
-            }); */
-     
-            
-        }
 
 function fijarUbicacion (pos,userid){
     //Request de ajax para obtener userid de servidor Node.js
@@ -698,7 +482,7 @@ function entrarUbicacion (userid){
 };
 
       
-socket.on('usuarioEntra', function(msg){
+socket.on('usuarioEntra', function(msg, usuarios){
     if(msg.mensaje != undefined){
         console.log(msg.mensaje)
     }
@@ -707,6 +491,7 @@ socket.on('usuarioEntra', function(msg){
  
     console.log('Codigo de Evento -> ', codigoEvento)
 
+    usuarios = msg.idsEvento
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
       
 })
@@ -715,9 +500,10 @@ socket.on('codigoInvalido', function(msg){
     console.log('Código Invalido -> ', msg.codigoInvalido)
 })
 
-socket.on('nuevoUsuario',function(msg){
+socket.on('nuevoUsuario',function(msg, usuarios){
     console.log(msg.mensaje)
     console.log(msg.idsEvento)
+    usuarios = msg.idsEvento
     
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
     
@@ -728,65 +514,25 @@ socket.on('nuevoUsuario',function(msg){
     
 })
 
- ///////////////////////////////////////////////NO USADO
-   /* function eliminarplaylist (){
-        // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
-        /*navigator.geolocation.getCurrentPosition(function(position) {
-            //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-            pos = {
-                'lat' : position.coords.latitude, 
-                'lng' : position.coords.longitude
-            }
-        });
-        //var namespace = '/test';
+  function vaciarPool() {
+            
+        console.log('Vamos a vaciar el pool de Escritorio')
+        
+        document.getElementsByClassName("pool").remove();
+      
+        var canvas = document.getElementById("canvas")
+        var pool = document.createElement('div');
+        pool.className = 'pool';
+        canvas.appendChild(pool)  
+      
+        console.log("Depuración de playlist en escritorio")
+        /*Mensaje de actualizacion de playlist*/
 
-        var userid = null
-
-        //Request de ajax para obtener userid de servidor Node.js
-        $.ajax({url: '/userid', success:idEliminar, cache: false});
-
-
-        function idEliminar (data, status, error) {
-
-            if(error == true || data == "Error Global" || status != "success"){
-        document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+        console.log('cargando mensaje')
+        document.getElementById('nuevoPlaylist').innerHTML="Eliminando Playlist..."
         document.getElementById('nuevoPlaylist').style.display="block"
         setTimeout(function(){
             document.getElementById('nuevoPlaylist').style.display="none"
-            location.reload(true);
-        }, 3000);
-
-        }else{
-
-            var userid = data
-            console.log("userid -> ", userid)
-
-
-
-            console.log('se va a eliminar la fiesta');
-            console.log(posfija);
-            socket.emit('delete_party',{room: userid, position: posfija, user: userid});//proceso para eliminar una fiesta
-            return false;
-            console.log('Se elimino fiesta');
-
-        }                 
-
-
-        }               
-
-    };
-
-    $('#EliminarPlayslit2').on('click', function(event){
-        // Recibir POS FIJA de MAPA JS para eliminar la fiesta.
-        navigator.geolocation.getCurrentPosition(function(position) {
-            //posString = position.coords.latitude.toString() + ":" + position.coords.longitude.toString();
-            pos = {
-                'lat' : position.coords.latitude, 
-                'lng' : position.coords.longitude
-            }
-        });
-        socket.emit('delete_party',{room: userid, position: pos, user: userid});//proceso para eliminar una fiesta
-        return false;
-        console.log('Se elimino fiesta');
-    });
-*/
+        }, 2000);
+        
+    }

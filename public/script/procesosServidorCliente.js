@@ -966,50 +966,6 @@ var erroresPreferenciasSuri = 0
         
     /* Proceso para vaciar un playlist */
 
-    function vaciarPool() {
-            
-            console.log('Vamos a vaciar el pool de Escritorio')
-            
-            
-            $.ajax({url: '/pool?_=' + new Date().getTime(), data:{usersId:usuariosdentro}, success:poolPlaylist, cache: false});
-              function poolPlaylist(data, status, error){
-                    
-                console.log(data)
-                console.log(status)
-                           if(status === "success"){
-                if(data != undefined){
-                    
-                    console.log('El playlist se va a vaciar en escritorio')
-                    
-                    //eliminar contador de usuarios, por ahora esta comentado hasta tener el
-                    //document.getElementById("contadorSpan").remove();
-                    //eliminar fotos de usuarios
-                    //document.getElementsByClassName("imgUsuario").remove();
-                    
-                   data.forEach(function(item,index){
-                       /*Se eliminan las canciones viejas*/
-                       if(document.getElementById("pool"+index) !== null){
-                            document.getElementById("pool"+index).remove();
-                            console.log("Depuración de playlist en escritorio")
-                            /*Mensaje de actualizacion de playlist*/
-                            if(index == 1){
-                                console.log('cargando mensaje')
-                                document.getElementById('nuevoPlaylist').innerHTML="Eliminando Playlist..."
-                                document.getElementById('nuevoPlaylist').style.display="block"
-                                console.log(data)
-                                setTimeout(function(){
-                                    document.getElementById('nuevoPlaylist').style.display="none"
-                                }, 2000);
-                            }
-                            
-                       }
-                   })              
-        }}
-                
-            }
-    }
-
-
     function vaciarPool2() {
             
             console.log('Vamos a vaciar el pool de movil')

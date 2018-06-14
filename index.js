@@ -431,7 +431,11 @@ io.on('connection', function(socket) {
                                                     idsEvento.push(ids.records[index]._fields[0])
                                                     
                                                     if(ids.records.length == index +1){
-                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Invitado'});
+                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Has entrado al evento'});
+                                                        
+                                                        // sending to all clients in room except sender
+                                                        socket.to(codigoEvento).emit('nuevoUsuario', {idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                        
                                                     }
                                                     
                                                 })
@@ -569,7 +573,10 @@ io.on('connection', function(socket) {
                                                     idsEvento.push(ids.records[index]._fields[0])
                                                     
                                                     if(ids.records.length == index +1){
-                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Invitado'});
+                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Has entrado al evento'});
+                                                        
+                                                        socket.to(codigoEvento).emit('nuevoUsuario', {idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                        
                                                     }
                                                     
                                                 })
