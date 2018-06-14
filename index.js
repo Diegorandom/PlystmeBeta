@@ -305,11 +305,15 @@ io.on('connection', function(socket) {
 
     /*Código de creación de Evento*/
     
-    socket.on('crearEvento', function(msg){
+    var codigoEvento
+    
+    socket.on('crearEvento', function(msg, codigoEvento){
         console.log('Evento creado')
         console.log('Posicion del evento -> ', msg.posicion)    
         console.log('Id del host -> ', msg.userId)    
-        var codigoEvento = generateRandomString(4);
+        codigoEvento = generateRandomString(4);
+        console.log('Codigo del evento -> ', codigoEvento)
+        
         var userId = msg.userId
         
         if(userId != undefined || msg.posicion != undefined ){ 
@@ -340,10 +344,10 @@ io.on('connection', function(socket) {
         
     });
     
-    socket.on('crearEventoCodigo', function(msg){
+    socket.on('crearEventoCodigo', function(msg, codigoEvento){
         console.log('Evento creado por Código')
         console.log('Id del host -> ', msg.userId)    
-        var codigoEvento = generateRandomString(4);
+        codigoEvento = generateRandomString(4);
         var userId = msg.userId
         
         if(userId != undefined){ 
@@ -381,19 +385,19 @@ io.on('connection', function(socket) {
     */
     
     
-    socket.on('usuarioNuevoCodigo', function(msg){
+    socket.on('usuarioNuevoCodigo', function(msg, codigoEvento){
         console.log('Un nuevo usario se quiere unir a un evento por código')
         console.log('Codigo del evento - ', msg.codigoEvento)
         console.log('UserId del usuario que quiere entrar - ', msg.userId)
-        var codigoEvento = msg.codigoEvento;
+        codigoEvento = msg.codigoEvento;
         var userId = msg.userId
         
         const promesaChecarEvento = objetosGlobales[0].session[0]
-            .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE n.codigoEvento={codigoEvento} RETURN n.codigoEvento', {codigoEvento:codigoEvento}))
+            .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE n.codigoEvento={codigoEvento} AND n.status=true RETURN n.codigoEvento', {codigoEvento:codigoEvento}))
         
         promesaChecarEvento
             .then(function(codigoBD){
-                console.log('Resultado de búsqueda de código en BD ->', codigoBD.records[0]._fields )
+                console.log('Resultado de búsqueda de código en BD ->', codigoBD.records[0] )
                 if(codigoBD.records[0] != undefined){
                     console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
                     socket.join(codigoEvento);
@@ -516,7 +520,7 @@ io.on('connection', function(socket) {
         
     })
     
-     socket.on('usuarioNuevoUbicacion', function(msg){
+     socket.on('usuarioNuevoUbicacion', function(msg, codigoEvento){
         console.log('Un nuevo usario se quiere unir a un evento por geolocalización')
         console.log('UserId del usuario que quiere entrar - ', msg.userId)
         var userId = msg.userId
@@ -529,18 +533,18 @@ io.on('connection', function(socket) {
         console.log('radio - ', radio)
         
         const promesaChecarPosEvento = objetosGlobales[0].session[0]
-            .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE {latUser} < (n.lat+{radio}) AND {latUser} > (n.lat-{radio}) AND {lngUser} < (n.lng+{radio}) AND {lngUser} > (n.lng-{radio}) RETURN n.codigoEvento',{ latUser:lat, radio:radio, lngUser:lng }))
+            .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE {latUser} < (n.lat+{radio}) AND {latUser} > (n.lat-{radio}) AND {lngUser} < (n.lng+{radio}) AND {lngUser} > (n.lng-{radio}) AND n.status=true RETURN n.codigoEvento',{ latUser:lat, radio:radio, lngUser:lng }))
             
         promesaChecarPosEvento 
             .then(function(codigoBD){
                 if(codigoBD.records[0] != undefined){
-                    var codigoEvento = codigoBD.records[0]._fields
+                    codigoEvento = codigoBD.records[0]._fields[0]
                     
                     console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
                     socket.join(codigoEvento);
                     
                     const promesaChecarUsuario = objetosGlobales[0].session[0]
-                        .writeTransaction(tx => tx.run('MATCH (n:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario)  WHERE u.spotifyid={spotifyidUsuario} RETURN u.spotifyid', {codigoEvento:codigoEvento[0], spotifyidUsuario:userId}))
+                        .writeTransaction(tx => tx.run('MATCH (n:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario)  WHERE u.spotifyid={spotifyidUsuario} RETURN u.spotifyid', {codigoEvento:codigoEvento, spotifyidUsuario:userId}))
                         
                     promesaChecarUsuario
                         .then(function(usuarioId){
@@ -608,7 +612,7 @@ io.on('connection', function(socket) {
                                 console.log('El usuario ya está registrado en el evento de la BD')
                                 
                                 const promesaEventoUsuario= objetosGlobales[0].session[0]
-                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento[0]}))
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento}))
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
@@ -657,7 +661,28 @@ io.on('connection', function(socket) {
         
     })
     
+    app.get('/salirEvento', function(request, response, error) {
+        var objetosGlobales = request.app.get('objetosGlobales');
+        var position = request.app.get('position');
+        position = request.sessions.position; 
         
+        console.log('Usuario a salirse -> ', objetosGlobales[position].userid)
+
+        const promesaSacarUsuario= objetosGlobales[0].session[0]
+            .writeTransaction(tx => tx.run('MATCH (e:Evento {status:true})<-[]-(u:usuario {spotifyid:{spotifyid}}) SET e.status = false RETURN e', { spotifyid:objetosGlobales[position].userid }))
+        
+        promesaSacarUsuario
+            .then(function(evento){
+                console.log(evento.records[0]._fields)
+            })
+        
+        promesaSacarUsuario
+            .catch(function(err){
+                console.log(err);
+                res.send('Error checarPosEvento')
+            })
+
+    })
 
 })
 

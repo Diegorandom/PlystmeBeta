@@ -317,7 +317,6 @@
     
     $('#EliminarPlaylist').on('click',function(){
         vaciarPool(usuarios);
-        eliminarplaylist();
         $('#btnActualizar').css("display","none");
         $(this).css("display","none");
         $('#btnCrear').css("display","inline-block");
