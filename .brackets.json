@@ -1,0 +1,5 @@
+{
+    "jscodehints.detectedExclusions": [
+        "isotope/js/layout-modes/vertical.js"
+    ]
+}

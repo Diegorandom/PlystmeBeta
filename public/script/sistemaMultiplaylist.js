@@ -491,7 +491,6 @@ socket.on('usuarioEntra', function(msg, usuarios){
  
     console.log('Codigo de Evento -> ', codigoEvento)
 
-    usuarios = msg.idsEvento
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
       
 })
@@ -500,9 +499,9 @@ socket.on('codigoInvalido', function(msg){
     console.log('Código Invalido -> ', msg.codigoInvalido)
 })
 
-socket.on('nuevoUsuario',function(msg, usuarios){
+socket.on('nuevoUsuario',function(msg){
     console.log(msg.mensaje)
-    console.log(msg.idsEvento)
+    console.log('idsEvento -> ' msg.idsEvento)
     usuarios = msg.idsEvento
     
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
