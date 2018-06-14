@@ -603,29 +603,50 @@ function entrarCodigo (codigoUsuarioEvento, userid){
   
 function entrarUbicacion (userid){
     
-    console.log("userid de usuario a entrar -> ", userid)
+    //Request de ajax para obtener userid de servidor Node.js
+    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
 
-     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-         pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-
-        console.log("Posición del usuario ", userid, "que quiere entrar a una fiesta -> ", pos)
-
-        socket.emit('usuarioNuevoUbicacion', {posicion:pos, userId: userid});//proceso para crear una fiesta
+    
+    function idCallback(userid){
+        return function(data, status, error){
 
 
-    }, function() {
-        handleLocationError(true, infoWindow, map.getCenter());
-      });
-    } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter());
-    }
+            //Control de errores
+            if(error == true || data == "Error Global" || status != "success"){
+                document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+                document.getElementById('nuevoPlaylist').style.display="block"
+                setTimeout(function(){
+                    document.getElementById('nuevoPlaylist').style.display="none"
+                    //location.reload(true);
+                }, 3000);
 
-                        
+            }else{
+                userid = data
+                
+                console.log("userid de usuario a entrar -> ", userid)
+
+                 if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(function(position) {
+                     pos = {
+                      lat: position.coords.latitude,
+                      lng: position.coords.longitude
+                    };
+
+                    console.log("Posición del usuario ", userid, "que quiere entrar a una fiesta -> ", pos)
+
+                    socket.emit('usuarioNuevoUbicacion', {posicion:pos, userId: userid});//proceso para crear una fiesta
+
+
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                  });
+                } else {
+                  // Browser doesn't support Geolocation
+                  handleLocationError(false, infoWindow, map.getCenter());
+                }
+            }
+        }
+    }                        
 };
 
       

@@ -418,7 +418,7 @@ io.on('connection', function(socket) {
                                         console.log('Nuevo usuario ',userId,' -> añadido a evento en BD-> ', codigoEvento)
                                         
                                         const promesaEventoUsuario= objetosGlobales[0].session[0]
-                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento}),{ codigoEvento:codigoEvento})
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento}))
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
@@ -493,21 +493,115 @@ io.on('connection', function(socket) {
      socket.on('usuarioNuevoUbicacion', function(msg){
         console.log('Un nuevo usario se quiere unir a un evento por geolocalización')
         console.log('UserId del usuario que quiere entrar - ', msg.userId)
-        console.log('Posiciòn del usuario - ', msg.posicion)
         var userId = msg.userId
         var lat = msg.posicion.lat
         var lng = msg.posicion.lng
         var radio = 0.0005
         
+        console.log('Latitud del usuario - ', lat)
+        console.log('Longitud del usuario - ', lng)
+        console.log('radio - ', radio)
+        
         const promesaChecarPosEvento = objetosGlobales[0].session[0]
-            .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE {latUser} < (n.lat+{radio}) AND WHERE {latUser} > (n.lat-{radio}) AND WHERE {lngUser} < (n.lng+{radio}) AND WHERE {lngUser} > (n.lng-{radio}) RETURN n.codigoEvento'))
+            .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE {latUser} < (n.lat+{radio}) AND {latUser} > (n.lat-{radio}) AND {lngUser} < (n.lng+{radio}) AND {lngUser} > (n.lng-{radio}) RETURN n.codigoEvento',{ latUser:lat, radio:radio, lngUser:lng }))
             
         promesaChecarPosEvento 
-            .then(function(codigoEvento){
-                if(codigoEvento != undefined || codigoEvento != null){
-                    socket.join(msg.codigoEvento);
-                    io.to(socket.id).emit('usuarioEntra', {codigoEvento: msg.codigoEvento, userId:userId});
+            .then(function(codigoBD){
+                if(codigoBD.records[0] != undefined){
+                    var codigoEvento = codigoBD.records[0]._fields
+                    
+                    console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
+                    socket.join(codigoEvento);
+                    
+                    const promesaChecarUsuario = objetosGlobales[0].session[0]
+                        .writeTransaction(tx => tx.run('MATCH (n:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario)  WHERE u.spotifyid={spotifyidUsuario} RETURN u.spotifyid', {codigoEvento:codigoEvento[0], spotifyidUsuario:userId}))
+                        
+                    promesaChecarUsuario
+                        .then(function(usuarioId){
+                        
+                            console.log('usarioId -> ', usuarioId)
+                            if(usuarioId.records[0] == undefined){
+                                                                
+                                console.log('Guardando nuevo invitado en el evento de la BD')
+                                
+                                const promesaNuevoUsuario = objetosGlobales[0].session[0]
+                                    .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[:Invitado]->(n) Return p', {spotifyidUsuario:userId, codigoEvento:codigoEvento}))
+
+                                promesaNuevoUsuario 
+                                    .then(function(unionUsuarioEvento){
+                                        console.log('unionUsuarioEvento')
+                                        console.log('Nuevo usuario ',userId,' -> añadido a evento en BD-> ', codigoEvento)
+                                        
+                                        const promesaEventoUsuario= objetosGlobales[0].session[0]
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento}))
+                                            
+                                        promesaEventoUsuario
+                                            .then(function(ids){
+                                                console.log('ids -> ', ids)
+                                                console.log('Usuarios en evento -> ', ids.records[0]._fields)
+                                                
+                                                var idsEvento = ids.records[0]._fields
+                                                
+                                                io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento});
+                                            
+                                                socket.to(codigoEvento).emit('nuevoUsuario', {mensaje:'Nuevo invitado', idsEvento:idsEvento });
+                                            })
+                                        
+                                        promesaEventoUsuario
+                                            .catch(function(err){
+                                                console.log(err);
+                                                res.send('Error EventoUsuario')
+                                            })
+                                })
+
+                                 promesaNuevoUsuario
+                                    .catch(function(err){
+                                        console.log(err);
+                                        res.send('Error nuevoUsuario')
+                                    })
+                                 promesaNuevoUsuario
+                                    .catch(function(err){
+                                        console.log(err);
+                                        res.send('Error checarEvento')
+                                    })
+                                
+                            }else{
+                                console.log('El usuario ya está registrado en el evento de la BD')
+                                
+                                const promesaEventoUsuario= objetosGlobales[0].session[0]
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento[0]}))
+                                            
+                                        promesaEventoUsuario
+                                            .then(function(ids){
+                                                console.log('ids -> ', ids)
+                                                console.log('Usuarios en evento -> ', ids.records[0]._fields)
+                                                
+                                                var idsEvento = ids.records[0]._fields
+                                                
+                                                 io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Usuario ya estaba adentro del evento'});
+                                            
+                                            })
+                                        promesaEventoUsuario
+                                            .catch(function(err){
+                                                console.log(err);
+                                                res.send('Error eventoUsuario')
+                                            })
+                            }
+                            
+                        })
+                    
+                        
+
+                }else{
+                    console.log('Código Inválido')
+                    io.to(socket.id).emit('codigoInvalido', {codigoInvalido:codigoEvento});
                 }
+            })
+        
+        promesaChecarPosEvento
+            .catch(function(err){
+                console.log(err);
+                res.send('Error checarPosEvento')
             })
         
         
