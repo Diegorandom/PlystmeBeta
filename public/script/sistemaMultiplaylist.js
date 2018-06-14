@@ -490,7 +490,7 @@ function crearCodigo (pos,userid){
             /*Proceso entrar a un pool, se configuran los botones que serán las opciones dentro del pool*/
             var botonPool = document.getElementById('btnActualizar')
             botonPool.innerHTML = "Actualizar Playlist"
-            botonPool.style="width:40%; border: none; background-color:#FFF; margin:0 auto 0px auto; color:#588b8b; display:inline-block; border-radius:30px;"
+            botonPool.style="width:40%; border: none; background-color:#FFF; margin:0 auto 0px auto; color:#588b8b; display:none; border-radius:30px;"
             var icono = document.createElement('i')
             icono.className ="fas fa-sync-alt"
             icono.style="font-size:20px; color:#588b8b; margin-left:5px;"

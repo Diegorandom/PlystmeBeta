@@ -101,10 +101,12 @@
         entrarCodigo($('#codigo').val());
         $(this).css("display","none");
         $('#entrar').css("display","none");
+        $('#salirPlaylist').css("display","block");
     })
     $('#entrarUbicacion').on('click',function(){
         $('#entrar').css("display","none");
         entrarUbicacion();
+        $('#salirPlaylist').css("display","block");
     })
 
     $('#regresarDeEntrar').on('click', function(){
@@ -143,8 +145,9 @@
     })
 
     $('#crearCodigo').on('click', function(){
-        crearCodigo()
+        crearCodigo();
         $('#crear').css("display","none");
+        $('#EliminarPlaylist').css("display","block");
     })
     
     $('#btnCrear2').on('click',function(){
