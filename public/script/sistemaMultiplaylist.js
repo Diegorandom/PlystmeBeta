@@ -646,6 +646,9 @@ socket.on('codigoInvalido', function(msg){
 socket.on('nuevoUsuario',function(msg){
     console.log(msg.mensaje)
     console.log(msg.idsEvento)
+    
+    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
+    
 })
 
  ///////////////////////////////////////////////NO USADO
