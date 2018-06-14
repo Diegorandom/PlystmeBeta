@@ -413,7 +413,7 @@ io.on('connection', function(socket) {
                                 console.log('Guardando nuevo invitado en el evento de la BD')
                                 
                                 const promesaNuevoUsuario = objetosGlobales[0].session[0]
-                                    .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[r]->(n) SET r.status=true Return p', {spotifyidUsuario:userId, codigoEvento:codigoEvento}))
+                                    .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[r {status:true}]->(n) Return p', {spotifyidUsuario:userId, codigoEvento:codigoEvento}))
 
                                 promesaNuevoUsuario 
                                     .then(function(unionUsuarioEvento){
@@ -555,7 +555,7 @@ io.on('connection', function(socket) {
                                 console.log('Guardando nuevo invitado en el evento de la BD')
                                 
                                 const promesaNuevoUsuario = objetosGlobales[0].session[0]
-                                    .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[r]->(n) SET r.status=true Return p', {spotifyidUsuario:userId, codigoEvento:codigoEvento}))
+                                    .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[r {status:true}]->(n) Return p', {spotifyidUsuario:userId, codigoEvento:codigoEvento}))
 
                                 promesaNuevoUsuario 
                                     .then(function(unionUsuarioEvento){
