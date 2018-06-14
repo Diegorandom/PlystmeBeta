@@ -96,6 +96,7 @@
         $('#btnCrear').css("display","none");
         inPool1 = 1;
         $('#entrar').css("display","block");
+        $('#entrarEvento').css("display","block");
     })
     $('#entrarEvento').on('click',function(){
         entrarCodigo($('#codigo').val());
