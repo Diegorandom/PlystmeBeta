@@ -406,9 +406,7 @@ io.on('connection', function(socket) {
                         
                             console.log('usarioId -> ', usuarioId)
                             if(usuarioId.records[0] == undefined){
-                                
-                                io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId});
-                                
+                                                                
                                 console.log('Guardando nuevo invitado en el evento de la BD')
                                 
                                 const promesaNuevoUsuario = objetosGlobales[0].session[0]
@@ -420,13 +418,17 @@ io.on('connection', function(socket) {
                                         console.log('Nuevo usuario ',userId,' -> añadido a evento en BD-> ', codigoEvento)
                                         
                                         const promesaEventoUsuario= objetosGlobales[0].session[0]
-                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:codigoEvento})<-[]-(u:usuario) RETURN n.spotifyid'),{ codigoEvento:codigoEvento})
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento}),{ codigoEvento:codigoEvento})
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
-                                                console.log('Usuarios en evento -> ', ids)
+                                                console.log('Usuarios en evento -> ', ids.records[0]._fields)
+                                                
+                                                var idsEvento = ids.records[0]._fields
+                                                
+                                                io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento});
                                             
-                                                io.sockets.in(codigoEvento).emit('nuevoUsuario', {mensaje:'Nuevo invitado', idsEvento:{ids} });
+                                                io.sockets.in(codigoEvento).emit('nuevoUsuario', {mensaje:'Nuevo invitado', idsEvento:{idsEvento} });
                                             })
                                         promesaNuevoUsuario
                                             .catch(function(err){
