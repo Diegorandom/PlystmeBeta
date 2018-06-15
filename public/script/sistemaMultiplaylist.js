@@ -499,7 +499,7 @@ socket.on('codigoInvalido', function(msg){
     console.log('Código Invalido -> ', msg.codigoInvalido)
 })
 
-socket.on('nuevoUsuario',function(msg){
+/*socket.on('nuevoUsuario',function(msg){
     console.log(msg.mensaje)
     console.log('idsEvento -> ', msg.idsEvento)
     
@@ -510,7 +510,7 @@ socket.on('nuevoUsuario',function(msg){
             $('#mensajeNuevoUsuario').animate({width:'toggle'});
         }, 2000);
     
-})
+})*/
 
 socket.on('saleUsuario',function(msg, usuarios){
     console.log(msg.mensaje)

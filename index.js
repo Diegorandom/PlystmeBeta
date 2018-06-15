@@ -435,11 +435,14 @@ io.on('connection', function(socket) {
                                                     idsEvento.push(ids.records[index]._fields[0])
                                                     
                                                     if(ids.records.length == idsEvento.length){
-                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Has entrado al evento'});
+                                                        //io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Has entrado al evento'});
                                                         
                                                         console.log('Room a actualizar -> ', codigoEvento)
                                                         
-                                                        socket.to(codigoEvento).emit('nuevoUsuario', {idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                        //socket.to(codigoEvento).emit('nuevoUsuario', {idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                        
+                                                        io.in(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+
                                                         
                                                     }
                                                     
