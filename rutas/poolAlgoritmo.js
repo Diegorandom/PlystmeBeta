@@ -39,7 +39,7 @@ router.get('/pool', function(req, res, error){
             console.log(pool)
             /*Argumentos necesarios para establecer comunicación con la API del suriel*/
               var options = { method: 'POST',
-              url: 'https://atmos-algorithm.mybluemix.net/api/v1/mixed/list',
+              url: 'https://atmos-algorithm.mybluemix.net/api/v1/dynamic_playlist/dynamic_playlist_search',
               headers: 
                { 'Postman-Token': '375407cd-0b49-4974-bb5b-6b4f2f42a22d',
                  'Cache-Control': 'no-cache',
