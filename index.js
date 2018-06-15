@@ -493,7 +493,8 @@ io.on('connection', function(socket) {
                                                     idsEvento.push(ids.records[index]._fields[0])
                                                     
                                                     if(ids.records.length == index +1){
-                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Usuario ya estaba adentro del evento'});
+                                                        io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                        
                                                     }
                                                     
                                                 })
@@ -585,11 +586,11 @@ io.on('connection', function(socket) {
                                                     idsEvento.push(ids.records[index]._fields[0])
                                                     
                                                     if(ids.records.length == index +1){
-                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Has entrado al evento'});
+                                                        io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                        
                                                         
                                                         console.log('Room a actualizar -> ', codigoEvento)
                                                         
-                                                        socket.to(codigoEvento).emit('nuevoUsuario', {idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
                                                         
                                                     }
                                                     
@@ -636,7 +637,8 @@ io.on('connection', function(socket) {
                                                     idsEvento.push(ids.records[index]._fields[0])
                                                     
                                                     if(ids.records.length == index +1){
-                                                        io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Usuario ya estaba adentro del evento'});
+                                                        io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                        
                                                     }
                                                     
                                                 })
@@ -695,7 +697,13 @@ io.on('connection', function(socket) {
                     
                     promesaCaducarEvento
                         .then(function(evento){
-                            console.log(evento.records[0]._fields)
+                            console.log("Evento a salirse -> ", evento.records[0]._fields[0].properties.codigoEvento)
+                            codigoEvento = evento.records[0]._fields[0].properties.codigoEvento
+                            
+                            
+                            io.to(codigoEvento).emit('caducaEvento',{mensaje:"Caduca el Evento", codigoEvento:codigoEvento});
+                                                        
+                            
                         })
                     
                     promesaCaducarEvento
@@ -706,13 +714,51 @@ io.on('connection', function(socket) {
                     
                 }else if(tipoRelacion == "Invitado"){
                     const promesaCaducarRelacion= objetosGlobales[0].session[0]
-                        .writeTransaction(tx => tx.run('MATCH (e:Evento {status:true})<-[r]-(u:usuario {spotifyid:{spotifyid}}) SET r.status=false RETURN r', { spotifyid:objetosGlobales[position].userid }))
+                        .writeTransaction(tx => tx.run('MATCH (e:Evento {status:true})<-[r]-(u:usuario {spotifyid:{spotifyid}}) SET r.status=false RETURN r,e', { spotifyid:objetosGlobales[position].userid }))
                     promesaCaducarRelacion
                         .then(function(evento){
-                            //console.log(evento)
-                            console.log(evento.records[0]._fields)
+                            console.log("Codigo Evento -> ", evento.records[0]._fields[1].properties.codigoEvento)
+                            codigoEvento = evento.records[0]._fields[1].properties.codigoEvento
+                            console.log("Evento a salirse -> ", evento.records[0]._fields[0])
                             var tipoRelacion = evento.records[0]._fields[0].type
                             console.log(tipoRelacion)
+                            
+                            socket.leave(codigoEvento);
+                        
+                            const promesaEventoUsuario= objetosGlobales[0].session[0]
+                                .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[{status:true}]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento}))
+
+                            promesaEventoUsuario
+                                .then(function(ids){
+                                    console.log('Usuarios en evento -> ', ids.records)
+
+                                     var idsEvento = []
+
+                                    ids.records.forEach(function(item, index){
+                                        console.log(ids.records[index]._fields[0])
+
+                                        idsEvento.push(ids.records[index]._fields[0])
+
+                                        if(ids.records.length == index +1){
+                                            
+                                            socket.emit('saleUsuario', {mensaje:'Salió Usuario ', usuarioSalio:objetosGlobales[position].userid, idsEvento:idsEvento})
+                                            
+
+                                        }
+
+                                    })
+
+
+
+
+                                })
+
+                            promesaEventoUsuario
+                                .catch(function(err){
+                                    console.log(err);
+                                    res.send('Error EventoUsuario')
+                                })
+                        
                         })
                             
                     promesaCaducarRelacion
@@ -733,7 +779,7 @@ io.on('connection', function(socket) {
 
     })
     
-    //socket.emit('saleUsuario', {mensaje:'Salió Usuario'})
+    
 
 })
 

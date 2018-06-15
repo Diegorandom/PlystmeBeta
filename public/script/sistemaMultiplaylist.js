@@ -527,12 +527,23 @@ socket.on('saleUsuario',function(msg, usuarios){
     console.log(msg.idsEvento)
     usuarios = msg.idsEvento
     
+    console.log('Se actualiza playlist cuando un invitado sale del evento')
+    
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
     
     $('#mensajeNuevoUsuario').animate({width:'toggle'});
         setTimeout(function(){
             $('#mensajeNuevoUsuario').animate({width:'toggle'});
         }, 2000);
+    
+})
+
+socket.on('caducaEvento', function(msg){
+    console.log('Se elimina evento porque Host lo decidió')
+    console.log(msg.mensaje)
+    console.log(msg.codigoEvento)
+    
+    vaciarPool()
     
 })
 
