@@ -686,7 +686,7 @@ io.on('connection', function(socket) {
         promesachecarRelacion
             .then(function(evento){
                 //console.log(evento)
-                console.log(evento.records[0]._fields)
+                console.log(evento)
                 var tipoRelacion = evento.records[0]._fields[0].type
                 console.log(tipoRelacion)
                 
@@ -698,11 +698,14 @@ io.on('connection', function(socket) {
                     promesaCaducarEvento
                         .then(function(evento){
                             console.log("Evento a salirse -> ", evento.records[0]._fields[0].properties.codigoEvento)
-                            codigoEvento = evento.records[0]._fields[0].properties.codigoEvento
-                            
+                            var codigoEvento = evento.records[0]._fields[0].properties.codigoEvento
                             
                             io.to(codigoEvento).emit('caducaEvento',{mensaje:"Caduca el Evento", codigoEvento:codigoEvento});
-                                                        
+                          
+                            io.sockets.clients(codigoEvento).forEach(function(s){
+                                console.log('Usuario dejando room -> ', s)
+                                s.leave(codigoEvento);
+                            });
                             
                         })
                     
