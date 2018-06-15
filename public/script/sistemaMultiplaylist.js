@@ -482,7 +482,7 @@ function entrarUbicacion (userid){
 };
 
       
-socket.on('usuarioEntra', function(msg, usuarios){
+socket.on('usuarioEntra', function(msg){
     if(msg.mensaje != undefined){
         console.log(msg.mensaje)
     }
