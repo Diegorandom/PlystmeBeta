@@ -960,7 +960,7 @@ var erroresPreferenciasSuri = 0
 
     function mostrarCodigo(codigo){
         
-        $('#codigoMostrado').css("display","block");
+        $('#codigoMuestra').css("display","block");
         document.getElementById('codigoMostrado').append(codigo);
     }
         
