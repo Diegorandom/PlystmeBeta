@@ -442,9 +442,11 @@ io.on('connection', function(socket) {
                                                         
                                                         //socket.to(codigoEvento).emit('nuevoUsuario', {idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
                                                         
-                                                        io.in(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                       // io.in(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
 
-                                                        socket.broadcast.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                       // socket.broadcast.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                        
+                                                        io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
                                                         
                                                     }
                                                     
