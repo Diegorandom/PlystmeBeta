@@ -358,6 +358,8 @@ io.on('connection', function(socket) {
             promesaCrearEvento
                 .then(function(evento){
                     console.log('Registro de Evento -> ', evento)
+                    /*JOIN crea el room cuyo ID será el código del evento*/
+                    socket.join(codigoEvento);
 
                 })
 
@@ -367,8 +369,7 @@ io.on('connection', function(socket) {
                     res.send('Error crearEvento')
                 })
 
-            /*JOIN crea el room cuyo ID será el código del evento*/
-            socket.join(codigoEvento);
+            
 
             io.to(socket.id).emit('eventoCreadoCodigo', {codigoEvento: codigoEvento, userId:userId});
         
@@ -443,6 +444,7 @@ io.on('connection', function(socket) {
                                                         
                                                         io.in(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
 
+                                                        socket.broadcast.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
                                                         
                                                     }
                                                     
