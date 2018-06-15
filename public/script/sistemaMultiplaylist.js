@@ -497,6 +497,16 @@ socket.on('usuarioEntra', function(msg, usuarios){
 
 socket.on('codigoInvalido', function(msg){
     console.log('Código Invalido -> ', msg.codigoInvalido)
+    
+    document.getElementById('nuevoPlaylist').innerHTML="No hay eventos disponibles con estos parámetros. Ingresa de nuevo o crea un nuevo evento"
+        document.getElementById('nuevoPlaylist').style.display="block"
+        setTimeout(function(){
+            document.getElementById('nuevoPlaylist').style.display="none"
+        }, 2000);
+    
+    $('#enterPool').css("display","inline-block");
+    $('#btnCrear').css("display","inline-block");
+    $('#salirPlaylist').css("display","none");
 })
 
 socket.on('nuevoUsuario',function(msg){

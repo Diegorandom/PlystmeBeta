@@ -272,7 +272,7 @@
 //Funcionalidad del boton salir del playlist
     
     $('#salirPlaylist').on('click',function(){
-        vaciarPool(usuarios);
+        vaciarPool();
         $('#btnActualizar').css("display","none");
         $(this).css("display","none");
         $('#btnCrear').css("display","inline-block");
@@ -316,12 +316,14 @@
     // Botón ELIMINAR Playlist en la playlist del HOST para regresar a la pantalla principal
     
     $('#EliminarPlaylist').on('click',function(){
-        vaciarPool(usuarios);
+        vaciarPool();
         $('#btnActualizar').css("display","none");
         $(this).css("display","none");
         $('#btnCrear').css("display","inline-block");
         $('#enterPool').css("display","inline-block");
         $('#usuariosDentro').css("display","none");
+        $('#codigoMostrado').empty();
+        $('#codigoMuestra').css("display","none");
     })
 
     $('#EliminarPlaylist2').on('click',function(){
