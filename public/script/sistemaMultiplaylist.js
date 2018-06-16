@@ -648,7 +648,8 @@ socket.on('caducaEvento', function(msg){
         document.getElementsByClassName('imgUsuario').remove();
     }
     
-    vaciarPool();
+    var caduca = true;
+    vaciarPool(caduca);
     $('#btnActualizar').css("display","none");
     $('#salirPlaylist').css("display","none");
     $('#btnCrear').css("display","inline-block");
@@ -657,7 +658,7 @@ socket.on('caducaEvento', function(msg){
     $('#createPlaylist').css("display","none");
 })
 
-  function vaciarPool() {
+  function vaciarPool(caduca) {
         
         console.log('Vamos a vaciar el pool de Escritorio')
         
@@ -668,18 +669,21 @@ socket.on('caducaEvento', function(msg){
         pool.className = 'pool';
         canvas.appendChild(pool)  
         
-        function salir(){ 
-            $.get('/salirEvento', function(data, success, error){
-                if(error == true){
-                    console.log(error)
-                    repetir();
-                }else{
-                   console.log('Salida exitosa -> ', success) 
-                }
-            }) 
+        if(caduca != true){
+            function salir(){ 
+                $.get('/salirEvento', function(data, success, error){
+                    if(error == true){
+                        console.log(error)
+                        repetir();
+                    }else{
+                       console.log('Salida exitosa -> ', success) 
+                    }
+                }) 
+            }
+
+            setTimeout(function repetir(){salir()}, 3000);
         }
-                        
-        setTimeout(function repetir(){salir()}, 3000);
+        
       
       
         

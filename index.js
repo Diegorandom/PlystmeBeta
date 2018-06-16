@@ -761,6 +761,11 @@ io.on('connection', function(socket) {
     })
     
     app.get('/salirEvento', function(request, response, error) {
+        
+        if(error == true){
+            console.log('Errror -> ', error)
+        }
+        
         var objetosGlobales = request.app.get('objetosGlobales');
         var position = request.app.get('position');
         position = request.sessions.position; 

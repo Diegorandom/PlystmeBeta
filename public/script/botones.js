@@ -275,8 +275,8 @@
 //Funcionalidad del boton salir del playlist
     
     $('#salirPlaylist').on('click',function(){
-        
-        vaciarPool();
+        var caduca = false
+        vaciarPool(caduca);
         
         document.getElementById('contadorSpan').remove();
         document.getElementById('usuarios').remove();
