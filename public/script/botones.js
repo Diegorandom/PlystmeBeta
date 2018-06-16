@@ -275,10 +275,13 @@
 //Funcionalidad del boton salir del playlist
     
     $('#salirPlaylist').on('click',function(){
+        
+        vaciarPool();
+        
         document.getElementById('contadorSpan').remove();
         document.getElementById('usuarios').remove();
         document.getElementsByClassName('imgUsuario').remove();
-        vaciarPool();
+        
         $('#btnActualizar').css("display","none");
         $(this).css("display","none");
         $('#btnCrear').css("display","inline-block");
