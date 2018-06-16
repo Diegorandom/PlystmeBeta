@@ -8,7 +8,7 @@ router.get('/guardar/top50', function(req, res, error){
 var objetosGlobales = req.app.get('objetosGlobales');
 var position = req.sessions.position;
     
-spotifyApi.setAccessToken(objetosGlobales[position].access_token);
+objetosGlobales[0].spotifyApi.setAccessToken(objetosGlobales[position].access_token);
     
 if(error == true || objetosGlobales == undefined || position == undefined){
     console.log('error en el proceso de guardar playlist')
