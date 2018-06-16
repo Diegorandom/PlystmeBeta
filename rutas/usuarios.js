@@ -10,14 +10,22 @@ router.get('/usuarios', function(request, response, error) {
     position = request.sessions.position;
     
     if(objetosGlobales != undefined || position != undefined || objetosGlobales[position] != undefined){
-        objetosGlobales[position].refreshingUsers = true;
-        response.redirect('/perfil')
+        
+        const promesaEventoUsuario= objetosGlobales[0].session[0]
+            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[{status:true}]-(u:usuario) RETURN u.nombre, u.imagen_url, u.userid', { codigoEvento:codigoEvento}))
+        
+        promesaEventoUsuario
+            .then(function(usuarios){
+            
+            console.log('Usuarios en evento -> ', usuarios)
+            
+            })
+        
     }else{
         console.log('Error con variables globales...')
         res.send("Error Origen Usuarios")
     }
-    
-    
+  
 })
 
 router.get('/userid', function(request, response, error) {

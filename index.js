@@ -319,11 +319,35 @@ io.on('connection', function(socket) {
         if(userId != undefined || msg.posicion != undefined ){ 
             /*Se crea registro del evento en BD*/
             const promesaCrearEvento = objetosGlobales[0].session[0]
-                 .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, lat:{lat}, lng:{lng}, status:true}) Return n', {codigoEvento:codigoEvento, lat:msg.posicion.lat, lng:msg.posicion.lng, spotifyidUsuario:userId}))
+                 .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, lat:{lat}, lng:{lng}, status:true}) Return n,m', {codigoEvento:codigoEvento, lat:msg.posicion.lat, lng:msg.posicion.lng, spotifyidUsuario:userId}))
 
             promesaCrearEvento
                 .then(function(evento){
-                    console.log('Registro de Evento en-> ', evento)
+                    console.log('Registro de Evento -> ', evento.records[0]._fields)
+                    
+                    var usuarios = [];
+                
+                    evento.records[0]._fields.forEach(function(item, index){
+                        var nombre = item.properties.nombre;
+                        var imagen = item.properties.imagen_url
+                        var id = item.properties.spotifyid
+
+                        if(nombre == undefined && id != undefined && index != 0){
+                            usuarios.push([id,imagen])
+                        }else if(index != 0){
+                            usuarios.push([nombre,imagen]) 
+                        }
+                        
+                        if( evento.records[0]._fields.length == index+1){
+                            console.log('Usuarios en evento -> ', usuarios)
+                            io.to(socket.id).emit('eventoCreado', {codigoEvento: codigoEvento, userId:userId, usuarios:usuarios})
+                        }
+                        
+                    })
+                    
+                    
+                    /*JOIN crea el room cuyo ID será el código del evento*/
+                    socket.join(codigoEvento);
 
                 })
 
@@ -335,8 +359,6 @@ io.on('connection', function(socket) {
 
             /*JOIN crea el room cuyo ID será el código del evento*/
             socket.join(codigoEvento);
-
-            io.to(socket.id).emit('eventoCreado', {codigoEvento: codigoEvento, userId:userId});
         
         }else{
             console.log(" Error = userId -> ", userId, "msg.posicion ->", msg.posicion )
@@ -353,11 +375,33 @@ io.on('connection', function(socket) {
         if(userId != undefined){ 
             /*Se crea registro del evento en BD*/
             const promesaCrearEvento = objetosGlobales[0].session[0]
-                 .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, status:true}) Return n', {codigoEvento:codigoEvento, spotifyidUsuario:userId}))
+                 .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, status:true}) Return n,m', {codigoEvento:codigoEvento, spotifyidUsuario:userId}))
 
             promesaCrearEvento
                 .then(function(evento){
-                    console.log('Registro de Evento -> ', evento)
+                    console.log('Registro de Evento -> ', evento.records[0]._fields)
+                    
+                    var usuarios = [];
+                
+                    evento.records[0]._fields.forEach(function(item, index){
+                        var nombre = item.properties.nombre;
+                        var imagen = item.properties.imagen_url
+                        var id = item.properties.spotifyid
+
+                        if(nombre == undefined && id != undefined && index != 0){
+                            usuarios.push([id,imagen])
+                        }else if(index != 0){
+                            usuarios.push([nombre,imagen]) 
+                        }
+                        
+                        if( evento.records[0]._fields.length == index+1){
+                            console.log('Usuarios en evento -> ', usuarios)
+                            io.to(socket.id).emit('eventoCreadoCodigo', {codigoEvento: codigoEvento, userId:userId, usuarios:usuarios})
+                        }
+                        
+                    })
+                    
+                    
                     /*JOIN crea el room cuyo ID será el código del evento*/
                     socket.join(codigoEvento);
 
@@ -369,10 +413,7 @@ io.on('connection', function(socket) {
                     res.send('Error crearEvento')
                 })
 
-            
-
-            io.to(socket.id).emit('eventoCreadoCodigo', {codigoEvento: codigoEvento, userId:userId});
-        
+                
         }else{
             console.log(" Error = userId -> ", userId, "msg.posicion ->", msg.posicion )
         }
@@ -422,39 +463,44 @@ io.on('connection', function(socket) {
                                         console.log('Nuevo usuario ',userId,' -> añadido a evento en BD-> ', codigoEvento)
                                         
                                         const promesaEventoUsuario= objetosGlobales[0].session[0]
-                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[{status:true}]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento}))
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
-                                                console.log('Usuarios en evento -> ', ids.records)
-                                                
+                                                console.log('Resultado de busqueda -> ', ids.records)
+
                                                  var idsEvento = []
+                                                 var usuarios = []
                                                 
-                                                ids.records.forEach(function(item, index){
-                                                    console.log(ids.records[index]._fields[0])
+                                                ids.records[0]._fields.forEach(function(item, index){
                                                     
-                                                    idsEvento.push(ids.records[index]._fields[0])
+                                                    console.log('item -> ', item)
                                                     
-                                                    if(ids.records.length == idsEvento.length){
-                                                        //io.to(socket.id).emit('usuarioEntra', {codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Has entrado al evento'});
+                                                    idsEvento.push(item.properties.spotifyid)
+                                                    
                                                         
                                                         console.log('Room a actualizar -> ', codigoEvento)
                                                         
-                                                        /*socket.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
-                                                        
-                                                       io.in(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                        var nombre = item.properties.nombre;
+                                                        var imagen = item.properties.imagen_url
+                                                        var id = item.properties.spotifyid
 
-                                                       socket.broadcast.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});*/
-                                                        
-                                                        io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
-                                                        
-                                                    }
+                                                        if(nombre == undefined && id != undefined){
+                                                            usuarios.push([id,imagen])
+                                                        }else{
+                                                            usuarios.push([nombre,imagen]) 
+                                                        }
+
+                                                        if( usuarios.length == index+1){
+                                                            console.log('Usuarios en evento -> ', usuarios)
+                                                            io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                        }
+                                                   
+                                                  
                                                     
                                                 })
                                                 
-                                                
-                                                
-                                            
+                                              
                                             })
                                         promesaNuevoUsuario
                                             .catch(function(err){
@@ -479,29 +525,44 @@ io.on('connection', function(socket) {
                                 console.log('El usuario ya está registrado en el evento de la BD')
                                 
                                 const promesaEventoUsuario= objetosGlobales[0].session[0]
-                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r]-(u:usuario) SET r.status = true RETURN u.spotifyid', { codigoEvento:codigoEvento}),{ codigoEvento:codigoEvento})
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r]-(u:usuario) SET r.status = true RETURN u', { codigoEvento:codigoEvento}),{ codigoEvento:codigoEvento})
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
-                                                console.log('Usuarios en evento -> ', ids.records)
-                                                
+                                                console.log('Resultado de busqueda -> ', ids.records)
+
                                                  var idsEvento = []
+                                                 var usuarios = []
                                                 
-                                                ids.records.forEach(function(item, index){
-                                                    console.log(ids.records[index]._fields[0])
+                                                ids.records[0]._fields.forEach(function(item, index){
                                                     
-                                                    idsEvento.push(ids.records[index]._fields[0])
+                                                    console.log('item -> ', item)
                                                     
-                                                    if(ids.records.length == index +1){
-                                                        io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                    idsEvento.push(item.properties.spotifyid)
+                                                    
                                                         
-                                                    }
+                                                        console.log('Room a actualizar -> ', codigoEvento)
+                                                        
+                                                        var nombre = item.properties.nombre;
+                                                        var imagen = item.properties.imagen_url
+                                                        var id = item.properties.spotifyid
+
+                                                        if(nombre == undefined && id != undefined){
+                                                            usuarios.push([id,imagen])
+                                                        }else{
+                                                            usuarios.push([nombre,imagen]) 
+                                                        }
+
+                                                        if( usuarios.length == index+1){
+                                                            console.log('Usuarios en evento -> ', usuarios)
+                                                            io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                        }
+                                                   
+                                                  
                                                     
                                                 })
                                                 
-                                                
-                                                
-                                            
+                                              
                                             })
                                         promesaEventoUsuario
                                             .catch(function(err){
@@ -576,29 +637,40 @@ io.on('connection', function(socket) {
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
-                                                console.log('Usuarios en evento -> ', ids.records)
-                                                
+                                                console.log('Resultado de busqueda -> ', ids.records)
+
                                                  var idsEvento = []
+                                                 var usuarios = []
                                                 
-                                                ids.records.forEach(function(item, index){
-                                                    console.log(ids.records[index]._fields[0])
+                                                ids.records[0]._fields.forEach(function(item, index){
                                                     
-                                                    idsEvento.push(ids.records[index]._fields[0])
+                                                    console.log('item -> ', item)
                                                     
-                                                    if(ids.records.length == index +1){
-                                                        io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
-                                                        
+                                                    idsEvento.push(item.properties.spotifyid)
+                                                    
                                                         
                                                         console.log('Room a actualizar -> ', codigoEvento)
                                                         
-                                                        
-                                                    }
+                                                        var nombre = item.properties.nombre;
+                                                        var imagen = item.properties.imagen_url
+                                                        var id = item.properties.spotifyid
+
+                                                        if(nombre == undefined && id != undefined){
+                                                            usuarios.push([id,imagen])
+                                                        }else{
+                                                            usuarios.push([nombre,imagen]) 
+                                                        }
+
+                                                        if( usuarios.length == index+1){
+                                                            console.log('Usuarios en evento -> ', usuarios)
+                                                            io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                        }
+                                                   
+                                                  
                                                     
                                                 })
                                                 
-                                                
-                                                
-                                            
+                                              
                                             })
                                         
                                         promesaEventoUsuario
@@ -627,25 +699,40 @@ io.on('connection', function(socket) {
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
-                                                console.log('Usuarios en evento -> ', ids.records)
-                                                
+                                                console.log('Resultado de busqueda -> ', ids.records)
+
                                                  var idsEvento = []
+                                                 var usuarios = []
                                                 
-                                                ids.records.forEach(function(item, index){
-                                                    console.log(ids.records[index]._fields[0])
+                                                ids.records[0]._fields.forEach(function(item, index){
                                                     
-                                                    idsEvento.push(ids.records[index]._fields[0])
+                                                    console.log('item -> ', item)
                                                     
-                                                    if(ids.records.length == index +1){
-                                                        io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario'});
+                                                    idsEvento.push(item.properties.spotifyid)
+                                                    
                                                         
-                                                    }
+                                                        console.log('Room a actualizar -> ', codigoEvento)
+                                                        
+                                                        var nombre = item.properties.nombre;
+                                                        var imagen = item.properties.imagen_url
+                                                        var id = item.properties.spotifyid
+
+                                                        if(nombre == undefined && id != undefined){
+                                                            usuarios.push([id,imagen])
+                                                        }else{
+                                                            usuarios.push([nombre,imagen]) 
+                                                        }
+
+                                                        if( usuarios.length == index+1){
+                                                            console.log('Usuarios en evento -> ', usuarios)
+                                                            io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                        }
+                                                   
+                                                  
                                                     
                                                 })
                                                 
-                                                
-                                                
-                                            
+                                              
                                             })
                                         promesaEventoUsuario
                                             .catch(function(err){

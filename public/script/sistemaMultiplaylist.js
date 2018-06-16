@@ -178,9 +178,12 @@ function fijarUbicacion (pos,userid){
 
                         userId.push(msg.userId)
 
+                       console.log( ' Usuarios -> ', msg.usuarios)
                         console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
 
+
                         mostrarCodigo(codigoEvento);
+                        despliegueUsuarios(msg.usuarios)
 
                        $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
 
@@ -195,9 +198,12 @@ function fijarUbicacion (pos,userid){
 
                         userId.push(msg.userId)
 
+                       console.log( ' Usuarios -> ', msg.usuarios)
                         console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
 
+
                         mostrarCodigo(codigoEvento);
+                        despliegueUsuarios(msg.usuarios)
 
                        $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
 
@@ -243,9 +249,12 @@ function crearCodigo (pos,userid){
 
                     userId.push(msg.userId)
 
+                   console.log( ' Usuarios -> ', msg.usuarios)
                     console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
 
+
                     mostrarCodigo(codigoEvento);
+                    despliegueUsuarios(msg.usuarios)
 
                    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
 
@@ -400,23 +409,19 @@ function crearCodigo (pos,userid){
     }
             
 
-function mostrarUsuariosDentro(){
-    
-     
-            $('#usuariosDentro').css("display","block");
-            
-            $.get('/usuarios', function(data, status){
+function despliegueUsuarios(usuarios){
                
-            console.log(data)
-            console.log(status)
+            $('#usuariosDentro').css('display', 'block')
+    
+            console.log(usuarios)
                         
-            if(status === "success"){
-                if(data != undefined){
+            
+                if(usuarios != undefined){
                     
                     var contadorU = document.getElementById('contadorU')
                     var cont= document.createElement("span")
                     cont.id="contadorSpan"
-                    cont.innerHTML = data.length
+                    cont.innerHTML = usuarios.length
                     contadorU.appendChild(cont)
                     
                     var usuariosDentro = document.getElementById('usuariosDentro')
@@ -425,7 +430,7 @@ function mostrarUsuariosDentro(){
                     listaUsuarios.style="display:none; padding:5px;"
                     usuariosDentro.appendChild(listaUsuarios)
                     
-                    data.forEach(function(usuario,index){
+                    usuarios.forEach(function(usuario,index){
                         if(checkUrl(usuario[1])==false){
                             console.log(usuario[1], " No válido")
                             usuario[1] = false
@@ -480,10 +485,9 @@ function mostrarUsuariosDentro(){
                         
                     })
                 }
-            }
+            
                 
-            })
-}
+            }
 
 
 function entrarCodigo (codigoUsuarioEvento, userid){
@@ -508,7 +512,7 @@ function entrarCodigo (codigoUsuarioEvento, userid){
                 userid = data
                 console.log("userid de usuario a entrar -> ", userid)
                 console.log("codigo del evento -> ", codigoUsuarioEvento)
-                socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoUsuarioEvento, userId: userid});//proceso para crear una fiesta  
+                socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoUsuarioEvento, userId: userid});//proceso para crear una fiesta 
             }
         }
     }
@@ -575,9 +579,11 @@ socket.on('usuarioEntra', function(msg){
     var codigoEvento=msg.codigoEvento 
  
     console.log('Codigo de Evento -> ', codigoEvento)
+    
+    despliegueUsuarios(msg.usuarios)
 
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
-      
+
 })
 
 socket.on('codigoInvalido', function(msg){

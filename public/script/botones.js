@@ -103,13 +103,13 @@
         $(this).css("display","none");
         $('#entrar').css("display","none");
         $('#salirPlaylist').css("display","block");
-        mostrarUsuariosDentro();
+        
     })
     $('#entrarUbicacion').on('click',function(){
         $('#entrar').css("display","none");
         entrarUbicacion();
         $('#salirPlaylist').css("display","block");
-        mostrarUsuariosDentro();
+        
     })
 
     $('#regresarDeEntrar').on('click', function(){
@@ -149,7 +149,7 @@
 
     $('#crearCodigo').on('click', function(){
         crearCodigo();
-        mostrarUsuariosDentro();
+        
         $('#crear').css("display","none");
         $('#EliminarPlaylist').css("display","block");
     })
