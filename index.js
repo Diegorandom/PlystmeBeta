@@ -540,9 +540,6 @@ io.on('connection', function(socket) {
                                                     
                                                     idsEvento.push(item.properties.spotifyid)
                                                     
-                                                        
-                                                        console.log('Room a actualizar -> ', codigoEvento)
-                                                        
                                                         var nombre = item.properties.nombre;
                                                         var imagen = item.properties.imagen_url
                                                         var id = item.properties.spotifyid
@@ -554,6 +551,7 @@ io.on('connection', function(socket) {
                                                         }
 
                                                         if( usuarios.length == index+1){
+                                                            console.log('Room a actualizar -> ', codigoEvento)
                                                             console.log('Usuarios en evento -> ', usuarios)
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                         }
