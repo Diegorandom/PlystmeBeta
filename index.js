@@ -831,8 +831,8 @@ io.on('connection', function(socket) {
 
                                         if(ids.records.length == index +1){
                                             
-                                            socket.emit('saleUsuario', {mensaje:'Salió Usuario ', usuarioSalio:objetosGlobales[position].userid, idsEvento:idsEvento})
-                                            
+                                            socket.to(codigoEvento).emit('saleUsuario', {mensaje:'Salió Usuario ', usuarioSalio:objetosGlobales[position].userid, idsEvento:idsEvento});
+                                                                                        
 
                                         }
 
