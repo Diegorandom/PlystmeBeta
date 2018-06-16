@@ -667,12 +667,10 @@ socket.on('caducaEvento', function(msg){
         var pool = document.createElement('div');
         pool.className = 'pool';
         canvas.appendChild(pool)  
-        
-        $.ajax({url:'/salirEvento', success:salidaExitosa, cache:false})
-        
-        function salidaExitosa(data, success, error){
+                        
+        $.get('/salirEvento', function(data, success, error){
             console.log('Salida exitosa -> ', success)
-        }
+        })
       
         console.log("Depuración de playlist en escritorio")
         /*Mensaje de actualizacion de playlist*/
