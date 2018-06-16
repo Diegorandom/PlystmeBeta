@@ -820,28 +820,41 @@ io.on('connection', function(socket) {
 
                             promesaEventoUsuario
                                 .then(function(ids){
-                                    console.log('Usuarios en evento -> ', ids.records)
+                                                console.log('Resultado de busqueda -> ', ids.records)
 
-                                     var idsEvento = []
+                                                 var idsEvento = []
+                                                 var usuarios = []
+                                                
+                                                ids.records.forEach(function(item, index){
+                                                    
+                                                    console.log('item -> ', item._fields)
+                                                    
+                                                    idsEvento.push(item._fields[0].properties.spotifyid)
+                                                    
+                                                        
+                                                        console.log('Room a actualizar -> ', codigoEvento)
+                                                        
+                                                        var nombre = item._fields[0].properties.nombre;
+                                                        var imagen = item._fields[0].properties.imagen_url
+                                                        var id = item._fields[0].properties.spotifyid
 
-                                    ids.records.forEach(function(item, index){
-                                        console.log(ids.records[index]._fields[0])
+                                                        if(nombre == undefined && id != undefined){
+                                                            usuarios.push([id,imagen])
+                                                        }else{
+                                                            usuarios.push([nombre,imagen]) 
+                                                        }
 
-                                        idsEvento.push(ids.records[index]._fields[0])
-
-                                        if(ids.records.length == index +1){
-                                            
-                                            socket.to(codigoEvento).emit('saleUsuario', {mensaje:'Salió Usuario ', usuarioSalio:objetosGlobales[position].userid, idsEvento:idsEvento});
-                                                                                        
-
-                                        }
-
-                                    })
-
-
-
-
-                                })
+                                                        if( ids.records.length == index+1){
+                                                            console.log('Usuarios en evento -> ', usuarios)
+                                                            
+                                                            
+                                                              socket.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                        }
+                                                   
+                                                })
+                                                
+                                              
+                                            })
 
                             promesaEventoUsuario
                                 .catch(function(err){
