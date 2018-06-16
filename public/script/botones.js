@@ -103,11 +103,13 @@
         $(this).css("display","none");
         $('#entrar').css("display","none");
         $('#salirPlaylist').css("display","block");
+        mostrarUsuariosDentro();
     })
     $('#entrarUbicacion').on('click',function(){
         $('#entrar').css("display","none");
         entrarUbicacion();
         $('#salirPlaylist').css("display","block");
+        mostrarUsuariosDentro();
     })
 
     $('#regresarDeEntrar').on('click', function(){
@@ -147,6 +149,7 @@
 
     $('#crearCodigo').on('click', function(){
         crearCodigo();
+        mostrarUsuariosDentro();
         $('#crear').css("display","none");
         $('#EliminarPlaylist').css("display","block");
     })
@@ -278,6 +281,7 @@
         $('#btnCrear').css("display","inline-block");
         $('#enterPool').css("display","inline-block");
         $('#usuariosDentro').css("display","none");
+        $('#createPlaylist').css("display","none");
     })
 
     $('#salirPlaylist2').on('click',function(){
@@ -318,11 +322,13 @@
     $('#EliminarPlaylist').on('click',function(){
         vaciarPool();
         $('#btnActualizar').css("display","none");
+        $('#createPlaylist').css("display","none");
         $(this).css("display","none");
         $('#btnCrear').css("display","inline-block");
         $('#enterPool').css("display","inline-block");
         $('#usuariosDentro').css("display","none");
-        $('#codigoMostrado').empty();
+        $('#codigoMostrado').remove();
+        $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
         $('#codigoMuestra').css("display","none");
     })
 

@@ -329,9 +329,9 @@ var erroresPreferenciasSuri = 0
             if(status == "success"){
                 /*Si se ha guardado el playlist se despliega un mensaje en la interfaz*/
                 if(data=="playlistGuardado"){
-                    document.getElementById('nuevoPlaylist').innerHTML="Playlist guardado como FIESTA ATMOS en Spotify"
-                    document.getElementById('nuevoPlaylist').style.display="block"
                     console.log(data)
+                    document.getElementById('nuevoPlaylist').innerHTML="La playlist se ha guardado como PLYSTME en tu cuenta de Spotify"
+                    document.getElementById('nuevoPlaylist').style.display="block"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
@@ -961,7 +961,7 @@ var erroresPreferenciasSuri = 0
     function mostrarCodigo(codigo){
         
         $('#codigoMuestra').css("display","block");
-        document.getElementById('codigoMostrado').append(codigo);
+        document.getElementById('codigoMostrado').innerHTML = codigo;
     }
         
     /* Proceso para vaciar un playlist */
