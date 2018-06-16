@@ -276,7 +276,15 @@
     
     $('#salirPlaylist').on('click',function(){
         var caduca = false
-        vaciarPool(caduca);
+    
+        $.get('/salirEvento', function(data, success, error){
+            if(error == true){
+                console.log(error)
+                repetir();
+            }else{
+               console.log('Salida exitosa -> ', success) 
+            }
+        }) 
         
         document.getElementById('contadorSpan').remove();
         document.getElementById('usuarios').remove();
@@ -329,7 +337,16 @@
         document.getElementById('contadorSpan').remove()
         document.getElementById('usuarios').remove()
         document.getElementsByClassName('imgUsuario').remove()
-        vaciarPool();
+        
+        $.get('/salirEvento', function(data, success, error){
+            if(error == true){
+                console.log(error)
+                repetir();
+            }else{
+               console.log('Salida exitosa -> ', success) 
+            }
+        }) 
+        
         $('#btnActualizar').css("display","none");
         $('#createPlaylist').css("display","none");
         $(this).css("display","none");

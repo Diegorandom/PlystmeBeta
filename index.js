@@ -758,7 +758,7 @@ io.on('connection', function(socket) {
         
     })
     
-    app.get('/salirEvento', function(request, response, error) {
+    app.get('/salirEvento', function salirEvento(request, response, error) {
         
         if(error == true){
             console.log('Errror -> ', error)
