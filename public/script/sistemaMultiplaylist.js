@@ -419,6 +419,7 @@ function despliegueUsuarios(usuarios){
                 if(usuarios != undefined){
                     
                     var contadorU = document.getElementById('contadorU')
+    
                     var cont= document.createElement("span")
                     cont.id="contadorSpan"
                     cont.innerHTML = usuarios.length
@@ -639,7 +640,7 @@ socket.on('caducaEvento', function(msg){
 })
 
   function vaciarPool() {
-            
+        
         console.log('Vamos a vaciar el pool de Escritorio')
         
         document.getElementsByClassName("pool").remove();

@@ -472,18 +472,18 @@ io.on('connection', function(socket) {
                                                  var idsEvento = []
                                                  var usuarios = []
                                                 
-                                                ids.records[0]._fields.forEach(function(item, index){
+                                                ids.records.forEach(function(item, index){
                                                     
-                                                    console.log('item -> ', item)
+                                                    console.log('item -> ', item._fields)
                                                     
-                                                    idsEvento.push(item.properties.spotifyid)
+                                                    idsEvento.push(item._fields[0].properties.spotifyid)
                                                     
                                                         
                                                         console.log('Room a actualizar -> ', codigoEvento)
                                                         
-                                                        var nombre = item.properties.nombre;
-                                                        var imagen = item.properties.imagen_url
-                                                        var id = item.properties.spotifyid
+                                                        var nombre = item._fields[0].properties.nombre;
+                                                        var imagen = item._fields[0].properties.imagen_url
+                                                        var id = item._fields[0].properties.spotifyid
 
                                                         if(nombre == undefined && id != undefined){
                                                             usuarios.push([id,imagen])
@@ -491,7 +491,7 @@ io.on('connection', function(socket) {
                                                             usuarios.push([nombre,imagen]) 
                                                         }
 
-                                                        if( usuarios.length == index+1){
+                                                        if( ids.records.length == index+1){
                                                             console.log('Usuarios en evento -> ', usuarios)
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                         }
@@ -608,7 +608,7 @@ io.on('connection', function(socket) {
         promesaChecarPosEvento 
             .then(function(codigoBD){
                 if(codigoBD.records[0] != undefined){
-                    codigoEvento = codigoBD.records[0]._fields[0]
+                    var codigoEvento = codigoBD.records[0]._fields[0]
                     
                     console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
                     socket.join(codigoEvento);
@@ -633,7 +633,7 @@ io.on('connection', function(socket) {
                                         console.log('Nuevo usuario ',userId,' -> añadido a evento en BD-> ', codigoEvento)
                                         
                                         const promesaEventoUsuario= objetosGlobales[0].session[0]
-                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[{status:true}]-(u:usuario) RETURN u.spotifyid', { codigoEvento:codigoEvento}))
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
@@ -642,18 +642,18 @@ io.on('connection', function(socket) {
                                                  var idsEvento = []
                                                  var usuarios = []
                                                 
-                                                ids.records[0]._fields.forEach(function(item, index){
+                                                ids.records.forEach(function(item, index){
                                                     
-                                                    console.log('item -> ', item)
+                                                    console.log('item -> ', item._fields)
                                                     
-                                                    idsEvento.push(item.properties.spotifyid)
+                                                    idsEvento.push(item._fields[0].properties.spotifyid)
                                                     
                                                         
                                                         console.log('Room a actualizar -> ', codigoEvento)
                                                         
-                                                        var nombre = item.properties.nombre;
-                                                        var imagen = item.properties.imagen_url
-                                                        var id = item.properties.spotifyid
+                                                        var nombre = item._fields[0].properties.nombre;
+                                                        var imagen = item._fields[0].properties.imagen_url
+                                                        var id = item._fields[0].properties.spotifyid
 
                                                         if(nombre == undefined && id != undefined){
                                                             usuarios.push([id,imagen])
@@ -661,7 +661,7 @@ io.on('connection', function(socket) {
                                                             usuarios.push([nombre,imagen]) 
                                                         }
 
-                                                        if( usuarios.length == index+1){
+                                                        if( ids.records.length == index+1){
                                                             console.log('Usuarios en evento -> ', usuarios)
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                         }
@@ -695,11 +695,11 @@ io.on('connection', function(socket) {
                                 console.log('El usuario ya está registrado en el evento de la BD')
                                 
                                 const promesaEventoUsuario= objetosGlobales[0].session[0]
-                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r:Invitado]-(u:usuario) SET r.status=true RETURN u.spotifyid', { codigoEvento:codigoEvento}))
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r]-(u:usuario) SET r.status=true RETURN u', { codigoEvento:codigoEvento}))
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
-                                                console.log('Resultado de busqueda -> ', ids.records)
+                                                console.log('Resultado de busqueda -> ', ids)
 
                                                  var idsEvento = []
                                                  var usuarios = []
@@ -808,7 +808,7 @@ io.on('connection', function(socket) {
                     promesaCaducarRelacion
                         .then(function(evento){
                             console.log("Codigo Evento -> ", evento.records[0]._fields[1].properties.codigoEvento)
-                            codigoEvento = evento.records[0]._fields[1].properties.codigoEvento
+                            var codigoEvento = evento.records[0]._fields[1].properties.codigoEvento
                             console.log("Evento a salirse -> ", evento.records[0]._fields[0])
                             var tipoRelacion = evento.records[0]._fields[0].type
                             console.log(tipoRelacion)
