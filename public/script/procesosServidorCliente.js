@@ -368,8 +368,8 @@ var erroresPreferenciasSuri = 0
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                 
-                })
-            }
+                }
+            
 
         })
     })
