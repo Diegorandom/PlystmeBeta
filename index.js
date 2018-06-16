@@ -491,7 +491,7 @@ io.on('connection', function(socket) {
                                                             usuarios.push([nombre,imagen]) 
                                                         }
 
-                                                        if( ids.records.length == index+1){
+                                                        if( ids.records.length == usuarios.length){
                                                             console.log('Usuarios en evento -> ', usuarios)
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                         }
@@ -817,7 +817,7 @@ io.on('connection', function(socket) {
                             
                         
                             const promesaEventoUsuario= objetosGlobales[0].session[0]
-                                .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}, status:true)<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
+                                .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}, status:true})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
 
                             promesaEventoUsuario
                                 .then(function(ids){
