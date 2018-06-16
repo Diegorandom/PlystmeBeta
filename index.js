@@ -846,7 +846,7 @@ io.on('connection', function(socket) {
                                                     usuarios.push([nombre,imagen]) 
                                                 }
 
-                                                if( ids.records.length == index+1){
+                                                if( ids.records.length == usuarios.length){
                                                     console.log('Usuarios en evento -> ', usuarios)
 
 
