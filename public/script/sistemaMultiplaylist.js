@@ -573,6 +573,11 @@ function entrarUbicacion (userid){
 
       
 socket.on('usuarioEntra', function(msg){
+    
+    document.getElementById('contadorSpan').remove()
+    document.getElementById('usuarios').remove()
+    document.getElementsByClassName('imgUsuario').remove()
+    
     if(msg.mensaje != undefined){
         console.log(msg.mensaje)
     }
