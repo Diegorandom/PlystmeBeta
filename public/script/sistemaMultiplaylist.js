@@ -681,3 +681,11 @@ socket.on('caducaEvento', function(msg){
         }, 2000);
         
     }
+
+/* Recibir el código e imprimirlo en el front del host*/
+
+    function mostrarCodigo(codigo){
+        
+        $('#codigoMuestra').css("display","block");
+        document.getElementById('codigoMostrado').innerHTML = codigo;
+    }

@@ -942,13 +942,7 @@ var erroresPreferenciasSuri = 0
 
     
 
-    /* Recibir el código e imprimirlo en el front del host*/
-
-    function mostrarCodigo(codigo){
-        
-        $('#codigoMuestra').css("display","block");
-        document.getElementById('codigoMostrado').innerHTML = codigo;
-    }
+    
         
     /* Proceso para vaciar un playlist */
 
