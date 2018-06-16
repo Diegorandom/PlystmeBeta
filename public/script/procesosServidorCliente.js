@@ -356,15 +356,6 @@ var erroresPreferenciasSuri = 0
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                     
-                    $.get('/error', function(data, status, error){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }else if(error ==true){
-                            location.reload(true);
-                        }
-                    })
                     
                 }
 
@@ -377,14 +368,6 @@ var erroresPreferenciasSuri = 0
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                 
-                $.get('/error', function(data, status, error){
-                    console.log(data)
-                    console.log(status)
-                    if(status=="sucess"){
-                        console.log('TOKEN REFRESCADO')
-                    }else if(error ==true){
-                        location.reload(true);
-                    }
                 })
             }
 
