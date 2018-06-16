@@ -642,12 +642,15 @@ socket.on('caducaEvento', function(msg){
     console.log(msg.mensaje)
     console.log(msg.codigoEvento)
     
-    document.getElementById('contadorSpan').remove();
-    document.getElementById('usuarios').remove();
-    document.getElementsByClassName('imgUsuario').remove();
+    if(document.getElementById('contadorSpan') != null){
+        document.getElementById('contadorSpan').remove();
+        document.getElementById('usuarios').remove();
+        document.getElementsByClassName('imgUsuario').remove();
+    }
+    
     vaciarPool();
     $('#btnActualizar').css("display","none");
-    $(this).css("display","none");
+    $('#salirPlaylist').css("display","none");
     $('#btnCrear').css("display","inline-block");
     $('#enterPool').css("display","inline-block");
     $('#usuariosDentro').css("display","none");
