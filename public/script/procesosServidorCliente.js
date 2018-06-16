@@ -323,7 +323,10 @@ var erroresPreferenciasSuri = 0
     
     /*Proceso que detona la guardar un playlist dado que el usuario lo solicita en la interfaz*/
     document.getElementById('createPlaylist').addEventListener('click', function(){
-        $.get('/create/playlist', function(data, status){
+        
+        console.log('Guardando playlist en Spotify')
+        
+        $.get('/create/playlist', function(data, status, error){
             console.log(status)
             console.log(data)
             if(status == "success"){

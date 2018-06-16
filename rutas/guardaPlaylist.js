@@ -35,6 +35,8 @@ if(error == true || objetosGlobales == undefined || position == undefined){
                 console.log('data', data);
 
                 /*Una vez creado el playlist, es tiempo de llenarlo con canciones. Para esto se toma el objeto playlist de objetosGlobales[usuario] que fue creado en el poolAlgoritmo*/
+            
+                if(objetosGlobales[position].playlist.length >0){
                 objetosGlobales[position].playlist.forEach(function(records, index){
                     /*Es necesario crear 2 arreglos intermedios para hacer 2 request correspondientes a la creación de 2 procesos de guardado en serie. Estos son requerimientos y limitaciones de la API de Spotify*/
                     if(index < 50){
@@ -44,9 +46,6 @@ if(error == true || objetosGlobales == undefined || position == undefined){
                     }
                 });
 
-                /*console.log("uris1 =", uris1);
-                console.log("uris2 =", uris2);*/
-
 
                 /*Se guarda el ID del playlist recién creado para procesos más adelante*/
                 var playlist_id = data.body.id; 
@@ -54,7 +53,7 @@ if(error == true || objetosGlobales == undefined || position == undefined){
 
                  console.log("info para agregar tracks a playlist: \n", "userids: ", objetosGlobales[position].userid,  "\n",
                     "data.body.id: ", data.body.id, "\n", 
-                    "uris2: ", uris1 )
+                    "uris1: ", uris1 )
 
                 // Se utiliza la API de Spotify para guardar el el primero grupo de 50 canciones en Spotify
                 objetosGlobales[0].spotifyApi.addTracksToPlaylist(objetosGlobales[position].userid, data.body.id, uris1)
@@ -82,13 +81,19 @@ if(error == true || objetosGlobales == undefined || position == undefined){
                                     res.send(err)
                                     res.send('ERRORORIGEN')
                                   });
-                        } 
+                        }else{
+                            res.send('playlistGuardado');
+                        }
 
                       }, function(err) {
                         console.log('Error al momento de agregar primeras 50 tracks a playlist. paso #1', err);
                         res.send(err)
                         res.send('ERRORORIGEN')
                         })
+                
+            }else{
+                res.send('ERRORORIGEN')
+            }
 
             },function(error){
                 console.log(error);
@@ -96,6 +101,8 @@ if(error == true || objetosGlobales == undefined || position == undefined){
                 res.send(error)
                 res.send('ERRORORIGEN')
             });
+            
+        
 
         }else{
             /*En caso de que el playlist ya exista en la cuenta del usuario, este proceso actualiza los tracks por los nuevos que se encuentran desplegados en ese momento en la interfaz. Este proceso puede funcionar con 100 tracks a la vez.*/
