@@ -98,7 +98,6 @@ if(error == true || objetosGlobales == undefined || position == undefined){
             },function(error){
                 console.log(error);
                 /*Error al crear playlist en Spotify*/
-                res.send(error)
                 res.send('ERRORORIGEN')
             });
             

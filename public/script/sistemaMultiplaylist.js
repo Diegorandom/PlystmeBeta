@@ -626,6 +626,8 @@ socket.on('saleUsuario',function(msg, usuarios){
     console.log(msg.idsEvento)
     usuarios = msg.idsEvento
     
+    vaciarPool();
+    
     console.log('Se actualiza playlist cuando un invitado sale del evento')
     
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
@@ -648,8 +650,7 @@ socket.on('caducaEvento', function(msg){
         document.getElementsByClassName('imgUsuario').remove();
     }
     
-    var caduca = true;
-    vaciarPool(caduca);
+    vaciarPool();
     $('#btnActualizar').css("display","none");
     $('#salirPlaylist').css("display","none");
     $('#btnCrear').css("display","inline-block");
