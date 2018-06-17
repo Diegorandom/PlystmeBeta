@@ -855,11 +855,13 @@ io.on('connection', function(socket) {
                                                 if( ids.records.length == usuarios.length){
                                                     console.log('Usuarios en evento -> ', usuarios)
 
+                                                    response.send('Exito')
+                                                    
                                                     io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                     
                                                     socket.leave(codigoEvento);
                                                     
-                                                    response.send('Exito')
+                                                    
                                                     
                                                       
                                                 }
