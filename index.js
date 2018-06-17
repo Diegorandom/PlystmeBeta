@@ -794,11 +794,11 @@ io.on('connection', function(socket) {
                             console.log("Evento a salirse -> ", evento.records[0]._fields[0].properties.codigoEvento)
                             var codigoEvento = evento.records[0]._fields[0].properties.codigoEvento
                             
-                            response.send('Exito')
+                            
                             
                             io.to(codigoEvento).emit('caducaEvento',{mensaje:"Caduca el Evento", codigoEvento:codigoEvento});
                         
-                        
+                        response.send('Exito')
                             
                           
                         })
@@ -855,16 +855,12 @@ io.on('connection', function(socket) {
                                                 if( ids.records.length == usuarios.length){
                                                     console.log('Usuarios en evento -> ', usuarios)
 
-                                                    response.send('Exito')
-                                                    
-                                                      socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
-                                                    
-                                                    
+                                                    io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                     
                                                     socket.leave(codigoEvento);
-
-                                                    /*io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});*/
-                                                      
+                                                    
+                                                    response.send('Exito')
+                                                    
                                                       
                                                 }
 
