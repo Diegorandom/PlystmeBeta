@@ -280,7 +280,6 @@
         $.get('/salirEvento', function(data, success, error){
             if(error == true){
                 console.log(error)
-                repetir();
             }else{
                console.log('Salida exitosa -> ', success) 
             }

@@ -824,7 +824,7 @@ io.on('connection', function(socket) {
                                 .then(function(ids){
                                     console.log('Resultado de busqueda -> ', ids.records)
 
-                                    if(records[0] != null){
+                                    if(ids.records[0] != null){
                                         var idsEvento = []
                                          var usuarios = []
 
