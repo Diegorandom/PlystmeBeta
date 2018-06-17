@@ -491,7 +491,7 @@ io.on('connection', function(socket) {
                                                             usuarios.push([nombre,imagen]) 
                                                         }
 
-                                                        if( ids.records.length == usuarios.length){
+                                                        if( ids.records[0].length == usuarios.length){
                                                             console.log('Usuarios en evento -> ', usuarios)
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                         }
@@ -846,7 +846,7 @@ io.on('connection', function(socket) {
                                                     usuarios.push([nombre,imagen]) 
                                                 }
 
-                                                if( ids.records.length == usuarios.length){
+                                                if( ids.records[0].length == usuarios.length){
                                                     console.log('Usuarios en evento -> ', usuarios)
 
 
