@@ -479,7 +479,6 @@ io.on('connection', function(socket) {
                                                     idsEvento.push(item._fields[0].properties.spotifyid)
                                                     
                                                         
-                                                        console.log('Room a actualizar -> ', codigoEvento)
                                                         
                                                         var nombre = item._fields[0].properties.nombre;
                                                         var imagen = item._fields[0].properties.imagen_url
@@ -491,7 +490,9 @@ io.on('connection', function(socket) {
                                                             usuarios.push([nombre,imagen]) 
                                                         }
 
-                                                        if( ids.records[0].length == usuarios.length){
+                                                        if( ids.records.length == usuarios.length){
+                                                            console.log('Room a actualizar -> ', codigoEvento)
+
                                                             console.log('Usuarios en evento -> ', usuarios)
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                         }
@@ -846,7 +847,7 @@ io.on('connection', function(socket) {
                                                     usuarios.push([nombre,imagen]) 
                                                 }
 
-                                                if( ids.records[0].length == usuarios.length){
+                                                if( ids.records.length == usuarios.length){
                                                     console.log('Usuarios en evento -> ', usuarios)
 
 
