@@ -689,3 +689,20 @@ socket.on('caducaEvento', function(msg){
         $('#codigoMuestra').css("display","block");
         document.getElementById('codigoMostrado').innerHTML = codigo;
     }
+
+
+$.get('/esHost', function(data,success,error){
+    if(error == true){
+            console.log(error)
+        }else{
+           console.log('Revision exitosa -> ', success)
+           console.log(data)
+           
+           if(data == true){
+               console.log('Usuario es host, debe ser llevado directamente a su playlist')
+           }else{
+               console.log('Usuario no es host, puede crear una playlist')
+           }
+           
+        }
+})
