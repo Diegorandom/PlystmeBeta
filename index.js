@@ -820,7 +820,7 @@ io.on('connection', function(socket) {
                             var tipoRelacion = evento.records[0]._fields[0].type
                             console.log(tipoRelacion)
                             
-                            socket.leave(codigoEvento);
+                            
                         
                             const promesaEventoUsuario= objetosGlobales[0].session[0]
                                 .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}, status:true})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
@@ -858,6 +858,9 @@ io.on('connection', function(socket) {
                                                         response.send('Exito')
                                                     
                                                       socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                    
+                                                    
+                                                    socket.leave(codigoEvento);
                                                     
                                                       
                                                       

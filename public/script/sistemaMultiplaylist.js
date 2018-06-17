@@ -621,7 +621,7 @@ socket.on('codigoInvalido', function(msg){
     
 })*/
 
-socket.on('saleUsuario',function(msg, usuarios){
+socket.on('saleUsuario',function(msg){
     console.log(msg.mensaje)
     console.log(msg.idsEvento)
     usuarios = msg.idsEvento
