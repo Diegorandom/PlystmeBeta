@@ -857,12 +857,13 @@ io.on('connection', function(socket) {
 
                                                     response.send('Exito')
                                                     
-                                                      /*socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});*/
+                                                      socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                     
                                                     
-                                                    //socket.leave(codigoEvento);
+                                                    
+                                                    socket.leave(codigoEvento);
 
-                                                    io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                    /*io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});*/
                                                       
                                                       
                                                 }
