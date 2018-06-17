@@ -857,13 +857,26 @@ io.on('connection', function(socket) {
 
                                                     response.send('Exito')
                                                     
+                                                    /*TESTEO DE MENSAJES*/
+                                                    
+                                                    // then simply use to or in (they are the same) when broadcasting or emitting (server-side)
                                                     io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                    
+                                                    io.sockets.in(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                    
+                                                    // sending to all clients in room except sender
+                                                    // sending to sender client, only if they are in 'game' room(channel)
+                                                    socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+
+                                                    //sending to all clients in room, including sender
+                                                    io.in(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                    
+                                                    // sending to all clients in 'game' room(channel) except sender
+                                                    socket.broadcast.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                    
                                                     
                                                     socket.leave(codigoEvento);
                                                     
-                                                    
-                                                    
-                                                      
                                                 }
 
                                         })
@@ -871,8 +884,6 @@ io.on('connection', function(socket) {
                                         console.log('Ya no existe el evento')
                                     }
                                      
-
-
                                     })
 
                             promesaEventoUsuario
