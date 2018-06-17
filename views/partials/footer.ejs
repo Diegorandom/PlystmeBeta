@@ -82,7 +82,7 @@ setup();
  
 /*Timer que espera por 4 horas si el usuario deja la pantalla encendida sin mover nada. En caso de que se termine el timer se activa goInactive*/
 function startTimer() {
-    timeoutID = window.setTimeout(goInactive, 60000*40);
+    timeoutID = window.setTimeout(goInactive, 1000*60*60*40);
 }
 
 /*Se resetea el timer y empieza de nuevo*/
