@@ -11,14 +11,14 @@ router.get('/esHost', function(req, res, error){
                 console.log('apuntador del objeto', position);
             
             const promesaEsHost = objetosGlobales[0].session[0]
-            .writeTransaction(tx => tx.run('MATCH (u:usuario {spotifyid:{userid}})-[r:Host {status:true}]->(e) RETURN u ', {userid:objetosGlobales[position].userid}))
+            .writeTransaction(tx => tx.run('MATCH p=(u:usuario {spotifyid:{userid}})-[r:Host {status:true}]->(e:Evento {status:true}) RETURN p ', {userid:objetosGlobales[position].userid}))
             
             promesaEsHost
                 .then(function(esHost){
                     console.log(esHost)
                     if(esHost.records.length > 0){
                         console.log('# Evento -> ', esHost.records.length )
-                        res.send(true)
+                        res.send(esHost)
                     }else{
                         res.send(false)
                     }
