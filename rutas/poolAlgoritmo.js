@@ -16,11 +16,11 @@ router.get('/pool', function(req, res, error){
     var conteoErrores = 0;
     
     /*El arreglo pool se llena con los IDs de los usuarios*/
-        
-    console.log('Usuarios -> ', req.query.userId )    
-        
+           
     var pool = req.query.userId;
-                  
+           
+        console.log('Pool -> ', pool ) 
+        
         /*Primer filtro para repetidos*/
         pool = pool.filter(function(item, pos, self) {
             return self.indexOf(item) == pos;

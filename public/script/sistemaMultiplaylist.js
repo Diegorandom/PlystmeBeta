@@ -659,7 +659,7 @@ socket.on('caducaEvento', function(msg){
     $('#createPlaylist').css("display","none");
 })
 
-  function vaciarPool(caduca) {
+  function vaciarPool() {
         
         console.log('Vamos a vaciar el pool de Escritorio')
         
