@@ -626,7 +626,7 @@ socket.on('saleUsuario',function(msg, usuarios){
     console.log(msg.idsEvento)
     usuarios = msg.idsEvento
     
-    vaciarPool();
+    
     
     console.log('Se actualiza playlist cuando un invitado sale del evento')
     

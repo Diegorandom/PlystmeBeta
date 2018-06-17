@@ -282,6 +282,7 @@
                 console.log(error)
             }else{
                console.log('Salida exitosa -> ', success) 
+               vaciarPool();
             }
         }) 
         
