@@ -379,9 +379,9 @@
     // Botón ELIMINAR Playlist en la playlist del HOST para regresar a la pantalla principal
     
     $('#EliminarPlaylist').on('click',function(){
-        document.getElementById('contadorSpan').remove()
-        document.getElementById('usuarios').remove()
-        document.getElementsByClassName('imgUsuario').remove()
+        document.getElementById('contadorSpan').remove();
+        document.getElementById('usuarios').remove();
+        document.getElementsByClassName('imgUsuario').remove();
         
         $.get('/salirEvento', function(data, success, error){
             if(error == true){
