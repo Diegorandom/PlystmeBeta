@@ -588,6 +588,7 @@ socket.on('usuarioEntra', function(msg){
  
     console.log('Codigo de Evento -> ', codigoEvento)
     
+    mostrarCodigo(codigoEvento);
     despliegueUsuarios(msg.usuarios)
 
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});

@@ -824,7 +824,8 @@ io.on('connection', function(socket) {
                             var tipoRelacion = evento.records[0]._fields[0].type
                             console.log(tipoRelacion)
                             
-                            socket.leave(codigoEvento);    
+                              
+                        
                         
                             const promesaEventoUsuario= objetosGlobales[0].session[0]
                                 .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}, status:true})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
@@ -868,14 +869,15 @@ io.on('connection', function(socket) {
                                                     // then simply use to or in (they are the same) when broadcasting or emitting (server-side)
                                                     /*io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios}); */
                                                     
+                                                 let rooms = Object.keys(socket.rooms);
+                                                console.log('rooms en las que sigue el usuario -> ', rooms); // [ <socket.id>, 'room 237' ]
                                                     
-                                                    
-                                                    setTimeout(function(){
-                                                        
                                                         // sending to all clients in 'game' room except sender
                                                         socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                         
-                                                    }, 1000);
+                                                 socket.leave(codigoEvento, (err) => {
+                                                    console.log(err)
+                                                });  
 
 
                                                     
