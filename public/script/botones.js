@@ -275,7 +275,7 @@
 //Funcionalidad del boton salir del playlist
     
     $('#salirPlaylist').on('click',function(){
-        var caduca = false
+        $('#usuariosDentro').css("display","none");
     
         $.get('/salirEvento', function(data, success, error){
             if(error == true){
@@ -303,7 +303,7 @@
             }
             
         }) 
-        $('#usuariosDentro').css("display","none");
+        
         $(this).css("display","none");
         
     })
