@@ -726,7 +726,7 @@ $.get('/esHost', function(data,success,error){
                                 $('#entrar').css("display","none");
                                 $('#enterPool').css("display","none");
                                 $('#btnCrear').css("display","none");
-                                $('##salirPlaylist').css("display","block");
+                                $('#salirPlaylist').css("display","block");
                                socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userId});          
 
 
