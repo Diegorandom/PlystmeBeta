@@ -296,6 +296,9 @@
         $('#enterPool').css("display","inline-block");
         $('#usuariosDentro').css("display","none");
         $('#createPlaylist').css("display","none");
+        $('#codigoMostrado').remove();
+        $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
+        $('#codigoMuestra').css("display","none")
     })
 
     $('#salirPlaylist2').on('click',function(){
