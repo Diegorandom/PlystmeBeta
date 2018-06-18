@@ -282,7 +282,8 @@
                 console.log(error)
             }else{
                console.log('Salida exitosa -> ', success) 
-               vaciarPool();
+                setTimeout(function(){ vaciarPool();}, 3000);
+
             }
         }) 
         
