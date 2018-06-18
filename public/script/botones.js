@@ -282,24 +282,30 @@
                 console.log(error)
             }else{
                console.log('Salida exitosa -> ', success) 
-                setTimeout(function(){ vaciarPool();}, 3000);
+                setTimeout(function(){
+                    
+                    vaciarPool();
+                    
+                    document.getElementById('contadorSpan').remove();
+                    document.getElementById('usuarios').remove();
+                    document.getElementsByClassName('imgUsuario').remove();
+
+                    $('#btnActualizar').css("display","none");
+                    $(this).css("display","none");
+                    $('#btnCrear').css("display","inline-block");
+                    $('#enterPool').css("display","inline-block");
+                    $('#usuariosDentro').css("display","none");
+                    $('#createPlaylist').css("display","none");
+                    $('#codigoMostrado').remove();
+                    $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
+                    $('#codigoMuestra').css("display","none")
+                
+                }, 3000);
 
             }
         }) 
         
-        document.getElementById('contadorSpan').remove();
-        document.getElementById('usuarios').remove();
-        document.getElementsByClassName('imgUsuario').remove();
         
-        $('#btnActualizar').css("display","none");
-        $(this).css("display","none");
-        $('#btnCrear').css("display","inline-block");
-        $('#enterPool').css("display","inline-block");
-        $('#usuariosDentro').css("display","none");
-        $('#createPlaylist').css("display","none");
-        $('#codigoMostrado').remove();
-        $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
-        $('#codigoMuestra').css("display","none")
     })
 
     $('#salirPlaylist2').on('click',function(){
