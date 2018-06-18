@@ -868,9 +868,15 @@ io.on('connection', function(socket) {
                                                     // then simply use to or in (they are the same) when broadcasting or emitting (server-side)
                                                     /*io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios}); */
                                                     
-                                                    // sending to all clients in 'game' room except sender
-                                                    socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                     
+                                                    
+                                                    setTimeout(function(){
+                                                        
+                                                        // sending to all clients in 'game' room except sender
+                                                        socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                        
+                                                    }, 1000);
+
 
                                                     
                                                 }
