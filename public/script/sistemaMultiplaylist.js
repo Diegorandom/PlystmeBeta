@@ -632,10 +632,11 @@ socket.on('saleUsuario',function(msg){
     
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
     
-    $('#mensajeNuevoUsuario').animate({width:'toggle'});
+    
+    /*$('#mensajeNuevoUsuario').animate({width:'toggle'});
         setTimeout(function(){
             $('#mensajeNuevoUsuario').animate({width:'toggle'});
-        }, 2000);
+        }, 2000);*/
     
 })
 
@@ -699,7 +700,7 @@ $.get('/esHost', function(data,success,error){
            console.log(data)
            
            if(data == false){
-               console.log('Usuario no es host, puede crear una playlist')
+               console.log('Usuario no es host, puede entrar a una playlist')
                
                
                $.get('/esInvitado', function(data,success,error){
@@ -710,7 +711,7 @@ $.get('/esHost', function(data,success,error){
                            console.log(data)
 
                            if(data == false){
-                               console.log('Usuario no es host, puede crear una playlist')
+                               console.log('Usuario no es invitado, puede crear una playlist')
                            }else{
                                console.log('Usuario es host, debe ser llevado directamente a su playlist')
 

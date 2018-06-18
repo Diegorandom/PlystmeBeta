@@ -800,11 +800,9 @@ io.on('connection', function(socket) {
                             console.log("Evento a salirse -> ", evento.records[0]._fields[0].properties.codigoEvento)
                             var codigoEvento = evento.records[0]._fields[0].properties.codigoEvento
                             
-                            
-                            
                             io.to(codigoEvento).emit('caducaEvento',{mensaje:"Caduca el Evento", codigoEvento:codigoEvento});
                         
-                        response.send('Exito')
+                            response.send('Exito')
                             
                           
                         })
@@ -826,7 +824,7 @@ io.on('connection', function(socket) {
                             var tipoRelacion = evento.records[0]._fields[0].type
                             console.log(tipoRelacion)
                             
-                            
+                            socket.leave(codigoEvento);    
                         
                             const promesaEventoUsuario= objetosGlobales[0].session[0]
                                 .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}, status:true})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
@@ -866,10 +864,15 @@ io.on('connection', function(socket) {
                                                     
                                                     /*TESTEO DE MENSAJES*/
                                                      
-                                                    socket.leave(codigoEvento);
                                                     
                                                     // then simply use to or in (they are the same) when broadcasting or emitting (server-side)
-                                                    io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios}); 
+                                                    /*io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios}); */
+                                                    
+                                                    // sending to all clients in 'game' room except sender
+                                                    socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                    
+                                                    socket.broadcast.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+
                                                     
                                                 }
 
