@@ -33,6 +33,7 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+
 /* 
 Documentación de Código
 
@@ -867,16 +868,22 @@ io.on('connection', function(socket) {
                                                     
                                                     // then simply use to or in (they are the same) when broadcasting or emitting (server-side)
                                                     /*io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios}); */
-                                                    
-                                                 var rooms = Object.keys(socket.rooms);
-                                                console.log('rooms en las que sigue el usuario -> ', rooms); // [ <socket.id>, 'room 237' ]
+                                                    socket.leave(codigoEvento, (err) => {
+                                                        console.log(err)
+                                                        
+                                                        var rooms = Object.keys(socket.rooms);
+                                                        console.log('rooms en las que sigue el usuario -> ', rooms); // [ <socket.id>, 'room 237' ]
                                                     
                                                         // sending to all clients in 'game' room except sender
                                                         socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                    
+                                                        /*socket.broadcast.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});*/
                                                         
-                                                 socket.leave(codigoEvento, (err) => {
-                                                    console.log(err)
-                                                });  
+                                                    });
+
+                                                     
+                                                        
+                                                   
 
 
                                                     
