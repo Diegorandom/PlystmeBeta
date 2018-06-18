@@ -700,6 +700,40 @@ $.get('/esHost', function(data,success,error){
            
            if(data == false){
                console.log('Usuario no es host, puede crear una playlist')
+               
+               
+               $.get('/esInvitado', function(data,success,error){
+                    if(error == true){
+                            console.log(error)
+                        }else{
+                           console.log('Revision exitosa -> ', success)
+                           console.log(data)
+
+                           if(data == false){
+                               console.log('Usuario no es host, puede crear una playlist')
+                           }else{
+                               console.log('Usuario es host, debe ser llevado directamente a su playlist')
+
+                               var userId = data.records[0]._fields[0].start.properties.spotifyid
+                               console.log('userId -> ', userId )
+
+                               var codigoEvento = data.records[0]._fields[0].end.properties.codigoEvento
+                               console.log('Código del evento -> ', codigoEvento )
+                                mostrarCodigo(codigoEvento);
+
+                                $(this).css("display","none");
+                                $('#entrar').css("display","none");
+                                $('#enterPool').css("display","none");
+                                $('#btnCrear').css("display","none");
+                                $('##salirPlaylist').css("display","block");
+                               socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userId});          
+
+
+                           }
+
+                        }
+                })
+               
            }else{
                console.log('Usuario es host, debe ser llevado directamente a su playlist')
                
