@@ -295,17 +295,16 @@
                     $('#enterPool').css("display","inline-block");
                     $('#usuariosDentro').css("display","none");
                     $('#createPlaylist').css("display","none");
-                    $('#codigoMostrado').remove();
                     $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
                     $('#codigoMuestra').css("display","none")
                 
                 }, 1000);
                 
-                $(this).css("display","none");
-
             }
+            
         }) 
-        
+        $('#codigoMostrado').remove();
+        $(this).css("display","none");
         
     })
 
