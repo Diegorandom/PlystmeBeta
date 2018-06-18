@@ -91,6 +91,7 @@
         }
     }
     
+    //Funcionalidades del botón ENTRAR POR CóDIGO
     $('#enterPool').on('click',function(){
         $('#enterPool').css("display","none");
         $('#btnCrear').css("display","none");
@@ -98,17 +99,35 @@
         $('#entrar').css("display","block");
         $('#entrarEvento').css("display","block");
     })
+
+   $('#enterPool2').on('click',function(){
+        $('#enterPool2').css("display","none");
+        $('#btnCrear2').css("display","none");
+        $('#entrar2').css("display","block");
+        inPool2 = 1;
+        //enterPool2();
+    })
+
+//Funcionalidades del botón entrar luego de ingresar CÓDIGO
     $('#entrarEvento').on('click',function(){
         entrarCodigo($('#codigo').val());
         $(this).css("display","none");
         $('#entrar').css("display","none");
         $('#salirPlaylist').css("display","block");
+    })
+
+    $('#entrarEvento2').on('click',function(){
         
     })
+
+
     $('#entrarUbicacion').on('click',function(){
         $('#entrar').css("display","none");
         entrarUbicacion();
         $('#salirPlaylist').css("display","block");
+    })
+
+    $('#entrarUbicacion2').on('click',function(){
         
     })
 
@@ -118,25 +137,35 @@
         $('#btnCrear').css("display","inline-block");
     })
 
-    $('#enterPool2').on('click',function(){
-        $('#enterPool2').css("display","none");
-        $('#btnCrear2').css("display","none");
-        $('#salirPlaylist2').css("display","block");
-        inPool2 = 1;
-        //enterPool2();
+    $('#regresarDeEntrar2').on('click', function(){
+        $('#entrar2').css("display","none");
+        $('#enterPool2').css("display","inline-block");
+        $('#btnCrear2').css("display","inline-block");
     })
-    
+
     $('#btnCrear').on('click',function(){
         $('#enterPool').css("display","none");
         $('#btnCrear').css("display","none");
         $('#crear').css("display","block");
-        btnCrear()
+        btnCrear();
+    })
+
+    $('#btnCrear2').on('click',function(){
+        $('#enterPool2').css("display","none");
+        $('#btnCrear2').css("display","none");
+        $('#crear2').css("display","block");
     })
 
     $('#regresarDeCrear').on('click', function(){
         $('#crear').css("display","none");
         $('#enterPool').css("display","inline-block");
         $('#btnCrear').css("display","inline-block");
+    }) 
+    
+    $('#regresarDeCrear2').on('click', function(){
+        $('#crear2').css("display","none");
+        $('#enterPool2').css("display","inline-block");
+        $('#btnCrear2').css("display","inline-block");
     })
 
     $('#crearUbicacion').on('click', function(){
@@ -147,23 +176,23 @@
         $('#btnRegresar').css("display","block");
     })
 
-    $('#crearCodigo').on('click', function(){
-        crearCodigo();
-        
-        $('#crear').css("display","none");
-        $('#EliminarPlaylist').css("display","block");
-    })
-    
-    $('#btnCrear2').on('click',function(){
-        $('#enterPool2').css("display","none");
-        $('#btnCrear2').css("display","none");
+    $('#crearUbicacion2').on('click', function(){
+        $('#crear2').css("display","none");        
         $('#mensajeUbicacion2').css("display","block");
         $('#map2').css("display","block");
         $('#fijarUbicacion2').css("display","block");
-        $('#btnRegresar').css("display","block");
         $('#btnRegresar2').css("display","block");
     })
-    
+
+    $('#crearCodigo').on('click', function(){
+        crearCodigo();
+        $('#crear').css("display","none");
+        $('#EliminarPlaylist').css("display","block");
+    })
+
+    $('#crearCodigo2').on('click', function(){
+        
+    })
     //Botón para entrar al POOL de del HOST
     
     $('#fijarUbicacion').on('click',function(){
