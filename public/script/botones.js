@@ -286,9 +286,12 @@
                     
                     vaciarPool();
                     
-                    document.getElementById('contadorSpan').remove();
-                    document.getElementById('usuarios').remove();
-                    document.getElementsByClassName('imgUsuario').remove();
+                    if(document.getElementById('contadorSpan') != null){
+                        document.getElementById('contadorSpan').remove();
+                        document.getElementById('usuarios').remove();
+                        document.getElementsByClassName('imgUsuario').remove();
+                    }
+                    
 
                     $('#btnActualizar').css("display","none");
                     $('#btnCrear').css("display","inline-block");
@@ -304,6 +307,9 @@
             
         }) 
         
+        document.getElementById('contadorSpan').remove();
+        document.getElementById('usuarios').remove();
+        document.getElementsByClassName('imgUsuario').remove();
         $(this).css("display","none");
         
     })
