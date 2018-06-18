@@ -12,6 +12,7 @@
 	    <![endif]-->
         
         <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
          <script type="text/javascript" src="/script/Chart.js"></script>
         
         <link rel="preload" href="img/fondo2.jpg">
@@ -109,6 +110,12 @@
         }
     }
     
+    input::placeholder {
+        color:grey;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    
 </style>
     
 	<body class="page-login"  >
@@ -174,7 +181,7 @@
 				</div>
             
                 <div class="clearfix"></div>
-										<div class="col-md-12"> <br>
+                <div class="col-md-12"> <br>
 					
                      <h2 style="text-align: center; font-family: 'Quicksand', serif; background-color: #c8553d; border-radius:5px; margin-top:0; color:#FFF;">Perfil</h2>
                     
@@ -390,7 +397,7 @@
                                             <div style="background-color: rgba(255,255,255,0.85); border-radius:30px; width:49%; height: 250px; border-radius:30px; border: 3px solid #588b8b; color:#588b8b; display:inline-block;">
                                                  
                                             <form>
-                                                <input type="text" id="codigo" class="form-control" aria-describedby="helpBlock" style="width:49%; height:50px; font-size:45px; margin-top:40px; text-align:center;">
+                                                <input type="text" id="codigo" class="form-control" aria-describedby="helpBlock" style="width:49%; height:50px; font-size:45px; margin-top:40px; text-align:center;font-family: 'Roboto Mono', monospace; vertical-align: middle;" placeholder="Ingresa tu código">
                                                 <!--
                                                 <button type="button" class="btn btn-default" style="margin-top:20px; width:105px;" id="formCancelar">Cancelar</button>-->                                                <button type="button" class="btn btn-primary" style="margin-top:20px; width:25%; background-color:#588b8b; align:center; margin-right:0px !important;" id="entrarEvento">Entrar</button>
                                                 <p style="margin-top: 20px;">Entrar con código</p>
@@ -469,7 +476,7 @@
                                             <i class="far far fa-save" style="font-size:20px; color:#588b8b; margin-left:5px;"></i> Guardar Playlist En Spotify 
                                         </button>-->
                                         
-                                        <!-- Fijar ubicación en modo celular -->
+                             <!-- Fijar ubicación en modo celular -->
                                         
                                         <br>
                                         
@@ -489,6 +496,7 @@
                                         </button>
                                         
                                         <!-- Termina sección mapa -->
+                                        <!-- Versión móvil --->
                                         
                                         <button  type="submit" value="Submit" class="be-button-vidget " style="width:55%;height:250px; background-color:rgba(88, 139, 139, 0.85);border-radius:5px; border: 3px solid white; color:white; margin:-40px 0 20px 0;" id="btnCrear2">
                                             
@@ -503,26 +511,49 @@
                                             <p style="font-size:30px; margin-top:20px;">Entra a una playlist</p>
                                         </button>
                                         
-                                        
-                                        
-                                        <!--<div style="background-color: rgba(255,255,255,0.8); border-radius:5px; position:relative; padding-top:20px; display: none;" id="formCodigo2">
-                                        
-                                            <p style="font-size: 30px; font-family: 'Quicksand', sans-serif; width:80%;">Ingresa el código de la fiesta</p>
-                                            <form>
+                                <!-- DIV de elementos al ENTRAR a fiesta para celular -->
                                             
-                                                <input type="text" id="codigoPool" class="form-control" aria-describedby="helpBlock" style="width:70%; height:50px; font-size:35px;">
-                                                
-                                                <button type="button" class="btn btn-default" style="margin:20px 0; width:105px;" id="formCancelar2">Cancelar</button>
-
-                                                
-                                                <button type="button" class="btn btn-primary" style="margin:20px 0; width:105px" id="enterPool2">Entrar</button>
+                                        <div id="entrar2" style="display:none">
                                             
-                                            </form>
+                                            <button  type="submit" value="Submit" class="be-button-vidget" style="width:90%; height:250px; background-color:rgba(255,255,255,0.85); border-radius:30px; border: 3px solid #588b8b; color:#588b8b; margin:0px 0 20px 0;" id="entrarUbicacion2">
+                                                    <i class="fas fa-map-marker" style="margin-top:10px; font-size:80px;"></i>
+                                                    <p style="margin-top:10px; font-size:30px;">Entrar con geolocalización</p>
+                                            </button>
                                             
-                                        </div>-->
+                                            <div style="width:90%; height:250px; background-color:rgba(255,255,255,0.85); border-radius:30px; border: 3px solid #588b8b; color:#588b8b; margin:0px 0 0px 0;">
+                                                <form>
+                                                    <input type="text" id="codigoPoool" class="form-control" aria-describedby="helpBlock" style="width:49%; height:50px; font-size:45px; margin-top:40px; text-align:center;font-family: 'Roboto Mono', monospace; vertical-align: middle;" placeholder="Código">
+                                                    <button type="button" class="btn btn-primary" style="margin:20px 0; width: 50%; background-color:#588b8b; align:center; margin-right:0px !important;" id="entrarEvento2">ENTRAR</button>
+                                                    <p style="font-size: 30px; width:80%;">Entrar con código</p>
+                                                 </form>
+                                            </div>
+                                            
+                                            <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 20px auto 0 auto; width:40%; border:none; background-color:#FFF; color:#588b8b; border-radius:30px; font-size: 15px;" id="regresarDeEntrar2">
+                                                REGRESAR
+                                            </button>
+                                            
+                                        </div>
                                         
-                                        
-                                        
+                                <!-- DIV de elementos al CREAR a fiesta para celular -->
+                                            
+                                        <div id="crear2" style="display:none">
+                                            
+                                            <button  type="submit" value="Submit" class="be-button-vidget" style="width:90%; height:250px; background-color:rgba(255,255,255,0.85); border-radius:30px; border: 3px solid #588b8b; color:#588b8b; margin:0px 0 20px 0;" id="crearUbicacion2">
+                                                    <i class="fas fa-map-marker" style="margin-top:10px; font-size:80px;"></i>
+                                                    <p style="margin-top:10px; font-size:30px;">Crear evento con geolocalización</p>
+                                            </button>
+                                            
+                                            <button  type="submit" value="Submit" class="be-button-vidget" style="width:90%; height:250px; background-color:rgba(255,255,255,0.85); border-radius:30px; border: 3px solid #588b8b; color:#588b8b; margin:0px 0 20px 0;" id="crearCodigo2">
+                                                    <i class="fas fa-hashtag" style="margin-top:10px; font-size:80px;"></i>
+                                                    <p style="margin-top:10px; font-size:30px;">Crear evento con código</p>
+                                            </button>
+                                            
+                                            <button  type="submit" value="Submit" class="be-button-vidget" style="margin: 20px auto 0 auto; width:40%; border:none; background-color:#FFF; color:#588b8b; border-radius:30px; font-size: 15px;" id="regresarDeCrear2">
+                                                REGRESAR
+                                            </button>
+                                            
+                                        </div>
+                                            
                                     </div>
                                     
                                     
