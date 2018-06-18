@@ -291,7 +291,6 @@
                     document.getElementsByClassName('imgUsuario').remove();
 
                     $('#btnActualizar').css("display","none");
-                    $(this).css("display","none");
                     $('#btnCrear').css("display","inline-block");
                     $('#enterPool').css("display","inline-block");
                     $('#usuariosDentro').css("display","none");
@@ -300,7 +299,9 @@
                     $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
                     $('#codigoMuestra').css("display","none")
                 
-                }, 3000);
+                }, 1000);
+                
+                $(this).css("display","none");
 
             }
         }) 
