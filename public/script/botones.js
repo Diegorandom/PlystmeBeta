@@ -298,7 +298,7 @@
                     $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
                     $('#codigoMuestra').css("display","none")
                 
-                }, 1000);
+                }, 3000);
                 
             }
             
