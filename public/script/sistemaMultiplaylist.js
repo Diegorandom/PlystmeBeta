@@ -626,9 +626,9 @@ socket.on('saleUsuario',function(msg){
     console.log(msg.idsEvento)
     usuarios = msg.idsEvento
     
-    
-    
     console.log('Se actualiza playlist cuando un invitado sale del evento')
+    
+    despliegueUsuarios(msg.usuarios)
     
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
     
