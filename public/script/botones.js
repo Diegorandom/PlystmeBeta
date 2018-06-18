@@ -303,9 +303,7 @@
             }
             
         }) 
-        $('#codigoMostrado').remove();
-        $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
-        $('#codigoMuestra').css("display","none")
+        $('#usuariosDentro').css("display","none");
         $(this).css("display","none");
         
     })
