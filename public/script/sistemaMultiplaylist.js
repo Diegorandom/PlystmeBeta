@@ -373,6 +373,7 @@ function crearCodigo (pos,userid){
             botonPool.appendChild(icono)
 
         document.getElementById('createPlaylist').style.display="block"
+        document.getElementById('createPlaylist2').style.display="block"
 
         console.log('El playlist ha cambiado')
            data.forEach(function(item,index){
@@ -690,6 +691,9 @@ socket.on('codigoInvalido', function(msg){
     $('#enterPool').css("display","inline-block");
     $('#btnCrear').css("display","inline-block");
     $('#salirPlaylist').css("display","none");
+    $('#enterPool2').css("display","inline-block");
+    $('#btnCrear2').css("display","inline-block");
+    $('#salirPlaylist2').css("display","none");
 })
 
 /*socket.on('nuevoUsuario',function(msg){
@@ -773,6 +777,9 @@ socket.on('caducaEvento', function(msg){
         
         $('#codigoMuestra').css("display","block");
         document.getElementById('codigoMostrado').innerHTML = codigo;
+        
+        $('#codigoMuestra2').css("display","block");
+        document.getElementById('codigoMostrado2').innerHTML = codigo;
     }
 
 

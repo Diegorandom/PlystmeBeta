@@ -117,7 +117,10 @@
     })
 
     $('#entrarEvento2').on('click',function(){
-        
+        entrarCodigo($('#codigo2').val());
+        $(this).css("display","none");
+        $('#entrar2').css("display","none");
+        $('#salirPlaylist2').css("display","block");
     })
 
 
@@ -128,7 +131,9 @@
     })
 
     $('#entrarUbicacion2').on('click',function(){
-        
+        $('#entrar2').css("display","none");
+        entrarUbicacion();
+        $('#salirPlaylist2').css("display","block");
     })
 
     $('#regresarDeEntrar').on('click', function(){
@@ -192,7 +197,9 @@
     })
 
     $('#crearCodigo2').on('click', function(){
-        
+        crearCodigo();
+        $('#crear2').css("display","none");
+        $('#EliminarPlaylist2').css("display","block");
     })
     //Botón para entrar al POOL de del HOST
     
@@ -401,12 +408,23 @@
     })
 
     $('#EliminarPlaylist2').on('click',function(){
-        vaciarPool2();
-        $('#btnActualizar2').css("display","none");
+         $.get('/salirEvento', function(data, success, error){
+            if(error == true){
+                console.log(error)
+                repetir();
+            }else{
+               console.log('Salida exitosa -> ', success) 
+            }
+        }) 
+        
+        $('#createPlaylist2').css("display","none");
         $(this).css("display","none");
         $('#btnCrear2').css("display","inline-block");
         $('#enterPool2').css("display","inline-block");
         $('#usuariosDentro2').css("display","none");
+        $('#codigoMostrado2').remove();
+        $('<div id="codigoMostrado2" style="display:inline-block"></div>').appendTo('#codigoMuestra2');
+        $('#codigoMuestra2').css("display","none");
     })
 
 
