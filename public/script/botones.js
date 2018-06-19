@@ -331,7 +331,7 @@
                     $('#enterPool').css("display","inline-block");
                     $('#usuariosDentro').css("display","none");
                     $('#createPlaylist').css("display","none");
-                    $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
+                    $('<div id="codigoMostrado" style="display: inline-block;"></div>').appendTo('#codigoMuestra');
                     $('#codigoMuestra').css("display","none")
                 
                 }, 3000);
@@ -397,7 +397,7 @@
         $('#enterPool').css("display","inline-block");
         $('#usuariosDentro').css("display","none");
         $('#codigoMostrado').remove();
-        $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
+        $('<div id="codigoMostrado"style="display: inline-block;"></div>').appendTo('#codigoMuestra');
         $('#codigoMuestra').css("display","none");
         
         document.getElementById('contadorSpan').remove();
@@ -421,7 +421,7 @@
         $('#enterPool2').css("display","inline-block");
         $('#usuariosDentro2').css("display","none");
         $('#codigoMostrado2').remove();
-        $('<div id="codigoMostrado2" style="display:inline-block"></div>').appendTo('#codigoMuestra2');
+        $('<div id="codigoMostrado2"style="display: inline-block;"></div>').appendTo('#codigoMuestra2');
         $('#codigoMuestra2').css("display","none");
     })
 
