@@ -222,7 +222,12 @@ var posfija = {'lat' : 0.0, 'lng' : 0.0};
 var usariosdentro = null;
 
 
-var socket = io();
+var socket = io({
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax : 5000,
+    reconnectionAttempts: 99999
+} );
 
 socket.on('conexionServidor', (msg) => {
     console.log(msg)

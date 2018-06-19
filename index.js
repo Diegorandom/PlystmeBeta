@@ -881,13 +881,7 @@ io.on('connection', function(socket) {
                                                         /*socket.broadcast.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});*/
                                                         
                                                     });
-
-                                                     
-                                                        
-                                                   
-
-
-                                                    
+   
                                                 }
 
                                         })
