@@ -910,6 +910,10 @@ $.get('/esHost', function(data,success,error){
                                 $('#enterPool').css("display","none");
                                 $('#btnCrear').css("display","none");
                                 $('#salirPlaylist').css("display","block");
+                                $('#entrar2').css("display","none");
+                                $('#enterPool2').css("display","none");
+                                $('#btnCrear2').css("display","none");
+                                $('#salirPlaylist2').css("display","block");
                                socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userId});          
 
 
@@ -932,7 +936,11 @@ $.get('/esHost', function(data,success,error){
                 $('#entrar').css("display","none");
                 $('#enterPool').css("display","none");
                 $('#btnCrear').css("display","none");
-                $('#EliminarPlaylist').css("display","block");
+                $('#EliminarPlaylist').css("display","block");                
+                $('#entrar2').css("display","none");
+                $('#enterPool2').css("display","none");
+                $('#btnCrear2').css("display","none");
+                $('#EliminarPlaylist2').css("display","block");
                socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userId});          
 
                

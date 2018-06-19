@@ -349,9 +349,40 @@
 
     $('#salirPlaylist2').on('click',function(){
         $(this).css("display","none");
-        $('#btnCrear2').css("display","inline-block");
-        $('#enterPool2').css("display","inline-block");
         $('#usuariosDentro2').css("display","none");
+        
+        $.get('/salirEvento', function(data, success, error){
+            if(error == true){
+                console.log(error)
+            }else{
+               console.log('Salida exitosa -> ', success) 
+                setTimeout(function(){
+                    
+                    vaciarPool();
+                    
+                    if(document.getElementById('contadorSpan') != null){
+                        document.getElementById('contadorSpan').remove();
+                        document.getElementById('usuarios').remove();
+                        document.getElementsByClassName('imgUsuario').remove();
+                    }
+                    
+
+                    $('#btnCrear2').css("display","inline-block");
+                    $('#enterPool2').css("display","inline-block");
+                    $('#usuariosDentro2').css("display","none");
+                    $('#createPlaylist2').css("display","none");
+                    $('<div id="codigoMostrado2" style="display: inline-block;"></div>').appendTo('#codigoMuestra2');
+                    $('#codigoMuestra2').css("display","none")
+                
+                }, 3000);
+                
+            }
+            
+        }) 
+        
+        document.getElementById('contadorSpan').remove();
+        document.getElementById('usuarios').remove();
+        document.getElementsByClassName('imgUsuario').remove();
     })
 
 
