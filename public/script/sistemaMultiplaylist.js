@@ -266,7 +266,8 @@ function fijarUbicacion (pos,userid){
 
 
                         mostrarCodigo(codigoEvento);
-                        despliegueUsuarios(msg.usuarios)
+                        despliegueUsuarios(msg.usuarios);
+                        despliegueUsuarios2(msg.usuarios);
 
                        $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
 
@@ -286,7 +287,8 @@ function fijarUbicacion (pos,userid){
 
 
                         mostrarCodigo(codigoEvento);
-                        despliegueUsuarios(msg.usuarios)
+                        despliegueUsuarios(msg.usuarios);
+                        despliegueUsuarios2(msg.usuarios);
 
                        $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
 
@@ -337,7 +339,8 @@ function crearCodigo (pos,userid){
 
 
                     mostrarCodigo(codigoEvento);
-                    despliegueUsuarios(msg.usuarios)
+                    despliegueUsuarios(msg.usuarios);
+                    despliegueUsuarios2(msg.usuarios);
 
                    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
 
@@ -574,6 +577,87 @@ function despliegueUsuarios(usuarios){
                 
             }
 
+function despliegueUsuarios2(usuarios){
+               
+            $('#usuariosDentro2').css('display', 'block')
+    
+            console.log(usuarios)
+                        
+            
+                if(usuarios != undefined){
+                    
+                    var contadorU = document.getElementById('contadorU2')
+    
+                    var cont= document.createElement("span")
+                    cont.id="contadorSpan2"
+                    cont.innerHTML = usuarios.length
+                    contadorU.appendChild(cont)
+                    
+                    var usuariosDentro = document.getElementById('usuariosDentro2')
+                    var listaUsuarios = document.createElement('ul')
+                    listaUsuarios.id="usuarios"
+                    listaUsuarios.style="display:none; padding:5px;"
+                    usuariosDentro.appendChild(listaUsuarios)
+                    
+                    usuarios.forEach(function(usuario,index){
+                        if(checkUrl(usuario[1])==false){
+                            console.log(usuario[1], " No válido")
+                            usuario[1] = false
+                        }
+                        
+                        
+                        
+                        var usuariosFotos = document.getElementById('usuariosFotos2')
+                        
+                        if(usuario[1]){ 
+                            var imgU= document.createElement("img")
+                            imgU.src=usuario[1]
+                            imgU.alt="omg"
+                            imgU.style="height:100%; border-radius:50%; width:20px;"
+                            imgU.className="imgUsuario"
+                            usuariosFotos.appendChild(imgU)
+                        }else{
+                            var imgU= document.createElement("img")
+                            imgU.src="img/Perfil.png"
+                            imgU.alt="omg"
+                            imgU.style="height:100%; border-radius:50%; width:20px;"
+                            imgU.className="imgUsuario"
+                            usuariosFotos.appendChild(imgU) 
+                        }
+                        
+                        
+                        if(usuario[0] && usuario[1]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = usuario[1]
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = usuario[0]
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }else if(usuario[0]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = "img/Perfil.png"
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = usuario[0]
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }else if(usuario[1]){
+                            var bullet = document.createElement('li')
+                            var imgL = document.createElement("img")
+                            imgL.src = usuario[1]
+                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
+                            bullet.innerHTML = "Anónimo"
+                            bullet.appendChild(imgL)
+                            listaUsuarios.appendChild(bullet)
+                        }
+                        
+                    })
+                }
+            
+                
+            }
+
 
 function entrarCodigo (codigoUsuarioEvento, userid){
      //Request de ajax para obtener userid de servidor Node.js
@@ -673,7 +757,8 @@ socket.on('usuarioEntra', function(msg){
     console.log('Codigo de Evento -> ', codigoEvento)
     
     mostrarCodigo(codigoEvento);
-    despliegueUsuarios(msg.usuarios)
+    despliegueUsuarios(msg.usuarios);
+    despliegueUsuarios2(msg.usuarios);
 
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
 
@@ -716,7 +801,8 @@ socket.on('saleUsuario',function(msg){
     
     console.log('Se actualiza playlist cuando un invitado sale del evento')
     
-    despliegueUsuarios(msg.usuarios)
+    despliegueUsuarios(msg.usuarios);
+    despliegueUsuarios2(msg.usuarios);
     
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
     
@@ -746,6 +832,12 @@ socket.on('caducaEvento', function(msg){
     $('#enterPool').css("display","inline-block");
     $('#usuariosDentro').css("display","none");
     $('#createPlaylist').css("display","none");
+    $('#btnActualizar2').css("display","none");
+    $('#salirPlaylist2').css("display","none");
+    $('#btnCrear2').css("display","inline-block");
+    $('#enterPool2').css("display","inline-block");
+    $('#usuariosDentro2').css("display","none");
+    $('#createPlaylist2').css("display","none");
 })
 
   function vaciarPool() {

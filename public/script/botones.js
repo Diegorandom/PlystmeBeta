@@ -348,8 +348,6 @@
     })
 
     $('#salirPlaylist2').on('click',function(){
-        vaciarPool2();
-        $('#btnActualizar2').css("display","none");
         $(this).css("display","none");
         $('#btnCrear2').css("display","inline-block");
         $('#enterPool2').css("display","inline-block");
