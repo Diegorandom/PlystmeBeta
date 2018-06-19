@@ -875,7 +875,7 @@ io.on('connection', function(socket) {
                                                         console.log('rooms en las que sigue el usuario -> ', rooms); // [ <socket.id>, 'room 237' ]
                                                     
                                                         // sending to all clients in 'game' room except sender
-                                                        socket.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                        io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                     
                                                         /*socket.broadcast.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});*/
                                                         
