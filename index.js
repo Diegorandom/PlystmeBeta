@@ -596,16 +596,17 @@ io.on('connection', function(socket) {
     })
     
      socket.on('usuarioNuevoUbicacion', function(msg, codigoEvento){
-        console.log('Un nuevo usario se quiere unir a un evento por geolocalización')
+        console.log('Un nuevo usuario se quiere unir a un evento por geolocalización')
         console.log('UserId del usuario que quiere entrar - ', msg.userId)
         var userId = msg.userId
         var lat = msg.posicion.lat
         var lng = msg.posicion.lng
-        var radio = 0.0005
+        //157m de radio.
+        var radio = 0.0001
         
-        console.log('Latitud del usuario - ', lat)
-        console.log('Longitud del usuario - ', lng)
-        console.log('radio - ', radio)
+        console.log('Latitud del usuario -> ', lat)
+        console.log('Longitud del usuario -> ', lng)
+        console.log('radio -> ', radio)
         
         const promesaChecarPosEvento = objetosGlobales[0].session[0]
             .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE {latUser} < (n.lat+{radio}) AND {latUser} > (n.lat-{radio}) AND {lngUser} < (n.lng+{radio}) AND {lngUser} > (n.lng-{radio}) AND n.status=true RETURN n.codigoEvento',{ latUser:lat, radio:radio, lngUser:lng }))
