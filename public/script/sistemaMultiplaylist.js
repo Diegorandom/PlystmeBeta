@@ -14,14 +14,11 @@ var mapa = document.createElement('script')
 function btnCrear(userid){        
 
     console.log('Creando Evento')
-
     //Request de ajax para obtener userid de servidor Node.js
     $.ajax({url: '/userid', success:idCallback(userid), cache: false});
 
-    
     function idCallback(userid){
         return function(data, status, error){
-
 
             //Control de errores
             if(error == true || data == "Error Global" || status != "success"){
@@ -35,19 +32,43 @@ function btnCrear(userid){
             }else{
 
                 userid = data
-
                 var tipomap = "map"
                 console.log("userid -> ", userid)
                 creacionMapa(userid,tipomap)
 
+            }
+        }
+    }
+};
+
+function btnCrear2(userid){        
+
+    console.log('Creando Evento')
+    //Request de ajax para obtener userid de servidor Node.js
+    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
+
+    function idCallback(userid){
+        return function(data, status, error){
+
+            //Control de errores
+            if(error == true || data == "Error Global" || status != "success"){
+                document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+                document.getElementById('nuevoPlaylist').style.display="block"
+                setTimeout(function(){
+                    document.getElementById('nuevoPlaylist').style.display="none"
+                    //location.reload(true);
+                }, 3000);
+
+            }else{
+
+                userid = data
+                var tipomap = "map2"
+                console.log("userid -> ", userid)
+                creacionMapa2(userid,tipomap)
 
             }
         }
-
     }
-    
-   
-
 };
 
 
@@ -107,6 +128,68 @@ function btnCrear(userid){
                       document.getElementById('nuevoPlaylist').innerHTML="Geolocalizacion no disponible, crear evento por código"
                     document.getElementById('nuevoPlaylist').style.display="block"
                     $('#fijarUbicacion').css("display","none");
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none";
+                    }, 3000);
+                      
+                      
+                  });
+                } else {
+                  // Browser doesn't support Geolocation
+                  handleLocationError(false, infoWindow, map.getCenter());
+                    
+                }
+            
+        }
+
+    function creacionMapa2(userid,tipomap){
+            userid = userid
+            console.log("userid CM -> ", userid)
+            console.log('Creación de mapa..')
+           
+
+                var map = new google.maps.Map(document.getElementById(tipomap), {
+                  center: {lat: 19.4326018, lng: -99.1332049},
+                  zoom: 18
+                });
+                var infoWindow = new google.maps.InfoWindow({map: map});
+
+                // Try HTML5 geolocation.
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(function(position) {
+                     pos = {
+                      lat: position.coords.latitude,
+                      lng: position.coords.longitude
+                    };
+
+                    console.log("Posición del usuario -> ", pos)
+                    
+                    // Construct the circle for each value in citymap.
+                    // Note: We scale the area of the circle based on the population.
+
+
+                    //infoWindow.setPosition(pos);
+                    //infoWindow.setContent('');
+                    map.setCenter(pos);
+                        var image = 'img/PositionMarker.png';
+                        var beachMarker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        icon: image,
+                        draggable: true,
+                        animation: google.maps.Animation.DROP
+
+                        }); 
+                      
+                     //Una vez obtenido el userid, éste se pasa a la función sockets() para que sea utilizado
+                    //sockets(userid, pos)
+                    //console.log('se manda a llamar socket')
+
+                  }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                      document.getElementById('nuevoPlaylist').innerHTML="Geolocalizacion no disponible, crear evento por código"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    $('#fijarUbicacion2').css("display","none");
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none";
                     }, 3000);

@@ -154,6 +154,7 @@
         $('#enterPool2').css("display","none");
         $('#btnCrear2').css("display","none");
         $('#crear2').css("display","block");
+        btnCrear2();
     })
 
     $('#regresarDeCrear').on('click', function(){
@@ -205,26 +206,22 @@
         $('#map').css("display","none");       
         $('#fijarUbicacion').css("display","none");        
         $('#btnRegresar').css("display","none");
-        
         $('#EliminarPlaylist').css("display","block");
         $('#salirPlaylist').css("display","none");
         $('#btnRegresar').css("display","none");
-
-        
-        
     })
     
     $('#fijarUbicacion2').on('click',function(){
         console.log('Se activa fijarUbicacion2');
         
         //enterPool2();
-        
-        $('#map2').css("display","none");
+        fijarUbicacion(pos,userid);
+           
         $('#mensajeUbicacion2').css("display","none");
-        $('#btnRegresar2').css("display","none");
+        $('#map2').css("display","none");
+        $('#fijarUbicacion2').css("display","none");
+        $('#btnRegresar2').css("display","none");        
         $('#EliminarPlaylist2').css("display","block");
-        $(this).css("display","none");
-        
     })
     
     
@@ -378,11 +375,7 @@
     
     // Botón ELIMINAR Playlist en la playlist del HOST para regresar a la pantalla principal
     
-    $('#EliminarPlaylist').on('click',function(){
-        document.getElementById('contadorSpan').remove();
-        document.getElementById('usuarios').remove();
-        document.getElementsByClassName('imgUsuario').remove();
-        
+    $('#EliminarPlaylist').on('click',function(){        
         $.get('/salirEvento', function(data, success, error){
             if(error == true){
                 console.log(error)
@@ -401,6 +394,10 @@
         $('#codigoMostrado').remove();
         $('<div id="codigoMostrado" style="display:inline-block"></div>').appendTo('#codigoMuestra');
         $('#codigoMuestra').css("display","none");
+        
+        document.getElementById('contadorSpan').remove();
+        document.getElementById('usuarios').remove();
+        document.getElementsByClassName('imgUsuario').remove();
     })
 
     $('#EliminarPlaylist2').on('click',function(){
