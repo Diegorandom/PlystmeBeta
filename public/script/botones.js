@@ -361,10 +361,10 @@
                     
                     vaciarPoolInvitado();
                     
-                    if(document.getElementById('contadorSpan') != null){
-                        document.getElementById('contadorSpan').remove();
-                        document.getElementById('usuarios').remove();
-                        document.getElementsByClassName('imgUsuario').remove();
+                    if(document.getElementById('contadorSpan2') != null){
+                        document.getElementById('contadorSpan2').remove();
+                        document.getElementById('usuarios2').remove();
+                        document.getElementsByClassName('imgUsuario2').remove();
                     }
                     
 
@@ -381,9 +381,9 @@
             
         }) 
         
-        document.getElementById('contadorSpan').remove();
-        document.getElementById('usuarios').remove();
-        document.getElementsByClassName('imgUsuario').remove();
+        document.getElementById('contadorSpan2').remove();
+        document.getElementById('usuarios2').remove();
+        document.getElementsByClassName('imgUsuario2').remove();
     })
 
 
@@ -455,6 +455,11 @@
         $('#codigoMostrado2').remove();
         $('<div id="codigoMostrado2"style="display: inline-block;"></div>').appendTo('#codigoMuestra2');
         $('#codigoMuestra2').css("display","none");
+        
+        
+        document.getElementById('contadorSpan2').remove();
+        document.getElementById('usuarios2').remove();
+        document.getElementsByClassName('imgUsuario2').remove();
     })
 
 

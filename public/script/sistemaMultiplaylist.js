@@ -595,7 +595,7 @@ function despliegueUsuarios2(usuarios){
                     
                     var usuariosDentro = document.getElementById('usuariosDentro2')
                     var listaUsuarios = document.createElement('ul')
-                    listaUsuarios.id="usuarios"
+                    listaUsuarios.id="usuarios2"
                     listaUsuarios.style="display:none; padding:5px;"
                     usuariosDentro.appendChild(listaUsuarios)
                     
@@ -614,14 +614,14 @@ function despliegueUsuarios2(usuarios){
                             imgU.src=usuario[1]
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.className="imgUsuario"
+                            imgU.className="imgUsuario2"
                             usuariosFotos.appendChild(imgU)
                         }else{
                             var imgU= document.createElement("img")
                             imgU.src="img/Perfil.png"
                             imgU.alt="omg"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.className="imgUsuario"
+                            imgU.className="imgUsuario2"
                             usuariosFotos.appendChild(imgU) 
                         }
                         
