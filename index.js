@@ -527,7 +527,13 @@ io.on('connection', function(socket) {
                             }else{
                                 console.log('El usuario ya está registrado en el evento de la BD')
                                 
-                                const promesaEventoUsuario= objetosGlobales[0].session[0]
+                                const promesaUnirUsuario= objetosGlobales[0].session[0]
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r]-(u:usuario {spotifyid:{userId}}) SET r.status = true RETURN u', { codigoEvento:codigoEvento, userId:userId}))
+                                
+                                promesaUnirUsuario
+                                    .then(function(usuarioUnido){
+                                    
+                                         const promesaEventoUsuario= objetosGlobales[0].session[0]
                                             .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r {status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
                                             
                                         promesaEventoUsuario
@@ -571,6 +577,15 @@ io.on('connection', function(socket) {
                                                 console.log(err);
                                                 res.send('Error nuevoEventoUsuario')
                                             })
+                                })
+                                
+                                promesaUnirUsuario
+                                    .catch(function(err){
+                                        console.log(err);
+                                        res.send('Error UnirUsuario')
+                                    })
+                                
+                               
                             }
                             
                         })
