@@ -412,7 +412,9 @@
     
     // Botón ELIMINAR Playlist en la playlist del HOST para regresar a la pantalla principal
     
-    $('#EliminarPlaylist').on('click',function(){        
+    $('#EliminarPlaylist').on('click',function(){
+         socket.disconnect(); 
+        
         $.get('/salirEvento', function(data, success, error){
             if(error == true){
                 console.log(error)
@@ -421,7 +423,7 @@
                console.log('Salida exitosa -> ', success) 
             }
         }) 
-        
+
         $('#btnActualizar').css("display","none");
         $('#createPlaylist').css("display","none");
         $(this).css("display","none");

@@ -560,9 +560,7 @@ io.on('connection', function(socket) {
                                                             console.log('Room a actualizar -> ', codigoEvento)
 
                                                             console.log('Usuarios en evento -> ', usuarios)
-                                                           
-                                                            socket.disconnect(); 
-                                                            
+                                                                                                                       
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                         }
                                                    
