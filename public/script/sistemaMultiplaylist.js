@@ -982,7 +982,3 @@ $.get('/esHost', function(data,success,error){
         }
 })
 
- socket.on('disconnect', function(){
-        console.log('user disconnected');
-        socket.socket.reconnect();
-      });
