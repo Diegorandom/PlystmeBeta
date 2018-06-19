@@ -529,7 +529,7 @@ io.on('connection', function(socket) {
                                 console.log('El usuario ya está registrado en el evento de la BD')
                                 
                                 const promesaEventoUsuario= objetosGlobales[0].session[0]
-                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r]-(u:usuario) SET r.status = true RETURN u', { codigoEvento:codigoEvento}),{ codigoEvento:codigoEvento})
+                                            .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r {status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
                                             
                                         promesaEventoUsuario
                                             .then(function(ids){
