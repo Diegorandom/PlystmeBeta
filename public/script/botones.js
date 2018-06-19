@@ -319,7 +319,7 @@
                 console.log(error)
             }else{
                console.log('Salida exitosa -> ', success) 
-                setTimeout(function(){
+       
                     
                     vaciarPoolInvitado();
                     
@@ -338,7 +338,7 @@
                     $('<div id="codigoMostrado" style="display: inline-block;"></div>').appendTo('#codigoMuestra');
                     $('#codigoMuestra').css("display","none")
                 
-                }, 3000);
+           
                 
             }
             
