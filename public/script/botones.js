@@ -311,6 +311,7 @@
     $('#salirPlaylist').on('click',function(){
         
         socket.disconnect(); 
+        socket.open()
         $('#usuariosDentro').css("display","none");
     
         $.get('/salirEvento', function(data, success, error){
