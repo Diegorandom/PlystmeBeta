@@ -501,7 +501,12 @@ function despliegueUsuarios(usuarios){
             $('#usuariosDentro').css('display', 'block')
     
             console.log(usuarios)
-                        
+             
+            if( document.getElementById('contadorSpan') != null){
+                document.getElementById('contadorSpan').remove();
+                document.getElementById('usuarios').remove();
+                document.getElementsByClassName('imgUsuario').remove();
+               }
             
                 if(usuarios != undefined){
                     
@@ -582,6 +587,11 @@ function despliegueUsuarios2(usuarios){
             $('#usuariosDentro2').css('display', 'block')
     
             console.log(usuarios)
+            if( document.getElementById('contadorSpan2') != null){
+                document.getElementById('contadorSpan2').remove();
+                document.getElementById('usuarios2').remove();
+                document.getElementsByClassName('imgUsuario2').remove();
+               }
                         
             
                 if(usuarios != undefined){
