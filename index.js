@@ -602,7 +602,7 @@ io.on('connection', function(socket) {
         var lat = msg.posicion.lat
         var lng = msg.posicion.lng
         //157m de radio.
-        var radio = 0.0001
+        var radio = 0.001
         
         console.log('Latitud del usuario -> ', lat)
         console.log('Longitud del usuario -> ', lng)
