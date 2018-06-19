@@ -104,6 +104,7 @@
         $('#enterPool2').css("display","none");
         $('#btnCrear2').css("display","none");
         $('#entrar2').css("display","block");
+        $('#entrarEvento2').css("display","block");
         inPool2 = 1;
         //enterPool2();
     })
@@ -317,7 +318,7 @@
                console.log('Salida exitosa -> ', success) 
                 setTimeout(function(){
                     
-                    vaciarPool();
+                    vaciarPoolInvitado();
                     
                     if(document.getElementById('contadorSpan') != null){
                         document.getElementById('contadorSpan').remove();
@@ -358,7 +359,7 @@
                console.log('Salida exitosa -> ', success) 
                 setTimeout(function(){
                     
-                    vaciarPool();
+                    vaciarPoolInvitado();
                     
                     if(document.getElementById('contadorSpan') != null){
                         document.getElementById('contadorSpan').remove();

@@ -855,7 +855,30 @@ socket.on('caducaEvento', function(msg){
         /*Mensaje de actualizacion de playlist*/
 
         console.log('cargando mensaje')
-        document.getElementById('nuevoPlaylist').innerHTML="Eliminando Playlist..."
+        document.getElementById('nuevoPlaylist').innerHTML="Eliminando playlist..."
+        document.getElementById('nuevoPlaylist').style.display="block"
+        setTimeout(function(){
+            document.getElementById('nuevoPlaylist').style.display="none"
+        }, 2000);
+        
+    }
+
+    function vaciarPoolInvitado() {
+        
+        console.log('Vamos a vaciar el pool porque el invitado salió')
+        
+        document.getElementsByClassName("pool").remove();
+      
+        var canvas = document.getElementById("canvas")
+        var pool = document.createElement('div');
+        pool.className = 'pool';
+        canvas.appendChild(pool)  
+        
+        console.log("Depuración de playlist")
+        /*Mensaje de actualizacion de playlist*/
+
+        console.log('cargando mensaje')
+        document.getElementById('nuevoPlaylist').innerHTML="Saliendo del evento..."
         document.getElementById('nuevoPlaylist').style.display="block"
         setTimeout(function(){
             document.getElementById('nuevoPlaylist').style.display="none"
