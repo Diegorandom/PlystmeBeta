@@ -494,7 +494,7 @@ io.on('connection', function(socket) {
                                                         if( ids.records.length == usuarios.length){
                                                             console.log('Room a actualizar -> ', codigoEvento)
                                                             console.log('Usuarios en evento -> ', usuarios)
-                                                            console.log('Ids en evento -> ' idsEvento)
+                                                            console.log('Ids en evento -> ', idsEvento)
                                                             
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
                                                         }
