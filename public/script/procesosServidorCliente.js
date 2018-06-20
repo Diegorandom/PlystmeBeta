@@ -226,9 +226,7 @@ var erroresPreferenciasSuri = 0
             console.log('Datos del usuario ->', data)
             if(status == "success" && data == "guardado"){
                 console.log('Se llama a preferencias')
-                
-                    preferencias()
-                
+                preferencias()
                 referenciaBD = data
             }
         })
@@ -249,7 +247,9 @@ var erroresPreferenciasSuri = 0
              
          
      }
-
+     
+    /*Inicio de proceso de obtención de perfil de preferencias*/
+     chequeoBDLoop();
 
     var erroresGuardarTopGlobal = 0
     var erroresGuardarTopSpotify = 0

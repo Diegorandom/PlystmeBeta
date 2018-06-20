@@ -1,6 +1,7 @@
 var express = require('express');
 var router = new express.Router();
 var request = require('request'); // "Request" library
+var util = require('util');
 
 /*
         CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION
@@ -63,6 +64,23 @@ router.post('/preferencias', function(req, res, error) {
                 }else{
                     /*Proceso en caso de que la API funcione #blessed. Se guarda el perfil en el objeto del usuario y se manda a la interfaz*/
                     console.log('La API jaló, alabado sea el señor')
+                    
+                        var preferencias = {
+                            danceability:body.profile.danceability,
+                            energia:body.profile.energia,
+                            acustica:body.profile.acousticness,
+                            instrumental:body.profile.instrumentalness,
+                            audiencia:body.profile.liveness,
+                            positivismo:body.profile.positivismo,
+                            amplitud:body.profile.amplitud,
+                            fundamental:body.profile.fundamental,
+                            tempo:body.profile.tempo,
+                            firma_tiempo:body.profile.compas,
+                            popularidadAvg:body.profile.popularidadAvg,
+                            modo:body.profile.modo,
+                            duracion:body.profile.duracion
+                        }    
+                    
                         objetosGlobales[position].danceability = body.profile.danceability;
 
                         objetosGlobales[position].energia = body.profile.energia;
@@ -90,8 +108,13 @@ router.post('/preferencias', function(req, res, error) {
                         objetosGlobales[position].duracion = body.profile.duracion;
                     
                         console.log('Preferencias llegó a servidor')
+                        console.log('Preferencias -> ', preferencias)
+                       
                     
-                        res.send(objetosGlobales[position])
+                       
+                       
+                        res.send(preferencias)
+                        
 
 
                 }

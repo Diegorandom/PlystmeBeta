@@ -928,7 +928,8 @@ socket.on('caducaEvento', function(msg){
   function esHost(data,success,error){
     if(error == true){
             console.log(error)
-            chequeoBDLoop();
+            
+
         }else{
            console.log('Revision exitosa -> ', success)
            console.log(data)
@@ -940,16 +941,16 @@ socket.on('caducaEvento', function(msg){
                $.get('/esInvitado', function(data,success,error){
                     if(error == true){
                             console.log(error)
-                            chequeoBDLoop();
+                            ;
                         }else{
                            console.log('Revision exitosa -> ', success)
                            console.log(data)
 
                            if(data == false){
-                               chequeoBDLoop();
+                               
                                console.log('Usuario no es invitado, puede crear una playlist')
                            }else{
-                               chequeoBDLoop();
+                               
                                console.log('Usuario es host, debe ser llevado directamente a su playlist')
 
                                var userId = data.records[0]._fields[0].start.properties.spotifyid
@@ -997,7 +998,7 @@ socket.on('caducaEvento', function(msg){
                 $('#EliminarPlaylist2').css("display","block");
                socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userId});          
 
-               chequeoBDLoop();
+               
            }
            
         }
