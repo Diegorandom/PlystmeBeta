@@ -233,7 +233,11 @@ socket.on('conexionServidor', (msg) => {
     console.log(msg.mensaje)
     socket.emit('EventoConexion', {data: 'Estoy Conectado!'});
     
-    $.get('/esHost', esHost)
+
+
+        $.get('/esHost', esHost)
+
+ 
     
 });
 
@@ -917,13 +921,8 @@ socket.on('caducaEvento', function(msg){
         document.getElementById('codigoMostrado2').innerHTML = codigo;
     }
 
-setTimeout(function(){ 
 
-    $.get('/esHost', esHost)
-    
-}, 1000);
-
-
+ $.get('/esHost', esHost)
       
       
   function esHost(data,success,error){

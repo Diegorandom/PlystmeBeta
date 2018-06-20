@@ -226,7 +226,9 @@ var erroresPreferenciasSuri = 0
             console.log('Datos del usuario ->', data)
             if(status == "success" && data == "guardado"){
                 console.log('Se llama a preferencias')
-                preferencias()
+                setTimeout(function(){ 
+                    preferencias()
+                }, 1000);
                 referenciaBD = data
             }
         })
