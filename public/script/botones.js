@@ -343,9 +343,11 @@
             
         }) 
         
-        document.getElementById('contadorSpan').remove();
-        document.getElementById('usuarios').remove();
-        document.getElementsByClassName('imgUsuario').remove();
+        if(document.getElementById('contadorSpan') != null){
+            document.getElementById('contadorSpan').remove();
+            document.getElementById('usuarios').remove();
+            document.getElementsByClassName('imgUsuario').remove();
+        }
         $(this).css("display","none");
         
     })
@@ -361,7 +363,6 @@
                 console.log(error)
             }else{
                console.log('Salida exitosa -> ', success) 
-                setTimeout(function(){
                     
                     vaciarPoolInvitado();
                     
@@ -378,16 +379,16 @@
                     $('#createPlaylist2').css("display","none");
                     $('<div id="codigoMostrado2" style="display: inline-block;"></div>').appendTo('#codigoMuestra2');
                     $('#codigoMuestra2').css("display","none")
-                
-                }, 3000);
-                
+                                
             }
             
         }) 
         
-        document.getElementById('contadorSpan2').remove();
-        document.getElementById('usuarios2').remove();
-        document.getElementsByClassName('imgUsuario2').remove();
+        if(document.getElementById('contadorSpan') != null){
+            document.getElementById('contadorSpan').remove();
+            document.getElementById('usuarios').remove();
+            document.getElementsByClassName('imgUsuario').remove();
+        }
     })
 
 
@@ -436,9 +437,11 @@
         $('<div id="codigoMostrado"style="display: inline-block;"></div>').appendTo('#codigoMuestra');
         $('#codigoMuestra').css("display","none");
         
-        document.getElementById('contadorSpan').remove();
-        document.getElementById('usuarios').remove();
-        document.getElementsByClassName('imgUsuario').remove();
+        if(document.getElementById('contadorSpan') != null){
+            document.getElementById('contadorSpan').remove();
+            document.getElementById('usuarios').remove();
+            document.getElementsByClassName('imgUsuario').remove();
+        }
     })
 
     $('#EliminarPlaylist2').on('click',function(){
@@ -461,9 +464,11 @@
         $('#codigoMuestra2').css("display","none");
         
         
-        document.getElementById('contadorSpan2').remove();
-        document.getElementById('usuarios2').remove();
-        document.getElementsByClassName('imgUsuario2').remove();
+        if(document.getElementById('contadorSpan') != null){
+            document.getElementById('contadorSpan').remove();
+            document.getElementById('usuarios').remove();
+            document.getElementsByClassName('imgUsuario').remove();
+        }
     })
 
 
