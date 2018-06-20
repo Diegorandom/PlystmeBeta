@@ -250,11 +250,6 @@ var erroresPreferenciasSuri = 0
          
      }
 
-     setTimeout(function(){ 
-        /*Inicio de proceso de obtención de perfil de preferencias*/
-        chequeoBDLoop();
-            
-     }, 1000);
 
     var erroresGuardarTopGlobal = 0
     var erroresGuardarTopSpotify = 0
