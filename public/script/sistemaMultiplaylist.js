@@ -783,6 +783,11 @@ socket.on('usuarioEntra', function(msg){
     despliegueUsuarios2(msg.usuarios);
 
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
+    
+    $('#mensajeNuevoUsuario').animate({width:'toggle'});
+        setTimeout(function(){
+            $('#mensajeNuevoUsuario').animate({width:'toggle'});
+        }, 2000);
 
 })
 
