@@ -71,6 +71,14 @@
         display:none;
     }
     
+    #nombrarPlaylist{
+        -webkit-box-shadow: 4px 6px 57px 25px rgba(88,139,139,1);
+        -moz-box-shadow: 4px 6px 57px 25px rgba(88,139,139,1);
+        box-shadow: 4px 6px 57px 25px rgba(88,139,139,1);
+        font-weight: 500;
+        display:none;
+    }
+    
     .infoVariables div i{
         float:right;
         margin-right:5px;
@@ -123,7 +131,7 @@
         
         <div id="fondoIphone" style="display: block; width:100%; position:fixed; top:0; bottom:0; background: url('img/fondo2.jpg') no-repeat; z-index:-1000; background-size:cover; background-position:center;"></div>
         
-        <div style="width:120px;height:25px;background-color:rgba(255,255,255,0.4);display:none; float:right; margin-top:200px; position:fixed; right:5px; color:black; font-family: 'Quicksand', serif; text-align: right; font-size:15px; border-radius:5px;" id="mensajeNuevoUsuario">Nuevo usuario</div>
+        <div style="width:120px;height:25px;background-color:rgba(255,255,255,0.6);display:none; float:right; margin-top:250px; position:fixed; right:5px; color:black; font-family: 'Quicksand', serif; text-align: center; font-size:15px; border-radius:5px; z-index:100" id="mensajeNuevoUsuario">Nuevo usuario</div>
         
 	<!-- THE HEADER -->
 	<header>
@@ -627,7 +635,13 @@
         </div>
 
         <div class="alert2 alert-dismissable fade in" id="floating_alert" style="display:none; width:80%; height:80px; background-color: white; font-size:20px; margin: 0 auto; border-radius:25px;">
-            El playlist se guardó como PLYSTME en Spotify
+            El playlist se guardó como PlystMe en Spotify
+        </div>
+        
+        <div id="nombrarPlaylist" style="width:50%; right:25%; font-size:1.5em; background-color:white; height: auto; padding: 20px 5px;">
+            Guardar playlist en Spotify como: 
+            <input type="text" id="codigo" style="width:49%; height:30px; font-size:25px; margin-top:40px; text-align:center;font-family: 'Roboto Mono', monospace; vertical-align: middle;" placeholder="Nombre">
+            <button  style="margin-top:20px; width:25%; background-color:#588b8b; align:center; margin-right:0px !important;" id="guardarPlaylist">GUARDAR</button>
         </div>
         
         <!--<div class="alert2 alert-dismissable fade in" id="topguardado" style="display:none; width:80%; height:80px; background-color: white; font-family: 'Lato', sans-serif; font-size:130%; margin: 0 auto; border-radius:5px;">
