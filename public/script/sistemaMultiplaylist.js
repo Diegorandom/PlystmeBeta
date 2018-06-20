@@ -408,7 +408,7 @@ function crearCodigo (pos,userid){
                var iDiv = document.createElement('div');
                 iDiv.id = 'pool' + index;
                 iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-                iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
+                iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:20px; height:350px !important; "
 
                 // Create the inner div before appending to the body
                 var innerDiv = document.createElement('div');
