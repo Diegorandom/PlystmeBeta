@@ -304,7 +304,19 @@ io.on('connection', function(socket) {
         console.log(mensaje.data)
     });
 
-    io.emit('conexionServidor', 'Mensaje de prueba de servidor a cliente')
+    app.use(function (req, res, next) {
+        var objetosGlobales = req.app.get('objetosGlobales');
+        var position = req.app.get('position');
+        position = req.sessions.position;
+        console.log('apuntador del objeto', position);
+        var driver = req.app.get('driver')
+
+        if(objetosGlobales != undefined && position != undefined){
+            io.emit('conexionServidor', {mensaje:'Mensaje de prueba de servidor a cliente' })
+        }
+        
+        next();
+    })
 
     /*Código de creación de Evento*/
     
@@ -850,9 +862,6 @@ io.on('connection', function(socket) {
                             var tipoRelacion = evento.records[0]._fields[0].type
                             console.log(tipoRelacion)
                             
-                              
-                        
-                        
                             const promesaEventoUsuario= objetosGlobales[0].session[0]
                                 .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}, status:true})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
 

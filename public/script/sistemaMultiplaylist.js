@@ -230,8 +230,11 @@ var socket = io({
 } );
 
 socket.on('conexionServidor', (msg) => {
-    console.log(msg)
+    console.log(msg.mensaje)
     socket.emit('EventoConexion', {data: 'Estoy Conectado!'});
+    
+    $.get('/esHost', esHost)
+    
 });
 
 function fijarUbicacion (pos,userid){
@@ -914,8 +917,16 @@ socket.on('caducaEvento', function(msg){
         document.getElementById('codigoMostrado2').innerHTML = codigo;
     }
 
+setTimeout(function(){ 
 
-$.get('/esHost', function(data,success,error){
+    $.get('/esHost', esHost)
+    
+}, 1000);
+
+
+      
+      
+  function esHost(data,success,error){
     if(error == true){
             console.log(error)
         }else{
@@ -987,5 +998,5 @@ $.get('/esHost', function(data,success,error){
            }
            
         }
-})
+}
 
