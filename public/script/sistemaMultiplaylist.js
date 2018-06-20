@@ -392,11 +392,11 @@ function crearCodigo (pos,userid){
                     /*Despliegue de mensaje de que hay un nuevo playlist*/
                     if(index == 1){
                         console.log('cargando mensaje')
-                        document.getElementById('nuevoPlaylist').style.display="block"
+                        /*document.getElementById('nuevoPlaylist').style.display="block"
                         console.log(data)
                         setTimeout(function(){
                             document.getElementById('nuevoPlaylist').style.display="none"
-                        }, 2000);
+                        }, 2000);*/
                     }
 
                }
@@ -847,12 +847,14 @@ socket.on('caducaEvento', function(msg){
     $('#enterPool').css("display","inline-block");
     $('#usuariosDentro').css("display","none");
     $('#createPlaylist').css("display","none");
+    $('#codigoMuestra').css("display","none")
     $('#btnActualizar2').css("display","none");
     $('#salirPlaylist2').css("display","none");
     $('#btnCrear2').css("display","inline-block");
     $('#enterPool2').css("display","inline-block");
     $('#usuariosDentro2').css("display","none");
     $('#createPlaylist2').css("display","none");
+    $('#codigoMuestra2').css("display","none")
 })
 
   function vaciarPool() {

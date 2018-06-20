@@ -308,10 +308,9 @@
     
 //Funcionalidad del boton salir del playlist
     
-    $('#salirPlaylist').on('click',function(){
-        
+    $('#salirPlaylist').on('click',function(){        
         socket.disconnect(); 
-        socket.open()
+        socket.open();
         $('#usuariosDentro').css("display","none");
     
         $.get('/salirEvento', function(data, success, error){
@@ -351,7 +350,9 @@
         
     })
 
-    $('#salirPlaylist2').on('click',function(){
+    $('#salirPlaylist2').on('click',function(){        
+        socket.disconnect(); 
+        socket.open();
         $(this).css("display","none");
         $('#usuariosDentro2').css("display","none");
         
@@ -416,8 +417,6 @@
     // Botón ELIMINAR Playlist en la playlist del HOST para regresar a la pantalla principal
     
     $('#EliminarPlaylist').on('click',function(){
-         
-        
         $.get('/salirEvento', function(data, success, error){
             if(error == true){
                 console.log(error)
