@@ -114,6 +114,16 @@
         font-weight:700;
     }
     
+    @media screen and (max-width:600px){
+        #listaEventos{
+            width:75% !important;
+        }
+        
+        .eventosDisponibles{
+            font-size:20px;
+        }
+    }
+    
     @media screen and (max-width:550px){
         #btnCrear2, #enterPool2{
             width: 90% !important;
@@ -133,8 +143,10 @@
     }
     
     .eventosDisponibles{
-        border:1px solid black;
+        border-top:1px solid black;
         cursor: pointer;
+        background-color: rgba(255,255,255,0.8);
+        padding: 10px 0;
     }
        
 </style>
@@ -432,11 +444,7 @@
                                                                                        
                                         </div>
                                     
-                            <!-- Cuadro de despliegue con la lista de los eventos disponibles en una misma ubicación -->
-                                        <div id="listaEventos" style="color:black; font-size:25px; background-color:white; font-family:'Quicksand',sans-serif; display:none; margin-top:30px; border-radius:20px;">
-                                            <h1>Eventos disponibles:</h1>
-                                                                                        
-                                        </div>
+                            
                             <!-- DIV con los elementos al ingresar a la pantalla de CREAR -->
                                         <div style="position:relative; padding-top:20px; display: none; font-family: 'Quicksand', sans-serif; font-size:30px;" id="crear">
                                                                                           
@@ -649,6 +657,11 @@
 		</div>
 	</div>
             
+    <!-- Cuadro de despliegue con la lista de los eventos disponibles en una misma ubicación -->
+        <div id="listaEventos" style="color:black; font-size:25px; background-color:#588b8b; font-family:'Quicksand',sans-serif; display:none; border-radius:20px;margin: -150px auto 0 auto;width: 50%;text-align: center; overflow:hidden;">
+            <h1 style="color:white; margin-top:10px !important;"><strong>Eventos disponibles:</strong></h1>
+
+        </div>
         
         <div class="alert2 alert-dismissable fade in" id="actualizacion" style="display:none; width:80%; height:80px; background-color: white; font-family: 'Lato', sans-serif; font-size:130%; margin: 0 auto; border-radius:5px;">
             <strong>Se actualizó tu playlist </strong> en Spotify
