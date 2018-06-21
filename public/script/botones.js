@@ -128,13 +128,13 @@
     $('#entrarUbicacion').on('click',function(){
         $('#entrar').css("display","none");
         entrarUbicacion();
-        $('#salirPlaylist').css("display","block");
+        //$('#salirPlaylist').css("display","block");
     })
 
     $('#entrarUbicacion2').on('click',function(){
         $('#entrar2').css("display","none");
         entrarUbicacion();
-        $('#salirPlaylist2').css("display","block");
+        //$('#salirPlaylist2').css("display","block");
     })
 
     $('#regresarDeEntrar').on('click', function(){

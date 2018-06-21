@@ -792,6 +792,11 @@ socket.on('usuarioEntra', function(msg){
 
 })
 
+socket.on('entraste', function() {
+    $('#salirPlaylist').css("display","block");
+    $('#salirPlaylist2').css("display","block");
+})
+
 socket.on('codigoInvalido', function(msg){
     console.log('Código Invalido -> ', msg.codigoInvalido)
     
