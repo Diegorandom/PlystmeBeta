@@ -633,12 +633,16 @@ io.on('connection', function(socket) {
         console.log('radio -> ', radio)
         
         const promesaChecarPosEvento = objetosGlobales[0].session[0]
-            .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE {latUser} < (n.lat+{radio}) AND {latUser} > (n.lat-{radio}) AND {lngUser} < (n.lng+{radio}) AND {lngUser} > (n.lng-{radio}) AND n.status=true RETURN n.codigoEvento',{ latUser:lat, radio:radio, lngUser:lng }))
+            .writeTransaction(tx => tx.run('MATCH (n:Evento)-[r:Host]-(u:usuario) WHERE {latUser} < (n.lat+{radio}) AND {latUser} > (n.lat-{radio}) AND {lngUser} < (n.lng+{radio}) AND {lngUser} > (n.lng-{radio}) AND n.status=true RETURN n.codigoEvento, u.nombre',{ latUser:lat, radio:radio, lngUser:lng }))
             
         promesaChecarPosEvento 
             .then(function(codigoBD){
-                if(codigoBD.records[0] != undefined){
+                console.log("codigoBD -> ", codigoBD )
+                
+                if(codigoBD.records[0] != undefined && codigoBD.records.length == 1){
                     var codigoEvento = codigoBD.records[0]._fields[0]
+                    
+                    
                     
                     console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
                     socket.join(codigoEvento);
@@ -788,6 +792,24 @@ io.on('connection', function(socket) {
                     
                         
 
+                }else if(codigoBD.records.length > 1){
+                    //console.log(codigoBD.records[0]._fields)
+                    
+                    var listaEventos = [];
+                    
+                    codigoBD.records.forEach(function(item, index){
+                        listaEvento.push(item._fields)
+                        
+                        if(codigoBD.records.length == listaEvento.length){
+                            
+                            //listaEventos -> [codigo, nombre de host, ...]
+                             
+                            io.to(socket.id).emit('multiplesEventos', {listaEventos:listaEventos});
+                        }
+                        
+                    })
+                    
+                    
                 }else{
                     console.log('Código Inválido')
                     io.to(socket.id).emit('codigoInvalido', {codigoInvalido:codigoEvento});

@@ -110,9 +110,6 @@ router.post('/preferencias', function(req, res, error) {
                         console.log('Preferencias llegó a servidor')
                         console.log('Preferencias -> ', preferencias)
                        
-                    
-                       
-                       
                         res.send(preferencias)
                         
 

@@ -809,7 +809,14 @@ socket.on('codigoInvalido', function(msg){
 })
 
 socket.on('multiplesEventos', function(msg){
-    console.log("Hay varios eventos disponibles -> ", msg);
+     //listaEventos -> [[codigo1, nombre de host1], [codigo2, nombre de host2]]
+   
+    /*La lista de eventos es un array de 2 dimensiones, es decir tiene la siguiente estructuria, este arreglo se debe mostrar al usuario*/
+    console.log("Hay varios eventos disponibles -> ", msg.listaEventos);
+    
+    
+    /*La selección de evento del usuario debe enviarse al servidor con el siguiente socket -> 
+    socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoUsuarioEvento, userId: userid});//proceso para crear una fiesta */
     
     $('#entrar').css("display","none");
     $('#listaEventos').css("display","block");
