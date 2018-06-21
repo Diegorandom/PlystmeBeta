@@ -808,6 +808,15 @@ socket.on('codigoInvalido', function(msg){
     $('#salirPlaylist2').css("display","none");
 })
 
+socket.on('multiplesEventos', function(msg){
+    console.log("Hay varios eventos disponibles -> ", msg);
+    
+    $('#entrar').css("display","none");
+    $('#listaEventos').css("display","block");
+    $('#regresarDeEntrar').css("display","block");
+    
+})
+
 /*socket.on('nuevoUsuario',function(msg){
     console.log(msg.mensaje)
     console.log('idsEvento -> ', msg.idsEvento)
