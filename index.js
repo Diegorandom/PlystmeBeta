@@ -798,9 +798,9 @@ io.on('connection', function(socket) {
                     var listaEventos = [];
                     
                     codigoBD.records.forEach(function(item, index){
-                        listaEvento.push(item._fields)
+                        listaEventos.push(item._fields)
                         
-                        if(codigoBD.records.length == listaEvento.length){
+                        if(codigoBD.records.length == listaEventos.length){
                             
                             //listaEventos -> [codigo, nombre de host, ...]
                              

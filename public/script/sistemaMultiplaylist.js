@@ -788,6 +788,7 @@ socket.on('usuarioEntra', function(msg){
         setTimeout(function(){
             $('#mensajeNuevoUsuario').animate({width:'toggle'});
         }, 2000);
+    
 
 })
 
@@ -821,8 +822,62 @@ socket.on('multiplesEventos', function(msg){
     $('#entrar').css("display","none");
     $('#listaEventos').css("display","block");
     $('#regresarDeEntrar').css("display","block");
+    $('#salirPlaylist').css("display","none");
+    
+    $('.eventosDisponibles').remove();
+    
+    msg.listaEventos.forEach(function(item,index){
+        console.log(item + index);
+        var elemento = document.createElement("div");
+        var lista = document.getElementById('listaEventos');
+        elemento.innerHTML= item;
+        elemento.className = "eventosDisponibles";
+        elemento.id = item[0];
+        lista.appendChild(elemento);
+    });
+    
+    $('.eventosDisponibles').on('click',function(){
+        
+        var codigoEvento = $(this).attr('id');
+        console.log(codigoEvento);
+        
+        $.ajax({url: '/userid', success:idCallback(), cache: false});
+
+        function idCallback(){
+            return function(data, status, error){
+
+                //Control de errores
+                if(error == true || data == "Error Global" || status != "success"){
+                    document.getElementById('nuevoPlaylist').innerHTML="Error de Servidor"
+                    document.getElementById('nuevoPlaylist').style.display="block"
+                    setTimeout(function(){
+                        document.getElementById('nuevoPlaylist').style.display="none"
+                        //location.reload(true);
+                    }, 3000);
+
+                }else{
+
+                    var userid = data
+                    console.log("userid -> ", userid)
+                    console.log("codigo evento ->", codigoEvento)
+                    
+                    $('#listaEventos').css("display","none");
+                    socket.emit('usuarioNuevoCodigo',{codigoEvento:codigoEvento, userId:userid})
+                    $('#salirPlaylist').css("display","block");
+                }
+            }
+        }
+        
+
+    })
     
 })
+
+
+
+
+
+
 
 /*socket.on('nuevoUsuario',function(msg){
     console.log(msg.mensaje)
@@ -985,11 +1040,11 @@ socket.on('caducaEvento', function(msg){
                                 $('#entrar').css("display","none");
                                 $('#enterPool').css("display","none");
                                 $('#btnCrear').css("display","none");
-                                $('#salirPlaylist').css("display","block");
+                                //$('#salirPlaylist').css("display","block");
                                 $('#entrar2').css("display","none");
                                 $('#enterPool2').css("display","none");
                                 $('#btnCrear2').css("display","none");
-                                $('#salirPlaylist2').css("display","block");
+                                //$('#salirPlaylist2').css("display","block");
                                socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userId});          
 
 

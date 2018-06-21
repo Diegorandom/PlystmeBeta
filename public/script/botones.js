@@ -308,7 +308,8 @@
     
 //Funcionalidad del boton salir del playlist
     
-    $('#salirPlaylist').on('click',function(){        
+    $('#salirPlaylist').on('click',function(){ 
+        $(this).css("display","none");
         socket.disconnect(); 
         socket.open();
         $('#usuariosDentro').css("display","none");
@@ -348,7 +349,7 @@
             document.getElementById('usuarios').remove();
             document.getElementsByClassName('imgUsuario').remove();
         }
-        $(this).css("display","none");
+        
         
     })
 
@@ -471,7 +472,7 @@
         }
     })
 
-
+    
 
 
 
