@@ -233,9 +233,9 @@ socket.on('conexionServidor', (msg) => {
     console.log(msg.mensaje)
     socket.emit('EventoConexion', {data: 'Estoy Conectado!'});
     
-
-
-        $.get('/esHost', esHost)
+        
+        $.ajax({url:'/esHost', success:esHost, cache:false})
+        
 
  
     
@@ -482,7 +482,11 @@ function crearCodigo (pos,userid){
 
            })
            }else{
-               $.get('/error', function(data, status, error){
+               
+               $.ajax({url:'/error', success:Error, cache:false})
+               
+               
+              function Error(data, status, error){
                     console.log(data)
                     console.log(status)
                     if(status=="sucess"){
@@ -490,19 +494,22 @@ function crearCodigo (pos,userid){
                     }else if(error ==true){
                         location.reload(true);
                     }
-                })
+                }
+               
             }
         }else{
             console.log(data);
-            $.get('/error', function(data, status, error){
-                console.log(data)
-                console.log(status)
-                if(status=="sucess"){
-                    console.log('TOKEN REFRESCADO')
-                }else if(error ==true){
-                    location.reload(true);
+            $.ajax({url:'/error', success:Error, cache:false})
+               
+              function Error(data, status, error){
+                    console.log(data)
+                    console.log(status)
+                    if(status=="sucess"){
+                        console.log('TOKEN REFRESCADO')
+                    }else if(error ==true){
+                        location.reload(true);
+                    }
                 }
-            })
         }
 
     }
@@ -998,7 +1005,7 @@ socket.on('caducaEvento', function(msg){
     }
 
 
- $.get('/esHost', esHost)
+ $.ajax({url:'/esHost', success:esHost, cache:false})
       
       
   function esHost(data,success,error){
@@ -1013,8 +1020,10 @@ socket.on('caducaEvento', function(msg){
            if(data == false){
                console.log('Usuario no es host, puede entrar a una playlist')
                
-               
-               $.get('/esInvitado', function(data,success,error){
+                     
+                $.ajax({url:'/esInvitado', success:esInvitado, cache:false})
+                     
+             function esInvitado(data,success,error){
                     if(error == true){
                             console.log(error)
                             ;
@@ -1051,7 +1060,7 @@ socket.on('caducaEvento', function(msg){
                            }
 
                         }
-                })
+                }
                
            }else{
                console.log('Usuario es host, debe ser llevado directamente a su playlist')
