@@ -799,6 +799,11 @@ socket.on('usuarioEntra', function(msg){
 
 })
 
+socket.on('entraste', function() {
+    $('#salirPlaylist').css("display","block");
+    $('#salirPlaylist2').css("display","block");
+})
+
 socket.on('codigoInvalido', function(msg){
     console.log('Código Invalido -> ', msg.codigoInvalido)
     
@@ -830,6 +835,7 @@ socket.on('multiplesEventos', function(msg){
     $('#listaEventos').css("display","block");
     $('#regresarDeEntrar').css("display","block");
     $('#salirPlaylist').css("display","none");
+    $('#salirPlaylist2').css("display","none");
     
     $('.eventosDisponibles').remove();
     
@@ -837,7 +843,7 @@ socket.on('multiplesEventos', function(msg){
         console.log(item + index);
         var elemento = document.createElement("div");
         var lista = document.getElementById('listaEventos');
-        elemento.innerHTML= item;
+        elemento.innerHTML= "Host: "+item[1]+"<br> Código: "+item[0];
         elemento.className = "eventosDisponibles";
         elemento.id = item[0];
         lista.appendChild(elemento);
@@ -871,6 +877,7 @@ socket.on('multiplesEventos', function(msg){
                     $('#listaEventos').css("display","none");
                     socket.emit('usuarioNuevoCodigo',{codigoEvento:codigoEvento, userId:userid})
                     $('#salirPlaylist').css("display","block");
+                    $('#salirPlaylist2').css("display","block");
                 }
             }
         }

@@ -509,6 +509,8 @@ io.on('connection', function(socket) {
                                                             console.log('Ids en evento -> ', idsEvento)
                                                             
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                            
+                                                            
                                                         }
                                                    
                                                   
@@ -698,6 +700,9 @@ io.on('connection', function(socket) {
                                                         if( ids.records.length == index+1){
                                                             console.log('Usuarios en evento -> ', usuarios)
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                            
+                                                            io.to(socket.id).emit('entraste');
+
                                                         }
                                                    
                                                   
@@ -765,6 +770,7 @@ io.on('connection', function(socket) {
                                                             console.log('Ids en evento -> ', idsEvento)
                                                             
                                                             io.to(codigoEvento).emit('usuarioEntra',{codigoEvento: codigoEvento, userId:userId, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios});
+                                                            io.to(socket.id).emit('entraste');
                                                         }
                                                    
                                                   
