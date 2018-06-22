@@ -170,7 +170,7 @@ if( app.get('port') == 5000 ){
 */
 var generateRandomString = function(length) {
   var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
   for (var i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -326,7 +326,7 @@ io.on('connection', function(socket) {
         console.log('Evento creado')
         console.log('Posicion del evento -> ', msg.posicion)    
         console.log('Id del host -> ', msg.userId)    
-        codigoEvento = generateRandomString(4);
+        codigoEvento = generateRandomString(5);
         console.log('Codigo del evento -> ', codigoEvento)
         
         var userId = msg.userId
