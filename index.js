@@ -384,7 +384,7 @@ io.on('connection', function(socket) {
     socket.on('crearEventoCodigo', function(msg, codigoEvento){
         console.log('Evento creado por Código')
         console.log('Id del host -> ', msg.userId)    
-        codigoEvento = generateRandomString(4);
+        codigoEvento = generateRandomString(5);
         var userId = msg.userId
         
         if(userId != undefined){ 
