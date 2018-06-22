@@ -168,9 +168,19 @@ if( app.get('port') == 5000 ){
  * @return {string} The generated string
  
 */
-var generateRandomString = function(length) {
+var generateRandomStringCode = function(length) {
   var text = '';
   var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (var i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+};
+
+var generateRandomString = function(length) {
+  var text = '';
+  var possible = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789';
 
   for (var i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -326,7 +336,7 @@ io.on('connection', function(socket) {
         console.log('Evento creado')
         console.log('Posicion del evento -> ', msg.posicion)    
         console.log('Id del host -> ', msg.userId)    
-        codigoEvento = generateRandomString(5);
+        codigoEvento = generateRandomStringCode(5);
         console.log('Codigo del evento -> ', codigoEvento)
         
         var userId = msg.userId
@@ -384,7 +394,7 @@ io.on('connection', function(socket) {
     socket.on('crearEventoCodigo', function(msg, codigoEvento){
         console.log('Evento creado por Código')
         console.log('Id del host -> ', msg.userId)    
-        codigoEvento = generateRandomString(5);
+        codigoEvento = generateRandomStringCode(5);
         var userId = msg.userId
         
         if(userId != undefined){ 
