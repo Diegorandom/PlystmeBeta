@@ -315,8 +315,11 @@
         $('#usuariosDentro').css("display","none");
     
         $.get('/salirEvento', function(data, success, error){
-            if(error == true){
-                console.log(error)
+            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario'){
+                if(error == true){console.log(error)}
+                
+                location.reload(true);
+                
             }else{
                console.log('Salida exitosa -> ', success) 
        
@@ -360,8 +363,11 @@
         $('#usuariosDentro2').css("display","none");
         
         $.get('/salirEvento', function(data, success, error){
-            if(error == true){
-                console.log(error)
+            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario'){
+                if(error == true){console.log(error)}
+                
+                location.reload(true);
+                
             }else{
                console.log('Salida exitosa -> ', success) 
                     
@@ -420,9 +426,11 @@
     
     $('#EliminarPlaylist').on('click',function(){
         $.get('/salirEvento', function(data, success, error){
-            if(error == true){
-                console.log(error)
-                repetir();
+            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario'){
+                if(error == true){console.log(error)}
+                
+                location.reload(true);
+                
             }else{
                console.log('Salida exitosa -> ', success) 
             }
@@ -447,9 +455,11 @@
 
     $('#EliminarPlaylist2').on('click',function(){
          $.get('/salirEvento', function(data, success, error){
-            if(error == true){
-                console.log(error)
-                repetir();
+            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario'){
+                if(error == true){console.log(error)}
+                
+                location.reload(true);
+                
             }else{
                console.log('Salida exitosa -> ', success) 
             }

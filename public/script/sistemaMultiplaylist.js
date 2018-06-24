@@ -232,13 +232,7 @@ var socket = io({
 socket.on('conexionServidor', (msg) => {
     console.log(msg.mensaje)
     socket.emit('EventoConexion', {data: 'Estoy Conectado!'});
-    
-        
-        $.ajax({url:'/esHost', success:esHost, cache:false})
-        
-
- 
-    
+    $.ajax({url:'/esHost', success:esHost, cache:false})   
 });
 
 function fijarUbicacion (pos,userid){

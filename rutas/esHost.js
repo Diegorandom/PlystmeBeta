@@ -29,7 +29,7 @@ router.get('/esHost', function(req, res, error){
                         res.send(false)
                     }
                     
-                    
+                    objetosGlobales[position].session[0].close();
                 })
             
             promesaEsHost
@@ -50,8 +50,10 @@ router.get('/esInvitado', function(req, res, error){
             var position = req.app.get('position');
                 position = req.sessions.position;
                 console.log('apuntador del objeto', position);
+            var driver = req.app.get('driver')
+            objetosGlobales[position].session[1] = driver.session();
             
-            const promesaEsInvitado = objetosGlobales[position].session[0]
+            const promesaEsInvitado = objetosGlobales[position].session[1]
             .writeTransaction(tx => tx.run('MATCH p=(u:usuario {spotifyid:{userid}})-[r:Invitado {status:true}]->(e:Evento {status:true}) RETURN p ', {userid:objetosGlobales[position].userid}))
             
             promesaEsInvitado
@@ -64,7 +66,7 @@ router.get('/esInvitado', function(req, res, error){
                         res.send(false)
                     }
                     
-                    
+                    objetosGlobales[0].session[1].close();
                 })
             
             promesaEsInvitado

@@ -69,9 +69,9 @@ No se debe cambiar nada de la estructura de configuración de la base de datos.
 */
 
 if(graphenedbURL == undefined){
-	var driver = neo4j.driver('bolt://hobby-gbcebfemnffigbkefemgfaal.dbs.graphenedb.com:24786', neo4j.auth.basic('app91002402-MWprOS', 'b.N1zF4KnI6xoa.Kt5xmDPgVvFuO0CG'));
+	var driver = neo4j.driver('bolt://hobby-gbcebfemnffigbkefemgfaal.dbs.graphenedb.com:24786', neo4j.auth.basic('app91002402-MWprOS', 'b.N1zF4KnI6xoa.Kt5xmDPgVvFuO0CG'), {maxTransactionRetryTime: 60 * 1000,maxConnectionLifetime: 60 * 1000,maxConnectionPoolSize: 500,connectionAcquisitionTimeout: 10 * 1000});
 }else{
-	var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass));
+	var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass), {maxTransactionRetryTime: 60 * 1000,maxConnectionLifetime: 60 * 1000,maxConnectionPoolSize: 500,connectionAcquisitionTimeout: 10 * 1000});
 };
 
 objetosGlobales[0].session[0] = driver.session();
@@ -314,19 +314,7 @@ io.on('connection', function(socket) {
         console.log(mensaje.data)
     });
 
-    app.use(function (req, res, next) {
-        var objetosGlobales = req.app.get('objetosGlobales');
-        var position = req.app.get('position');
-        position = req.sessions.position;
-        console.log('apuntador del objeto', position);
-        var driver = req.app.get('driver')
-
-        if(objetosGlobales != undefined && position != undefined){
-            io.emit('conexionServidor', {mensaje:'Mensaje de prueba de servidor a cliente' })
-        }
-        
-        next();
-    })
+     io.emit('conexionServidor', {mensaje:'Mensaje de prueba de servidor a cliente' })
 
     /*Código de creación de Evento*/
     
@@ -379,7 +367,7 @@ io.on('connection', function(socket) {
             promesaCrearEvento
                  .catch(function(err){
                     console.log(err);
-                    res.send('Error crearEvento')
+                 //   res.send('Error crearEvento')
                 })
 
             /*JOIN crea el room cuyo ID será el código del evento*/
@@ -435,7 +423,7 @@ io.on('connection', function(socket) {
             promesaCrearEvento
                  .catch(function(err){
                     console.log(err);
-                    res.send('Error crearEvento')
+                  //  res.send('Error crearEvento')
                 })
 
                 
@@ -453,6 +441,7 @@ io.on('connection', function(socket) {
     
     
     socket.on('usuarioNuevoCodigo', function(msg, codigoEvento){
+        console.log('Cookies via Socket ->', socket.request.headers.cookie)
         console.log('Un nuevo usario se quiere unir a un evento por código')
         console.log('Codigo del evento - ', msg.codigoEvento)
         console.log('UserId del usuario que quiere entrar - ', msg.userId)
@@ -523,7 +512,7 @@ io.on('connection', function(socket) {
                                                             
                                                         }
                                                    
-                                                  
+                                                  objetosGlobales[0].session[0].close();
                                                     
                                                 })
                                                 
@@ -532,7 +521,7 @@ io.on('connection', function(socket) {
                                         promesaNuevoUsuario
                                             .catch(function(err){
                                                 console.log(err);
-                                                res.send('Error nuevoUsuario')
+                                              //  res.send('Error nuevoUsuario')
                                             })
                                         
                                     })
@@ -540,12 +529,12 @@ io.on('connection', function(socket) {
                                  promesaNuevoUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                        res.send('Error nuevoUsuario')
+                                        //res.send('Error nuevoUsuario')
                                     })
                                  promesaNuevoUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                        res.send('Error checarEvento')
+                                        //res.send('Error checarEvento')
                                     })
                                 
                             }else{
@@ -593,20 +582,20 @@ io.on('connection', function(socket) {
                                                   
                                                     
                                                 })
-                                                
+                                                objetosGlobales[0].session[0].close();
                                               
                                             })
                                         promesaEventoUsuario
                                             .catch(function(err){
                                                 console.log(err);
-                                                res.send('Error nuevoEventoUsuario')
+                                              //  res.send('Error nuevoEventoUsuario')
                                             })
                                 })
                                 
                                 promesaUnirUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                        res.send('Error UnirUsuario')
+                                       // res.send('Error UnirUsuario')
                                     })
                                 
                                
@@ -625,7 +614,7 @@ io.on('connection', function(socket) {
         promesaChecarEvento
             .catch(function(err){
                 console.log(err);
-                res.send('Error checarEvento')
+               // res.send('Error checarEvento')
             })
         
         
@@ -719,25 +708,25 @@ io.on('connection', function(socket) {
                                                     
                                                 })
                                                 
-                                              
+                                              objetosGlobales[0].session[0].close();
                                             })
                                         
                                         promesaEventoUsuario
                                             .catch(function(err){
                                                 console.log(err);
-                                                res.send('Error EventoUsuario')
+                                                //res.send('Error EventoUsuario')
                                             })
                                 })
 
                                  promesaNuevoUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                        res.send('Error nuevoUsuario')
+                                        //res.send('Error nuevoUsuario')
                                     })
                                  promesaNuevoUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                        res.send('Error checarEvento')
+                                        //res.send('Error checarEvento')
                                     })
                                 
                             }else{
@@ -786,20 +775,20 @@ io.on('connection', function(socket) {
                                                   
                                                     
                                                 })
-                                                
+                                                objetosGlobales[0].session[0].close();
                                               
                                             })
                                         promesaEventoUsuario
                                             .catch(function(err){
                                                 console.log(err);
-                                                res.send('Error nuevoEventoUsuario')
+                                               // res.send('Error nuevoEventoUsuario')
                                             })
                                 })
                                 
                                 promesaUnirUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                        res.send('Error UnirUsuario')
+                                        //res.send('Error UnirUsuario')
                                     })
                                 
                             }
@@ -835,7 +824,7 @@ io.on('connection', function(socket) {
         promesaChecarPosEvento
             .catch(function(err){
                 console.log(err);
-                res.send('Error checarPosEvento')
+                //res.send('Error checarPosEvento')
             })
         
         
@@ -850,10 +839,12 @@ io.on('connection', function(socket) {
         var objetosGlobales = request.app.get('objetosGlobales');
         var position = request.app.get('position');
         position = request.sessions.position; 
+        var driver = request.app.get('driver')
+        objetosGlobales[position].session[2] = driver.session();
         
         console.log('Usuario a salirse -> ', objetosGlobales[position].userid)
 
-        const promesachecarRelacion= objetosGlobales[0].session[0]
+        const promesachecarRelacion= objetosGlobales[position].session[2]
             .writeTransaction(tx => tx.run('MATCH (e:Evento {status:true})<-[r]-(u:usuario {spotifyid:{spotifyid}}) RETURN r', { spotifyid:objetosGlobales[position].userid }))
         
         promesachecarRelacion
@@ -868,7 +859,7 @@ io.on('connection', function(socket) {
                 
                 if(tipoRelacion == "Host"){
                     
-                    const promesaCaducarEvento= objetosGlobales[0].session[0]
+                    const promesaCaducarEvento= objetosGlobales[position].session[2]
                         .writeTransaction(tx => tx.run('MATCH (e:Evento {status:true})<-[r]-(u:usuario {spotifyid:{spotifyid}}) SET e.status = false AND r.status = false RETURN e', { spotifyid:objetosGlobales[position].userid }))
                     
                     promesaCaducarEvento
@@ -879,6 +870,7 @@ io.on('connection', function(socket) {
                             io.to(codigoEvento).emit('caducaEvento',{mensaje:"Caduca el Evento", codigoEvento:codigoEvento});
                         
                             response.send('Exito')
+                            objetosGlobales[position].session[2].close();
                             
                           
                         })
@@ -886,11 +878,11 @@ io.on('connection', function(socket) {
                     promesaCaducarEvento
                         .catch(function(err){
                             console.log(err);
-                            res.send('Error checarPosEvento')
+                            response.send('Error checarPosEvento')
                         })
                     
                 }else if(tipoRelacion == "Invitado"){
-                    const promesaCaducarRelacion= objetosGlobales[0].session[0]
+                    const promesaCaducarRelacion= objetosGlobales[position].session[2]
                         .writeTransaction(tx => tx.run('MATCH (e:Evento {status:true})<-[r]-(u:usuario {spotifyid:{spotifyid}}) SET r.status=false RETURN r,e', { spotifyid:objetosGlobales[position].userid }))
                     promesaCaducarRelacion
                         .then(function(evento){
@@ -900,7 +892,7 @@ io.on('connection', function(socket) {
                             var tipoRelacion = evento.records[0]._fields[0].type
                             console.log(tipoRelacion)
                             
-                            const promesaEventoUsuario= objetosGlobales[0].session[0]
+                            const promesaEventoUsuario= objetosGlobales[position].session[2]
                                 .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}, status:true})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
 
                             promesaEventoUsuario
@@ -961,12 +953,14 @@ io.on('connection', function(socket) {
                                         console.log('Ya no existe el evento')
                                     }
                                      
+                               objetosGlobales[position].session[2].close();
+                                
                                     })
 
                             promesaEventoUsuario
                                 .catch(function(err){
                                     console.log(err);
-                                    res.send('Error EventoUsuario')
+                                    response.send('Error EventoUsuario')
                                 })
                         
                         })
@@ -974,7 +968,7 @@ io.on('connection', function(socket) {
                     promesaCaducarRelacion
                         .catch(function(err){
                             console.log(err);
-                            res.send('Error checarPosEvento')
+                            response.send('Error checarPosEvento')
                         })
                     
                 }
@@ -987,7 +981,7 @@ io.on('connection', function(socket) {
         promesachecarRelacion
             .catch(function(err){
                 console.log(err);
-                res.send('Error checarPosEvento')
+                response.send('Error checarPosEvento')
             })
 
     })
