@@ -312,6 +312,7 @@ io.on('connection', function(socket) {
 
     socket.on('EventoConexion', function(mensaje){
         console.log(mensaje.data)
+        console.log('Usuario conectado!')
     });
 
      io.emit('conexionServidor', {mensaje:'Mensaje de prueba de servidor a cliente' })
@@ -367,7 +368,7 @@ io.on('connection', function(socket) {
             promesaCrearEvento
                  .catch(function(err){
                     console.log(err);
-                 //   res.send('Error crearEvento')
+                    io.to(socket.id).emit('errorCrearEvento')
                 })
 
             /*JOIN crea el room cuyo ID será el código del evento*/
@@ -423,7 +424,7 @@ io.on('connection', function(socket) {
             promesaCrearEvento
                  .catch(function(err){
                     console.log(err);
-                  //  res.send('Error crearEvento')
+                io.to(socket.id).emit('errorCrearEvento')
                 })
 
                 
@@ -442,6 +443,7 @@ io.on('connection', function(socket) {
     
     socket.on('usuarioNuevoCodigo', function(msg, codigoEvento){
         console.log('Cookies via Socket ->', socket.request.headers.cookie)
+        console.log('Position via Socket ->', socket.request.position)
         console.log('Un nuevo usario se quiere unir a un evento por código')
         console.log('Codigo del evento - ', msg.codigoEvento)
         console.log('UserId del usuario que quiere entrar - ', msg.userId)
@@ -521,7 +523,8 @@ io.on('connection', function(socket) {
                                         promesaNuevoUsuario
                                             .catch(function(err){
                                                 console.log(err);
-                                              //  res.send('Error nuevoUsuario')
+                                            io.to(socket.id).emit('errorNuevoUsuario')
+                                            
                                             })
                                         
                                     })
@@ -529,12 +532,12 @@ io.on('connection', function(socket) {
                                  promesaNuevoUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                        //res.send('Error nuevoUsuario')
+                                      io.to(socket.id).emit('errorNuevoUsuario')
                                     })
                                  promesaNuevoUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                        //res.send('Error checarEvento')
+                                      io.to(socket.id).emit('errorchecarEvento')
                                     })
                                 
                             }else{
@@ -588,14 +591,14 @@ io.on('connection', function(socket) {
                                         promesaEventoUsuario
                                             .catch(function(err){
                                                 console.log(err);
-                                              //  res.send('Error nuevoEventoUsuario')
+                                            io.to(socket.id).emit('errorNuevoEventoUsuario')
                                             })
                                 })
                                 
                                 promesaUnirUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                       // res.send('Error UnirUsuario')
+                                    io.to(socket.id).emit('errorUnirUsuario')
                                     })
                                 
                                
@@ -614,7 +617,7 @@ io.on('connection', function(socket) {
         promesaChecarEvento
             .catch(function(err){
                 console.log(err);
-               // res.send('Error checarEvento')
+            io.to(socket.id).emit('errorchecarEvento')
             })
         
         
@@ -715,6 +718,7 @@ io.on('connection', function(socket) {
                                             .catch(function(err){
                                                 console.log(err);
                                                 //res.send('Error EventoUsuario')
+                                             io.to(socket.id).emit('errorEventoUsuario');
                                             })
                                 })
 
@@ -722,11 +726,13 @@ io.on('connection', function(socket) {
                                     .catch(function(err){
                                         console.log(err);
                                         //res.send('Error nuevoUsuario')
+                                       io.to(socket.id).emit('errorNuevoUsuario');
+                                     
                                     })
                                  promesaNuevoUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                        //res.send('Error checarEvento')
+                                     io.to(socket.id).emit('errorchecarEvento')
                                     })
                                 
                             }else{
@@ -781,14 +787,14 @@ io.on('connection', function(socket) {
                                         promesaEventoUsuario
                                             .catch(function(err){
                                                 console.log(err);
-                                               // res.send('Error nuevoEventoUsuario')
+                                                 io.to(socket.id).emit('errorNuevoUsuario');
                                             })
                                 })
                                 
                                 promesaUnirUsuario
                                     .catch(function(err){
                                         console.log(err);
-                                        //res.send('Error UnirUsuario')
+                                         io.to(socket.id).emit('errorUnirUsuario')
                                     })
                                 
                             }
@@ -824,7 +830,7 @@ io.on('connection', function(socket) {
         promesaChecarPosEvento
             .catch(function(err){
                 console.log(err);
-                //res.send('Error checarPosEvento')
+              io.to(socket.id).emit('errorchecarPosEvento')
             })
         
         

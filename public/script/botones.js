@@ -115,6 +115,7 @@
         $(this).css("display","none");
         $('#entrar').css("display","none");
         $('#salirPlaylist').css("display","block");
+        $('#canvas').css('display', 'block');
     })
 
     $('#entrarEvento2').on('click',function(){
@@ -122,6 +123,7 @@
         $(this).css("display","none");
         $('#entrar2').css("display","none");
         $('#salirPlaylist2').css("display","block");
+        $('#canvas').css('display', 'block');
     })
 
 
@@ -181,6 +183,7 @@
         $('#map').css("display","block");
         $('#fijarUbicacion').css("display","block");
         $('#btnRegresar').css("display","block");
+        $('#canvas').css('display', 'block');
     })
 
     $('#crearUbicacion2').on('click', function(){
@@ -189,18 +192,21 @@
         $('#map2').css("display","block");
         $('#fijarUbicacion2').css("display","block");
         $('#btnRegresar2').css("display","block");
+        $('#canvas').css('display', 'block');
     })
 
     $('#crearCodigo').on('click', function(){
         crearCodigo();
         $('#crear').css("display","none");
         $('#EliminarPlaylist').css("display","block");
+        $('#canvas').css('display', 'block');
     })
 
     $('#crearCodigo2').on('click', function(){
         crearCodigo();
         $('#crear2').css("display","none");
         $('#EliminarPlaylist2').css("display","block");
+        $('#canvas').css('display', 'block');
     })
     //Botón para entrar al POOL de del HOST
     
@@ -432,10 +438,11 @@
                 location.reload(true);
                 
             }else{
-               console.log('Salida exitosa -> ', success) 
+               console.log('Salida exitosa -> ', success, ' ',data) 
             }
         }) 
 
+        $('#canvas').css('display', 'none');
         $('#btnActualizar').css("display","none");
         $('#createPlaylist').css("display","none");
         $(this).css("display","none");
@@ -464,7 +471,8 @@
                console.log('Salida exitosa -> ', success) 
             }
         }) 
-        
+         
+        $('#canvas').css('display', 'none');
         $('#createPlaylist2').css("display","none");
         $(this).css("display","none");
         $('#btnCrear2').css("display","inline-block");

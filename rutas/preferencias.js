@@ -41,7 +41,7 @@ router.post('/preferencias', function(req, res, error) {
             console.log('La API de preferencias ha sido llamada')
             request(options, function (error, response, body) {
                 console.log('La API de preferencias respondió algo')
-                if (error == true || body == undefined || body.profile == undefined || objetosGlobales[position] == null) {
+                if (error == true || body == undefined || body.profile == undefined || objetosGlobales[position] == null || body == null || body.profile.danceability == null) {
                 /**Proceso En caso de que la API esté valiendo verga como casi nunca pasa. Se imprimen errores*/
                 console.log("API dormida zzzzz ugh!")
                 console.log(body)

@@ -25,7 +25,8 @@ router.get('/mineria', function(req, res, error){
     var position = req.app.get('position'); 
     position = req.sessions.position;
     
-    if(error == true || objetosGlobales == undefined || position == undefined || objetosGlobales[position]==null){
+    if(error == true || objetosGlobales == undefined || position == undefined ){
+        console.log(error)
         res.send('Error Global')
     }else{
     

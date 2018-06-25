@@ -1,18 +1,29 @@
 var express = require("express");
 var neo4j = require('neo4j-driver').v1;
 var router = new express.Router();
+var contErrorServidor = 0;
 
 router.get('/esHost', function(req, res, error){
-        
+        var objetosGlobales = req.app.get('objetosGlobales');
+        var position = req.app.get('position');
+        var driver = req.app.get('driver')
+        position = req.sessions.position;
     
-        if(error == true){
+        if(error == true || objetosGlobales == undefined || position == undefined || driver == undefined){
+            contErrorServidor += 1
             console.log('Errror -> ', error)
+            
+            if(contErrorServidor < 2){
+                res.send('Error Servidor')
+            }else{
+                res.redirect('/error')
+            }
+            
         }else{
-            var objetosGlobales = req.app.get('objetosGlobales');
-            var position = req.app.get('position');
-            position = req.sessions.position;
+            contErrorServidor = 0;
+            
             console.log('apuntador del objeto', position);
-            var driver = req.app.get('driver')
+            
             
             objetosGlobales[position].session[0] = driver.session();
             
@@ -35,7 +46,7 @@ router.get('/esHost', function(req, res, error){
             promesaEsHost
                  .catch(function(err){
                     console.log(err);
-                    res.send('Error crearEvento')
+                    res.redirect('/perfil')
                 })
             
         }
@@ -43,14 +54,18 @@ router.get('/esHost', function(req, res, error){
 
 
 router.get('/esInvitado', function(req, res, error){
-        if(error == true){
-            console.log('Errror -> ', error)
-        }else{
-            var objetosGlobales = req.app.get('objetosGlobales');
+     var objetosGlobales = req.app.get('objetosGlobales');
             var position = req.app.get('position');
                 position = req.sessions.position;
                 console.log('apuntador del objeto', position);
             var driver = req.app.get('driver')
+    
+        if(error == true || objetosGlobales == undefined || position == undefined || driver == undefined){
+            console.log('Errror -> ', error)
+            res.send('Error Servidor')
+        }else{
+            
+           
             objetosGlobales[position].session[1] = driver.session();
             
             const promesaEsInvitado = objetosGlobales[position].session[1]
@@ -72,7 +87,7 @@ router.get('/esInvitado', function(req, res, error){
             promesaEsInvitado
                  .catch(function(err){
                     console.log(err);
-                    res.send('Error crearEvento')
+                    res.redirect('/perfil')
                 })
             
         }

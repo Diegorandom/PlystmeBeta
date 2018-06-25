@@ -232,7 +232,7 @@ var socket = io({
 socket.on('conexionServidor', (msg) => {
     console.log(msg.mensaje)
     socket.emit('EventoConexion', {data: 'Estoy Conectado!'});
-    $.ajax({url:'/esHost', success:esHost, cache:false})   
+    $.ajax({url:'/esHost?_=' + new Date().getTime(), success:esHost, cache:false})   
 });
 
 function fijarUbicacion (pos,userid){
@@ -1006,13 +1006,14 @@ socket.on('caducaEvento', function(msg){
     }
 
 
- $.ajax({url:'/esHost', success:esHost, cache:false})
+ //$.ajax({url:'/esHost', success:esHost, cache:false})
       
       
   function esHost(data,success,error){
-    if(error == true){
-            console.log(error)
-            
+    if(error == true || data == "Error checarHost" || data == "Error checarInvitado" || data == "Error Servidor"){
+            if(error == true){console.log(error)}
+                
+                location.reload(true);
 
         }else{
            console.log('Revision exitosa -> ', success)
@@ -1025,9 +1026,11 @@ socket.on('caducaEvento', function(msg){
                 $.ajax({url:'/esInvitado', success:esInvitado, cache:false})
                      
              function esInvitado(data,success,error){
-                    if(error == true){
-                            console.log(error)
-                            ;
+                     if(error == true || data == "Error checarHost" || data == "Error checarInvitado" || data == "Error Servidor"){
+                            if(error == true){console.log(error)}
+
+                                location.reload(true);
+
                         }else{
                            console.log('Revision exitosa -> ', success)
                            console.log(data)
@@ -1089,4 +1092,28 @@ socket.on('caducaEvento', function(msg){
            
         }
 }
+
+ socket.on('errorCrearEvento', function(){
+     location.reload(true);
+ })
+ 
+ socket.on('errorNuevoUsuario', function(){
+     location.reload(true);
+ })
+ socket.on('errorchecarEvento', function(){
+     location.reload(true);
+ })
+ socket.on('errorNuevoEventoUsuario', function(){
+     location.reload(true);
+ })
+ socket.on('errorUnirUsuario', function(){
+     location.reload(true);
+ })
+ socket.on('errorEventoUsuario', function(){
+     location.reload(true);
+ })
+ socket.on('errorchecarPosEvento', function(){
+     location.reload(true);
+ })
+ 
 
