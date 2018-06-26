@@ -24,7 +24,8 @@ var erroresPreferenciasSuri = 0
     function preferencias(){
         /*Se llama a la ruta de preferencias.js*/
         console.log('Se ha comenzado a llamar a preferencias')
-        $.post('/preferencias', function(data, status, error){
+                
+        $.post('/preferencias',function(data, status, error){
             
             console.log(status)
             /*Si la obtención de datos es existosa se despliega el perfil de preferencias en un gráfico de radar*/
@@ -222,7 +223,7 @@ var erroresPreferenciasSuri = 0
      
     /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con el perfil de preferencias del usuario*/
     function chequeoFBD(){
-        $.post('/chequeoBD', function(data,status){
+        $.post('/chequeoBD',function (data,status){
             console.log('Datos del usuario ->', data)
             if(status == "success" && data == "guardado"){
                 console.log('Se llama a preferencias')
@@ -255,7 +256,10 @@ var erroresPreferenciasSuri = 0
     var erroresGuardarTopSpotify = 0
      
     document.getElementById('guardarTOP50').addEventListener('click', function(){
-        $.get('/guardar/top50', function(data, status){
+        
+    $.ajax({url:'/guardar/top50?_=' + new Date().getTime(), success:guardarTop, cache:false}) 
+        
+    function guardarTop(data, status){
             console.log(status)
             console.log(data)
             if(status == "success"){
@@ -318,7 +322,7 @@ var erroresPreferenciasSuri = 0
                 location.reload(true);
             }
 
-        })
+        }
     })
     
     /*Proceso que detona la guardar un playlist dado que el usuario lo solicita en la interfaz*/
@@ -326,60 +330,19 @@ var erroresPreferenciasSuri = 0
         
         console.log('Guardando playlist en Spotify')
         
-        $.get('/create/playlist', function(data, status, error){
-            console.log(status)
-            console.log(data)
-            if(status == "success"){
-                /*Si se ha guardado el playlist se despliega un mensaje en la interfaz*/
-                if(data=="playlistGuardado"){
-                    console.log(data)
-                    document.getElementById('nuevoPlaylist').innerHTML="La playlist se ha guardado como PLYSTME en tu cuenta de Spotify"
-                    document.getElementById('nuevoPlaylist').style.display="block"
-                    setTimeout(function(){
-                        document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);
-
-                }else if(data=="ActualizacionPlaylist"){
-                    /*Si se actualizó el playlist, se despliega un mensaje*/
-                    console.log(data)
-                    document.getElementById('nuevoPlaylist').innerHTML="Se ha actualizado el Playlist"
-                    document.getElementById('nuevoPlaylist').style.display="block"
-                    setTimeout(function(){
-                        document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);
-                }else if(data=="ERRORORIGEN"){
-                    console.log('ERROR DE ORIGEN')
-                    console.log(data)
-                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
-                    document.getElementById('nuevoPlaylist').style.display="block"
-                    setTimeout(function(){
-                        document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);
-                    
-                    
-                }
-
-            }else{
-                console.log('ERROR DE ORIGEN')
-                console.log(data)
-                    document.getElementById('nuevoPlaylist').innerHTML="Error al guardar playlist, ups!"
-                    document.getElementById('nuevoPlaylist').style.display="block"
-                    setTimeout(function(){
-                        document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);
-                
-                }
-            
-
-        })
+        $.ajax({url:'/create/playlist?_=' + new Date().getTime(), success:crearPlaylist, cache:false}) 
+        
     })
     
     
         
     
-        /*Lo mismo de arriba pero en versión para móvil*/
-        document.getElementById('createPlaylist2').addEventListener('click', function(){
-            $.get('/create/playlist', function(data, status){
+    /*Lo mismo de arriba pero en versión para móvil*/
+    document.getElementById('createPlaylist2').addEventListener('click', function(){
+        $.ajax({url:'/create/playlist?_=' + new Date().getTime(), success:crearPlaylist, cache:false}) 
+    })
+    
+    function crearPlaylist(data, status, error){
                 console.log(status)
                 console.log(data)
                 if(status == "success"){
@@ -404,15 +367,9 @@ var erroresPreferenciasSuri = 0
                             document.getElementById('nuevoPlaylist').style.display="none"
                         }, 2000);
                         
-                        $.get('/error', function(data, status, error){
-                            console.log(data)
-                            console.log(status)
-                            if(status=="sucess"){
-                                console.log('TOKEN REFRESCADO')
-                            }else if(error ==true){
-                                location.reload(true);
-                            }
-                        })
+                        $.ajax({url:'/error?_=' + new Date().getTime(), success:error, cache:false}) 
+                      
+                     
                         
                     }     
                 }else{
@@ -424,21 +381,23 @@ var erroresPreferenciasSuri = 0
                         document.getElementById('nuevoPlaylist').style.display="none"
                     }, 2000);
                     
-                    $.get('/error', function(data, status, error){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }else if(error ==true){
-                            location.reload(true);
-                        }
-                    })
+                     $.ajax({url:'/error?_=' + new Date().getTime(), success:error, cache:false}) 
+                      
+                      
                     
                 } 
                 
-            })
-        })
+            }
      
+    function error(data, status, error){
+        console.log(data)
+        console.log(status)
+        if(status=="sucess"){
+            console.log('TOKEN REFRESCADO')
+        }else if(error ==true){
+            location.reload(true);
+        }
+    }
         
         function checkUrl(url) {
             console.log('Checando URL -> ', url)
@@ -462,88 +421,16 @@ var erroresPreferenciasSuri = 0
             
             $('#usuariosDentro').css("display","block");
             
-            $.get('/usuarios', function(data, status){
-               
-            console.log(data)
-            console.log(status)
-                        
-                        
-                        
-            if(status === "success"){
-                if(data != undefined){
-                    
-                    var contadorU = document.getElementById('contadorU')
-                    var cont= document.createElement("span")
-                    cont.id="contadorSpan"
-                    cont.innerHTML = data.length
-                    contadorU.appendChild(cont)
-                    
-                    var usuariosDentro = document.getElementById('usuariosDentro')
-                    var listaUsuarios = document.createElement('ul')
-                    listaUsuarios.id="usuarios"
-                    listaUsuarios.style="display:none; padding:5px;"
-                    usuariosDentro.appendChild(listaUsuarios)
-                    
-                    data.forEach(function(usuario,index){
-                        if(checkUrl(usuario[1])==false){
-                            console.log(usuario[1], " No válido")
-                            usuario[1] = false
-                        }
-                        
-                        
-                        
-                        var usuariosFotos = document.getElementById('usuariosFotos')
-                        
-                        if(usuario[1]){ 
-                            var imgU= document.createElement("img")
-                            imgU.src=usuario[1]
-                            imgU.alt="omg"
-                            imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.className="imgUsuario"
-                            usuariosFotos.appendChild(imgU)
-                        }else{
-                            var imgU= document.createElement("img")
-                            imgU.src="img/Perfil.png"
-                            imgU.alt="omg"
-                            imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.className="imgUsuario"
-                            usuariosFotos.appendChild(imgU) 
-                        }
-                        
-                        
-                        if(usuario[0] && usuario[1]){
-                            var bullet = document.createElement('li')
-                            var imgL = document.createElement("img")
-                            imgL.src = usuario[1]
-                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
-                            bullet.innerHTML = usuario[0]
-                            bullet.appendChild(imgL)
-                            listaUsuarios.appendChild(bullet)
-                        }else if(usuario[0]){
-                            var bullet = document.createElement('li')
-                            var imgL = document.createElement("img")
-                            imgL.src = "img/Perfil.png"
-                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
-                            bullet.innerHTML = usuario[0]
-                            bullet.appendChild(imgL)
-                            listaUsuarios.appendChild(bullet)
-                        }else if(usuario[1]){
-                            var bullet = document.createElement('li')
-                            var imgL = document.createElement("img")
-                            imgL.src = usuario[1]
-                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
-                            bullet.innerHTML = "Anónimo"
-                            bullet.appendChild(imgL)
-                            listaUsuarios.appendChild(bullet)
-                        }
-                        
-                    })
-                }
-            }
-                
-            }) 
+            $.get({url:'/usuarios?_=' + new Date().getTime(), success:usuarios, cache:false})
+                  
+           
             
-            $.get( '/pool',  function(data, status) {
+            $.ajax({url:'/pool?_=' + new Date().getTime(), success:pool, cache:false})  
+            
+        }
+
+    
+            function pool(data, status) {
                 console.log(data)
                 console.log(status)
                 if(status === "success"){
@@ -661,7 +548,9 @@ var erroresPreferenciasSuri = 0
                        
                    })
                    }else{
-                       $.get('/error', function(data, status, error){
+                        $.ajax({url:'/error?_=' + new Date().getTime(), success:error, cache:false}) 
+                      
+                      function error(data, status, error){
                             console.log(data)
                             console.log(status)
                             if(status=="sucess"){
@@ -669,79 +558,58 @@ var erroresPreferenciasSuri = 0
                             }else if(error ==true){
                                 location.reload(true);
                             }
-                        })
+                        }
                     }
                 }else{
                     console.log(data);
-                    $.get('/error', function(data, status, error){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }else if(error ==true){
-                            location.reload(true);
+                     $.ajax({url:'/error?_=' + new Date().getTime(), success:error, cache:false}) 
+                      
+                      function error(data, status, error){
+                            console.log(data)
+                            console.log(status)
+                            if(status=="sucess"){
+                                console.log('TOKEN REFRESCADO')
+                            }else if(error ==true){
+                                location.reload(true);
+                            }
                         }
-                    })
                 }
                 
-            })
-        }
+            }
 
-        
-
-        /*Proceso para entrar a un pool determinado*/
-        document.getElementById('enterPool').addEventListener('click', function(){
-            //enterPool()
-        })
-    
-     /*Proceso para actualizar un playlist*/
-        /*document.getElementById('btnActualizar').addEventListener('click', function() {
-            console.log('Actualizando POOL1')
-           
-            $.get('/usuarios', function(data, status){
+         function usuarios(data, status){
                
             console.log(data)
             console.log(status)
                         
-            
+                        
                         
             if(status === "success"){
                 if(data != undefined){
                     
-                    document.getElementById("usuarios").remove();
+                    var contadorU = document.getElementById('contadorU')
+                    var cont= document.createElement("span")
+                    cont.id="contadorSpan"
+                    cont.innerHTML = data.length
+                    contadorU.appendChild(cont)
+                    
                     var usuariosDentro = document.getElementById('usuariosDentro')
                     var listaUsuarios = document.createElement('ul')
                     listaUsuarios.id="usuarios"
                     listaUsuarios.style="display:none; padding:5px;"
                     usuariosDentro.appendChild(listaUsuarios)
                     
-                    var contadorU = document.getElementById('contadorU')
-                    document.getElementById("contadorSpan").remove();
-                    var cont= document.createElement("span")
-                    cont.id="contadorSpan"
-                    cont.innerHTML = data.length
-                    contadorU.appendChild(cont)
-                   
-                    var totalId = document.getElementsByClassName("imgUsuario").length;
-                    
-                    console.log("# de IDs a eliminar -> ",  totalId)
-                    
-                    for(var i=0; i<totalId; i++){
-                        document.getElementsByClassName("imgUsuario").remove();
-                    }
-                    
                     data.forEach(function(usuario,index){
-                        console.log('Modificando usuarios -> Indice ', index)
-                        
                         if(checkUrl(usuario[1])==false){
                             console.log(usuario[1], " No válido")
                             usuario[1] = false
                         }
                         
+                        
+                        
                         var usuariosFotos = document.getElementById('usuariosFotos')
                         
-                        if(usuario[1]){
-                            
+                        if(usuario[1]){ 
                             var imgU= document.createElement("img")
                             imgU.src=usuario[1]
                             imgU.alt="omg"
@@ -788,161 +656,9 @@ var erroresPreferenciasSuri = 0
                 }
             }
                 
-            }) 
-            
-            $.get( '/pool', function(data, status) {
-                console.log(data)
-                console.log(status)
-                if(status === "success"){
-                    if(data != undefined){
-                        
-                console.log('El playlist ha cambiado')
-                   data.forEach(function(item,index){
-                       /*Se eliminan las canciones viejas-
-                       if(document.getElementById("pool"+index) !== null){
-                            document.getElementById("pool"+index).remove();
-                            console.log("Depuración de playlist")
-                            /*Mensaje de actualizacion de playlist-
-                            if(index == 1){
-                                console.log('cargando mensaje')
-                                document.getElementById('nuevoPlaylist').innerHTML="Actualizando Playlist..."
-                                document.getElementById('nuevoPlaylist').style.display="block"
-                                console.log(data)
-                                setTimeout(function(){
-                                    document.getElementById('nuevoPlaylist').style.display="none"
-                                }, 2000);
-                            }
-                            
-                       }
-                      
-                       
-                       /*Se despliega la actualizacion del playlist en la interfaz/
-                        playlist = data
-                        
-                       console.log(item)
-                       var iDiv = document.createElement('div');
-                        iDiv.id = 'pool' + index;
-                        iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
+            } 
 
-                        // Create the inner div before appending to the body
-                        var innerDiv = document.createElement('div');
-                        innerDiv.className = 'be-post';
-                        innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
-
-                        // The variable iDiv is still good... Just append to it.
-                        iDiv.appendChild(innerDiv);
-                       
-                        /*var form = document.createElement("form")
-                        form.method="post"
-                        form.action="/track/profile"
-                        form.id="trackprofile" /
-                        
-                        var boton = document.createElement("span")
-                        boton.className="be-img-block"
-                        boton.form="trackprofile"
-                        boton.type="submit"
-                        boton.name="index"
-                        boton.value= index
-                        boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
-                        
-                        innerDiv.appendChild(boton)
-                        
-                        var img= document.createElement("img")
-                        img.src=item[4]
-                        img.alt="omg"
-                        img.style=""
-                        
-                        boton.appendChild(img)
-                        
-                        var span = document.createElement("span")
-                        span.className="be-post-title"
-                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
-                        
-                        span.innerHTML = item[0]
-                        
-                        innerDiv.appendChild(span)
-                        
-                        /*var a = document.createElement('a')
-                        a.className="close"
-                        a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
-                        a.id="fadeOut" + index
-                        a.innerHTML ="&times;"
-                        
-                        innerDiv.appendChild(a)/
-                        
-                        var span2 = document.createElement("span")
-                        span2.style="color:#503047; font-size:120%;max-height:20px;"
-                        span2.innerHTML="Popularidad: " + item[5]
-                        
-                        //innerDiv.appendChild(span2)
-                        
-                        var div2 = document.createElement("div")
-                        div2.className="author-post"
-                        
-                        innerDiv.appendChild(div2)
-                        
-                        var span3= document.createElement("span")
-                        span3.style="color:#777; font-size:120%;max-height:20px;"
-                        span3.innerHTML=item[2]
-                        
-                        div2.appendChild(span3)
-
-                        // Then append the whole thing onto the body
-                        document.getElementsByClassName('pool')[0].appendChild(iDiv);
-                       
-                    
-                       
-                       
-                       console.log('Nueva canción desplegada')
-                   })
-                }else{
-                     console.log(data)
-                    document.getElementById('nuevoPlaylist').innerHTML="Error al actualizar playlist, ups!"
-                    document.getElementById('nuevoPlaylist').style.display="block"
-                    setTimeout(function(){
-                        document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);
-                    
-                    $.get('/error', function(data, status, error){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }else if(error ==true){
-                            location.reload(true);
-                        }
-                    })
-                    
-                }
-                }else{
-                    console.log(data)
-                    document.getElementById('nuevoPlaylist').innerHTML="Error al actualizar playlist, ups!"
-                    document.getElementById('nuevoPlaylist').style.display="block"
-                    setTimeout(function(){
-                        document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);
-                    
-                    $.get('/error', function(data, status, error){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }else if(error ==true){
-                            location.reload(true);
-                        }
-                    })
-                    
-                }
-                    
-                
-            })
-        })*/
-
-
-    
-
-    
+      
         
     /* Proceso para vaciar un playlist */
 
@@ -951,7 +667,9 @@ var erroresPreferenciasSuri = 0
             console.log('Vamos a vaciar el pool de movil')
             
             
-            $.get('/pool', function(data, status){
+            $.ajax({url:'/pool?_=' + new Date().getTime(), success:pool, cache:false}) 
+            
+        function pool(data, status){
                
             console.log(data)
             console.log(status)
@@ -986,7 +704,11 @@ var erroresPreferenciasSuri = 0
                             
                        }
                    })              
-        }}})}
+        
+                }
+            }
+        }
+    }
         
             
 
@@ -1001,489 +723,11 @@ var erroresPreferenciasSuri = 0
             
             console.log('Entramos a pool de Móvil')
             
-            $.get('/usuarios', function(data, status){
-            
-            console.log(status)    
-            console.log(data)
-                        
-            if(status === "success"){
-                if(data != undefined){
-                    
-                    
-                    var contadorU2 = document.getElementById('contadorU2')
-                    var cont= document.createElement("span")
-                    cont.id="contadorSpan2"
-                    cont.innerHTML = data.length
-                    contadorU2.appendChild(cont)
-                    
-                    var usuariosDentro2 = document.getElementById('usuariosDentro2')
-                    var listaUsuarios2 = document.createElement('ul')
-                    listaUsuarios2.id="usuarios2"
-                    listaUsuarios2.style="display:none; padding:5px;"
-                    usuariosDentro2.appendChild(listaUsuarios2)
-                    
-                    data.forEach(function(usuario,index){
-                        
-                        if(checkUrl(usuario[1])==false){
-                            console.log(usuario[1], " No válido")
-                            usuario[1] = false
-                        }
-                        
-                        var usuariosFotos2 = document.getElementById('usuariosFotos2')
-                        
-                        if(usuario[1]){ 
-                            var imgU= document.createElement("img")
-                            imgU.src=usuario[1]
-                            imgU.alt="omg"
-                            imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.className="imgUsuario2"
-                            usuariosFotos2.appendChild(imgU)
-                            
-                        }else{
-                            var imgU= document.createElement("img")
-                            imgU.src="img/Perfil.png"
-                            imgU.alt="omg"
-                            imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.className="imgUsuario2"
-                            usuariosFotos2.appendChild(imgU) 
-                        }
-                        
-                        
-                        
-                        if(usuario[0] && usuario[1]){
-                            var bullet = document.createElement('li')
-                            var imgL = document.createElement("img")
-                            imgL.src = usuario[1]
-                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
-                            bullet.innerHTML = usuario[0]
-                            bullet.appendChild(imgL)
-                            listaUsuarios2.appendChild(bullet)
-                        }else if(usuario[0]){
-                            var bullet = document.createElement('li')
-                            var imgL = document.createElement("img")
-                            imgL.src = "img/Perfil.png"
-                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
-                            bullet.innerHTML = usuario[0]
-                            bullet.appendChild(imgL)
-                            listaUsuarios2.appendChild(bullet)
-                        }else if(usuario[1]){
-                            var bullet = document.createElement('li')
-                            var imgL = document.createElement("img")
-                            imgL.src = usuario[1]
-                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
-                            bullet.innerHTML = "Anónimo"
-                            bullet.appendChild(imgL)
-                            listaUsuarios2.appendChild(bullet)
-                        }
-                        
-                        
-                        
-                    })
-                }
-            }
-                
-            }) 
-            
-            
-            $.get( '/pool', function(data, status) {
-                console.log(data)
-                console.log(status)
-                if(status === "success"){
-                    if(data != undefined){
-                    
-                    var botonPool = document.getElementById('btnActualizar2')
-                    botonPool.innerHTML = "Actualizar Playlist"
-                    botonPool.style="width:50%; border: none; background-color:#FFF; margin:0px auto 0px auto; color:#588b8b; border-radius: 30px; margin-bottom: 15px;"
-                    var icono = document.createElement('i')
-                    icono.className ="fas fa-sync-alt"
-                    icono.style="font-size:20px; color:#588b8b; margin-left:5px;"
-                    botonPool.appendChild(icono)
-                    
-                    document.getElementById('btnCrear2').style.display="none"
-                    document.getElementById('createPlaylist2').style.display="block"
-                    
-                console.log('El playlist ha cambiado')
-                   data.forEach(function(item,index){
-                       if(document.getElementById("pool"+index) !== null){
-                            document.getElementById("pool"+index).remove();
-                            console.log("Depuración de playlist")
-                            
-                            if(index == 1){
-                                console.log('cargando mensaje')
-                                document.getElementById('nuevoPlaylist').style.display="block"
-                                console.log(data)
-                                setTimeout(function(){
-                                    document.getElementById('nuevoPlaylist').style.display="none"
-                                    console.log("ya no está el mensaje");
-                                }, 2000);
-                            }
-                            
-                       }
-                      
-                        playlist = data
-                        
-                       console.log(item)
-                       var iDiv = document.createElement('div');
-                        iDiv.id = 'pool' + index;
-                        iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
-
-                        // Create the inner div before appending to the body
-                        var innerDiv = document.createElement('div');
-                        innerDiv.className = 'be-post';
-                        innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
-
-                        // The variable iDiv is still good... Just append to it.
-                        iDiv.appendChild(innerDiv);
-                       
-                        /*var form = document.createElement("form")
-                        form.method="post"
-                        form.action="/track/profile"
-                        form.id="trackprofile"
-                        
-                        innerDiv.appendChild(form) */
-                        
-                        var boton = document.createElement("span")
-                        boton.className="be-img-block"
-                        boton.form="trackprofile"
-                        boton.type="submit"
-                        boton.name="index"
-                        boton.value= index
-                        boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
-                        
-                        innerDiv.appendChild(boton)
-                        
-                        var img= document.createElement("img")
-                        img.src=item[4]
-                        img.alt="omg"
-                        img.style=""
-                        
-                        boton.appendChild(img)
-                        
-                        var span = document.createElement("span")
-                        span.className="be-post-title"
-                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
-                        
-                        span.innerHTML = item[0]
-                        
-                        innerDiv.appendChild(span)
-                        
-                        /*var a = document.createElement('a')
-                        a.className="close"
-                        a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
-                        a.id="fadeOut" + index
-                        a.innerHTML ="&times;"
-                        
-                        innerDiv.appendChild(a)*/
-                        
-                        var span2 = document.createElement("span")
-                        span2.style="color:#503047; font-size:120%;max-height:20px;"
-                        span2.innerHTML="Popularidad: " + item[5]
-                        
-                        //innerDiv.appendChild(span2)
-                        
-                        var div2 = document.createElement("div")
-                        div2.className="author-post"
-                        
-                        innerDiv.appendChild(div2)
-                        
-                        var span3= document.createElement("span")
-                        span3.style="color:#777; font-size:120%;max-height:20px;"
-                        span3.innerHTML= item[2]
-                        
-                        div2.appendChild(span3)
-
-                        // Then append the whole thing onto the body
-                        document.getElementsByClassName('pool')[0].appendChild(iDiv);
-                       
-                    
-                       
-                       
-                       console.log('Nueva canción desplegada')
-                   })
-                    }else{
-                        $.get('/error', function(data, status, error){
-                            console.log(data)
-                            console.log(status)
-                            if(status=="sucess"){
-                                console.log('TOKEN REFRESCADO')
-                            }else if(error ==true){
-                                location.reload(true);
-                            }
-                        })
-                    }
-                }else{
-                    $.get('/error', function(data, status, error){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }else if(error ==true){
-                            location.reload(true);
-                        }
-                    })
-                }
-                
-            })
+        $.get({url:'/usuarios?_=' + new Date().getTime(), success:usuarios, cache:false})
+          
+        $.ajax({url:'/pool?_=' + new Date().getTime(), success:pool, cache:false})  
         }
-        
-        /*Lo mismo que btnActualizar pero para movil*/
-        document.getElementById('btnActualizar2').addEventListener('click', function() {
-            console.log('Actualizando POOL2')
-            
-            $.get('/usuarios', function(data, status, error){
-                
-            console.log(status)    
-            console.log(data)
-                        
-            if(status === "success"){
-                if(data != undefined){
-                    
-                    document.getElementById("usuarios2").remove();
-                    var usuariosDentro2 = document.getElementById('usuariosDentro2')
-                    var listaUsuarios2 = document.createElement('ul')
-                    listaUsuarios2.id="usuarios2"
-                    listaUsuarios2.style="display:none; padding:5px;"
-                    usuariosDentro2.appendChild(listaUsuarios2)
-                    
-                     var contadorU2 = document.getElementById('contadorU2')
-                        document.getElementById("contadorSpan2").remove();
-                        var cont= document.createElement("span")
-                        cont.id="contadorSpan2"
-                        cont.innerHTML = data.length
-                        contadorU2.appendChild(cont)
-                        
-                         var totalId = document.getElementsByClassName("imgUsuario2").length;
-                    
-                        console.log("# de IDs a eliminar -> ",  totalId)
-
-                        for(var i=0; i<totalId; i++){
-                            document.getElementsByClassName("imgUsuario2").remove();
-                        }
-
-                        
-                    data.forEach(function(usuario,index){
-                        
-                        if(checkUrl(usuario[1])==false){
-                            console.log(usuario[1], " No válido")
-                            usuario[1] = false
-                        }
-                        
-                        var usuariosFotos2 = document.getElementById('usuariosFotos2')
-                        
-                        if(usuario[1]){ 
-                            var imgU= document.createElement("img")
-                            imgU.src=usuario[1]
-                            imgU.alt="omg"
-                            imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.className="imgUsuario2"
-                            usuariosFotos2.appendChild(imgU)
-                            
-                        }else{
-                            var imgU= document.createElement("img")
-                            imgU.src="img/Perfil.png"
-                            imgU.alt="omg"
-                            imgU.style="height:100%; border-radius:50%; width:20px;"
-                            imgU.className="imgUsuario2"
-                            usuariosFotos2.appendChild(imgU) 
-                        }
-                                                
-                        
-                        
-                        if(usuario[0] && usuario[1]){
-                            var bullet = document.createElement('li')
-                            var imgL = document.createElement("img")
-                            imgL.src = usuario[1]
-                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
-                            bullet.innerHTML = usuario[0]
-                            bullet.appendChild(imgL)
-                            listaUsuarios2.appendChild(bullet)
-                        }else if(usuario[0]){
-                            var bullet = document.createElement('li')
-                            var imgL = document.createElement("img")
-                            imgL.src = "img/Perfil.png"
-                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
-                            bullet.innerHTML = usuario[0]
-                            bullet.id="listaUsuario"
-                            bullet.appendChild(imgL)
-                            listaUsuarios2.appendChild(bullet)
-                        }else if(usuario[1]){
-                            var bullet = document.createElement('li')
-                            var imgL = document.createElement("img")
-                            imgL.src = usuario[1]
-                            imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
-                            bullet.innerHTML = "Anónimo"
-                            bullet.id="listaUsuario"
-                            bullet.appendChild(imgL)
-                            listaUsuarios2.appendChild(bullet)
-                        }
-                        
-                        
-                        
-                    })
-                }
-            }
-                
-            })
-            
-            $.get( '/pool', function(data, status) {
-                console.log(data)
-                console.log(status)
-                if(status === "success"){
-                    if(data != undefined){
-                    
-                    var botonPool = document.getElementById('btnActualizar2')
-                    botonPool.innerHTML = "Actualizar Playlist"
-                    botonPool.style="width:80%; border: none; background-color:#FFF; margin:0 auto 0px auto; color:#588b8b; border-radius:30px;"
-                    var icono = document.createElement('i')
-                    icono.className ="fas fa-sync-alt"
-                    icono.style="font-size:20px; color:#588b8b; margin-left:5px;"
-                    botonPool.appendChild(icono)
-                    
-                    document.getElementById('btnCrear2').style.display="none"
-                    document.getElementById('createPlaylist2').style.display="block"
-                    
-                console.log('El playlist ha cambiado')
-                   data.forEach(function(item,index){
-                       if(document.getElementById("pool"+index) !== null){
-                            document.getElementById("pool"+index).remove();
-                            console.log("Depuración de playlist")
-                            
-                            if(index == 1){
-                                console.log('cargando mensaje')
-                                document.getElementById('nuevoPlaylist').style.display="block"
-                                console.log(data)
-                                setTimeout(function(){
-                                    document.getElementById('nuevoPlaylist').style.display="none"
-                                    console.log("ya no está");
-                                }, 2000);
-                            }
-                            
-                       }
-                      
-                        playlist = data
-                        
-                       console.log(item)
-                       var iDiv = document.createElement('div');
-                        iDiv.id = 'pool' + index;
-                        iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-                        iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:10px; height:350px !important; "
-
-                        // Create the inner div before appending to the body
-                        var innerDiv = document.createElement('div');
-                        innerDiv.className = 'be-post';
-                        innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
-
-                        // The variable iDiv is still good... Just append to it.
-                        iDiv.appendChild(innerDiv);
-                       
-                        /*var form = document.createElement("form")
-                        form.method="post"
-                        form.action="/track/profile"
-                        form.id="trackprofile"
-                        
-                        innerDiv.appendChild(form) */
-                        
-                        var boton = document.createElement("span")
-                        boton.className="be-img-block"
-                        boton.form="trackprofile"
-                        boton.type="submit"
-                        boton.name="index"
-                        boton.value= index
-                        boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
-                        
-                        innerDiv.appendChild(boton)
-                        
-                        var img= document.createElement("img")
-                        img.src=item[4]
-                        img.alt="omg"
-                        img.style=""
-                        
-                        boton.appendChild(img)
-                        
-                        var span = document.createElement("span")
-                        span.className="be-post-title"
-                        span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
-                        
-                        span.innerHTML = item[0]
-                        
-                        innerDiv.appendChild(span)
-                        
-                        /*var a = document.createElement('a')
-                        a.className="close"
-                        a.style="color:#503047; font-size:20px; font-family:'Kanit', sans-serif;"
-                        a.id="fadeOut" + index
-                        a.innerHTML ="&times;"
-                        
-                        innerDiv.appendChild(a)*/
-                        
-                        var span2 = document.createElement("span")
-                        span2.style="color:#503047; font-size:120%;max-height:20px;"
-                        span2.innerHTML="Popularidad: " + item[5]
-                        
-                        //innerDiv.appendChild(span2)
-                        
-                        var div2 = document.createElement("div")
-                        div2.className="author-post"
-                        
-                        innerDiv.appendChild(div2)
-                        
-                        var span3= document.createElement("span")
-                        span3.style="color:#777; font-size:120%;max-height:20px;"
-                        span3.innerHTML= item[2]
-                        
-                        div2.appendChild(span3)
-
-                        // Then append the whole thing onto the body
-                        document.getElementsByClassName('pool')[0].appendChild(iDiv);
-                       
-                    
-                       
-                       
-                       console.log('Nueva canción desplegada')
-                   })
-                    }else{
-                        console.log(data)
-                        document.getElementById('nuevoPlaylist').innerHTML="Error al actualizar playlist, ups!"
-                        document.getElementById('nuevoPlaylist').style.display="block"
-                        setTimeout(function(){
-                            document.getElementById('nuevoPlaylist').style.display="none"
-                        }, 2000);
-                        
-                        $.get('/error', function(data, status, error){
-                            console.log(data)
-                            console.log(status)
-                            if(status=="sucess"){
-                                console.log('TOKEN REFRESCADO')
-                            }else if(error ==true){
-                                location.reload(true);
-                            }
-                        })
-                    }
-                }else{
-                    console.log(data)
-                    document.getElementById('nuevoPlaylist').innerHTML="Error al actualizar playlist, ups!"
-                    document.getElementById('nuevoPlaylist').style.display="block"
-                    setTimeout(function(){
-                        document.getElementById('nuevoPlaylist').style.display="none"
-                    }, 2000);
-                    
-                    $.get('/error', function(data, status, error){
-                        console.log(data)
-                        console.log(status)
-                        if(status=="sucess"){
-                            console.log('TOKEN REFRESCADO')
-                        }else if(error ==true){
-                            location.reload(true);
-                        }
-                    })
-                    
-                }
-                
-            })
-        })
-        
-        
+         
         //Botones de filtro de tiempo en top 50
         
   function rango(data, status, error){
@@ -1631,16 +875,8 @@ var erroresPreferenciasSuri = 0
                     document.getElementById('nuevoPlaylist').style.display="none"
                 }, 2000);
 
-                $.get('/error', function(data, status, error){
-                    console.log(data)
-                    console.log(status)
-                    if(status=="sucess"){
-                        console.log('TOKEN REFRESCADO')
-                    }else if(error ==true){
-                        location.reload(true);
-                    }
-                })
-
+                 $.ajax({url:'/error?_=' + new Date().getTime(), success:error, cache:false}) 
+               
             }
   }
 

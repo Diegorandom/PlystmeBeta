@@ -46,7 +46,7 @@ router.get('/esHost', function(req, res, error){
             promesaEsHost
                  .catch(function(err){
                     console.log(err);
-                    res.redirect('/perfil')
+                    res.redirect('/error')
                 })
             
         }
@@ -81,13 +81,13 @@ router.get('/esInvitado', function(req, res, error){
                         res.send(false)
                     }
                     
-                    objetosGlobales[0].session[1].close();
+                    objetosGlobales[position].session[1].close();
                 })
             
             promesaEsInvitado
                  .catch(function(err){
                     console.log(err);
-                    res.redirect('/perfil')
+                    res.redirect('/error')
                 })
             
         }

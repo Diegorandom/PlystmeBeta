@@ -4,6 +4,21 @@ var pos, userid, usuarios;
       // prompted by your browser. If you see the error "The Geolocation service
       // failed.", it means you probably did not give permission for the browser to
       // locate you.
+
+ function checkUrl(url) {
+            console.log('Checando URL -> ', url)
+            $.get(url)
+                .done(function() { 
+                    return true
+                    // Do something now you know the image exists.
+
+                }).fail(function() { 
+                    return false
+                    // Image doesn't exist - do something else.
+
+                })
+        } 
+        
     
 
 var mapa = document.createElement('script')
@@ -15,7 +30,7 @@ function btnCrear(userid){
 
     console.log('Creando Evento')
     //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
+    $.ajax({url: '/userid?_=' + new Date().getTime(), success:idCallback(userid), cache: false});
 
     function idCallback(userid){
         return function(data, status, error){
@@ -45,7 +60,7 @@ function btnCrear2(userid){
 
     console.log('Creando Evento')
     //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
+    $.ajax({url: '/userid?_=' + new Date().getTime(), success:idCallback(userid), cache: false});
 
     function idCallback(userid){
         return function(data, status, error){
@@ -237,7 +252,7 @@ socket.on('conexionServidor', (msg) => {
 
 function fijarUbicacion (pos,userid){
     //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
+    $.ajax({url: '/userid?_=' + new Date().getTime(), success:idCallback(userid), cache: false});
 
     
     function idCallback(userid){
@@ -312,7 +327,7 @@ function fijarUbicacion (pos,userid){
 
 function crearCodigo (pos,userid){
     //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
+    $.ajax({url: '/userid?_=' + new Date().getTime(), success:idCallback(userid), cache: false});
 
     
     function idCallback(userid){
@@ -477,7 +492,7 @@ function crearCodigo (pos,userid){
            })
            }else{
                
-               $.ajax({url:'/error', success:Error, cache:false})
+               $.ajax({url:'/error?_=' + new Date().getTime(), success:Error, cache:false})
                
                
               function Error(data, status, error){
@@ -493,7 +508,7 @@ function crearCodigo (pos,userid){
             }
         }else{
             console.log(data);
-            $.ajax({url:'/error', success:Error, cache:false})
+            $.ajax({url:'/error?_=' + new Date().getTime(), success:Error, cache:false})
                
               function Error(data, status, error){
                     console.log(data)
@@ -684,7 +699,7 @@ function despliegueUsuarios2(usuarios){
 
 function entrarCodigo (codigoUsuarioEvento, userid){
      //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
+    $.ajax({url: '/userid?_=' + new Date().getTime(), success:idCallback(userid), cache: false});
 
     
     function idCallback(userid){
@@ -717,7 +732,7 @@ function entrarCodigo (codigoUsuarioEvento, userid){
 function entrarUbicacion (userid){
     
     //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({url: '/userid', success:idCallback(userid), cache: false});
+    $.ajax({url: '/userid?_=' + new Date().getTime(), success:idCallback(userid), cache: false});
 
     
     function idCallback(userid){
@@ -848,7 +863,7 @@ socket.on('multiplesEventos', function(msg){
         var codigoEvento = $(this).attr('id');
         console.log(codigoEvento);
         
-        $.ajax({url: '/userid', success:idCallback(), cache: false});
+        $.ajax({url: '/userid?_=' + new Date().getTime(), success:idCallback(), cache: false});
 
         function idCallback(){
             return function(data, status, error){
@@ -1023,7 +1038,7 @@ socket.on('caducaEvento', function(msg){
                console.log('Usuario no es host, puede entrar a una playlist')
                
                      
-                $.ajax({url:'/esInvitado', success:esInvitado, cache:false})
+                $.ajax({url:'/esInvitado?_=' + new Date().getTime(), success:esInvitado, cache:false})
                      
              function esInvitado(data,success,error){
                      if(error == true || data == "Error checarHost" || data == "Error checarInvitado" || data == "Error Servidor"){
@@ -1053,11 +1068,11 @@ socket.on('caducaEvento', function(msg){
                                 $('#entrar').css("display","none");
                                 $('#enterPool').css("display","none");
                                 $('#btnCrear').css("display","none");
-                                //$('#salirPlaylist').css("display","block");
+                                $('#salirPlaylist').css("display","block");
                                 $('#entrar2').css("display","none");
                                 $('#enterPool2').css("display","none");
                                 $('#btnCrear2').css("display","none");
-                                //$('#salirPlaylist2').css("display","block");
+                                $('#salirPlaylist2').css("display","block");
                                socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userId});          
 
 
