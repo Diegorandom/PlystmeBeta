@@ -85,7 +85,7 @@ router.get('/perfil', function(request, response, error) {
                     console.log(objetosGlobales[position].usuarios)
                     
                     if(objetosGlobales[position].cambioRango==true){
-                        console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
+                        //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
                         console.log('Cambio de rango')
                         objetosGlobales[position].cambioRango = false;
                         console.log('Regreso a estado original de cambioRango -> ', objetosGlobales[position].cambioRango)
@@ -95,17 +95,17 @@ router.get('/perfil', function(request, response, error) {
                         console.log('Refrescando Tokens')
                         objetosGlobales[position].refreshing = false;
                         response.send("TOKEN REFRESCADO")
-                        console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
+                        //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
                     }else if(objetosGlobales[position].refreshingUsers == true){
                         console.log('Refrescando usuarios en el pool')
                         console.log(objetosGlobales[position].usuarios)
                         objetosGlobales[position].refreshingUsers = false
                         response.send(objetosGlobales[position].usuarios)
-                         console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
+                         //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
                     }else{
                     console.log('Cargando perfil')
                     response.render('pages/perfilUI.ejs', objetosGlobales[position]); 
-                    console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
+                    //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
                     }
                      
                 }

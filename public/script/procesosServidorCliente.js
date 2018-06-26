@@ -421,7 +421,7 @@ var erroresPreferenciasSuri = 0
             
             $('#usuariosDentro').css("display","block");
             
-            $.get({url:'/usuarios?_=' + new Date().getTime(), success:usuarios, cache:false})
+            $.ajax({url:'/usuarios?_=' + new Date().getTime(), success:usuarios, cache:false})
                   
            
             
@@ -723,7 +723,7 @@ var erroresPreferenciasSuri = 0
             
             console.log('Entramos a pool de Móvil')
             
-        $.get({url:'/usuarios?_=' + new Date().getTime(), success:usuarios, cache:false})
+        $.ajax({url:'/usuarios?_=' + new Date().getTime(), success:usuarios, cache:false})
           
         $.ajax({url:'/pool?_=' + new Date().getTime(), success:pool, cache:false})  
         }

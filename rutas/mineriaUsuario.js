@@ -27,7 +27,8 @@ router.get('/mineria', function(req, res, error){
     
     if(error == true || objetosGlobales == undefined || position == undefined ){
         console.log(error)
-        res.send('Error Global')
+        console.log('Error Global')
+        res.redirect('/error')
     }else{
     
     console.log('apuntador del objeto', position);  
@@ -45,7 +46,8 @@ router.get('/mineria', function(req, res, error){
     /*Se hace la solicitud de información del usuario*/
     request.get(options2, function(error, response, body){     
         if(error == true || body == undefined || body.items == undefined){
-            res.send('Error SpotifyApi')
+            console.log('Error SpotifyApi')
+            res.redirect('/error')
         }else{
 
         /*Por cada uno de los tracks del usuario se correo un proceso para gaurdar esta información en la BD*/    
@@ -169,8 +171,8 @@ router.get('/mineria', function(req, res, error){
                                                 promesaRelacionTrackArtista
                                                     .catch(function(err){
                                                     console.log(err);
-                                                    res.send('Error BD')
-                                                    
+                                                    console.log('Error BD')
+                                                    res.redirect('/error')
                                                     }) 
 
                                             })
@@ -178,7 +180,8 @@ router.get('/mineria', function(req, res, error){
                                         promesaRelacionTrackBd
                                              .catch(function(err){
                                                 console.log(err);
-                                                res.send('Error BD')
+                                                console.log('Error BD')
+                                                 res.redirect('/error')
                                             })
 
                                         })
@@ -186,7 +189,8 @@ router.get('/mineria', function(req, res, error){
                                         promesaCrearArtista
                                         .catch(function(err){
                                             console.log(err);
-                                            res.send('Error BD')
+                                            console.log('Error BD')
+                                             res.redirect('/error')
                                         })
 
                             }else{
@@ -204,7 +208,8 @@ router.get('/mineria', function(req, res, error){
                                 promesaRelacionTrackUsuario
                                      .catch(function(err){
                                         console.log(err);
-                                        res.send('Error BD')
+                                        console.log('Error BD')
+                                        res.redirect('/error')
                                         
                                     })
 
@@ -215,7 +220,8 @@ router.get('/mineria', function(req, res, error){
                         promesaArtista
                             .catch(function(err){
                                 console.log(err);
-                                res.send('Error BD')
+                                console.log('Error BD')
+                                 res.redirect('/error')
 
                             })
 
@@ -234,7 +240,8 @@ router.get('/mineria', function(req, res, error){
                     promesaConectarUsuarioTrack
                          .catch(function(err){
                         console.log(err);
-                        res.send('Error BD')
+                        console.log('Error BD')
+                         res.redirect('/error')
                         
                         })
                 }
@@ -243,7 +250,8 @@ router.get('/mineria', function(req, res, error){
             promesaBasicTrack
             .catch(function(err){
                 console.log(err);
-                res.send('Error BD')
+                console.log('Error BD')
+                 res.redirect('/error')
                 
             })
 
@@ -264,8 +272,9 @@ router.get('/mineria', function(req, res, error){
                 promesaTrackId
                 .catch(function(err){
                     console.log(err);
-                    res.send('Error BD')
-                    throw Error
+                    console.log('Error BD')
+                     res.redirect('/error')
+                  
                 }) 
 
               //TERMINA DE GUARDARSE INFORMACIÓN DEL TRACK Y COMIENZA A PROCRESARCE EL ALGORITMO
@@ -391,7 +400,8 @@ router.get('/mineria', function(req, res, error){
                              promesaGuardarCaract
                                  .catch(function(err){
                                     console.log(err);
-                                    res.send('Error BD')
+                                    console.log('Error BD')
+                                    res.redirect('/error')
                                     
                                 })
                        /* } */
@@ -431,7 +441,8 @@ router.get('/mineria', function(req, res, error){
               }, function(err) {
                 done(err);
                  console.log("err: " + err );
-                 res.send('Error SpotifyApi')
+                 console.log('Error SpotifyApi')
+                 res.redirect('/error')
                  
               });
             console.log(''); 
@@ -462,7 +473,8 @@ router.get('/mineria', function(req, res, error){
         promesaRevisionCaract
              .catch(function(err){
                 console.log(err);
-                res.send('Error BD')
+                console.log('Error BD')
+                res.redirect('/error')
 
             })
 

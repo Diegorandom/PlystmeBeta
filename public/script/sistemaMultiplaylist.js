@@ -1109,7 +1109,8 @@ socket.on('caducaEvento', function(msg){
 }
 
  socket.on('errorCrearEvento', function(){
-     location.reload(true);
+     //location.reload(true);
+     window.location.replace("https://www.plystme.com/");
  })
  
  socket.on('errorNuevoUsuario', function(){

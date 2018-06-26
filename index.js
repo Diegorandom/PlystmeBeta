@@ -424,7 +424,7 @@ io.on('connection', function(socket) {
             promesaCrearEvento
                  .catch(function(err){
                     console.log(err);
-                io.to(socket.id).emit('errorCrearEvento')
+                    io.to(socket.id).emit('errorCrearEvento')
                 })
 
                 
@@ -884,7 +884,7 @@ io.on('connection', function(socket) {
                     promesaCaducarEvento
                         .catch(function(err){
                             console.log(err);
-                            response.send('Error checarPosEvento')
+                            response.redirect('/perfil')
                         })
                     
                 }else if(tipoRelacion == "Invitado"){
@@ -974,7 +974,7 @@ io.on('connection', function(socket) {
                     promesaCaducarRelacion
                         .catch(function(err){
                             console.log(err);
-                            response.send('Error checarPosEvento')
+                            response.redirect('/perfil')
                         })
                     
                 }
@@ -987,7 +987,7 @@ io.on('connection', function(socket) {
         promesachecarRelacion
             .catch(function(err){
                 console.log(err);
-                response.send('Error checarPosEvento')
+                response.send('Error BD')
             })
 
     })
