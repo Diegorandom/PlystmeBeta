@@ -452,6 +452,7 @@
         $('#codigoMostrado').remove();
         $('<div id="codigoMostrado"style="display: inline-block;"></div>').appendTo('#codigoMuestra');
         $('#codigoMuestra').css("display","none");
+        $('#compartir').css("display","none");
         
         if(document.getElementById('contadorSpan') != null){
             document.getElementById('contadorSpan').remove();
@@ -481,6 +482,7 @@
         $('#codigoMostrado2').remove();
         $('<div id="codigoMostrado2"style="display: inline-block;"></div>').appendTo('#codigoMuestra2');
         $('#codigoMuestra2').css("display","none");
+        $('#compartir').css("display","none");
         
         
         if(document.getElementById('contadorSpan') != null){

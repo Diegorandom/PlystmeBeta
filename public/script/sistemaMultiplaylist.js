@@ -289,6 +289,11 @@ function fijarUbicacion (pos,userid){
                         mostrarCodigo(codigoEvento);
                         despliegueUsuarios(msg.usuarios);
                         despliegueUsuarios2(msg.usuarios);
+                        
+                        $('#compartir').css("display","block")
+                    
+                        var WAshare = document.getElementById("whatsappShare");
+                        WAshare.href = "whatsapp://send?text=Entra a PlystMe -> https://www.plystme.com y únete al evento con el siguiente código: " + codigoEvento;
 
                        $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
 
@@ -354,6 +359,10 @@ function crearCodigo (pos,userid){
                     var userId = []
 
                     userId.push(msg.userId)
+                    $('#compartir').css("display","block")
+                    
+                    var WAshare = document.getElementById("whatsappShare");
+                    WAshare.href = "whatsapp://send?text=Entra a PlystMe -> https://www.plystme.com y únete al evento con el siguiente código: " + codigoEvento;
 
                    console.log( ' Usuarios -> ', msg.usuarios)
                     console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
@@ -1073,7 +1082,12 @@ socket.on('caducaEvento', function(msg){
                                 $('#enterPool2').css("display","none");
                                 $('#btnCrear2').css("display","none");
                                 $('#salirPlaylist2').css("display","block");
-                               socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userId});          
+                               socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userId});  
+                               
+                               $('#compartir').css("display","block")
+                    
+                                var WAshare = document.getElementById("whatsappShare");
+                                WAshare.href = "whatsapp://send?text=Entra a PlystMe -> https://www.plystme.com y únete al evento con el siguiente código: " + codigoEvento;
 
 
                            }
@@ -1101,7 +1115,10 @@ socket.on('caducaEvento', function(msg){
                 $('#btnCrear2').css("display","none");
                 $('#EliminarPlaylist2').css("display","block");
                socket.emit('usuarioNuevoCodigo', {codigoEvento:codigoEvento, userId: userId});          
-
+               $('#compartir').css("display","block")
+                    
+                var WAshare = document.getElementById("whatsappShare");
+                WAshare.href = "whatsapp://send?text=Entra a PlystMe -> https://www.plystme.com y únete al evento con el siguiente código: " + codigoEvento;
                
            }
            
