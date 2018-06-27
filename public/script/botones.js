@@ -473,8 +473,14 @@
     })
 
     $('#EliminarPlaylist2').on('click',function(){
-         $.get('/salirEvento', function(data, success, error){
-            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD'){
+         $.post('/salirEvento', salirEvento) 
+              
+              
+      function salirEvento(data, success, error){
+            
+            console.log('data -> ', data)
+            
+            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD' || data == "Error"){
                 if(error == true){console.log(error)}
                 
                 window.location.replace("https://www.plystme.com/");
@@ -482,7 +488,7 @@
             }else{
                console.log('Salida exitosa -> ', success) 
             }
-        }) 
+        }
          
         $('#canvas').css('display', 'none');
         $('#createPlaylist2').css("display","none");
