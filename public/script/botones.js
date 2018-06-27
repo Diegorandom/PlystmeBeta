@@ -369,10 +369,10 @@
         $('#usuariosDentro2').css("display","none");
         
         $.get('/salirEvento', function(data, success, error){
-            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario'){
+            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD'){
                 if(error == true){console.log(error)}
                 
-                location.reload(true);
+                window.location.replace("https://www.plystme.com/");
                 
             }else{
                console.log('Salida exitosa -> ', success) 
@@ -432,10 +432,10 @@
     
     $('#EliminarPlaylist').on('click',function(){
         $.get('/salirEvento', function(data, success, error){
-            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario'){
+            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD'){
                 if(error == true){console.log(error)}
                 
-                location.reload(true);
+                window.location.replace("https://www.plystme.com/");
                 
             }else{
                console.log('Salida exitosa -> ', success, ' ',data) 
@@ -462,10 +462,10 @@
 
     $('#EliminarPlaylist2').on('click',function(){
          $.get('/salirEvento', function(data, success, error){
-            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario'){
+            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD'){
                 if(error == true){console.log(error)}
                 
-                location.reload(true);
+                window.location.replace("https://www.plystme.com/");
                 
             }else{
                console.log('Salida exitosa -> ', success) 
