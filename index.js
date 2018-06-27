@@ -836,12 +836,8 @@ io.on('connection', function(socket) {
         
     })
     
-    app.get('/salirEvento', function salirEvento(request, response, error) {
-        
-        if(error == true){
-            console.log('Errror -> ', error)
-        }
-        
+    app.post('/salirEvento', function(request, response, error) {
+      
         var objetosGlobales = request.app.get('objetosGlobales');
         var position = request.app.get('position');
         position = request.sessions.position; 
@@ -873,9 +869,11 @@ io.on('connection', function(socket) {
                             console.log("Evento a salirse -> ", evento.records[0]._fields[0].properties.codigoEvento)
                             var codigoEvento = evento.records[0]._fields[0].properties.codigoEvento
                             
+                            response.send('Exito')
+                            
                             io.to(codigoEvento).emit('caducaEvento',{mensaje:"Caduca el Evento", codigoEvento:codigoEvento});
                         
-                            response.send('Exito')
+                            
                             objetosGlobales[position].session[2].close();
                             
                           
@@ -883,8 +881,8 @@ io.on('connection', function(socket) {
                     
                     promesaCaducarEvento
                         .catch(function(err){
-                            console.log(err);
-                            response.redirect('/perfil')
+                             console.log('Error -> ', err);
+                            response.send('Error')
                         })
                     
                 }else if(tipoRelacion == "Invitado"){
@@ -965,16 +963,16 @@ io.on('connection', function(socket) {
 
                             promesaEventoUsuario
                                 .catch(function(err){
-                                    console.log(err);
-                                    response.send('Error EventoUsuario')
+                                     console.log('Error -> ', err);
+                                    response.send('Error')
                                 })
                         
                         })
                             
                     promesaCaducarRelacion
                         .catch(function(err){
-                            console.log(err);
-                            response.redirect('/perfil')
+                             console.log('Error -> ', err);
+                            response.send('Error')
                         })
                     
                 }
@@ -986,18 +984,27 @@ io.on('connection', function(socket) {
         
         promesachecarRelacion
             .catch(function(err){
-                console.log(err);
-                response.send('Error BD')
+                console.log('Error -> ', err);
+                response.send('Error')
             })
 
+    
     })
+    
+    
     
     
 
 })
 
-app.get('*', function(req, res) {
-    res.redirect('/');
+app.get('*', function(req, res, error) {
+    if(error == true){
+        console.log('error -> ', error)
+        res.redirect('/error');
+    }else{
+        res.redirect('/');
+    }
+    
 });
 
 /*TERMINA SOCKETS*/

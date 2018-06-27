@@ -21,6 +21,12 @@ router.get('/usuarios', function(request, response, error) {
             
             })
         
+        promesaEventoUsuario
+            .catch(function(error){
+                console.log(error)
+                response.redirect('/error')
+            })
+        
     }else{
         console.log('Error con variables globales...')
         res.send("Error Origen Usuarios")
@@ -33,8 +39,9 @@ router.get('/userid', function(request, response, error) {
     var position = request.app.get('position');
     position = request.sessions.position;
     
-    if(error == true || objetosGlobales == undefined || position == undefined){
-        response.send('Error Global')
+    if(error == true || objetosGlobales == undefined || position == undefined || objetosGlobales[position] == undefined){
+        console.log(error)
+        response.redirect('/error')
     }else{
         console.log("userid -> ", objetosGlobales[position].userid)
         response.send(objetosGlobales[position].userid)

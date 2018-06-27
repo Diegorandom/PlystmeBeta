@@ -431,17 +431,26 @@
     // Botón ELIMINAR Playlist en la playlist del HOST para regresar a la pantalla principal
     
     $('#EliminarPlaylist').on('click',function(){
-        $.get('/salirEvento', function(data, success, error){
-            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD'){
+        
+    
+        $.post('/salirEvento', salirEvento) 
+              
+              
+      function salirEvento(data, success, error){
+            
+            console.log('data -> ', data)
+            
+            if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD' || data == "Error"){
                 if(error == true){console.log(error)}
                 
                 window.location.replace("https://www.plystme.com/");
                 
             }else{
-               console.log('Salida exitosa -> ', success, ' ',data) 
+               console.log('Salida exitosa -> ', success) 
             }
-        }) 
-
+        }
+        
+        
         $('#canvas').css('display', 'none');
         $('#btnActualizar').css("display","none");
         $('#createPlaylist').css("display","none");
@@ -459,6 +468,8 @@
             document.getElementById('usuarios').remove();
             document.getElementsByClassName('imgUsuario').remove();
         }
+
+        
     })
 
     $('#EliminarPlaylist2').on('click',function(){
