@@ -293,7 +293,7 @@ function fijarUbicacion (pos,userid){
                         $('#compartir').css("display","block")
                     
                         var WAshare = document.getElementById("whatsappShare");
-                        WAshare.href = "whatsapp://send?text=Entra a PlystMe -> https://www.plystme.com y únete al evento con el siguiente código: " + codigoEvento;
+                        WAshare.href = "whatsapp://send?text=Hola, únete a mi evento en https://www.plystme.com/login con el siguiente código: " + codigoEvento;
 
                        $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
 
@@ -362,7 +362,7 @@ function crearCodigo (pos,userid){
                     $('#compartir').css("display","block")
                     
                     var WAshare = document.getElementById("whatsappShare");
-                    WAshare.href = "whatsapp://send?text=Entra a PlystMe -> https://www.plystme.com y únete al evento con el siguiente código: " + codigoEvento;
+                    WAshare.href = "whatsapp://send?text=Hola, únete a mi evento en https://www.plystme.com/login con el siguiente código: " + codigoEvento;
 
                    console.log( ' Usuarios -> ', msg.usuarios)
                     console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
@@ -1087,7 +1087,7 @@ socket.on('caducaEvento', function(msg){
                                $('#compartir').css("display","block")
                     
                                 var WAshare = document.getElementById("whatsappShare");
-                                WAshare.href = "whatsapp://send?text=Entra a PlystMe -> https://www.plystme.com y únete al evento con el siguiente código: " + codigoEvento;
+                                WAshare.href = "whatsapp://send?text=Hola, únete a mi evento en https://www.plystme.com/login con el siguiente código: " + codigoEvento;
 
 
                            }
@@ -1118,7 +1118,7 @@ socket.on('caducaEvento', function(msg){
                $('#compartir').css("display","block")
                     
                 var WAshare = document.getElementById("whatsappShare");
-                WAshare.href = "whatsapp://send?text=Entra a PlystMe -> https://www.plystme.com y únete al evento con el siguiente código: " + codigoEvento;
+                WAshare.href = "whatsapp://send?text=Hola, únete a mi evento en https://www.plystme.com/login con el siguiente código: " + codigoEvento;
                
            }
            
