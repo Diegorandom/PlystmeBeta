@@ -278,10 +278,26 @@ $.ajaxSetup({
         cursor: pointer;
     }
      
+     #fbLikeShare{
+         margin-top:80px;
+     }
+     
      
     </style>    
     
   <body class="page-login">
+      
+      <!-- Facebook plugin -->
+      <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = 'https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v3.0';
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+      
+      <!-- Facebook plugin -->
     
     <section id="one">
       
@@ -446,7 +462,7 @@ Pruébalo</a>
       <!--LOGIN BOX
       Aquí está la división para la caja de inicio, para todos los tamaños excepto XS-->
     
-      <div id="login" class="contenedor row hidden-xs" style="margin-top:15%; font-family: 'Quicksand', sans-serif; margin-bottom:15%; font-weight: bold; width:100%;">
+      <div id="login" class="contenedor row hidden-xs" style="margin-top:15%; font-family: 'Quicksand', sans-serif; margin-bottom:6%; font-weight: bold; width:100%;">
           <br>
           <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
                 <h1 style="color:white; font-size:5em;">¡Playlists perfectas para todos!</h1>
@@ -472,7 +488,7 @@ Pruébalo</a>
          
           
           
-          <div style="margin-left:25%; width:50%;">
+          <div style="margin-left:25%; width:50%; text-align:center;">
                <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="margin-top:40px; margin-bottom:20px; text-align: center;">
                     <a href="/login" >
                       <div class="centro btn size-2 hover-3" style="width: 50%; background-color:#c8553d; border-radius: 100px;" onmouseover="this.style.background='rgba(0,0,0,0.5)';" onmouseout = "this.style.background='rgba(200,85,61)';">
@@ -489,6 +505,8 @@ Pruébalo</a>
                       </span> 
                 </a>
               </div>
+              
+              
               
               <!-- Tamaño mediano -->
               
@@ -527,6 +545,8 @@ Pruébalo</a>
                       </span> 
                 </a>
               </div>
+              
+              <div class="fb-like" data-href="https://www.facebook.com/plystme/" data-width="150px" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true" id="fbLikeShare"></div>
           </div>
       
       </div>    
