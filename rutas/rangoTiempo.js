@@ -29,7 +29,7 @@ router.get('/rango', function(req, res, error){
 
         }else if(objetosGlobales[position].rango == "short_term"){
             
-                console.log('Comienza minería de datos - Rango largo')
+                console.log('Comienza minería de datos - Rango Corto')
                 res.redirect('/mineria');
            
         }
