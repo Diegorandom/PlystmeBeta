@@ -326,7 +326,7 @@ router.get('/mineria', function(req, res, error){
                                 preventCache: preventCache
                               })); 
                          */
-                        
+                        objetosGlobales[position].cambioRango = false;
                         res.send(objetosGlobales[position].seedTracks)
             }else{
             
@@ -423,7 +423,7 @@ router.get('/mineria', function(req, res, error){
                                 refresh_token: objetosGlobales[position].refresh_token,
                                 preventCache: preventCache
                               })); */
-                                
+                                objetosGlobales[position].cambioRango = false;
                                 res.send(objetosGlobales[position].seedTracks)
                          
                             }else{
