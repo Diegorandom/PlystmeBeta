@@ -37,3 +37,50 @@
 
   gtag('config', 'UA-115050824-2');
 </script>
+
+
+<!-- Facebook metadata override -->
+
+
+
+<script>
+  window.fbAsyncInit = function() {
+	FB.init({
+	  appId            : '124285848214697',
+	  autoLogAppEvents : true,
+	  xfbml            : true,
+	  version          : 'v2.10'
+	});
+	FB.AppEvents.logPageView();
+  };
+ 
+  (function(d, s, id){
+	 var js, fjs = d.getElementsByTagName(s)[0];
+	 if (d.getElementById(id)) {return;}
+	 js = d.createElement(s); js.id = id;
+	 js.src = "//connect.facebook.net/en_US/sdk.js";
+	 fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+    
+    
+function shareOverrideOGMeta()
+{
+	FB.ui({
+		method: 'share_open_graph',
+		action_type: 'og.likes',
+		action_properties: JSON.stringify({
+			object: {
+				'og:url': "https://www.plystme.com",
+				'og:title': "Codigo del evento",
+				'og:description': "nueva descripción",
+				'og:image': "/img/backgroundNew.jpg"
+			}
+		})
+	},
+	function (response) {
+	// Action after response
+	});
+}
+
+
+</script>

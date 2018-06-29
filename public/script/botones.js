@@ -509,6 +509,10 @@
         }
     })
 
+$('#tituloPlaylist').on('click',function(){
+    shareOverrideOGMeta(); 
+})
+
     
 
 
