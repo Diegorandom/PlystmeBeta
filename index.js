@@ -300,7 +300,6 @@ app.get('/error', function(req, res, error){
 
 /* INICIA SOCKETS*/
 
-//console.log('io -> ', io.on)
 
 io.on('connection', function(socket) {
     
