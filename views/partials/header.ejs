@@ -63,16 +63,16 @@
    }(document, 'script', 'facebook-jssdk'));
     
     
-function shareOverrideOGMeta()
+function shareOverrideOGMeta(codigoEvento)
 {
 	FB.ui({
-		method: 'share_open_graph',
-		action_type: 'og.likes',
+		method: 'share',
+		action_type: 'og.shares',
 		action_properties: JSON.stringify({
 			object: {
 				'og:url': "https://www.plystme.com",
-				'og:title': "Codigo del evento",
-				'og:description': "descripción",
+				'og:title': "Únete a mi evento con el código: "+codigoEvento,
+				'og:description': "Una nueva experiencia",
 				'og:image': "https://www.plystme.com/img/backgroundNew.jpg"
 			}
 		})

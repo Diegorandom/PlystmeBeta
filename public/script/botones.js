@@ -509,8 +509,9 @@
         }
     })
 
-$('#tituloPlaylist').on('click',function(){
-    shareOverrideOGMeta(); 
+$('#fbShare').on('click',function(){
+    var codigo = document.getElementById('codigoMostrado').innerHTML;
+    shareOverrideOGMeta(codigo); 
 })
 
     
