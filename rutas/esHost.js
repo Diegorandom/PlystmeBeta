@@ -9,7 +9,7 @@ router.get('/esHost', function(req, res, error){
         var driver = req.app.get('driver')
         position = req.sessions.position;
     
-        if(error == true || objetosGlobales == undefined || position == undefined || driver == undefined){
+        if(error == true || objetosGlobales == undefined || position == undefined || driver == undefined || objetosGlobales[position] == undefined){
             contErrorServidor += 1
             console.log('Errror -> ', error)
             
