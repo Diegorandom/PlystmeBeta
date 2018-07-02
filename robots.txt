@@ -1,0 +1,26 @@
+robotstxt = *entries
+entries = *( ( <1>*startgroupline 
+  *(groupmemberline | nongroupline | comment)
+  | nongroupline
+  | comment) )
+startgroupline = [LWS] "user-agent" [LWS] ":" [LWS] agentvalue [comment] EOL
+groupmemberline = [LWS] (
+  pathmemberfield [LWS] ":" [LWS] pathvalue
+  | othermemberfield [LWS] ":" [LWS] textvalue) [comment] EOL
+nongroupline = [LWS] (
+  urlnongroupfield [LWS] ":" [LWS] urlvalue
+  | othernongroupfield [LWS] ":" [LWS] textvalue) [comment] EOL
+comment = [LWS] "#" *anychar
+agentvalue = textvalue
+
+pathmemberfield = "disallow" | "allow"
+othermemberfield = ()
+urlnongroupfield = "sitemap"
+othernongroupfield = ()
+
+pathvalue = "/" path
+urlvalue = absoluteURI
+textvalue = *(valuechar | SP)
+valuechar = <any UTF-8 character except ("#" CTL)>
+anychar = <any UTF-8 character except CTL>
+EOL = CR | LF | (CR LF)

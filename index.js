@@ -996,6 +996,12 @@ io.on('connection', function(socket) {
 
 })
 
+
+
+/*TERMINA SOCKETS*/
+
+
+/*Ruta para errores con 404*/
 app.get('*', function(req, res, error) {
     if(error == true){
         console.log('error -> ', error)
@@ -1005,8 +1011,6 @@ app.get('*', function(req, res, error) {
     }
     
 });
-
-/*TERMINA SOCKETS*/
 
 /*Configuración de puerto de la app*/
 server.listen(app.get('port'), function(error) {
