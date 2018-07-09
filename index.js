@@ -12,7 +12,7 @@ https://stackoverflow.com/questions/30548073/spotify-web-api-rate-limits
 
 Estos módulos descargados del Node Package Manager son piezas de Middleware que soportan las funciones más básicas del sistema completo. Llamar módulos de node en index no interviene en las diferentes rutas del sistema
 */
-require('newrelic');
+
 var express = require('express')
 //make sure you keep this order
 
