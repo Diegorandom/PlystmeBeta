@@ -734,7 +734,7 @@ var erroresPreferenciasSuri = 0
     console.log(data)
     console.log(status)
     
-    if(data == 'Error Global' || data == 'Error SpotifyApi' || data == "Error BD"){
+    if(data == 'Error Global' || data == 'Error SpotifyApi' || data == "Error BD" || data == "Error"){
         if(error == true ){
             console.log(error)
         }
