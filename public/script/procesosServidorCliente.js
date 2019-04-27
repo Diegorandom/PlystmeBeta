@@ -611,7 +611,7 @@ var erroresPreferenciasSuri = 0
                         
                         if(usuario[1]){ 
                             var imgU= document.createElement("img")
-                            imgU.src="img/Perfil.png"//usuario[1]
+                            imgU.src=usuario[1]
                             imgU.alt="omgosh"
                             imgU.style="height:100%; border-radius:50%; width:20px;"
                             imgU.className="imgUsuario"
