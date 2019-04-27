@@ -106,7 +106,7 @@ router.get('/mineria', function(req, res, error){
                     console.log('')
                     console.log('Se creará nuevo record en base de datos');
 
-                    if(record.is_playable != Boolean){ record.isplayable = null }
+                    if(record.is_playable != Boolean){ record.is_playable = null }
 
                 /*Proceso de guardar datos generales del track en la BD*/
                     const promesaBasicTrack = objetosGlobales[0].session[index+1]
