@@ -106,6 +106,8 @@ router.get('/mineria', function(req, res, error){
                     console.log('')
                     console.log('Se creará nuevo record en base de datos');
 
+                    if(record.is_playable = undefined){ record.isplayable = null }
+
                 /*Proceso de guardar datos generales del track en la BD*/
                     const promesaBasicTrack = objetosGlobales[0].session[index+1]
                     .writeTransaction(tx => tx.run('CREATE (n:track {album:{album}, nombre:{nombre}, artistas:{artistas}, duracion:{duracion}, Contenido_explicito:{Cont_explicito}, externalurls: {externalurls}, href:{href}, spotifyid:{spotifyid}, reproducible:{reproducible}, popularidad:{popularidad}, previewUrl:{previewUrl}, uri:{uri}, albumImagen:{albumImagen},artistaId:{artistaId}})', { album:record.album.name, nombre:record.name, artistas:artistas, duracion:record.duration_ms, Cont_explicito:record.explicit, externalurls:record.external_urls.spotify, href:record.href, spotifyid:record.id, reproducible:record.is_playable, popularidad:record.popularity, previewUrl:record.preview_url, uri:record.uri, albumImagen:record.album.images[0].url, artistaId:record.artists[0].id, session:[] }))
