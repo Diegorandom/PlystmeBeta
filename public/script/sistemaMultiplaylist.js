@@ -295,7 +295,37 @@ function fijarUbicacion (pos,userid){
                         var WAshare = document.getElementById("whatsappShare");
                         WAshare.href = "whatsapp://send?text=Hola, únete a mi evento en https://www.plystme.com/login con el siguiente código: " + codigoEvento;
 
-                       $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+                        /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con
+                        el playlist*/
+                        function chequeoFBD2(){
+                            $.post('/chequeoBD',function (data,status){
+                                console.log('Datos del usuario ->', data)
+                                if(status == "success" && data == "guardado"){
+                                    console.log('Se crea playlist')
+                                    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+                                    referenciaBD = data
+                                }
+                            })
+                        }
+                        
+                        console.log('Se ha comenzado a revisar la base de datos')
+                        
+                        /*Proceso que detona el loop que se encargara de esperar a que la BD y la API estén listas para transmitir la información del playlist*/
+                        function chequeoBDLoop2() {
+                            chequeoFBD2()
+                                setTimeout(function(){
+                                    if(referenciaBD != "guardado"){
+                                        setTimeout(chequeoBDLoop2,1000)
+                                    }else{
+                                        console.log('Ya se terminó de guardar la información en la base de datos')
+                                    }
+                                },1000)
+                        }
+                        
+                        /*Inicio de proceso de obtención de perfil de preferencias*/
+                        chequeoBDLoop2();
+
+                      
 
                     })
                 }else{
@@ -372,7 +402,37 @@ function crearCodigo (pos,userid){
                     despliegueUsuarios(msg.usuarios);
                     despliegueUsuarios2(msg.usuarios);
 
-                   $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+                     /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con
+                        el playlist*/
+                        function chequeoFBD2(){
+                            $.post('/chequeoBD',function (data,status){
+                                console.log('Datos del usuario ->', data)
+                                if(status == "success" && data == "guardado"){
+                                    console.log('Se crea playlist')
+                                    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+                                    referenciaBD = data
+                                }
+                            })
+                        }
+                        
+                        console.log('Se ha comenzado a revisar la base de datos')
+                        
+                        /*Proceso que detona el loop que se encargara de esperar a que la BD y la API estén listas para transmitir la información del playlist*/
+                        function chequeoBDLoop2() {
+                            chequeoFBD2()
+                                setTimeout(function(){
+                                    if(referenciaBD != "guardado"){
+                                        setTimeout(chequeoBDLoop2,1000)
+                                    }else{
+                                        console.log('Ya se terminó de guardar la información en la base de datos')
+                                    }
+                                },1000)
+                        }
+                        
+                        /*Inicio de proceso de obtención de perfil de preferencias*/
+                        chequeoBDLoop2();
+
+                   
 
                 })
                     
@@ -384,7 +444,6 @@ function crearCodigo (pos,userid){
     }
     
 }   
-
 
 
     
@@ -409,96 +468,102 @@ function crearCodigo (pos,userid){
         document.getElementById('createPlaylist2').style.display="block"
 
         console.log('El playlist ha cambiado')
-           data.forEach(function(item,index){
-               /*Se quitan las canciones viejas si es que existen*/
-               if(document.getElementById("pool"+index) !== null){
-                    document.getElementById("pool"+index).remove();
-                    console.log("Depuración de playlist")
-                    /*Despliegue de mensaje de que hay un nuevo playlist*/
-                    if(index == 1){
-                        console.log('cargando mensaje')
-                        /*document.getElementById('nuevoPlaylist').style.display="block"
-                        console.log(data)
-                        setTimeout(function(){
-                            document.getElementById('nuevoPlaylist').style.display="none"
-                        }, 2000);*/
-                    }
+        if(data.length>0){
+            data.forEach(function(item,index){
+                /*Se quitan las canciones viejas si es que existen*/
+                if(document.getElementById("pool"+index) !== null){
+                     document.getElementById("pool"+index).remove();
+                     console.log("Depuración de playlist")
+                     /*Despliegue de mensaje de que hay un nuevo playlist*/
+                     if(index == 1){
+                         console.log('cargando mensaje')
+                         /*document.getElementById('nuevoPlaylist').style.display="block"
+                         console.log(data)
+                         setTimeout(function(){
+                             document.getElementById('nuevoPlaylist').style.display="none"
+                         }, 2000);*/
+                     }
+ 
+                }
+ 
+                /*Se colocan las canciones en el playlist por primera vez */
+                 playlist = data
+ 
+                console.log(item)
+                var iDiv = document.createElement('div');
+                 iDiv.id = 'pool' + index;
+                 iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
+                 iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:20px; height:350px !important; "
+ 
+                 // Create the inner div before appending to the body
+                 var innerDiv = document.createElement('div');
+                 innerDiv.className = 'be-post';
+                 innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
+ 
+                 // The variable iDiv is still good... Just append to it.
+                 iDiv.appendChild(innerDiv);
+ 
+                 /*var form = document.createElement("form")
+                 form.method="post"
+                 form.action="/track/profile"
+                 form.id="trackprofile" */
+ 
+                 var boton = document.createElement("span")
+                 boton.className="be-img-block"
+                 boton.form="trackprofile"
+                 boton.type="submit"
+                 boton.name="index"
+                 boton.value= index
+                 boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
+ 
+                 innerDiv.appendChild(boton)
+ 
+                 var img= document.createElement("img")
+                 img.src=item[4]
+                 img.alt="omg"
+                 img.style=""
+ 
+                 boton.appendChild(img)
+ 
+                 var span = document.createElement("span")
+                 span.className="be-post-title"
+                 span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
+ 
+                 span.innerHTML = item[0]
+ 
+                 innerDiv.appendChild(span)
+ 
+                 var span2 = document.createElement("span")
+                 span2.style="color:#503047; font-size:120%;max-height:20px;"
+                 span2.innerHTML="Popularidad: " + item[5]
+ 
+                 //innerDiv.appendChild(span2)
+ 
+                 var div2 = document.createElement("div")
+                 div2.className="author-post"
+ 
+                 innerDiv.appendChild(div2)
+ 
+                 var span3= document.createElement("span")
+                 span3.style="color:#777; font-size:120%;max-height:20px;"
+                 span3.innerHTML=item[2]
+ 
+                 div2.appendChild(span3)
+ 
+                 // Then append the whole thing onto the body
+                 document.getElementsByClassName('pool')[0].appendChild(iDiv);
+ 
+ 
+ 
+ 
+                console.log('Nueva canción desplegada')
+ 
+            })
+        }else{
+            console.log("Las rolas todavia no estan listas")
+        } 
+        
 
-               }
-
-               /*Se colocan las canciones en el playlist por primera vez */
-                playlist = data
-
-               console.log(item)
-               var iDiv = document.createElement('div');
-                iDiv.id = 'pool' + index;
-                iDiv.className = 'col-lg-4 col-md-4 col-xs-12 col-sm-4';
-                iDiv.style = "padding-left:30px; padding-right:30px; margin-bottom:20px; height:350px !important; "
-
-                // Create the inner div before appending to the body
-                var innerDiv = document.createElement('div');
-                innerDiv.className = 'be-post';
-                innerDiv.style = ' background-color: rgba(255,255,255,0.9) !important; color:#d5573b; max-height:400px; max-width:250px;';
-
-                // The variable iDiv is still good... Just append to it.
-                iDiv.appendChild(innerDiv);
-
-                /*var form = document.createElement("form")
-                form.method="post"
-                form.action="/track/profile"
-                form.id="trackprofile" */
-
-                var boton = document.createElement("span")
-                boton.className="be-img-block"
-                boton.form="trackprofile"
-                boton.type="submit"
-                boton.name="index"
-                boton.value= index
-                boton.style=" -webkit-appearance: none;-webkit-border-radius: 0px; max-height:400px; max-width:250px;"
-
-                innerDiv.appendChild(boton)
-
-                var img= document.createElement("img")
-                img.src=item[4]
-                img.alt="omg"
-                img.style=""
-
-                boton.appendChild(img)
-
-                var span = document.createElement("span")
-                span.className="be-post-title"
-                span.style="color:#503047; font-size:15px; font-family:'Kanit', sans-serif; height:40px;color:black;text-align:left;"
-
-                span.innerHTML = item[0]
-
-                innerDiv.appendChild(span)
-
-                var span2 = document.createElement("span")
-                span2.style="color:#503047; font-size:120%;max-height:20px;"
-                span2.innerHTML="Popularidad: " + item[5]
-
-                //innerDiv.appendChild(span2)
-
-                var div2 = document.createElement("div")
-                div2.className="author-post"
-
-                innerDiv.appendChild(div2)
-
-                var span3= document.createElement("span")
-                span3.style="color:#777; font-size:120%;max-height:20px;"
-                span3.innerHTML=item[2]
-
-                div2.appendChild(span3)
-
-                // Then append the whole thing onto the body
-                document.getElementsByClassName('pool')[0].appendChild(iDiv);
-
-
-
-
-               console.log('Nueva canción desplegada')
-
-           })
            }else{
                
                $.ajax({url:'/error?_=' + new Date().getTime(), success:Error, cache:false})
@@ -510,7 +575,7 @@ function crearCodigo (pos,userid){
                     if(status=="sucess"){
                         console.log('TOKEN REFRESCADO')
                     }else if(error ==true){
-                        location.reload(true);
+                        console.log(error)
                     }
                 }
                
@@ -525,7 +590,7 @@ function crearCodigo (pos,userid){
                     if(status=="sucess"){
                         console.log('TOKEN REFRESCADO')
                     }else if(error ==true){
-                        location.reload(true);
+                        console.log(error)
                     }
                 }
         }
@@ -721,7 +786,6 @@ function entrarCodigo (codigoUsuarioEvento, userid){
                 document.getElementById('nuevoPlaylist').style.display="block"
                 setTimeout(function(){
                     document.getElementById('nuevoPlaylist').style.display="none"
-                    //location.reload(true);
                 }, 3000);
 
             }else{
@@ -754,7 +818,6 @@ function entrarUbicacion (userid){
                 document.getElementById('nuevoPlaylist').style.display="block"
                 setTimeout(function(){
                     document.getElementById('nuevoPlaylist').style.display="none"
-                    //location.reload(true);
                 }, 3000);
 
             }else{
@@ -883,7 +946,6 @@ socket.on('multiplesEventos', function(msg){
                     document.getElementById('nuevoPlaylist').style.display="block"
                     setTimeout(function(){
                         document.getElementById('nuevoPlaylist').style.display="none"
-                        //location.reload(true);
                     }, 3000);
 
                 }else{
@@ -1036,9 +1098,6 @@ socket.on('caducaEvento', function(msg){
   function esHost(data,success,error){
     if(error == true || data == "Error checarHost" || data == "Error checarInvitado" || data == "Error Servidor"){
             if(error == true){console.log(error)}
-                
-                location.reload(true);
-
         }else{
            console.log('Revision exitosa -> ', success)
            console.log(data)
@@ -1053,8 +1112,7 @@ socket.on('caducaEvento', function(msg){
                      if(error == true || data == "Error checarHost" || data == "Error checarInvitado" || data == "Error Servidor"){
                             if(error == true){console.log(error)}
 
-                                location.reload(true);
-
+                            console.log(error)
                         }else{
                            console.log('Revision exitosa -> ', success)
                            console.log(data)
@@ -1125,28 +1183,5 @@ socket.on('caducaEvento', function(msg){
         }
 }
 
- socket.on('errorCrearEvento', function(){
-     //location.reload(true);
-     window.location.replace("https://www.plystme.com/");
- })
- 
- socket.on('errorNuevoUsuario', function(){
-     location.reload(true);
- })
- socket.on('errorchecarEvento', function(){
-     location.reload(true);
- })
- socket.on('errorNuevoEventoUsuario', function(){
-     location.reload(true);
- })
- socket.on('errorUnirUsuario', function(){
-     location.reload(true);
- })
- socket.on('errorEventoUsuario', function(){
-     location.reload(true);
- })
- socket.on('errorchecarPosEvento', function(){
-     location.reload(true);
- })
  
 

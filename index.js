@@ -70,9 +70,12 @@ No se debe cambiar nada de la estructura de configuración de la base de datos.
 */
 
 if(graphenedbURL == undefined){
-	var driver = neo4j.driver('bolt://hobby-gbcebfemnffigbkefemgfaal.dbs.graphenedb.com:24786', neo4j.auth.basic('app91002402-MWprOS', 'b.N1zF4KnI6xoa.Kt5xmDPgVvFuO0CG'), {maxTransactionRetryTime: 60 * 1000,maxConnectionLifetime: 60 * 1000,maxConnectionPoolSize: 500,connectionAcquisitionTimeout: 10 * 1000});
+    var driver = neo4j.driver('bolt://hobby-gbcebfemnffigbkefemgfaal.dbs.graphenedb.com:24786', 
+                                neo4j.auth.basic('app91002402-MWprOS', 'b.N1zF4KnI6xoa.Kt5xmDPgVvFuO0CG'), 
+                                {maxTransactionRetryTime: 60 * 1000});
 }else{
-	var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass), {maxTransactionRetryTime: 60 * 1000,maxConnectionLifetime: 60 * 1000,maxConnectionPoolSize: 500,connectionAcquisitionTimeout: 10 * 1000});
+    var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass), 
+                            {maxTransactionRetryTime: 60 * 1000});
 };
 
 objetosGlobales[0].session[0] = driver.session();
@@ -332,6 +335,8 @@ io.on('connection', function(socket) {
         
         if(userId != undefined || msg.posicion != undefined ){ 
             /*Se crea registro del evento en BD*/
+            eventCreationErrorCounter=0
+            const createEvent = () =>{
             const promesaCrearEvento = objetosGlobales[0].session[0]
                  .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, lat:{lat}, lng:{lng}, status:true}) Return n,m', {codigoEvento:codigoEvento, lat:msg.posicion.lat, lng:msg.posicion.lng, spotifyidUsuario:userId}))
 
@@ -368,9 +373,17 @@ io.on('connection', function(socket) {
             promesaCrearEvento
                  .catch(function(err){
                     console.log(err);
-                    io.to(socket.id).emit('errorCrearEvento')
+                    eventCreationErrorCounter++;
+                    if(eventCreationErrorCounter>5){
+                        eventCreationErrorCounter=0;
+                        io.to(socket.id).emit('errorCrearEvento')
+                    }else{
+                        createEvent();
+                    }
+                    
                 })
-
+            }
+            createEvent();
             /*JOIN crea el room cuyo ID será el código del evento*/
             socket.join(codigoEvento);
         
@@ -388,6 +401,8 @@ io.on('connection', function(socket) {
         
         if(userId != undefined){ 
             /*Se crea registro del evento en BD*/
+            eventCodeCreationErrorCounter=0
+            const createCodeEvent = () =>{
             const promesaCrearEvento = objetosGlobales[0].session[0]
                  .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, status:true}) Return n,m', {codigoEvento:codigoEvento, spotifyidUsuario:userId}))
 
@@ -424,9 +439,17 @@ io.on('connection', function(socket) {
             promesaCrearEvento
                  .catch(function(err){
                     console.log(err);
-                    io.to(socket.id).emit('errorCrearEvento')
+                    eventCodeCreationErrorCounter++;
+                    if(eventCodeCreationErrorCounter>5){
+                        eventCodeCreationErrorCounter=0
+                        io.to(socket.id).emit('errorCrearEvento')
+                    }else{
+                        createCodeEvent();
+                    }
+                   
                 })
-
+            }
+            createCodeEvent();
                 
         }else{
             console.log(" Error = userId -> ", userId, "msg.posicion ->", msg.posicion )

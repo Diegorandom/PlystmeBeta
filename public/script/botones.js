@@ -324,7 +324,7 @@
             if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD'){
                 if(error == true){console.log(error)}
                 
-                window.location.replace("https://www.plystme.com/");
+                 
                 
             }else{
                console.log('Salida exitosa -> ', success) 
@@ -372,7 +372,7 @@
             if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD'){
                 if(error == true){console.log(error)}
                 
-                window.location.replace("https://www.plystme.com/");
+                 
                 
             }else{
                console.log('Salida exitosa -> ', success) 
@@ -443,7 +443,7 @@
             if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD' || data == "Error"){
                 if(error == true){console.log(error)}
                 
-                window.location.replace("https://www.plystme.com/");
+                 
                 
             }else{
                console.log('Salida exitosa -> ', success) 
@@ -483,7 +483,7 @@
             if(error == true || data == 'Error checarPosEvento' || data == 'Error EventoUsuario' || data == 'Error BD' || data == "Error"){
                 if(error == true){console.log(error)}
                 
-                window.location.replace("https://www.plystme.com/");
+                 
                 
             }else{
                console.log('Salida exitosa -> ', success) 
