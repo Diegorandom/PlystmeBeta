@@ -5,10 +5,7 @@ var request = require("request");
 router.get('/', function(req, res, error){ 
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
-    position = objetosGlobales.length;
-    console.log('apuntador del objeto', position);
-    req.sessions.position = position;
-    
+
  /*Esta ruta lleva a la landing page de la plataforma*/
         if(error == true){
             res.render('pages/error',{error:error})
@@ -29,7 +26,6 @@ router.get('/', function(req, res, error){
             
             console.log(objetosGlobales)
             res.render('pages/autorizacion',  objetosGlobales[0]);
-        
         }       
 });
 

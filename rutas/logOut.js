@@ -7,8 +7,7 @@ var request = require("request");
 router.get('/logOut', function(req, res, error) {
     console.log("Llegamos al pool")
     var objetosGlobales = req.app.get('objetosGlobales');
-    var position = req.app.get('position');
-     
+    var position = req.sessions.position;
     console.log('apuntador del objeto', position);
     
     if(error==true){
@@ -17,11 +16,9 @@ router.get('/logOut', function(req, res, error) {
     }else{
         /*Se borra la información del usuario del sistema*/
         objetosGlobales[position] = null
-        position = 0
-        req.sessions.position = 0
         console.log('Depuracion de datos por salida de Usuario')
         console.log(objetosGlobales)    
-        res.redirect('/')
+        res.render('pages/autorizacion',  objetosGlobales[0]);
     }
 });
 
