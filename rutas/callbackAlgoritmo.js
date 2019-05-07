@@ -195,7 +195,9 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                         }else if(checkid_result.records.length >= 1){
                             console.log('Este usuario ya está registrado (no debería ser más de 1)')
                             
-                            /*cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
+                            /*cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. 
+                            la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar
+                             la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
                             objetosGlobales[position].bdEstado="guardado"
                             
                             objetosGlobales[position].mensaje = "nuevo_login";

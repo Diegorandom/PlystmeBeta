@@ -8,7 +8,7 @@ router.get('/DatosBD', function(req, res, error) {
     console.log('entramos a la ruta')
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
-    position = req.sessions.position;
+     
     console.log('apuntador del objeto', position);  
 
 

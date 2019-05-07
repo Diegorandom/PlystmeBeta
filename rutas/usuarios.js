@@ -36,14 +36,14 @@ router.get('/usuarios', function(request, response, error) {
 
 router.get('/userid', function(request, response, error) {
     var objetosGlobales = request.app.get('objetosGlobales');
-    var position = request.app.get('position');
     position = request.sessions.position;
     
-    if(error == true || objetosGlobales == undefined || position == undefined || objetosGlobales[position] == undefined){
+    if(error == true || objetosGlobales[position] == undefined){
         console.log(error)
-        response.redirect('/error')
+        console.log('error')
     }else{
         console.log("userid -> ", objetosGlobales[position].userid)
+        request.sessions.position = position
         response.send(objetosGlobales[position].userid)
     }
     

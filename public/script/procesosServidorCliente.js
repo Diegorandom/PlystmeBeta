@@ -198,7 +198,7 @@ var erroresPreferenciasSuri = 0
                 console.log('Error global al procesar preferencias -> ', erroresPreferenciasGlobal)
                 
                 if(erroresPreferenciasGlobal > 2){
-                    location.reload(true);
+                    
                 }
                 
                 }else if(data == 'Error SuriApi'){
@@ -214,7 +214,7 @@ var erroresPreferenciasSuri = 0
                 
             
                 if(erroresPreferenciasSuri > 2){
-                    location.reload(true);
+                    
                 }
                 
             }
@@ -224,7 +224,6 @@ var erroresPreferenciasSuri = 0
     /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con el perfil de preferencias del usuario*/
     function chequeoFBD(){
         $.post('/chequeoBD',function (data,status){
-            console.log('Datos del usuario ->', data)
             if(status == "success" && data == "guardado"){
                 console.log('Se llama a preferencias')
                 preferencias()
@@ -299,7 +298,7 @@ var erroresPreferenciasSuri = 0
                     console.log('Error Global -> ', erroresGuardarTopGlobal)
                     
                    if(erroresGuardarTopGlobal >2){
-                       location.reload(true);
+                       
                    }
                       
                 }else if(data == "Error SpotifyApi"){
@@ -313,13 +312,12 @@ var erroresPreferenciasSuri = 0
                     console.log('Error Global -> ', erroresGuardarTopSpotify)
                     
                    if(erroresGuardarTopSpotify >2){
-                       location.reload(true);
+                       
                    } 
                 }
 
             }else{
                 console.log('ERROR DE ORIGEN')
-                location.reload(true);
             }
 
         }
@@ -395,7 +393,7 @@ var erroresPreferenciasSuri = 0
         if(status=="sucess"){
             console.log('TOKEN REFRESCADO')
         }else if(error ==true){
-            location.reload(true);
+            
         }
     }
         
@@ -556,7 +554,7 @@ var erroresPreferenciasSuri = 0
                             if(status=="sucess"){
                                 console.log('TOKEN REFRESCADO')
                             }else if(error ==true){
-                                location.reload(true);
+                                
                             }
                         }
                     }
@@ -570,7 +568,7 @@ var erroresPreferenciasSuri = 0
                             if(status=="sucess"){
                                 console.log('TOKEN REFRESCADO')
                             }else if(error ==true){
-                                location.reload(true);
+                                
                             }
                         }
                 }
@@ -738,7 +736,6 @@ var erroresPreferenciasSuri = 0
         if(error == true ){
             console.log(error)
         }
-        location.reload(true);
         
     }else{
     
@@ -844,7 +841,7 @@ var erroresPreferenciasSuri = 0
                     console.log('Error registrados en el sistema -> ', ErroresTopRango )
 
                     if(ErroresTopRango > 2){
-                        location.reload(true);
+                        
                     }
 
                 }else if(data == "Error SpotifyApi"){
@@ -859,11 +856,11 @@ var erroresPreferenciasSuri = 0
                     console.log('Error registrados en el sistema por Spotify -> ', ErroresSpotify )
 
                     if(ErroresSpotify > 2){
-                        location.reload(true);
+                        
                     }
 
                 }else if(data == "Error Global"){
-                     location.reload(true);
+                     
                 }
             }
                 else{

@@ -10,7 +10,7 @@ router.get('/heartbeat', function(req,res, error){
         console.log('heartbeat');
          var objetosGlobales = req.app.get('objetosGlobales');
         var position = req.app.get('position');
-        position = req.sessions.position;
+         
         console.log('apuntador del objeto', position);
     
     if(error == true || objetosGlobales[position] == undefined){
@@ -30,7 +30,7 @@ router.get('/heartbeat', function(req,res, error){
         function goInactive() {
             /*Cuando el cronometro se termina se activa la funcion y se borra el access token, el cookkie de position se reposiciona en 0, la posición neutral. */
             if(objetosGlobales.length>1 && req.sessions.position != undefined){
-                position = req.sessions.position;
+                 
                 /*
                 Se signa el valor NULL a la posicion de la cookie req.sessions.position en objetosGlobales.
                 El objetivo es que cuando ningún usuario se encuentre dentro del sistema, todas las posiciones excepto la [0] (posicion neutral) sean convertidas a NULL para que al entrar a la página de landing page, la siguiente parte del sistema al hacer el conteo de usuarios, elimine las posiciones.

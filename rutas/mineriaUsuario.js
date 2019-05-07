@@ -16,6 +16,7 @@ var idleTimer = require("idle-timer");
 var DelayedResponse = require('http-delayed-response')
 var cookieParser = require('cookie-parser');
 
+
 console.log('Llegamos a la ruta de mineria de datos de usuario')
 
 router.get('/mineria', function(req, res, error){

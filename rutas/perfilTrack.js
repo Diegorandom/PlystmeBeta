@@ -8,7 +8,7 @@ router.post('/track/profile', function(req, res, error){
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
     
-    position = req.sessions.position;
+     
     objetosGlobales[position].trackid = req.body.index; 
     
     console.log("Index de cancion elegida " + objetosGlobales[position].trackid);

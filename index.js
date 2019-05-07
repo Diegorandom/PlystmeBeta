@@ -34,6 +34,16 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+var cookieParser = require('cookie-parser');
+
+
+//CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
+app.use(logger('dev')); 
+app.use(bodyParser.json()); //DECLARACION DE PROTOCOLO DE LECTURA DE LAS VARIABLES INTERNAS "BODY" DE LAS FUNCIONES 
+app.use(bodyParser.urlencoded({ extended:true})); //DECLARACIÓN DE ENCODER DE URL
+app.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA PUBLIC BY DEFAULT PARA LOS RECURSOS
+app.use(cookieParser());
+app.use(methodOverride());
 
 /* 
 Documentación de Código
@@ -862,14 +872,14 @@ io.on('connection', function(socket) {
     app.post('/salirEvento', function(request, response, error) {
       
         var objetosGlobales = request.app.get('objetosGlobales');
-        var position = request.app.get('position');
+        
         position = request.sessions.position; 
         var driver = request.app.get('driver')
-        objetosGlobales[position].session[2] = driver.session();
+        objetosGlobales[0].session[2] = driver.session();
         
         console.log('Usuario a salirse -> ', objetosGlobales[position].userid)
 
-        const promesachecarRelacion= objetosGlobales[position].session[2]
+        const promesachecarRelacion= objetosGlobales[0].session[2]
             .writeTransaction(tx => tx.run('MATCH (e:Evento {status:true})<-[r]-(u:usuario {spotifyid:{spotifyid}}) RETURN r', { spotifyid:objetosGlobales[position].userid }))
         
         promesachecarRelacion
@@ -884,7 +894,7 @@ io.on('connection', function(socket) {
                 
                 if(tipoRelacion == "Host"){
                     
-                    const promesaCaducarEvento= objetosGlobales[position].session[2]
+                    const promesaCaducarEvento= objetosGlobales[0].session[2]
                         .writeTransaction(tx => tx.run('MATCH (e:Evento {status:true})<-[r]-(u:usuario {spotifyid:{spotifyid}}) SET e.status = false AND r.status = false RETURN e', { spotifyid:objetosGlobales[position].userid }))
                     
                     promesaCaducarEvento
@@ -897,7 +907,7 @@ io.on('connection', function(socket) {
                             io.to(codigoEvento).emit('caducaEvento',{mensaje:"Caduca el Evento", codigoEvento:codigoEvento});
                         
                             
-                            objetosGlobales[position].session[2].close();
+                            objetosGlobales[0].session[2].close();
                             
                           
                         })
@@ -909,7 +919,7 @@ io.on('connection', function(socket) {
                         })
                     
                 }else if(tipoRelacion == "Invitado"){
-                    const promesaCaducarRelacion= objetosGlobales[position].session[2]
+                    const promesaCaducarRelacion= objetosGlobales[0].session[2]
                         .writeTransaction(tx => tx.run('MATCH (e:Evento {status:true})<-[r]-(u:usuario {spotifyid:{spotifyid}}) SET r.status=false RETURN r,e', { spotifyid:objetosGlobales[position].userid }))
                     promesaCaducarRelacion
                         .then(function(evento){
@@ -919,7 +929,7 @@ io.on('connection', function(socket) {
                             var tipoRelacion = evento.records[0]._fields[0].type
                             console.log(tipoRelacion)
                             
-                            const promesaEventoUsuario= objetosGlobales[position].session[2]
+                            const promesaEventoUsuario= objetosGlobales[0].session[2]
                                 .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}, status:true})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento:codigoEvento}))
 
                             promesaEventoUsuario
@@ -980,7 +990,7 @@ io.on('connection', function(socket) {
                                         console.log('Ya no existe el evento')
                                     }
                                      
-                               objetosGlobales[position].session[2].close();
+                               objetosGlobales[0].session[2].close();
                                 
                                     })
 

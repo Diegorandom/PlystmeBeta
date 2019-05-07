@@ -7,7 +7,6 @@ var request = require("request");
 router.post('/refreshingToken', function(request, response, error) {
      var objetosGlobales = request.app.get('objetosGlobales');
     var position = request.app.get('position');
-    position = request.sessions.position;
     console.log('apuntador del objeto', position);
     
     if(objetosGlobales[position] != undefined || objetosGlobales[position].refresh_token != null ){

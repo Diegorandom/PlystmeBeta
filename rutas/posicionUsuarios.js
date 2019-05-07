@@ -7,7 +7,7 @@ var request = require("request");
 router.get('/posicionUsuarios', function(req, res, error) {
     var objetosGlobales = req.app.get('objetosGlobales');
     var position = req.app.get('position');
-    position = req.sessions.position;
+     
     console.log('apuntador del objeto', position);
     var posicionU = req.query.pos;
     

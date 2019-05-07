@@ -30,7 +30,7 @@ function btnCrear(userid){
 
     console.log('Creando Evento')
     //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({url: '/userid?_=' + new Date().getTime(), success:idCallback(userid), cache: false});
+    $.ajax({url: '/userid?_=' + new Date().getTime(), success:idCallback(userid)});
 
     function idCallback(userid){
         return function(data, status, error){
@@ -41,7 +41,6 @@ function btnCrear(userid){
                 document.getElementById('nuevoPlaylist').style.display="block"
                 setTimeout(function(){
                     document.getElementById('nuevoPlaylist').style.display="none"
-                    //location.reload(true);
                 }, 3000);
 
             }else{
@@ -71,7 +70,6 @@ function btnCrear2(userid){
                 document.getElementById('nuevoPlaylist').style.display="block"
                 setTimeout(function(){
                     document.getElementById('nuevoPlaylist').style.display="none"
-                    //location.reload(true);
                 }, 3000);
 
             }else{
@@ -263,7 +261,6 @@ function fijarUbicacion (pos,userid){
                 document.getElementById('nuevoPlaylist').style.display="block"
                 setTimeout(function(){
                     document.getElementById('nuevoPlaylist').style.display="none"
-                    //location.reload(true);
                 }, 3000);
 
             }else{
@@ -302,8 +299,38 @@ function fijarUbicacion (pos,userid){
                                 console.log('Datos del usuario ->', data)
                                 if(status == "success" && data == "guardado"){
                                     console.log('Se crea playlist')
-                                    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
-                                    referenciaBD = data
+
+                                    /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con
+                                        el playlist*/
+                                        function chequeoFBD2(){
+                                            $.post('/chequeoBD',function (data,status){
+                                                console.log('Datos del usuario ->', data)
+                                                if(status == "success" && data == "guardado"){
+                                                    console.log('Se crea playlist')
+                                                    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+                                                    referenciaBD = data
+                                                }
+                                            })
+                                        }
+                                        
+                                        console.log('Se ha comenzado a revisar la base de datos')
+                                        
+                                        /*Proceso que detona el loop que se encargara de esperar a que la BD y la API estén listas para transmitir la información del playlist*/
+                                        function chequeoBDLoop2() {
+                                            chequeoFBD2()
+                                                setTimeout(function(){
+                                                    if(referenciaBD != "guardado"){
+                                                        setTimeout(chequeoBDLoop2,1000)
+                                                    }else{
+                                                        console.log('Ya se terminó de guardar la información en la base de datos')
+                                                    }
+                                                },1000)
+                                        }
+                                        
+                                        /*Inicio de proceso de obtención de perfil de preferencias*/
+                                        chequeoBDLoop2();
+
+                                    
                                 }
                             })
                         }
@@ -346,8 +373,67 @@ function fijarUbicacion (pos,userid){
                         despliegueUsuarios(msg.usuarios);
                         despliegueUsuarios2(msg.usuarios);
 
-                       $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+                        /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con
+                        el playlist*/
+                        function chequeoFBD2(){
+                            $.post('/chequeoBD',function (data,status){
+                                console.log('Datos del usuario ->', data)
+                                if(status == "success" && data == "guardado"){
+                                    console.log('Se crea playlist')
 
+                                        /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con
+                                        el playlist*/
+                                        function chequeoFBD2(){
+                                            $.post('/chequeoBD',function (data,status){
+                                                console.log('Datos del usuario ->', data)
+                                                if(status == "success" && data == "guardado"){
+                                                    console.log('Se crea playlist')
+                                                    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:userId}, success:poolPlaylist, cache: false});
+                                                    referenciaBD = data
+                                                }
+                                            })
+                                        }
+                                        
+                                        console.log('Se ha comenzado a revisar la base de datos')
+                                        
+                                        /*Proceso que detona el loop que se encargara de esperar a que la BD y la API estén listas para transmitir la información del playlist*/
+                                        function chequeoBDLoop2() {
+                                            chequeoFBD2()
+                                                setTimeout(function(){
+                                                    if(referenciaBD != "guardado"){
+                                                        setTimeout(chequeoBDLoop2,1000)
+                                                    }else{
+                                                        console.log('Ya se terminó de guardar la información en la base de datos')
+                                                    }
+                                                },1000)
+                                        }
+                                        
+                                        /*Inicio de proceso de obtención de perfil de preferencias*/
+                                        chequeoBDLoop2();
+
+
+                                }
+                            })
+                        }
+                        
+                        console.log('Se ha comenzado a revisar la base de datos')
+                        
+                        /*Proceso que detona el loop que se encargara de esperar a que la BD y la API estén listas para transmitir la información del playlist*/
+                        function chequeoBDLoop2() {
+                            chequeoFBD2()
+                                setTimeout(function(){
+                                    if(referenciaBD != "guardado"){
+                                        setTimeout(chequeoBDLoop2,1000)
+                                    }else{
+                                        console.log('Ya se terminó de guardar la información en la base de datos')
+                                    }
+                                },1000)
+                        }
+                        
+                        /*Inicio de proceso de obtención de perfil de preferencias*/
+                        chequeoBDLoop2();
+
+                      
                     })
                     
                 }
@@ -373,7 +459,6 @@ function crearCodigo (pos,userid){
                 document.getElementById('nuevoPlaylist').style.display="block"
                 setTimeout(function(){
                     document.getElementById('nuevoPlaylist').style.display="none"
-                    //location.reload(true);
                 }, 3000);
 
             }else{
@@ -869,8 +954,10 @@ socket.on('usuarioEntra', function(msg){
     mostrarCodigo(codigoEvento);
     despliegueUsuarios(msg.usuarios);
     despliegueUsuarios2(msg.usuarios);
-
+    
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
+
+
     
     $('#mensajeNuevoUsuario').animate({width:'toggle'});
         setTimeout(function(){
@@ -967,25 +1054,6 @@ socket.on('multiplesEventos', function(msg){
     
 })
 
-
-
-
-
-
-
-/*socket.on('nuevoUsuario',function(msg){
-    console.log(msg.mensaje)
-    console.log('idsEvento -> ', msg.idsEvento)
-    
-    $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
-    
-    $('#mensajeNuevoUsuario').animate({width:'toggle'});
-        setTimeout(function(){
-            $('#mensajeNuevoUsuario').animate({width:'toggle'});
-        }, 2000);
-    
-})*/
-
 socket.on('saleUsuario',function(msg){
     console.log(msg.mensaje)
     console.log(msg.idsEvento)
@@ -995,10 +1063,9 @@ socket.on('saleUsuario',function(msg){
     
     despliegueUsuarios(msg.usuarios);
     despliegueUsuarios2(msg.usuarios);
-    
+
     $.ajax({url: '/pool?_=' + new Date().getTime(), data:{userId:msg.idsEvento}, success:poolPlaylist, cache: false});
-    
-    
+
     /*$('#mensajeNuevoUsuario').animate({width:'toggle'});
         setTimeout(function(){
             $('#mensajeNuevoUsuario').animate({width:'toggle'});
