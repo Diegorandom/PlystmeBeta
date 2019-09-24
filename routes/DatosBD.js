@@ -12,7 +12,9 @@ router.get('/DatosBD', function(req, res, error) {
     console.log('apuntador del objeto', position);  
 
 
-/*Se extrae la información de del index de importancia del usuario de nuestra BD. Así mismo se extrae la información del usuario de nuestra base de datos para su display en la interfaz*/
+/*Se extrae la información de del index de importancia del usuario de nuestra BD.
+ Así mismo se extrae la información del usuario de nuestra base de datos para su display 
+ en la interfaz*/
   objetosGlobales[0].session
     .run('MATCH (n:track)-[r:Escuchado {rangoTiempo:{rangoTiempo}}]-(m:usuario {spotifyid:{spotifyid}}) RETURN n, r.importanciaIndex', {spotifyid:objetosGlobales[position].userid, rangoTiempo:objetosGlobales[position].rango})
     .then(function(tracks){

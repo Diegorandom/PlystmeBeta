@@ -19,10 +19,6 @@ router.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA
 router.use(cookieParser());
 router.use(methodOverride());
 
-
-
-/*PIEZA DE MIDDLEWARE QUE NO SE ESTÁ USANDO*/
-
 /*
         CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION
         

@@ -65,23 +65,7 @@ router.get('/mineria', function(req, res, error){
             }
 
             objetosGlobales[0].session[index+1] = driver.session();
-            
-             /*
-            Ejemplo de transacciones con Neo4j ->
-            
-            const session = driver.session();
-            const writeTxPromise = session.writeTransaction(tx => tx.run('CREATE (a:Person {name: $name})', {'name': personName}));
-
-            writeTxPromise.then(result => {
-              session.close();
-
-              if (result) {
-                console.log('Person created');
-              }
-            });
-            
-            */
-            
+              
             /*Se consulta si el track ya existe en la BD*/
 
                 trackIdErrorCounter = 0;
