@@ -1,4 +1,4 @@
-![alt text](https://github.com/Diegorandom/PlystmeBeta/blob/master/Music%20Recommendation%20UML.png)
+![alt text](https://github.com/Diegorandom/PlystmeBeta/blob/master/plystmeLogin.png)
 
 Arquitectura de Plystme
 
