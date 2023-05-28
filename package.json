@@ -13,7 +13,7 @@
     "body-parser": "*",
     "client-sessions": "^0.8.0",
     "cookie-parser": "*",
-    "ejs": "2.7.1",
+    "ejs": "3.1.9",
     "express": "4.13.3",
     "fs": "*",
     "http-delayed-response": "0.0.4",
