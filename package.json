@@ -14,7 +14,7 @@
     "client-sessions": "^0.8.0",
     "cookie-parser": "*",
     "ejs": "3.1.9",
-    "express": "4.13.3",
+    "express": "^4.18.2",
     "fs": "*",
     "http-delayed-response": "0.0.4",
     "idle-timer": "^1.2.0",
@@ -23,11 +23,11 @@
     "morgan": "*",
     "neo4j-driver": "*",
     "newrelic": "^4.3.0",
-    "request": "*",
-    "sanitize-html": "^1.14.1",
+    "request": "2.88.2",
+    "sanitize-html": "^2.10.0",
     "shuffle-array": "^1.0.1",
     "socket.io": "^2.1.1",
-    "spotify-web-api-node": "^2.3.6",
+    "spotify-web-api-node": "^5.0.2",
     "supercolliderjs": "*"
   },
   "repository": {
@@ -41,6 +41,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "nodemon": "^2.0.22"
   }
 }
