@@ -1,6 +1,6 @@
 ![alt text](https://github.com/Diegorandom/PlystmeBeta/blob/master/plystmeLogin.png)
 
-#Arquitectura de Plystme
+# Arquitectura de Plystme
 
 Actualmente Plystme tiene una arquitectura servidor-cliente conectada con la API de Spotify, la API del algoritmo de recomendaciones y la base de datos Neo4j. El frontEnd fue construído en su totalidad sobre JavaScript con un templating language de Node.js llamado EJS. 
 
@@ -24,7 +24,7 @@ Una vez extraída la información de cada usuario, se obtienen las característi
 La base de datos está siendo implementada con Neo4j, una tecnología de bases de datos gráficas que funciona con nodos y aristas. La información del usuario se almacena en una estructura con 3 diferentes capas representadas en el siguientes gráfico con los colores azul, verde y rojo.
 
 
-## Estructura de información del usuario
+## Estructura de información del usuario
 
 El nodo azul en el centro corresponde al usuario y contiene información personal del usuario como email y username. Los nodos verdes corresponden a la música que se tiene registro que el usuario ha escuchado. Los nodos rojos representan a los artistas que interpretan la música que escucha el usuario. 
 En el siguiente gráfico se muestran estructuras conformadas por nodos eventos y nodos usuarios. Este gráfico nos da información acerca de las relaciones sociales de las personas dentro de un mismo evento. 
