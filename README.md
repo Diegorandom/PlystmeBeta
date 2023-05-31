@@ -1,7 +1,7 @@
-![alt text](https://github.com/Diegorandom/PlystmeBeta/blob/master/plystmeLogin.png)
-
-#Artículo
+# Artículo
 [Link.](https://medium.com/@diegoignacioortega/motor-de-recomendación-de-música-basado-en-grafos-f4e02de2884e)
+
+![alt text](https://github.com/Diegorandom/PlystmeBeta/blob/master/plystmeLogin.png)
 
 # Arquitectura de Plystme
 
