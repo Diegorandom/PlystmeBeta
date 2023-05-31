@@ -1,5 +1,8 @@
 ![alt text](https://github.com/Diegorandom/PlystmeBeta/blob/master/plystmeLogin.png)
 
+#Artículo
+[Link.](https://medium.com/@diegoignacioortega/motor-de-recomendación-de-música-basado-en-grafos-f4e02de2884e)
+
 # Arquitectura de Plystme
 
 Actualmente Plystme tiene una arquitectura servidor-cliente conectada con la API de Spotify, la API del algoritmo de recomendaciones y la base de datos Neo4j. El frontEnd fue construído en su totalidad sobre JavaScript con un templating language de Node.js llamado EJS. 
