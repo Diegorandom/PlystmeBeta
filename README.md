@@ -11,6 +11,14 @@ La comunicación entre el cliente y el backend utiliza HTTP con Ajax para la aut
 
 Socket.io se utiliza en la comunicación cliente-servidor para la creación y administración en tiempo real de las playlists grupales a las cuales se accede con el uso de un código dado por el anfitrión a los invitados de la fiesta.
 
+## Configuración de base de datos
+
+Hay 2 tipos de conexiones posibles:
+    1. Conexion con base de datos local
+    2. Conexion con base de datos del servidor
+
+Cuando se conecta la base de datos con localhost deben usarse los permisos mencionados en la siguiente estructura IF.
+No se debe cambiar nada de la estructura de configuración de la base de datos.
 
 ## Caso de uso de Servicio Principal de Plystme
 
