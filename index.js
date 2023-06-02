@@ -1,22 +1,12 @@
-/*DOCUMENTACIÓN DE ATMOS -> PLYSTME.COM
-Código por Diego Ignacio Ortega
-Derechos reservados ALV PRROO!
-NO BORRAR!
-
-Todos los cambios nuevos al código deben ser apropiadamente comentados y documentados.
-
+/*
+DOCUMENTACIÓN
 Tasa límite de requests Spotify - Documentación 
 https://stackoverflow.com/questions/30548073/spotify-web-api-rate-limits
-
- NODE MODULES
-
-Estos módulos descargados del Node Package Manager son piezas de Middleware que soportan las funciones más básicas del sistema completo. Llamar módulos de node en index no interviene en las diferentes rutas del sistema
 */
 
 var express = require('express')
 //make sure you keep this order
 
-var request = require('request'); // "Request" library
 var cookieParser = require('cookie-parser');
 var fs = require("fs");
 var SpotifyWebApi = require('spotify-web-api-node');
