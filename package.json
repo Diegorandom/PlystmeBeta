@@ -19,7 +19,7 @@
     "http-delayed-response": "0.0.4",
     "idle-timer": "^1.2.0",
     "logger": "*",
-    "method-override": "^2.3.8",
+    "method-override": "^3.0.0",
     "morgan": "*",
     "neo4j-driver": "*",
     "newrelic": "^4.3.0",
