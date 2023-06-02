@@ -22,7 +22,7 @@
     "method-override": "^2.3.8",
     "morgan": "*",
     "neo4j-driver": "*",
-    "newrelic": "^4.3.0",
+    "newrelic": "^10.1.2",
     "request": "2.88.2",
     "sanitize-html": "^2.10.0",
     "shuffle-array": "^1.0.1",
