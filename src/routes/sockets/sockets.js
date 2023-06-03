@@ -33,7 +33,6 @@ module.exports = {
                 let eventCreationErrorCounter = 0
                 const createEvent = () => {
                     // eslint-disable-next-line no-undef
-
                     const promesaCrearEvento = objetosGlobales[0].session[0]
                         .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, lat:{lat}, lng:{lng}, status:true}) Return n,m', { codigoEvento: codigoEvento, lat: msg.posicion.lat, lng: msg.posicion.lng, spotifyidUsuario: userId }))
 
@@ -100,7 +99,6 @@ module.exports = {
                 let eventCodeCreationErrorCounter = 0
                 const createCodeEvent = () => {
                     // eslint-disable-next-line no-undef
-
                     const promesaCrearEvento = objetosGlobales[0].session[0]
                         .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, status:true}) Return n,m', { codigoEvento: codigoEvento, spotifyidUsuario: userId }))
 
