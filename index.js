@@ -28,9 +28,9 @@ var cookieParser = require('cookie-parser');
 
 
 //CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
-app.use(logger('dev')); 
+app.use(logger('dev'));
 app.use(bodyParser.json()); //DECLARACION DE PROTOCOLO DE LECTURA DE LAS VARIABLES INTERNAS "BODY" DE LAS FUNCIONES 
-app.use(bodyParser.urlencoded({ extended:true})); //DECLARACIÓN DE ENCODER DE URL
+app.use(bodyParser.urlencoded({ extended: true })); //DECLARACIÓN DE ENCODER DE URL
 app.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA PUBLIC BY DEFAULT PARA LOS RECURSOS
 app.use(cookieParser());
 app.use(methodOverride());
@@ -41,13 +41,13 @@ Documentación de Código
 El objeto jsonDatosInit es la variable constructor con la cual se define la estructura de datos de los usuarios.
 Este objeto construye el usuario inicial con el cual funciona la plataforma cuando un usuario que no está registrado en el sistema entra a la página principal.
 */
-var jsonDatosInit = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:[], track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0, pool:[], playlist:[], popularidadAvg:0, usuarios:[], bdEstado:"noGuardado", rango:"short_term", cambioRango:false, refresh_token:null, refreshing:false, refreshingUsers:false, session:[]}
+var jsonDatosInit = { nombre: "", ref: false, email: null, external_urls: null, seguidores: null, imagen_url: null, pais: null, access_token: null, track_uri: [], track_uri_ref: null, num: 50, danceability: 0, energia: 0, fundamental: 0, amplitud: 0, modo: 0, dialogo: 0, acustica: 0, instrumental: 0, audiencia: 0, positivismo: 0, tempo: 0, firma_tiempo: 0, duracion: 0, danceability2: 0, energia2: 0, fundamental2: 0, amplitud2: 0, modo2: 0, dialogo2: 0, acustica2: 0, instrumental2: 0, audiencia2: 0, positivismo2: 0, tempo2: 0, firma_tiempo2: 0, duracion2: 0, followers: null, anti_playlist: [], trackid: null, artist_data: [], track_uri_ref2: [], seedTracks: [], userid: null, seed_shuffled: null, pass: null, pass2: null, mes: null, dia: null, año: null, noticias: null, Userdata: [], mensaje: null, add: null, totalUsers: 0, pool: [], playlist: [], popularidadAvg: 0, usuarios: [], bdEstado: "noGuardado", rango: "short_term", cambioRango: false, refresh_token: null, refreshing: false, refreshingUsers: false, session: [] }
 
 /*Se asigna position = 0 para que el sistema siempre arranque funcionando con la estructura inicial del objeto Global que contiene a todos los usuarios*/
 var position = 0;
 
 /*Se inicializa objetosGlobales como un arreglo que después se convertirá en un arreglo de objetos json*/
-var objetosGlobales=[];
+var objetosGlobales = [];
 
 objetosGlobales[0] = jsonDatosInit;
 
@@ -69,13 +69,13 @@ Cuando se conecta la base de datos con localhost deben usarse los permisos menci
 No se debe cambiar nada de la estructura de configuración de la base de datos.
 */
 
-if(graphenedbURL == undefined){
-    var driver = neo4j.driver('bolt://hobby-gbcebfemnffigbkefemgfaal.dbs.graphenedb.com:24786', 
-                                neo4j.auth.basic('app91002402-MWprOS', 'b.N1zF4KnI6xoa.Kt5xmDPgVvFuO0CG'), 
-                                {maxTransactionRetryTime: 60 * 1000});
-}else{
-    var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass), 
-                            {maxTransactionRetryTime: 60 * 1000});
+if (graphenedbURL == undefined) {
+  var driver = neo4j.driver('bolt://hobby-gbcebfemnffigbkefemgfaal.dbs.graphenedb.com:24786',
+    neo4j.auth.basic('app91002402-MWprOS', 'b.N1zF4KnI6xoa.Kt5xmDPgVvFuO0CG'),
+    { maxTransactionRetryTime: 60 * 1000 });
+} else {
+  var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass),
+    { maxTransactionRetryTime: 60 * 1000 });
 };
 
 objetosGlobales[0].session[0] = driver.session();
@@ -115,9 +115,9 @@ Express es una infraestructura de aplicaciones web Node.js mínima y flexible qu
 */
 
 //CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
-app.use(logger('dev')); 
+app.use(logger('dev'));
 app.use(bodyParser.json()); //DECLARACION DE PROTOCOLO DE LECTURA DE LAS VARIABLES INTERNAS "BODY" DE LAS FUNCIONES 
-app.use(bodyParser.urlencoded({ extended:true})); //DECLARACIÓN DE ENCODER DE URL
+app.use(bodyParser.urlencoded({ extended: true })); //DECLARACIÓN DE ENCODER DE URL
 app.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA PUBLIC BY DEFAULT PARA LOS RECURSOS
 app.use(cookieParser());
 app.use(methodOverride());
@@ -136,32 +136,32 @@ app.set('port', (process.env.PORT || 5000));
 objetosGlobales[0].client_id = 'b590c1e14afd46a69891549457267135'; // Your client id
 objetosGlobales[0].client_secret = config.sessionSecret; // Your secret
 
-if( app.get('port') == 5000 ){
-    console.log("Corriendo en servidor local con uri de redireccionamiento: ");
-    objetosGlobales[0].redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
+if (app.get('port') == 5000) {
+  console.log("Corriendo en servidor local con uri de redireccionamiento: ");
+  objetosGlobales[0].redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
 
-    //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
-    objetosGlobales[0].spotifyApi = new SpotifyWebApi({
-        clientId: 'b590c1e14afd46a69891549457267135',
-        clientSecret: config.sessionSecret,
-        redirectUri: 'http://localhost:5000/callback' 
-    }); 
-    console.log(objetosGlobales[0].redirect_uri);
-}else{
-    console.log("Corriendo en servidor web con uri de redireccionamiento: ");
-    objetosGlobales[0].redirect_uri = 'https://www.plystme.com/callback'; // Your redirect uri
+  //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
+  objetosGlobales[0].spotifyApi = new SpotifyWebApi({
+    clientId: 'b590c1e14afd46a69891549457267135',
+    clientSecret: config.sessionSecret,
+    redirectUri: 'http://localhost:5000/callback'
+  });
+  console.log(objetosGlobales[0].redirect_uri);
+} else {
+  console.log("Corriendo en servidor web con uri de redireccionamiento: ");
+  objetosGlobales[0].redirect_uri = 'https://www.plystme.com/callback'; // Your redirect uri
 
-    //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
-    objetosGlobales[0].spotifyApi = new SpotifyWebApi({
-        clientId: 'b590c1e14afd46a69891549457267135',
-        clientSecret: config.sessionSecret,
-        redirectUri: 'https://www.plystme.com/callback' 
-    });
-    console.log(objetosGlobales[0].redirect_uri);
+  //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
+  objetosGlobales[0].spotifyApi = new SpotifyWebApi({
+    clientId: 'b590c1e14afd46a69891549457267135',
+    clientSecret: config.sessionSecret,
+    redirectUri: 'https://www.plystme.com/callback'
+  });
+  console.log(objetosGlobales[0].redirect_uri);
 };
 //Finaliza setup de puerto
 
-      
+
 /*
     Este proceso funciona para crear una llave de acceso a la API de SPOTIFY
     
@@ -172,7 +172,7 @@ if( app.get('port') == 5000 ){
  * @return {string} The generated string
  
 */
-var generateRandomStringCode = function(length) {
+var generateRandomStringCode = function (length) {
   var text = '';
   var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -182,7 +182,7 @@ var generateRandomStringCode = function(length) {
   return text;
 };
 
-var generateRandomString = function(length) {
+var generateRandomString = function (length) {
   var text = '';
   var possible = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789';
 
@@ -201,7 +201,7 @@ var sessionSecreto = generateRandomString(16);
 app.use(sessions({
   cookieName: 'sessions',
   secret: sessionSecreto,
-  duration: 24* 60 * 60 * 1000,
+  duration: 24 * 60 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
   ephemeral: true
 }));
@@ -215,9 +215,9 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 /*Variables globales que son pasadas a las diferentes rutas del sistema*/
-app.set('objetosGlobales',objetosGlobales);
-app.set('position',position);
-app.set('generateRandomString',generateRandomString);
+app.set('objetosGlobales', objetosGlobales);
+app.set('position', position);
+app.set('generateRandomString', generateRandomString);
 app.set('driver', driver);
 
 /*
@@ -250,7 +250,7 @@ app.use(require('./src/routes/tokenRefreshing'));
 
 /*Ruta a perfil*/
 app.use(require('./src/routes/perfil'));
-        
+
 /*PERFIL DE UN TRACK*/
 app.use(require("./src/routes/perfilTrack"));
 
@@ -297,15 +297,15 @@ app.use(require('./src/routes/posicionUsuarios'));
 app.use(require('./src/routes/esHost'));
 
 /*Ruta para llamar la pagina de error para tests*/
-app.get('/error', function(req, res, error){
-    console.log('ERROR EN LA PLATAFORMA')    
-    res.render('pages/error', {error:error})
+app.get('/error', function (req, res, error) {
+  console.log('ERROR EN LA PLATAFORMA')
+  res.render('pages/error', { error: error })
 })
 
 /* INICIA SOCKETS*/
 
-var sockets = require("./src/routes/sockets/sockets");c
-io.on('connection', sockets.call() )
+var sockets = require("./src/routes/sockets/sockets"); c
+io.on('connection', sockets.call())
 
 
 
@@ -313,22 +313,22 @@ io.on('connection', sockets.call() )
 
 
 /*Ruta para errores con 404*/
-app.get('*', function(req, res, error) {
-    if(error == true){
-        console.log('error -> ', error)
-        res.redirect('/error');
-    }else{
-        res.redirect('/');
-    }
-    
+app.get('*', function (req, res, error) {
+  if (error == true) {
+    console.log('error -> ', error)
+    res.redirect('/error');
+  } else {
+    res.redirect('/');
+  }
+
 });
 
 /*Configuración de puerto de la app*/
-server.listen(app.get('port'), function(error) {
-    if(error == true){
-        console.log(error)
-    }
-    
+server.listen(app.get('port'), function (error) {
+  if (error == true) {
+    console.log(error)
+  }
+
   console.log('Node app is running on port', app.get('port'));
 });
 
