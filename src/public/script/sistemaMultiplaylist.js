@@ -1,5 +1,4 @@
-var pos, userid, usuarios;
-
+/* eslint-disable no-undef */
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see the error "The Geolocation service
 // failed.", it means you probably did not give permission for the browser to
@@ -26,194 +25,7 @@ mapa.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCtA2WyXGMPMY9Nk642
 var contenedorMapa = document.getElementById('mapa')
 contenedorMapa.appendChild(mapa)
 
-function btnCrear(userid) {
 
-    console.log('Creando Evento')
-    //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({ url: '/userid?_=' + new Date().getTime(), success: idCallback(userid) });
-
-    function idCallback(userid) {
-        return function (data, status, error) {
-
-            //Control de errores
-            if (error == true || data == "Error Global" || status != "success") {
-                document.getElementById('nuevoPlaylist').innerHTML = "Error de Servidor"
-                document.getElementById('nuevoPlaylist').style.display = "block"
-                setTimeout(function () {
-                    document.getElementById('nuevoPlaylist').style.display = "none"
-                }, 3000);
-
-            } else {
-
-                userid = data
-                var tipomap = "map"
-                console.log("userid -> ", userid)
-                creacionMapa(userid, tipomap)
-
-            }
-        }
-    }
-}
-
-function btnCrear2(userid) {
-
-    console.log('Creando Evento')
-    //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({ url: '/userid?_=' + new Date().getTime(), success: idCallback(userid), cache: false });
-
-    function idCallback(userid) {
-        return function (data, status, error) {
-
-            //Control de errores
-            if (error == true || data == "Error Global" || status != "success") {
-                document.getElementById('nuevoPlaylist').innerHTML = "Error de Servidor"
-                document.getElementById('nuevoPlaylist').style.display = "block"
-                setTimeout(function () {
-                    document.getElementById('nuevoPlaylist').style.display = "none"
-                }, 3000);
-
-            } else {
-
-                userid = data
-                var tipomap = "map2"
-                console.log("userid -> ", userid)
-                creacionMapa2(userid, tipomap)
-
-            }
-        }
-    }
-}
-
-
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-}
-
-
-function creacionMapa(userid, tipomap) {
-    console.log("userid CM -> ", userid)
-    console.log('Creación de mapa..')
-
-
-    var map = new google.maps.Map(document.getElementById(tipomap), {
-        center: { lat: 19.4326018, lng: -99.1332049 },
-        zoom: 18
-    });
-    var infoWindow = new google.maps.InfoWindow({ map: map });
-
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-
-            console.log("Posición del usuario -> ", pos)
-
-            // Construct the circle for each value in citymap.
-            // Note: We scale the area of the circle based on the population.
-
-
-            //infoWindow.setPosition(pos);
-            //infoWindow.setContent('');
-            map.setCenter(pos);
-            var image = 'img/PositionMarker.png';
-            var beachMarker = new google.maps.Marker({
-                position: pos,
-                map: map,
-                icon: image,
-                draggable: true,
-                animation: google.maps.Animation.DROP
-
-            });
-
-            //Una vez obtenido el userid, éste se pasa a la función sockets() para que sea utilizado
-            //sockets(userid, pos)
-            //console.log('se manda a llamar socket')
-
-        }, function () {
-            handleLocationError(true, infoWindow, map.getCenter());
-            document.getElementById('nuevoPlaylist').innerHTML = "Geolocalizacion no disponible, crear evento por código"
-            document.getElementById('nuevoPlaylist').style.display = "block"
-            $('#fijarUbicacion').css("display", "none");
-            setTimeout(function () {
-                document.getElementById('nuevoPlaylist').style.display = "none";
-            }, 3000);
-
-
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-
-    }
-
-}
-
-function creacionMapa2(userid, tipomap) {
-    console.log("userid CM -> ", userid)
-    console.log('Creación de mapa..')
-
-
-    var map = new google.maps.Map(document.getElementById(tipomap), {
-        center: { lat: 19.4326018, lng: -99.1332049 },
-        zoom: 18
-    });
-    var infoWindow = new google.maps.InfoWindow({ map: map });
-
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-
-            console.log("Posición del usuario -> ", pos)
-
-            // Construct the circle for each value in citymap.
-            // Note: We scale the area of the circle based on the population.
-
-
-            //infoWindow.setPosition(pos);
-            //infoWindow.setContent('');
-            map.setCenter(pos);
-            var image = 'img/PositionMarker.png';
-            var beachMarker = new google.maps.Marker({
-                position: pos,
-                map: map,
-                icon: image,
-                draggable: true,
-                animation: google.maps.Animation.DROP
-
-            });
-
-            //Una vez obtenido el userid, éste se pasa a la función sockets() para que sea utilizado
-            //sockets(userid, pos)
-            //console.log('se manda a llamar socket')
-
-        }, function () {
-            handleLocationError(true, infoWindow, map.getCenter());
-            document.getElementById('nuevoPlaylist').innerHTML = "Geolocalizacion no disponible, crear evento por código"
-            document.getElementById('nuevoPlaylist').style.display = "block"
-            $('#fijarUbicacion2').css("display", "none");
-            setTimeout(function () {
-                document.getElementById('nuevoPlaylist').style.display = "none";
-            }, 3000);
-
-
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-
-    }
-
-}
 
 /*
 
@@ -225,12 +37,6 @@ Desde ese momento la variable userid debe funcionar de manera global en todo el 
 La infraestructura de los sockets se encuentra toda contenida en la función sockets(), la cual recibe como argumento el userid estraído del request de AJAX. La función sockets() se manda a llamar una vez obtenido el userid correspondiente.
 
 */
-
-
-//Se defien var pos objeto y room string para actualizarlas constantemente 
-var room = "";
-var posfija = { 'lat': 0.0, 'lng': 0.0 };
-var usariosdentro = null;
 
 
 var socket = io({
@@ -245,290 +51,6 @@ socket.on('conexionServidor', (msg) => {
     socket.emit('EventoConexion', { data: 'Estoy Conectado!' });
     $.ajax({ url: '/esHost?_=' + new Date().getTime(), success: esHost, cache: false })
 });
-
-function fijarUbicacion(pos, userid) {
-    //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({ url: '/userid?_=' + new Date().getTime(), success: idCallback(userid), cache: false });
-
-
-    function idCallback(userid) {
-        return function (data, status, error) {
-            //Control de errores
-            if (error == true || data == "Error Global" || status != "success") {
-                document.getElementById('nuevoPlaylist').innerHTML = "Error de Servidor"
-                document.getElementById('nuevoPlaylist').style.display = "block"
-                setTimeout(function () {
-                    document.getElementById('nuevoPlaylist').style.display = "none"
-                }, 3000);
-
-            } else {
-                userid = data
-                console.log("userid -> ", userid)
-
-                console.log('Posición de la fiesta -> ', pos)
-
-                if (pos != null && pos != undefined) {
-                    socket.emit('crearEvento', { posicion: pos, userId: userid });//proceso para crear una fiesta
-
-                    socket.on('eventoCreado', function (msg) {
-                        console.log('Evento Creado')
-                        var codigoEvento = msg.codigoEvento;
-                        var userId = []
-
-                        userId.push(msg.userId)
-
-                        console.log(' Usuarios -> ', msg.usuarios)
-                        console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
-
-
-                        mostrarCodigo(codigoEvento);
-                        despliegueUsuarios(msg.usuarios);
-                        despliegueUsuarios2(msg.usuarios);
-
-                        $('#compartir').css("display", "block")
-
-                        var WAshare = document.getElementById("whatsappShare");
-                        WAshare.href = "whatsapp://send?text=Hola, únete a mi evento en https://www.plystme.com/login con el siguiente código: " + codigoEvento;
-
-                        /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con
-                        el playlist*/
-                        function chequeoFBD2() {
-                            $.post('/chequeoBD', function (data, status) {
-                                console.log('Datos del usuario ->', data)
-                                if (status == "success" && data == "guardado") {
-                                    console.log('Se crea playlist')
-
-                                    /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con
-                                        el playlist*/
-                                    function chequeoFBD2() {
-                                        $.post('/chequeoBD', function (data, status) {
-                                            console.log('Datos del usuario ->', data)
-                                            if (status == "success" && data == "guardado") {
-                                                console.log('Se crea playlist')
-                                                $.ajax({ url: '/pool?_=' + new Date().getTime(), data: { userId: userId }, success: poolPlaylist, cache: false });
-                                                referenciaBD = data
-                                            }
-                                        })
-                                    }
-
-                                    console.log('Se ha comenzado a revisar la base de datos')
-
-                                    /*Proceso que detona el loop que se encargara de esperar a que la BD y la API estén listas para transmitir la información del playlist*/
-                                    function chequeoBDLoop2() {
-                                        chequeoFBD2()
-                                        setTimeout(function () {
-                                            if (referenciaBD != "guardado") {
-                                                setTimeout(chequeoBDLoop2, 1000)
-                                            } else {
-                                                console.log('Ya se terminó de guardar la información en la base de datos')
-                                            }
-                                        }, 1000)
-                                    }
-
-                                    /*Inicio de proceso de obtención de perfil de preferencias*/
-                                    chequeoBDLoop2();
-
-
-                                }
-                            })
-                        }
-
-                        console.log('Se ha comenzado a revisar la base de datos')
-
-                        /*Proceso que detona el loop que se encargara de esperar a que la BD y la API estén listas para transmitir la información del playlist*/
-                        function chequeoBDLoop2() {
-                            chequeoFBD2()
-                            setTimeout(function () {
-                                if (referenciaBD != "guardado") {
-                                    setTimeout(chequeoBDLoop2, 1000)
-                                } else {
-                                    console.log('Ya se terminó de guardar la información en la base de datos')
-                                }
-                            }, 1000)
-                        }
-
-                        /*Inicio de proceso de obtención de perfil de preferencias*/
-                        chequeoBDLoop2();
-
-
-
-                    })
-                } else {
-                    socket.emit('crearEventoCodigo', { userId: userid })
-
-                    socket.on('eventoCreadoCodigo', function (msg) {
-                        console.log('Evento Creado')
-                        var codigoEvento = msg.codigoEvento;
-                        var userId = []
-
-                        userId.push(msg.userId)
-
-                        console.log(' Usuarios -> ', msg.usuarios)
-                        console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
-
-
-                        mostrarCodigo(codigoEvento);
-                        despliegueUsuarios(msg.usuarios);
-                        despliegueUsuarios2(msg.usuarios);
-
-                        /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con
-                        el playlist*/
-                        function chequeoFBD2() {
-                            $.post('/chequeoBD', function (data, status) {
-                                console.log('Datos del usuario ->', data)
-                                if (status == "success" && data == "guardado") {
-                                    console.log('Se crea playlist')
-
-                                    /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con
-                                    el playlist*/
-                                    function chequeoFBD2() {
-                                        $.post('/chequeoBD', function (data, status) {
-                                            console.log('Datos del usuario ->', data)
-                                            if (status == "success" && data == "guardado") {
-                                                console.log('Se crea playlist')
-                                                $.ajax({ url: '/pool?_=' + new Date().getTime(), data: { userId: userId }, success: poolPlaylist, cache: false });
-                                                referenciaBD = data
-                                            }
-                                        })
-                                    }
-
-                                    console.log('Se ha comenzado a revisar la base de datos')
-
-                                    /*Proceso que detona el loop que se encargara de esperar a que la BD y la API estén listas para transmitir la información del playlist*/
-                                    function chequeoBDLoop2() {
-                                        chequeoFBD2()
-                                        setTimeout(function () {
-                                            if (referenciaBD != "guardado") {
-                                                setTimeout(chequeoBDLoop2, 1000)
-                                            } else {
-                                                console.log('Ya se terminó de guardar la información en la base de datos')
-                                            }
-                                        }, 1000)
-                                    }
-
-                                    /*Inicio de proceso de obtención de perfil de preferencias*/
-                                    chequeoBDLoop2();
-
-
-                                }
-                            })
-                        }
-
-                        console.log('Se ha comenzado a revisar la base de datos')
-
-                        /*Proceso que detona el loop que se encargara de esperar a que la BD y la API estén listas para transmitir la información del playlist*/
-                        function chequeoBDLoop2() {
-                            chequeoFBD2()
-                            setTimeout(function () {
-                                if (referenciaBD != "guardado") {
-                                    setTimeout(chequeoBDLoop2, 1000)
-                                } else {
-                                    console.log('Ya se terminó de guardar la información en la base de datos')
-                                }
-                            }, 1000)
-                        }
-
-                        /*Inicio de proceso de obtención de perfil de preferencias*/
-                        chequeoBDLoop2();
-
-
-                    })
-
-                }
-
-
-            }
-        }
-    }
-
-}
-
-
-function crearCodigo(pos, userid) {
-    //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({ url: '/userid?_=' + new Date().getTime(), success: idCallback(userid), cache: false });
-
-
-    function idCallback(userid) {
-        return function (data, status, error) {
-            //Control de errores
-            if (error == true || data == "Error Global" || status != "success") {
-                document.getElementById('nuevoPlaylist').innerHTML = "Error de Servidor"
-                document.getElementById('nuevoPlaylist').style.display = "block"
-                setTimeout(function () {
-                    document.getElementById('nuevoPlaylist').style.display = "none"
-                }, 3000);
-
-            } else {
-                userid = data
-                console.log("userid -> ", userid)
-
-
-                socket.emit('crearEventoCodigo', { userId: userid })
-
-                socket.on('eventoCreadoCodigo', function (msg) {
-                    console.log('Evento Creado')
-                    var codigoEvento = msg.codigoEvento;
-                    var userId = []
-
-                    userId.push(msg.userId)
-                    $('#compartir').css("display", "block")
-
-                    var WAshare = document.getElementById("whatsappShare");
-                    WAshare.href = "whatsapp://send?text=Hola, únete a mi evento en https://www.plystme.com/login con el siguiente código: " + codigoEvento;
-
-                    console.log(' Usuarios -> ', msg.usuarios)
-                    console.log('Codigo de Evento -> ', codigoEvento, "userid -> ", userId)
-
-
-                    mostrarCodigo(codigoEvento);
-                    despliegueUsuarios(msg.usuarios);
-                    despliegueUsuarios2(msg.usuarios);
-
-                    /*La función de chequeoFDB revisa la BD de datos está lista para procesar transmitir información relacionada con
-                       el playlist*/
-                    function chequeoFBD2() {
-                        $.post('/chequeoBD', function (data, status) {
-                            console.log('Datos del usuario ->', data)
-                            if (status == "success" && data == "guardado") {
-                                console.log('Se crea playlist')
-                                $.ajax({ url: '/pool?_=' + new Date().getTime(), data: { userId: userId }, success: poolPlaylist, cache: false });
-                                referenciaBD = data
-                            }
-                        })
-                    }
-
-                    console.log('Se ha comenzado a revisar la base de datos')
-
-                    /*Proceso que detona el loop que se encargara de esperar a que la BD y la API estén listas para transmitir la información del playlist*/
-                    function chequeoBDLoop2() {
-                        chequeoFBD2()
-                        setTimeout(function () {
-                            if (referenciaBD != "guardado") {
-                                setTimeout(chequeoBDLoop2, 1000)
-                            } else {
-                                console.log('Ya se terminó de guardar la información en la base de datos')
-                            }
-                        }, 1000)
-                    }
-
-                    /*Inicio de proceso de obtención de perfil de preferencias*/
-                    chequeoBDLoop2();
-
-
-
-                })
-
-
-
-
-            }
-        }
-    }
-
-}
-
-
 
 function poolPlaylist(data, status, error) {
 
@@ -706,7 +228,7 @@ function despliegueUsuarios(usuarios) {
         listaUsuarios.style = "display:none; padding:5px;"
         usuariosDentro.appendChild(listaUsuarios)
 
-        usuarios.forEach(function (usuario, index) {
+        usuarios.forEach(function (usuario) {
             if (checkUrl(usuario[1]) == false) {
                 console.log(usuario[1], " No válido")
                 usuario[1] = false
@@ -723,7 +245,7 @@ function despliegueUsuarios(usuarios) {
                 imgU.className = "imgUsuario"
                 usuariosFotos.appendChild(imgU)
             } else {
-                var imgU = document.createElement("img")
+                imgU = document.createElement("img")
                 imgU.src = "img/Perfil.png"
                 imgU.alt = "omg"
                 imgU.style = "height:100%; border-radius:50%; width:20px;"
@@ -741,16 +263,16 @@ function despliegueUsuarios(usuarios) {
                 bullet.appendChild(imgL)
                 listaUsuarios.appendChild(bullet)
             } else if (usuario[0]) {
-                var bullet = document.createElement('li')
-                var imgL = document.createElement("img")
+                bullet = document.createElement('li')
+                imgL = document.createElement("img")
                 imgL.src = "img/Perfil.png"
                 imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                 bullet.innerHTML = usuario[0]
                 bullet.appendChild(imgL)
                 listaUsuarios.appendChild(bullet)
             } else if (usuario[1]) {
-                var bullet = document.createElement('li')
-                var imgL = document.createElement("img")
+                bullet = document.createElement('li')
+                imgL = document.createElement("img")
                 imgL.src = usuario[1]
                 imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                 bullet.innerHTML = "Anónimo"
@@ -791,7 +313,7 @@ function despliegueUsuarios2(usuarios) {
         listaUsuarios.style = "display:none; padding:5px;"
         usuariosDentro.appendChild(listaUsuarios)
 
-        usuarios.forEach(function (usuario, index) {
+        usuarios.forEach(function (usuario) {
             if (checkUrl(usuario[1]) == false) {
                 console.log(usuario[1], " No válido")
                 usuario[1] = false
@@ -809,7 +331,7 @@ function despliegueUsuarios2(usuarios) {
                 imgU.className = "imgUsuario2"
                 usuariosFotos.appendChild(imgU)
             } else {
-                var imgU = document.createElement("img")
+                imgU = document.createElement("img")
                 imgU.src = "img/Perfil.png"
                 imgU.alt = "omg"
                 imgU.style = "height:100%; border-radius:50%; width:20px;"
@@ -827,16 +349,16 @@ function despliegueUsuarios2(usuarios) {
                 bullet.appendChild(imgL)
                 listaUsuarios.appendChild(bullet)
             } else if (usuario[0]) {
-                var bullet = document.createElement('li')
-                var imgL = document.createElement("img")
+                bullet = document.createElement('li')
+                imgL = document.createElement("img")
                 imgL.src = "img/Perfil.png"
                 imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                 bullet.innerHTML = usuario[0]
                 bullet.appendChild(imgL)
                 listaUsuarios.appendChild(bullet)
             } else if (usuario[1]) {
-                var bullet = document.createElement('li')
-                var imgL = document.createElement("img")
+                bullet = document.createElement('li')
+                imgL = document.createElement("img")
                 imgL.src = usuario[1]
                 imgL.style = "height:20px;width:20px; border-radius:50%; float:left;"
                 bullet.innerHTML = "Anónimo"
@@ -849,86 +371,6 @@ function despliegueUsuarios2(usuarios) {
 
 
 }
-
-
-function entrarCodigo(codigoUsuarioEvento, userid) {
-    //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({ url: '/userid?_=' + new Date().getTime(), success: idCallback(userid), cache: false });
-
-
-    function idCallback(userid) {
-        return function (data, status, error) {
-
-
-            //Control de errores
-            if (error == true || data == "Error Global" || status != "success") {
-                document.getElementById('nuevoPlaylist').innerHTML = "Error de Servidor"
-                document.getElementById('nuevoPlaylist').style.display = "block"
-                setTimeout(function () {
-                    document.getElementById('nuevoPlaylist').style.display = "none"
-                }, 3000);
-
-            } else {
-                userid = data
-                console.log("userid de usuario a entrar -> ", userid)
-                console.log("codigo del evento -> ", codigoUsuarioEvento)
-                socket.emit('usuarioNuevoCodigo', { codigoEvento: codigoUsuarioEvento, userId: userid });//proceso para crear una fiesta 
-            }
-        }
-    }
-
-
-
-}
-
-
-function entrarUbicacion(userid) {
-
-    //Request de ajax para obtener userid de servidor Node.js
-    $.ajax({ url: '/userid?_=' + new Date().getTime(), success: idCallback(userid), cache: false });
-
-
-    function idCallback(userid) {
-        return function (data, status, error) {
-
-
-            //Control de errores
-            if (error == true || data == "Error Global" || status != "success") {
-                document.getElementById('nuevoPlaylist').innerHTML = "Error de Servidor"
-                document.getElementById('nuevoPlaylist').style.display = "block"
-                setTimeout(function () {
-                    document.getElementById('nuevoPlaylist').style.display = "none"
-                }, 3000);
-
-            } else {
-                userid = data
-
-                console.log("userid de usuario a entrar -> ", userid)
-
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function (position) {
-                        pos = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        };
-
-                        console.log("Posición del usuario ", userid, "que quiere entrar a una fiesta -> ", pos)
-
-                        socket.emit('usuarioNuevoUbicacion', { posicion: pos, userId: userid });//proceso para crear una fiesta
-
-
-                    }, function () {
-                        handleLocationError(true, infoWindow, map.getCenter());
-                    });
-                } else {
-                    // Browser doesn't support Geolocation
-                    handleLocationError(false, infoWindow, map.getCenter());
-                }
-            }
-        }
-    }
-}
-
 
 socket.on('usuarioEntra', function (msg) {
 
@@ -1119,29 +561,6 @@ function vaciarPool() {
 
 }
 
-function vaciarPoolInvitado() {
-
-    console.log('Vamos a vaciar el pool porque el invitado salió')
-
-    document.getElementsByClassName("pool").remove();
-
-    var canvas = document.getElementById("canvas")
-    var pool = document.createElement('div');
-    pool.className = 'pool';
-    canvas.appendChild(pool)
-
-    console.log("Depuración de playlist")
-    /*Mensaje de actualizacion de playlist*/
-
-    console.log('cargando mensaje')
-    document.getElementById('nuevoPlaylist').innerHTML = "Saliendo del evento..."
-    document.getElementById('nuevoPlaylist').style.display = "block"
-    setTimeout(function () {
-        document.getElementById('nuevoPlaylist').style.display = "none"
-    }, 2000);
-
-}
-
 /* Recibir el código e imprimirlo en el front del host*/
 
 function mostrarCodigo(codigo) {
@@ -1170,7 +589,7 @@ function esHost(data, success, error) {
 
             $.ajax({ url: '/esInvitado?_=' + new Date().getTime(), success: esInvitado, cache: false })
 
-            function esInvitado(data, success, error) {
+            const esInvitado = (data, success, error) => {
                 if (error == true || data == "Error checarHost" || data == "Error checarInvitado" || data == "Error Servidor") {
                     if (error == true) { console.log(error) }
 

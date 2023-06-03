@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /*
 DOCUMENTACIÓN
 Tasa límite de requests Spotify - Documentación 
@@ -8,29 +9,24 @@ var express = require('express')
 //make sure you keep this order
 
 var cookieParser = require('cookie-parser');
-var fs = require("fs");
 var SpotifyWebApi = require('spotify-web-api-node');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override')
 var logger = require('morgan');
 var path = require('path');
-var shuffle = require('shuffle-array');
 var neo4j = require('neo4j-driver').v1;
 var sessions = require("client-sessions");
-var idleTimer = require("idle-timer");
-var DelayedResponse = require('http-delayed-response')
 
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
-var cookieParser = require('cookie-parser');
 
 
 //CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
 app.use(logger('dev'));
 app.use(bodyParser.json()); //DECLARACION DE PROTOCOLO DE LECTURA DE LAS VARIABLES INTERNAS "BODY" DE LAS FUNCIONES 
 app.use(bodyParser.urlencoded({ extended: true })); //DECLARACIÓN DE ENCODER DE URL
+// eslint-disable-next-line no-undef
 app.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA PUBLIC BY DEFAULT PARA LOS RECURSOS
 app.use(cookieParser());
 app.use(methodOverride());
@@ -69,14 +65,20 @@ Cuando se conecta la base de datos con localhost deben usarse los permisos menci
 No se debe cambiar nada de la estructura de configuración de la base de datos.
 */
 
+var driver;
+
 if (graphenedbURL == undefined) {
-  var driver = neo4j.driver('bolt://hobby-gbcebfemnffigbkefemgfaal.dbs.graphenedb.com:24786',
+  //local setup
+  driver = neo4j.driver(
+    'bolt://hobby-gbcebfemnffigbkefemgfaal.dbs.graphenedb.com:24786',
     neo4j.auth.basic('app91002402-MWprOS', 'b.N1zF4KnI6xoa.Kt5xmDPgVvFuO0CG'),
     { maxTransactionRetryTime: 60 * 1000 });
 } else {
-  var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass),
+  // production setup
+  driver = neo4j.driver(
+    graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass),
     { maxTransactionRetryTime: 60 * 1000 });
-};
+}
 
 objetosGlobales[0].session[0] = driver.session();
 
@@ -97,7 +99,7 @@ catch (err) {
   config = {}
   console.log("unable to read file '" + fileName + "': ", err);
   console.log("see secret-config-sample.json for an example");
-};
+}
 
 console.log("session secret is:", config.sessionSecret);
 //Finaliza protocolo de seguridad
@@ -131,10 +133,13 @@ El puerto puede ser el 5000 y el asignado por por la configuración del servidor
 En este misma parte del código se configura con que URL de redireccionamiento trabajará spotify.
 Todas estas configuraciones se guardan en la posición [0] del objeto objetosGlobales.
 */
+// eslint-disable-next-line no-undef
 app.set('port', (process.env.PORT || 5000));
 
-objetosGlobales[0].client_id = 'b590c1e14afd46a69891549457267135'; // Your client id
-objetosGlobales[0].client_secret = config.sessionSecret; // Your secret
+// eslint-disable-next-line no-undef
+objetosGlobales[0].client_id = secrets.client_id; // Your client id
+// eslint-disable-next-line no-undef
+objetosGlobales[0].client_secret = secrets.secret; // Your secret
 
 if (app.get('port') == 5000) {
   console.log("Corriendo en servidor local con uri de redireccionamiento: ");
@@ -158,29 +163,9 @@ if (app.get('port') == 5000) {
     redirectUri: 'https://www.plystme.com/callback'
   });
   console.log(objetosGlobales[0].redirect_uri);
-};
+}
 //Finaliza setup de puerto
 
-
-/*
-    Este proceso funciona para crear una llave de acceso a la API de SPOTIFY
-    
-    La llave enviada a la API será comparada con la que se reciba después del proceso y estas deberán coincidir para no generar un error.
-
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- 
-*/
-var generateRandomStringCode = function (length) {
-  var text = '';
-  var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
 
 var generateRandomString = function (length) {
   var text = '';
@@ -209,8 +194,10 @@ app.use(sessions({
 
 
 /*Pieza de middleware que dirije los links a la carpeta donde se alojan los recursos*/
+// eslint-disable-next-line no-undef
 app.use(express.static(__dirname + '/public'))
 // views is directory for all template files/Directorio de Templates
+// eslint-disable-next-line no-undef
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
@@ -246,7 +233,7 @@ app.use(require("./src/routes/guardaPlaylist"));
 app.use(require("./src/routes/guardarTOP50"));
 
 //Proceso para refrescar un token
-app.use(require('./src/routes/tokenRefreshing'));
+app.use(require('./src/routes/tokens/tokenRefreshing'));
 
 /*Ruta a perfil*/
 app.use(require('./src/routes/perfil'));
@@ -285,7 +272,7 @@ app.use(require('./src/routes/rangoTiempo'));
 app.use(require('./src/routes/DatosBD'));
 
 /*Proceso para refrescar token de Spotify (en proceso)*/
-app.use(require('./src/routes/refreshingToken'));
+app.use(require('./src/routes/tokens/refreshingToken'));
 
 /*Ruta para obtener el arreglo con el número de usuarios, sus nombre y fotos, de nuestra BD*/
 app.use(require('./src/routes/usuarios'));

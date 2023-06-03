@@ -1,5 +1,5 @@
-/* INICIA SOCKETS*/
-
+const io = require('socket.io');
+const generateRandomStringCode = require('../../utils/generateRandomStringCode');
 
 module.exports = {
     call: function (socket) {
@@ -18,9 +18,6 @@ module.exports = {
         io.emit('conexionServidor', { mensaje: 'Mensaje de prueba de servidor a cliente' })
 
         /*Código de creación de Evento*/
-
-        var codigoEvento
-
         socket.on('crearEvento', function (msg, codigoEvento) {
             console.log('Evento creado')
             console.log('Posicion del evento -> ', msg.posicion)
@@ -32,8 +29,9 @@ module.exports = {
 
             if (userId != undefined || msg.posicion != undefined) {
                 /*Se crea registro del evento en BD*/
-                eventCreationErrorCounter = 0
+                let eventCreationErrorCounter = 0
                 const createEvent = () => {
+                    // eslint-disable-next-line no-undef
                     const promesaCrearEvento = objetosGlobales[0].session[0]
                         .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, lat:{lat}, lng:{lng}, status:true}) Return n,m', { codigoEvento: codigoEvento, lat: msg.posicion.lat, lng: msg.posicion.lng, spotifyidUsuario: userId }))
 
@@ -97,8 +95,9 @@ module.exports = {
 
             if (userId != undefined) {
                 /*Se crea registro del evento en BD*/
-                eventCodeCreationErrorCounter = 0
+                let eventCodeCreationErrorCounter = 0
                 const createCodeEvent = () => {
+                    // eslint-disable-next-line no-undef
                     const promesaCrearEvento = objetosGlobales[0].session[0]
                         .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, status:true}) Return n,m', { codigoEvento: codigoEvento, spotifyidUsuario: userId }))
 
@@ -165,6 +164,7 @@ module.exports = {
             console.log('UserId del usuario que quiere entrar - ', msg.userId)
             codigoEvento = msg.codigoEvento;
             var userId = msg.userId
+            // eslint-disable-next-line no-undef
             const promesaChecarEvento = objetosGlobales[0].session[0]
                 .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE n.codigoEvento={codigoEvento} AND n.status=true RETURN n.codigoEvento', { codigoEvento: codigoEvento }))
 
@@ -175,6 +175,7 @@ module.exports = {
                         console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
                         socket.join(codigoEvento);
 
+                        // eslint-disable-next-line no-undef
                         const promesaChecarUsuario = objetosGlobales[0].session[0]
                             .writeTransaction(tx => tx.run('MATCH (n:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario)  WHERE u.spotifyid={spotifyidUsuario} RETURN u.spotifyid', { codigoEvento: codigoEvento, spotifyidUsuario: userId }))
 
@@ -185,14 +186,16 @@ module.exports = {
 
                                     console.log('Guardando nuevo invitado en el evento de la BD')
 
+                                    // eslint-disable-next-line no-undef
                                     const promesaNuevoUsuario = objetosGlobales[0].session[0]
                                         .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[r:Invitado {status:true}]->(n) Return p', { spotifyidUsuario: userId, codigoEvento: codigoEvento }))
 
                                     promesaNuevoUsuario
-                                        .then(function (unionUsuarioEvento) {
+                                        .then(function () {
                                             console.log('unionUsuarioEvento')
                                             console.log('Nuevo usuario ', userId, ' -> añadido a evento en BD-> ', codigoEvento)
 
+                                            // eslint-disable-next-line no-undef
                                             const promesaEventoUsuario = objetosGlobales[0].session[0]
                                                 .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento: codigoEvento }))
 
@@ -203,7 +206,7 @@ module.exports = {
                                                     var idsEvento = []
                                                     var usuarios = []
 
-                                                    ids.records.forEach(function (item, index) {
+                                                    ids.records.forEach(function (item) {
 
                                                         console.log('item -> ', item._fields)
 
@@ -229,6 +232,7 @@ module.exports = {
 
                                                         }
 
+                                                        // eslint-disable-next-line no-undef
                                                         objetosGlobales[0].session[0].close();
 
                                                     })
@@ -258,12 +262,14 @@ module.exports = {
                                 } else {
                                     console.log('El usuario ya está registrado en el evento de la BD')
 
+                                    // eslint-disable-next-line no-undef
                                     const promesaUnirUsuario = objetosGlobales[0].session[0]
                                         .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r]-(u:usuario {spotifyid:{userId}}) SET r.status = true RETURN u', { codigoEvento: codigoEvento, userId: userId }))
 
                                     promesaUnirUsuario
-                                        .then(function (usuarioUnido) {
+                                        .then(function () {
 
+                                            // eslint-disable-next-line no-undef
                                             const promesaEventoUsuario = objetosGlobales[0].session[0]
                                                 .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r {status:true}]-(u:usuario) RETURN u', { codigoEvento: codigoEvento }))
 
@@ -274,7 +280,7 @@ module.exports = {
                                                     var idsEvento = []
                                                     var usuarios = []
 
-                                                    ids.records.forEach(function (item, index) {
+                                                    ids.records.forEach(function (item) {
 
                                                         console.log('item -> ', item._fields)
 
@@ -301,6 +307,7 @@ module.exports = {
 
 
                                                     })
+                                                    // eslint-disable-next-line no-undef
                                                     objetosGlobales[0].session[0].close();
 
                                                 })
@@ -339,7 +346,7 @@ module.exports = {
 
         })
 
-        socket.on('usuarioNuevoUbicacion', function (msg, codigoEvento) {
+        socket.on('usuarioNuevoUbicacion', function (msg) {
             console.log('Un nuevo usuario se quiere unir a un evento por geolocalización')
             console.log('UserId del usuario que quiere entrar - ', msg.userId)
             var userId = msg.userId
@@ -351,6 +358,7 @@ module.exports = {
             console.log('Longitud del usuario -> ', lng)
             console.log('radio -> ', radio)
 
+            // eslint-disable-next-line no-undef
             const promesaChecarPosEvento = objetosGlobales[0].session[0]
                 .writeTransaction(tx => tx.run('MATCH (n:Evento)-[r:Host]-(u:usuario) WHERE {latUser} < (n.lat+{radio}) AND {latUser} > (n.lat-{radio}) AND {lngUser} < (n.lng+{radio}) AND {lngUser} > (n.lng-{radio}) AND n.status=true RETURN n.codigoEvento, u.nombre', { latUser: lat, radio: radio, lngUser: lng }))
 
@@ -366,6 +374,7 @@ module.exports = {
                         console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
                         socket.join(codigoEvento);
 
+                        // eslint-disable-next-line no-undef
                         const promesaChecarUsuario = objetosGlobales[0].session[0]
                             .writeTransaction(tx => tx.run('MATCH (n:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario)  WHERE u.spotifyid={spotifyidUsuario} RETURN u.spotifyid', { codigoEvento: codigoEvento, spotifyidUsuario: userId }))
 
@@ -377,14 +386,16 @@ module.exports = {
 
                                     console.log('Guardando nuevo invitado en el evento de la BD')
 
+                                    // eslint-disable-next-line no-undef
                                     const promesaNuevoUsuario = objetosGlobales[0].session[0]
                                         .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[r:Invitado {status:true}]->(n) Return p', { spotifyidUsuario: userId, codigoEvento: codigoEvento }))
 
                                     promesaNuevoUsuario
-                                        .then(function (unionUsuarioEvento) {
+                                        .then(function () {
                                             console.log('unionUsuarioEvento')
                                             console.log('Nuevo usuario ', userId, ' -> añadido a evento en BD-> ', codigoEvento)
 
+                                            // eslint-disable-next-line no-undef
                                             const promesaEventoUsuario = objetosGlobales[0].session[0]
                                                 .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[{status:true}]-(u:usuario) RETURN u', { codigoEvento: codigoEvento }))
 
@@ -426,6 +437,7 @@ module.exports = {
 
                                                     })
 
+                                                    // eslint-disable-next-line no-undef
                                                     objetosGlobales[0].session[0].close();
                                                 })
 
@@ -453,12 +465,14 @@ module.exports = {
                                 } else {
                                     console.log('El usuario ya está registrado en el evento de la BD')
 
+                                    // eslint-disable-next-line no-undef
                                     const promesaUnirUsuario = objetosGlobales[0].session[0]
                                         .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r]-(u:usuario {spotifyid:{userId}}) SET r.status = true RETURN u', { codigoEvento: codigoEvento, userId: userId }))
 
                                     promesaUnirUsuario
-                                        .then(function (usuarioUnido) {
+                                        .then(function () {
 
+                                            // eslint-disable-next-line no-undef
                                             const promesaEventoUsuario = objetosGlobales[0].session[0]
                                                 .writeTransaction(tx => tx.run('MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[r {status:true}]-(u:usuario) RETURN u', { codigoEvento: codigoEvento }))
 
@@ -469,7 +483,7 @@ module.exports = {
                                                     var idsEvento = []
                                                     var usuarios = []
 
-                                                    ids.records.forEach(function (item, index) {
+                                                    ids.records.forEach(function (item) {
 
                                                         console.log('item -> ', item._fields)
 
@@ -497,6 +511,7 @@ module.exports = {
 
 
                                                     })
+                                                    // eslint-disable-next-line no-undef
                                                     objetosGlobales[0].session[0].close();
 
                                                 })
@@ -524,7 +539,7 @@ module.exports = {
 
                         var listaEventos = [];
 
-                        codigoBD.records.forEach(function (item, index) {
+                        codigoBD.records.forEach(function (item) {
                             listaEventos.push(item._fields)
 
                             if (codigoBD.records.length == listaEventos.length) {
@@ -552,11 +567,12 @@ module.exports = {
 
         })
 
-        app.post('/salirEvento', function (request, response, error) {
+        // eslint-disable-next-line no-undef
+        app.post('/salirEvento', function (request, response) {
 
             var objetosGlobales = request.app.get('objetosGlobales');
 
-            position = request.sessions.position;
+            let position = request.sessions.position;
             var driver = request.app.get('driver')
             objetosGlobales[0].session[2] = driver.session();
 
@@ -623,7 +639,7 @@ module.exports = {
                                                 var idsEvento = []
                                                 var usuarios = []
 
-                                                ids.records.forEach(function (item, index) {
+                                                ids.records.forEach(function (item) {
 
                                                     console.log('item -> ', item._fields)
 
