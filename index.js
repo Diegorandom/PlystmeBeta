@@ -115,8 +115,6 @@ app.set('port', (process.env.PORT || 5000));
 objetosGlobales[0].client_id = process.env.client_id
 objetosGlobales[0].client_secret = process.env.client_secret
 
-console.log('objetosGlobales[0].client_id ', process.env.client_id)
-
 if (app.get('port') == 5000) {
   console.log("Corriendo en servidor local con uri de redireccionamiento: ");
   objetosGlobales[0].redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
