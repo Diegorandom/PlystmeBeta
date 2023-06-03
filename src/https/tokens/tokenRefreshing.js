@@ -1,8 +1,7 @@
 var express = require("express");
 var router = new express.Router();
-var request = require("request");
-
 /*ESTE SOFTWARE NO ESTÁ EN USO*/
+const https = require('https');
 
 router.get('/refresh_token', function (req, res) {
 
@@ -22,7 +21,7 @@ router.get('/refresh_token', function (req, res) {
   }
 
 
-  request.post(authOptions, function (error, response, bodyS) {
+  https.post(authOptions, function (error, response, bodyS) {
     if (!error && response.statusCode === 200) {
       var access_token = bodyS.access_token;
       res.send({
