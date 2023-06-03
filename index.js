@@ -225,76 +225,76 @@ app.set('driver', driver);
 */
 
 /*La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. */
-app.use(require("./routes/heartbeat"));
+app.use(require("./src/routes/heartbeat"));
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
-app.use(require("./routes/inicio"))
+app.use(require("./src/routes/inicio"))
 
 //Login procesa el REQUEST de la API de Spotify para autorizacion
-app.use(require('./routes/login'))
+app.use(require('./src/routes/login'))
 
 /*CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION*/
-app.use(require("./routes/callbackAlgoritmo"));
+app.use(require("./src/routes/callbackAlgoritmo"));
 
 /*Proceso de conexio con la API del algoritmo del pool*/
-app.use(require("./routes/poolAlgoritmo"));
+app.use(require("./src/routes/poolAlgoritmo"));
 
 /*Ruta de proceso para guardar playlist en Spotify*/
-app.use(require("./routes/guardaPlaylist"));
+app.use(require("./src/routes/guardaPlaylist"));
 
 /*Ruta de proceso para guardar TOP 50 en Spotify*/
-app.use(require("./routes/guardarTOP50"));
+app.use(require("./src/routes/guardarTOP50"));
 
 //Proceso para refrescar un token
-app.use(require('./routes/tokenRefreshing'));
+app.use(require('./src/routes/tokenRefreshing'));
 
 /*Ruta a perfil*/
-app.use(require('./routes/perfil'));
+app.use(require('./src/routes/perfil'));
         
 /*PERFIL DE UN TRACK*/
-app.use(require("./routes/perfilTrack"));
+app.use(require("./src/routes/perfilTrack"));
 
 /*Ruta a preferencias*/
-app.use(require("./routes/preferencias"));
+app.use(require("./src/routes/preferencias"));
 
-app.use(require("./routes/chequeoBD"));
+app.use(require("./src/routes/chequeoBD"));
 
 /*Ruta a proceso  para guardar un track*/
-app.use(require('./routes/saveTrack'))
+app.use(require('./src/routes/saveTrack'))
 
 /*Ruta a funcion IDLE, la cual depura los datos de objetoGlobales*/
-app.use(require('./routes/idle'))
+app.use(require('./src/routes/idle'))
 
 /*Proceso para salirse de una sesion*/
-app.use(require('./routes/logOut'))
+app.use(require('./src/routes/logOut'))
 
 /*Rutas no implementadas aun*/
-app.use(require('./routes/otrosProcesos'))
+app.use(require('./src/routes/otrosProcesos'))
 
 /*Ambiente de SUPERCOLLIDER - no utilizada por el momento*/
-app.use(require("./routes/environmentSC"));
+app.use(require("./src/routes/environmentSC"));
 
 /*Ruta de donde se extrae la información del usuario de Spotify hacia nuestra propia BD*/
-app.use(require('./routes/mineriaUsuario'));
+app.use(require('./src/routes/mineriaUsuario'));
 
 
 /*Ruta donde se administra el tipo de minería necesaria dado que se escoge un rango de tiempo para Top 50 diferente*/
-app.use(require('./routes/rangoTiempo'));
+app.use(require('./src/routes/rangoTiempo'));
 
 /*Ruta para procesos con BD que no se usa actualmente*/
-app.use(require('./routes/DatosBD'));
+app.use(require('./src/routes/DatosBD'));
 
 /*Proceso para refrescar token de Spotify (en proceso)*/
-app.use(require('./routes/refreshingToken'));
+app.use(require('./src/routes/refreshingToken'));
 
 /*Ruta para obtener el arreglo con el número de usuarios, sus nombre y fotos, de nuestra BD*/
-app.use(require('./routes/usuarios'));
+app.use(require('./src/routes/usuarios'));
 
 /*Ruta no utilizada*/
-app.use(require('./routes/posicionUsuarios'));
+app.use(require('./src/routes/posicionUsuarios'));
 
 //Revision de usuario para checar si es host
-app.use(require('./routes/esHost'));
+app.use(require('./src/routes/esHost'));
 
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function(req, res, error){
@@ -304,7 +304,7 @@ app.get('/error', function(req, res, error){
 
 /* INICIA SOCKETS*/
 
-var sockets = require("./routes/sockets/sockets");c
+var sockets = require("./src/routes/sockets/sockets");c
 io.on('connection', sockets.call() )
 
 
