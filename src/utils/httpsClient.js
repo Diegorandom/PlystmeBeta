@@ -226,4 +226,3 @@ module.exports = {
     post,
     getAlgorithmRecommendation
 }
-
