@@ -1,6 +1,6 @@
-var checkUrl = (url) => {
+let checkUrl = (url) => {
     console.log('Checando URL -> ', url)
-    $.get(url)
+    return $.get(url)
         .done(function () {
             return true
             // Do something now you know the image exists.
@@ -8,7 +8,6 @@ var checkUrl = (url) => {
         }).fail(function () {
             return false
             // Image doesn't exist - do something else.
-
         })
 }
 
@@ -592,7 +591,7 @@ function usuarios(data, status) {
             listaUsuarios.style = "display:none; padding:5px;"
             usuariosDentro.appendChild(listaUsuarios)
 
-            data.forEach(function (usuario, index) {
+            data.forEach(function (usuario) {
 
                 if (checkUrl(usuario[1]) == false) {
                     console.log(usuario[1], " No válido")

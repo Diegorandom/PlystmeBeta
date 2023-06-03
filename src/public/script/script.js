@@ -138,7 +138,7 @@ $(function () {
 			slidesPerView: slidesP,
 			centeredSlides: centeredSlidesVar,
 			onSlideChangeStart: function (swiper) {
-				var activeIndex = (loopVar == true) ? swiper.activeIndex : swiper.activeLoopIndex;
+				var activeIndex = (loopVar) ? swiper.activeIndex : swiper.activeLoopIndex;
 				if ($t.closest('.w-banner').length) {
 					//alert(activeIndex);
 					$('.banner-navigation').removeClass('active-nav');
