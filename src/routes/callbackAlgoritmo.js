@@ -51,7 +51,6 @@ router.get('/callback', function (req, res, error) {
   var state = req.query.state || null;
   var storedState = req.cookies ? req.cookies[objetosGlobales[0].stateKey] : null;
 
-
   if (state === null || state !== storedState) {
     /*En caso de que haya un error de autenticación se lanza el mensaje y se envía a la pággina de error*/
     res.render('pages/error', { error: "Error de autentizacion state_mismatch" });
