@@ -163,153 +163,155 @@ if (app.get('port') == 5000) {
   });
   console.log(objetosGlobales[0].redirect_uri);
 
-var generateRandomString = function (length) {
-  var text = '';
-  var possible = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789';
+  var generateRandomString = function (length) {
+    var text = '';
+    var possible = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789';
 
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
+    for (var i = 0; i < length; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  };
 
-objetosGlobales[0].stateKey = 'spotify_auth_state';
-// Finaliza creacion de llaves
+  objetosGlobales[0].stateKey = 'spotify_auth_state';
+  // Finaliza creacion de llaves
 
-/*Configuración de Cookies para control de sesiones*/
-var sessionSecreto = generateRandomString(16);
+  /*Configuración de Cookies para control de sesiones*/
+  var sessionSecreto = generateRandomString(16);
 
-app.use(sessions({
-  cookieName: 'sessions',
-  secret: sessionSecreto,
-  duration: 24 * 60 * 60 * 1000,
-  activeDuration: 5 * 60 * 1000,
-  ephemeral: true
-}));
-//Termina configuracion de cookies
-
-
-/*Pieza de middleware que dirije los links a la carpeta donde se alojan los recursos*/
-// eslint-disable-next-line no-undef
-app.use(express.static(__dirname + '/public'))
-// views is directory for all template files/Directorio de Templates
-// eslint-disable-next-line no-undef
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-
-/*Variables globales que son pasadas a las diferentes rutas del sistema*/
-app.set('objetosGlobales', objetosGlobales);
-app.set('position', position);
-app.set('generateRandomString', generateRandomString);
-app.set('driver', driver);
-
-/*
-            RUTEO DE TODAS LA FUNCIONES DEL SISTEMA - NO MOVER
-*/
-
-/*La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. */
-app.use(require("./src/routes/heartbeat"));
-
-//PAGINA DE INICIO HACIA LA AUTORIZACIÓN
-app.use(require("./src/routes/inicio"))
-
-//Login procesa el REQUEST de la API de Spotify para autorizacion
-app.use(require('./src/routes/login'))
-
-/*CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION*/
-app.use(require("./src/routes/callbackAlgoritmo"));
-
-/*Proceso de conexio con la API del algoritmo del pool*/
-app.use(require("./src/routes/poolAlgoritmo"));
-
-/*Ruta de proceso para guardar playlist en Spotify*/
-app.use(require("./src/routes/guardaPlaylist"));
-
-/*Ruta de proceso para guardar TOP 50 en Spotify*/
-app.use(require("./src/routes/guardarTOP50"));
-
-//Proceso para refrescar un token
-app.use(require('./src/routes/tokens/tokenRefreshing'));
-
-/*Ruta a perfil*/
-app.use(require('./src/routes/perfil'));
-
-/*PERFIL DE UN TRACK*/
-app.use(require("./src/routes/perfilTrack"));
-
-/*Ruta a preferencias*/
-app.use(require("./src/routes/preferencias"));
-
-app.use(require("./src/routes/chequeoBD"));
-
-/*Ruta a proceso  para guardar un track*/
-app.use(require('./src/routes/saveTrack'))
-
-/*Ruta a funcion IDLE, la cual depura los datos de objetoGlobales*/
-app.use(require('./src/routes/idle'))
-
-/*Proceso para salirse de una sesion*/
-app.use(require('./src/routes/logOut'))
-
-/*Rutas no implementadas aun*/
-app.use(require('./src/routes/otrosProcesos'))
-
-/*Ambiente de SUPERCOLLIDER - no utilizada por el momento*/
-app.use(require("./src/routes/environmentSC"));
-
-/*Ruta de donde se extrae la información del usuario de Spotify hacia nuestra propia BD*/
-app.use(require('./src/routes/mineriaUsuario'));
+  app.use(sessions({
+    cookieName: 'sessions',
+    secret: sessionSecreto,
+    duration: 24 * 60 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+    ephemeral: true
+  }));
+  //Termina configuracion de cookies
 
 
-/*Ruta donde se administra el tipo de minería necesaria dado que se escoge un rango de tiempo para Top 50 diferente*/
-app.use(require('./src/routes/rangoTiempo'));
+  /*Pieza de middleware que dirije los links a la carpeta donde se alojan los recursos*/
+  // eslint-disable-next-line no-undef
+  app.use(express.static(__dirname + '/public'))
+  // views is directory for all template files/Directorio de Templates
+  // eslint-disable-next-line no-undef
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'ejs');
 
-/*Ruta para procesos con BD que no se usa actualmente*/
-app.use(require('./src/routes/DatosBD'));
+  /*Variables globales que son pasadas a las diferentes rutas del sistema*/
+  app.set('objetosGlobales', objetosGlobales);
+  app.set('position', position);
+  app.set('generateRandomString', generateRandomString);
+  app.set('driver', driver);
 
-/*Proceso para refrescar token de Spotify (en proceso)*/
-app.use(require('./src/routes/tokens/refreshingToken'));
+  /*
+              RUTEO DE TODAS LA FUNCIONES DEL SISTEMA - NO MOVER
+  */
 
-/*Ruta para obtener el arreglo con el número de usuarios, sus nombre y fotos, de nuestra BD*/
-app.use(require('./src/routes/usuarios'));
+  /*La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. */
+  app.use(require("./src/routes/heartbeat"));
 
-/*Ruta no utilizada*/
-app.use(require('./src/routes/posicionUsuarios'));
+  //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
+  app.use(require("./src/routes/inicio"))
 
-//Revision de usuario para checar si es host
-app.use(require('./src/routes/esHost'));
+  //Login procesa el REQUEST de la API de Spotify para autorizacion
+  app.use(require('./src/routes/login'))
 
-/*Ruta para llamar la pagina de error para tests*/
-app.get('/error', function (req, res, error) {
-  console.log('ERROR EN LA PLATAFORMA')
-  res.render('pages/error', { error: error })
-})
+  /*CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION*/
+  app.use(require("./src/routes/callbackAlgoritmo"));
 
-/* INICIA SOCKETS*/
+  /*Proceso de conexio con la API del algoritmo del pool*/
+  app.use(require("./src/routes/poolAlgoritmo"));
 
-var sockets = require("./src/routes/sockets/sockets");
-io.on('connection', sockets.call())
+  /*Ruta de proceso para guardar playlist en Spotify*/
+  app.use(require("./src/routes/guardaPlaylist"));
 
-/*TERMINA SOCKETS*/
+  /*Ruta de proceso para guardar TOP 50 en Spotify*/
+  app.use(require("./src/routes/guardarTOP50"));
+
+  //Proceso para refrescar un token
+  app.use(require('./src/routes/tokens/tokenRefreshing'));
+
+  /*Ruta a perfil*/
+  app.use(require('./src/routes/perfil'));
+
+  /*PERFIL DE UN TRACK*/
+  app.use(require("./src/routes/perfilTrack"));
+
+  /*Ruta a preferencias*/
+  app.use(require("./src/routes/preferencias"));
+
+  app.use(require("./src/routes/chequeoBD"));
+
+  /*Ruta a proceso  para guardar un track*/
+  app.use(require('./src/routes/saveTrack'))
+
+  /*Ruta a funcion IDLE, la cual depura los datos de objetoGlobales*/
+  app.use(require('./src/routes/idle'))
+
+  /*Proceso para salirse de una sesion*/
+  app.use(require('./src/routes/logOut'))
+
+  /*Rutas no implementadas aun*/
+  app.use(require('./src/routes/otrosProcesos'))
+
+  /*Ambiente de SUPERCOLLIDER - no utilizada por el momento*/
+  app.use(require("./src/routes/environmentSC"));
+
+  /*Ruta de donde se extrae la información del usuario de Spotify hacia nuestra propia BD*/
+  app.use(require('./src/routes/mineriaUsuario'));
 
 
-/*Ruta para errores con 404*/
-app.get('*', function (req, res, error) {
-  if (error == true) {
-    console.log('error -> ', error)
-    res.redirect('/error');
-  } else {
-    res.redirect('/');
-  }
+  /*Ruta donde se administra el tipo de minería necesaria dado que se escoge un rango de tiempo para Top 50 diferente*/
+  app.use(require('./src/routes/rangoTiempo'));
 
-});
+  /*Ruta para procesos con BD que no se usa actualmente*/
+  app.use(require('./src/routes/DatosBD'));
 
-/*Configuración de puerto de la app*/
-server.listen(app.get('port'), function (error) {
-  if (error == true) {
-    console.log(error)
-  }
+  /*Proceso para refrescar token de Spotify (en proceso)*/
+  app.use(require('./src/routes/tokens/refreshingToken'));
 
-  console.log('Node app is running on port', app.get('port'));
-});
+  /*Ruta para obtener el arreglo con el número de usuarios, sus nombre y fotos, de nuestra BD*/
+  app.use(require('./src/routes/usuarios'));
+
+  /*Ruta no utilizada*/
+  app.use(require('./src/routes/posicionUsuarios'));
+
+  //Revision de usuario para checar si es host
+  app.use(require('./src/routes/esHost'));
+
+  /*Ruta para llamar la pagina de error para tests*/
+  app.get('/error', function (req, res, error) {
+    console.log('ERROR EN LA PLATAFORMA')
+    res.render('pages/error', { error: error })
+  })
+
+  /* INICIA SOCKETS*/
+
+  var sockets = require("./src/routes/sockets/sockets");
+  io.on('connection', sockets.call())
+
+  /*TERMINA SOCKETS*/
+
+
+  /*Ruta para errores con 404*/
+  app.get('*', function (req, res, error) {
+    if (error == true) {
+      console.log('error -> ', error)
+      res.redirect('/error');
+    } else {
+      res.redirect('/');
+    }
+
+  });
+
+  /*Configuración de puerto de la app*/
+  server.listen(app.get('port'), function (error) {
+    if (error == true) {
+      console.log(error)
+    }
+
+    console.log('Node app is running on port', app.get('port'));
+  });
+
+}
 

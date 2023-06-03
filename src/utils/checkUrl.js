@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const checkUrl = (url) => {
     console.log('Checando URL -> ', url)
     return $.get(url)
