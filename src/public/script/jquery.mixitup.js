@@ -267,7 +267,7 @@
 				
 				for(var i = 0; i < self._toggleArray.length; i++){
 					self._updateControls({filter: self._toggleArray[i], sort: self._activeSort}, true);
-				};
+				}
 			} else if(self.controls.enable){
 				self._updateControls({filter: self._activeFilter, sort: self._activeSort});
 			}
@@ -305,8 +305,8 @@
 								prefix: '-'+vendorsTrans[i].toLowerCase()+'-',
 								vendor: vendorsTrans[i]
 							};
-						};
-					}; 
+						}
+					} 
 					return 'transition' in el.style ? '' : false;
 				},
 				transPrefix = prefix(self._domNode);
@@ -648,7 +648,7 @@
 						var t = newArray[i];
 						newArray[i] = newArray[p];
 						newArray[p] = t;
-					};
+					}
 					return newArray; 
 				};
 				
@@ -1332,7 +1332,7 @@
 			
 				if(self.effects.transform || self.effects.opacity){
 					self._bindTargetDone($el);
-				};
+				}
 			}
 			
 			self._execAction('_animateTargets', 1);

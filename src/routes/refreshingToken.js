@@ -80,7 +80,7 @@ router.post('/refreshingToken', function(request, response, error) {
                 objetosGlobales[position].imagen_url =  bodyS.images[0].url;
                 console.log('imagen_url');
                 console.log(imagen_url);
-            };
+            }
              
             objetosGlobales[position].refresh_token = bodyS.refresh_token;
             
@@ -238,7 +238,7 @@ router.get('/refreshingToken', function(request, response, error) {
                 objetosGlobales[position].imagen_url =  bodyS.images[0].url;
                 console.log('imagen_url');
                 console.log(imagen_url);
-            };
+            }
              
             objetosGlobales[position].refresh_token = bodyS.refresh_token;
             

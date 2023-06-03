@@ -737,7 +737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function Emitter(obj) {
 	  if (obj) return mixin(obj);
-	};
+	}
 	
 	/**
 	 * Mixin the emitter properties.
@@ -4155,7 +4155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/utf8js v2.1.2 by @mathias */
-	;(function(root) {
+	(function(root) {
 	
 		// Detect free variables `exports`
 		var freeExports = typeof exports == 'object' && exports;
@@ -4583,12 +4583,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  return (options.type) ? bb.getBlob(options.type) : bb.getBlob();
-	};
+	}
 	
 	function BlobConstructor(ary, options) {
 	  mapArrayBufferViews(ary);
 	  return new Blob(ary, options || {});
-	};
+	}
 	
 	module.exports = (function() {
 	  if (blobSupported) {
@@ -5890,5 +5890,5 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ })
 /******/ ])
 });
-;
+
 //# sourceMappingURL=socket.io.slim.dev.js.map

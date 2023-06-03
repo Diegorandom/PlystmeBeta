@@ -270,7 +270,7 @@ router.post('/track/profile', function(req, res, error){
             console.log(error);
         });
 
-        };
+        }
         })
 
         }else{ 

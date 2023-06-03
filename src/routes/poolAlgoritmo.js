@@ -87,7 +87,7 @@ router.get('/pool', function(req, res, error){
                     }
                     
                     });
-            };
+            }
 
             /*Comienza proceso de comunicación con la API de Suriel en el endpoint del POOL*/
             Test(options);

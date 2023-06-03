@@ -133,7 +133,7 @@ var callbackAlgoritmo = router.get('/callback', function(req, res, error) {
                 objetosGlobales[position].imagen_url =  bodyS.images[0].url;
                 console.log('imagen_url');
                 console.log(imagen_url);
-            };
+            }
              
            
             

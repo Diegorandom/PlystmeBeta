@@ -9,8 +9,7 @@
         "rawSpec": "2.1.1",
         "spec": "2.1.1",
         "type": "version"
-      },
-      "/Users/macbookair/Desktop/proyecto-techclub/node_modules/socket.io"
+      }
     ]
   ],
   "_from": "socket.io-client@2.1.1",
@@ -44,7 +43,6 @@
   "_shasum": "dcb38103436ab4578ddb026638ae2f21b623671f",
   "_shrinkwrap": null,
   "_spec": "socket.io-client@2.1.1",
-  "_where": "/Users/macbookair/Desktop/proyecto-techclub/node_modules/socket.io",
   "bugs": {
     "url": "https://github.com/Automattic/socket.io-client/issues"
   },

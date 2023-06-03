@@ -116,7 +116,7 @@ router.post('/preferencias', function(req, res, error) {
 
                 }
                 });
-        };
+        }
         
         /*Inicio de proceso de obtención de perfil de preferencias del usuario*/
         Test(options)
