@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 
 var colors = new Array(
   [62, 35, 255],

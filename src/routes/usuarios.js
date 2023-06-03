@@ -29,13 +29,13 @@ router.get('/usuarios', function (request, response) {
 
     } else {
         console.log('Error con variables globales...')
-        res.send("Error Origen Usuarios")
+        response.send("Error Origen Usuarios")
     }
 
 })
 
 router.get('/userid', function (request, response, error) {
-    var objetosGlobales = request.app.get('objetosGlobales');
+    let objetosGlobales = request.app.get('objetosGlobales');
     let position = request.sessions.position;
 
     if (error == true || objetosGlobales[position] == undefined) {

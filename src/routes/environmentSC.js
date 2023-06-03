@@ -1,7 +1,7 @@
- 
+
 var express = require('express');
 var router = new express.Router();
-var sc = require('supercolliderjs');
+//var sc = require('supercolliderjs');
 
 /**
 
@@ -47,10 +47,10 @@ sc.server.boot().then((server) => {
   SynthDef ("Fun2", { arg outbus=0, freqOne=${freqBase}, freqTwo=${freqBase2}, apMaxdelay=${energiaBase}, apDelay=${energiaBase2}, apDecay=${acusticaBase}, amp=1, gate=1; 
         var sig, in;
         in = LocalIn.ar(1);
-	    sig = SinOsc.ar((MouseX.kr(freqOne.midicps-12,freqTwo.midicps+12,0, 0.4)), in * LFDNoise3.ar(freqOne, mul: (MouseY.kr(0,1))),LFDNoise3.ar(freqTwo, 1)).tanh;
+      sig = SinOsc.ar((MouseX.kr(freqOne.midicps-12,freqTwo.midicps+12,0, 0.4)), in * LFDNoise3.ar(freqOne, mul: (MouseY.kr(0,1))),LFDNoise3.ar(freqTwo, 1)).tanh;
         5.do{sig = AllpassC.ar(sig, apMaxdelay,{MouseX.kr(0.2.rand + apDelay)} ! 2, apDecay)};
         LocalOut.ar(sig.tanh);
-	    Out.ar(outbus,Pan2.ar(sig, LFNoise1.ar(0.33))*amp);
+      Out.ar(outbus,Pan2.ar(sig, LFNoise1.ar(0.33))*amp);
     }).add;
 
     `);
@@ -65,11 +65,11 @@ sc.server.boot().then((server) => {
         freqTwo=${freqBase}, apMaxdelay=${energiaBase}, apDelay=${energiaBase2}, apDecay=${acusticaBase}, gate=1;
         var in, amp, sig;
         in = LocalIn.ar(2);
-	    amp = MouseX.kr(0.5,1,0,0.5);
+      amp = MouseX.kr(0.5,1,0,0.5);
         sig = SinOsc.ar(fundamental.midicps, in * LFDNoise3.ar(freqOne, 4),LFDNoise3.ar(freqTwo, 2)).tanh;
         5.do{sig = AllpassC.ar(sig, apMaxdelay,{0.2.rand + apDelay} ! 2, apDecay)};
         LocalOut.ar(sig.tanh);
-	    Out.ar(outbus, sig.tanh * amp);
+      Out.ar(outbus, sig.tanh * amp);
     }).add;
 
     `);
@@ -84,11 +84,11 @@ sc.server.boot().then((server) => {
         freqOne=0.1, freqTwo= 3.0, apMaxdelay=0.3, apDelay=0.1, apDecay=5, gate=1;
         var in, amp, sig;
         in = LocalIn.ar(2);
-	    amp = MouseX.kr(1,0.5,0,0.5);
+      amp = MouseX.kr(1,0.5,0,0.5);
         sig = SinOsc.ar(fundamental.midicps*5/4, in * LFDNoise3.ar(freqOne, 4),LFDNoise3.ar(freqTwo, 2)).tanh;
         5.do{sig = AllpassC.ar(sig, apMaxdelay,{0.2.rand + apDelay} ! 2, apDecay)};
         LocalOut.ar(sig.tanh);
-	    Out.ar(outbus, sig.tanh * amp);
+      Out.ar(outbus, sig.tanh * amp);
     }).add;
 
     `);
@@ -102,11 +102,11 @@ sc.server.boot().then((server) => {
         freqOne=0.1, freqTwo= 3.0, apMaxdelay=0.3, apDelay=0.1, apDecay=5, gate=1;
         var in, amp, sig;
         in = LocalIn.ar(2);
-	    amp = MouseX.kr(0.5,1,0,0.5);
+      amp = MouseX.kr(0.5,1,0,0.5);
         sig = SinOsc.ar(fundamental.midicps*9/5, in * LFDNoise3.ar(freqOne, 4),LFDNoise3.ar(freqTwo, 2)).tanh;
         5.do{sig = AllpassC.ar(sig, apMaxdelay,{0.2.rand + apDelay} ! 2, apDecay)};
         LocalOut.ar(sig.tanh);
-	    Out.ar(outbus, sig.tanh * amp);
+      Out.ar(outbus, sig.tanh * amp);
     }).add;
 
     `);
@@ -121,12 +121,12 @@ sc.server.boot().then((server) => {
   SynthDef ("armonia2", { arg outbus=0, fundamental=${freqBase}, freqTwo=${freqBase}, apMaxdelay=${energiaBase}, apDelay=${energiaBase2}, apDecay=${acusticaBase}, gate=1;
         var in, amp, sig;
         in = LocalIn.ar(2);
-	    amp = MouseX.kr(0.5,1,0,0.5);
+      amp = MouseX.kr(0.5,1,0,0.5);
         sig = SinOsc.ar(fundamental.midicps, in * LFDNoise3.ar(freqOne, 4),LFDNoise3.ar(freqTwo, 2)).tanh;
         5.do{sig = AllpassC.ar(sig, apMaxdelay,{0.2.rand + apDelay} ! 2, apDecay)
         };
         LocalOut.ar(sig.tanh);
-	    Out.ar(outbus, sig.tanh * amp);
+      Out.ar(outbus, sig.tanh * amp);
     }).add;
 
     `);
@@ -139,11 +139,11 @@ sc.server.boot().then((server) => {
         freqOne=0.1, freqTwo= 3.0, apMaxdelay=0.3, apDelay=0.1, apDecay=5, gate=1;
         var in, amp, sig;
         in = LocalIn.ar(2);
-	    amp = MouseX.kr(0.5,1,0,0.5);
+      amp = MouseX.kr(0.5,1,0,0.5);
         sig = SinOsc.ar(fundamental.midicps*6/5, in * LFDNoise3.ar(freqOne, 4),LFDNoise3.ar(freqTwo, 2)).tanh;
         5.do{sig = AllpassC.ar(sig, apMaxdelay,{0.2.rand + apDelay} ! 2, apDecay)};
         LocalOut.ar(sig.tanh);
-	    Out.ar(outbus, sig.tanh * amp);
+      Out.ar(outbus, sig.tanh * amp);
     }).add;
 
     `);
@@ -156,11 +156,11 @@ sc.server.boot().then((server) => {
         freqOne=0.1, freqTwo= 3.0, apMaxdelay=0.3, apDelay=0.1, apDecay=5, gate=1;
         var in, amp, sig;
         in = LocalIn.ar(2);
-	    amp = MouseX.kr(1,0.5,0,0.5);
+      amp = MouseX.kr(1,0.5,0,0.5);
         sig = SinOsc.ar(fundamental.midicps*10/5, in * LFDNoise3.ar(freqOne, 4),LFDNoise3.ar(freqTwo, 2)).tanh;
         5.do{sig = AllpassC.ar(sig, apMaxdelay,{0.2.rand + apDelay} ! 2, apDecay)};
         LocalOut.ar(sig.tanh);
-	    Out.ar(outbus, sig.tanh * amp);
+      Out.ar(outbus, sig.tanh * amp);
     }).add;
 
     `);

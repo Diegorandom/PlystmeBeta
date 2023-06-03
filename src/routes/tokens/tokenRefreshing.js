@@ -4,21 +4,25 @@ var request = require("request");
 
 /*ESTE SOFTWARE NO ESTÁ EN USO*/
 
-router.get('/refresh_token', function(req, res) {
+router.get('/refresh_token', function (req, res) {
 
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
   var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(objetosGlobales[0].client_id + ':' + objetosGlobales[0].client_secret).toString('base64')) },
+    headers: {
+      // eslint-disable-next-line no-undef
+      'Authorization': 'Basic ' + secrets.client_id + ':' + secrets.client_id,
+    },
     form: {
       grant_type: 'refresh_token',
       refresh_token: refresh_token
     },
     json: true
-  };
+  }
 
-  request.post(authOptions, function(error, response, bodyS) {
+
+  request.post(authOptions, function (error, response, bodyS) {
     if (!error && response.statusCode === 200) {
       var access_token = bodyS.access_token;
       res.send({
