@@ -114,7 +114,6 @@ Todas estas configuraciones se guardan en la posición [0] del objeto objetosGlo
 app.set('port', (process.env.PORT || 5000));
 objetosGlobales[0].client_id = process.env.client_id
 objetosGlobales[0].client_secret = process.env.client_secret
-
 console.log('objetosGlobales[0].client_id ', process.env.client_id)
 
 if (app.get('port') == 5000) {
