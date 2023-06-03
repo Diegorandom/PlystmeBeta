@@ -1,7 +1,6 @@
 var express = require("express");
 var router = new express.Router();
 
-
 /*Se ejecuta la ruta del perfil para renderizarlo*/
 router.get('/usuarios', function (request, response) {
     var objetosGlobales = request.app.get('objetosGlobales');
@@ -11,11 +10,9 @@ router.get('/usuarios', function (request, response) {
     if (objetosGlobales != undefined || position != undefined || objetosGlobales[position] != undefined) {
 
         const promesaEventoUsuario = objetosGlobales[0].session[0]
-            .writeTransaction(tx =>
-                tx.run(
-                    'MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[{status:true}]-(u:usuario) RETURN u.nombre, u.imagen_url, u.userid',
-                    { codigoEvento: request.sessions.codigoEvento }
-                ))
+            .writeTransaction(tx => tx.run(
+                'MATCH (e:Evento {codigoEvento:{codigoEvento}})<-[{status:true}]-(u:usuario) RETURN u.nombre, u.imagen_url, u.userid',
+                { codigoEvento: objetosGlobales[0].codigoEvento }))
 
         promesaEventoUsuario
             .then(function (usuarios) {
