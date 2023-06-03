@@ -83,7 +83,6 @@ module.exports = {
                 createEvent();
                 /*JOIN crea el room cuyo ID será el código del evento*/
                 socket.join(codigoEvento);
-
             } else {
                 console.log(" Error = userId -> ", userId, "msg.posicion ->", msg.posicion)
             }
@@ -154,13 +153,10 @@ module.exports = {
 
         });
 
-
         /*
         multi rooms
         https://gist.github.com/crtr0/2896891
         */
-
-
         socket.on('usuarioNuevoCodigo', function (msg, codigoEvento) {
             console.log('Cookies via Socket ->', socket.request.headers.cookie)
             console.log('Position via Socket ->', socket.request.position)
@@ -169,7 +165,6 @@ module.exports = {
             console.log('UserId del usuario que quiere entrar - ', msg.userId)
             codigoEvento = msg.codigoEvento;
             var userId = msg.userId
-
             const promesaChecarEvento = objetosGlobales[0].session[0]
                 .writeTransaction(tx => tx.run('MATCH (n:Evento) WHERE n.codigoEvento={codigoEvento} AND n.status=true RETURN n.codigoEvento', { codigoEvento: codigoEvento }))
 
@@ -352,7 +347,6 @@ module.exports = {
             var lng = msg.posicion.lng
             //157m de radio.
             var radio = 0.001
-
             console.log('Latitud del usuario -> ', lat)
             console.log('Longitud del usuario -> ', lng)
             console.log('radio -> ', radio)
@@ -656,12 +650,10 @@ module.exports = {
 
                                                         /*TESTEO DE MENSAJES*/
 
-
                                                         // then simply use to or in (they are the same) when broadcasting or emitting (server-side)
                                                         /*io.to(codigoEvento).emit('saleUsuario',{codigoEvento: codigoEvento, idsEvento:idsEvento,mensaje:'Nuevo Usuario', usuarios:usuarios}); */
                                                         socket.leave(codigoEvento, (err) => {
                                                             console.log(err)
-
                                                             var rooms = Object.keys(socket.rooms);
                                                             console.log('rooms en las que sigue el usuario -> ', rooms); // [ <socket.id>, 'room 237' ]
 

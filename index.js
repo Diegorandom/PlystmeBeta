@@ -304,10 +304,8 @@ app.get('/error', function (req, res, error) {
 
 /* INICIA SOCKETS*/
 
-var sockets = require("./src/routes/sockets/sockets"); c
+var sockets = require("./src/routes/sockets/sockets");
 io.on('connection', sockets.call())
-
-
 
 /*TERMINA SOCKETS*/
 
