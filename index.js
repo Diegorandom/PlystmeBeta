@@ -14,7 +14,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override')
 var logger = require('morgan');
 var path = require('path');
-var neo4j = require('neo4j-driver').v1;
+var neo4j = require('neo4j-driver')
 var sessions = require("client-sessions");
 
 var app = require('express')();
@@ -81,28 +81,6 @@ if (graphenedbURL == undefined) {
 
 objetosGlobales[0].session[0] = driver.session();
 
-/* 
-PROTOCOLO DE SEGURIDAD CON CLAVE SPOTIFY 
-
-El protocolo de seguridad utiliza una llave la cual se encuentre en secret-config.json y por ningun motivo debe ser compartida con ninguna persona que no pertenezca al grupo de programadores de Atmos.
-*/
-
-var fileName = "./secret-config.json";
-var config;
-
-/*la siguiente estructura TRY configura la llave secreta y la manda a llamar en la variable config.*/
-try {
-  config = require(fileName);
-}
-catch (err) {
-  config = {}
-  console.log("unable to read file '" + fileName + "': ", err);
-  console.log("see secret-config-sample.json for an example");
-}
-
-console.log("session secret is:", config.sessionSecret);
-//Finaliza protocolo de seguridad
-
 /*
 SETUP DE EXPRESS
 
@@ -134,11 +112,8 @@ Todas estas configuraciones se guardan en la posición [0] del objeto objetosGlo
 */
 // eslint-disable-next-line no-undef
 app.set('port', (process.env.PORT || 5000));
-
-// eslint-disable-next-line no-undef
-objetosGlobales[0].client_id = secrets.client_id; // Your client id
-// eslint-disable-next-line no-undef
-objetosGlobales[0].client_secret = secrets.secret; // Your secret
+objetosGlobales[0].client_id = process.env.client_id
+objetosGlobales[0].client_secret = process.env.client_secret
 
 if (app.get('port') == 5000) {
   console.log("Corriendo en servidor local con uri de redireccionamiento: ");
@@ -147,10 +122,11 @@ if (app.get('port') == 5000) {
   //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
   objetosGlobales[0].spotifyApi = new SpotifyWebApi({
     clientId: 'b590c1e14afd46a69891549457267135',
-    clientSecret: config.sessionSecret,
+    clientSecret: process.env.sessionSecret,
     redirectUri: 'http://localhost:5000/callback'
   });
   console.log(objetosGlobales[0].redirect_uri);
+
 } else {
   console.log("Corriendo en servidor web con uri de redireccionamiento: ");
   objetosGlobales[0].redirect_uri = 'https://www.plystme.com/callback'; // Your redirect uri
