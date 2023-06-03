@@ -215,7 +215,8 @@ const getAlgorithmRecommendation = (options, playlist) => {
         /*La lista de canciones recomendadas es enviada al cliente*/
         console.log('Despliegue de playlist exitosa')
         return {
-            send: body.listaCanciones
+            send: body.listaCanciones,
+            playlist
         }
 
     });
