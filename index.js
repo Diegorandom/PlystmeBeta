@@ -207,7 +207,7 @@ app.use(require("./src/routes/guardaPlaylist"));
 app.use(require("./src/routes/guardarTOP50"));
 
 //Proceso para refrescar un token
-app.use(require('./src/routes/tokens/tokenRefreshing'));
+app.use(require('./src/https/tokens/tokenRefreshing'));
 
 /*Ruta a perfil*/
 app.use(require('./src/routes/perfil'));
@@ -246,7 +246,7 @@ app.use(require('./src/routes/rangoTiempo'));
 app.use(require('./src/routes/DatosBD'));
 
 /*Proceso para refrescar token de Spotify (en proceso)*/
-app.use(require('./src/routes/tokens/refreshingToken'));
+app.use(require('./src/https/tokens/refreshingToken'));
 
 /*Ruta para obtener el arreglo con el número de usuarios, sus nombre y fotos, de nuestra BD*/
 app.use(require('./src/routes/usuarios'));
