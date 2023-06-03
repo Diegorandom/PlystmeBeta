@@ -1,30 +1,16 @@
 /* eslint-disable no-undef */
+
+const checkUrl = require('../../utils/checkUrl');
+
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see the error "The Geolocation service
 // failed.", it means you probably did not give permission for the browser to
 // locate you.
 
-function checkUrl(url) {
-    console.log('Checando URL -> ', url)
-    $.get(url)
-        .done(function () {
-            return true
-            // Do something now you know the image exists.
-
-        }).fail(function () {
-            return false
-            // Image doesn't exist - do something else.
-
-        })
-}
-
-
-
 var mapa = document.createElement('script')
 mapa.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCtA2WyXGMPMY9Nk642s_bSkEEp_5tguoU"
 var contenedorMapa = document.getElementById('mapa')
 contenedorMapa.appendChild(mapa)
-
 
 
 /*
