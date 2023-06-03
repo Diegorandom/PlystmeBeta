@@ -1,6 +1,6 @@
 var express = require("express");
 var router = new express.Router();
-var getAlgorithmRecommendation = require('../../src/utils/httpsClient')
+var getAlgorithmRecommendation = require('../https/httpsClient')
 /*Proceso para entrar a un pool*/
 router.get('/pool', function (req, res) {
 

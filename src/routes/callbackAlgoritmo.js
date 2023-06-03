@@ -6,7 +6,7 @@ var logger = require('morgan');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 let authOptionsModule = require('../utils/auth/authOptions')
-let httpsClient = require('../utils/httpsClient');
+let httpsClient = require('../https/httpsClient');
 
 //CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
 router.use(logger('dev'));
