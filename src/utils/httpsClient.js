@@ -202,8 +202,6 @@ const getAlgorithmRecommendation = (options, playlist) => {
         console.log(body);
         console.log(body)
 
-        playlist = []
-
         /*Se guarda la lista de canciones en el arreglo playlist del objetoGlobal del usuario correspondiente. Esto se hace para después usar este objeto en caso de que sea requerido guardar este playlist en Spotify*/
         body.listaCanciones.forEach(function (item) {
             playlist.push(item[1])

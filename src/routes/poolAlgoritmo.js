@@ -51,7 +51,7 @@ router.get('/pool', function (req, res) {
     };
 
     /*Comienza proceso de comunicación con la API de Suriel en el endpoint del POOL*/
-    let response = getAlgorithmRecommendation(options, objetosGlobales[position].playlist);
+    let response = getAlgorithmRecommendation(options, objetosGlobales[position].playlist ? objetosGlobales[position].playlist : []);
     objetosGlobales[position].playlist = response.playlist
     res.send(response.send)
 
