@@ -56,7 +56,6 @@ const get = (
             console.log('Se creará nuevo record en base de datos');
             mensaje = "nuevo_usuario";
 
-
             let response = createUsuario(
                 session,
                 pais,
@@ -73,7 +72,6 @@ const get = (
             return {
                 redirect: response
             }
-
 
         } else if (checkid_result.records.length >= 1) {
             console.log('Este usuario ya está registrado (no debería ser más de 1)')
@@ -172,8 +170,60 @@ const post = (
     })
 }
 
+/* Llamada al algoritmo de recomendaciones de Suriel */
+/**
+ * 
+ * 
+ * 
+ * @param {*} options 
+ */
+const getAlgorithmRecommendation = (options, playlist) => {
+    https.post(options, function (error, response, body) {
+        let conteoErrores = 0;
+
+        /*En caso de que haya errores en el requerimiento se manda el error a la consola*/
+        if (error == true || body == undefined || body.listaCanciones == null) {
+            console.log('error en Endpoint de Pool --> ', error)
+            console.log("API dormida zzzzz");
+            /*Se vuelve a intentar la comunicación con la API después de un tiempo de espera (1 segundo)*/
+            setTimeout(function () {
+                getAlgorithmRecommendation(options)
+            }, 1000);
+            conteoErrores += 1;
+
+            /*Si los errores en la API persisten por más de 30 segundos se manda a la pantalla de error*/
+            if (conteoErrores > 30) {
+                return 'Algorithm down'
+            }
+
+        }
+
+        console.log("API funcionando, GRACIAS A DIOS ALV PRRO!...");
+        console.log(body);
+        console.log(body)
+
+        playlist = []
+
+        /*Se guarda la lista de canciones en el arreglo playlist del objetoGlobal del usuario correspondiente. Esto se hace para después usar este objeto en caso de que sea requerido guardar este playlist en Spotify*/
+        body.listaCanciones.forEach(function (item) {
+            playlist.push(item[1])
+        })
+
+        console.log("objetosGlobales[position].playlist")
+        console.log(playlist)
+
+        /*La lista de canciones recomendadas es enviada al cliente*/
+        console.log('Despliegue de playlist exitosa')
+        return {
+            send: body.listaCanciones
+        }
+
+    });
+}
+
 module.exports = {
     get,
-    post
+    post,
+    getAlgorithmRecommendation
 }
 
