@@ -21,7 +21,7 @@ const get = (
     bdEstado,
     spotifyid
 ) => {
-    https.get(options, function (error, bodyS) {
+    return https.get(options, function (error, bodyS) {
         if (error) return error
 
         /*Se guarda la información del usuario en el objeto global correspondiente*/
