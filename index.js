@@ -4,27 +4,23 @@ Tasa límite de requests Spotify - Documentación
 https://stackoverflow.com/questions/30548073/spotify-web-api-rate-limits
 */
 
-var express = require('express')
+var express = require('express');
 //make sure you keep this order
 
 var cookieParser = require('cookie-parser');
-var fs = require("fs");
 var SpotifyWebApi = require('spotify-web-api-node');
 var bodyParser = require('body-parser');
-var methodOverride = require('method-override')
+var methodOverride = require('method-override');
 var logger = require('morgan');
 var path = require('path');
-var shuffle = require('shuffle-array');
-var neo4j = require('neo4j-driver').v1;
-var sessions = require("client-sessions");
-var idleTimer = require("idle-timer");
-var DelayedResponse = require('http-delayed-response')
+var sessions = require('client-sessions');
 
 var app = require('express')();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var io = require('socket.io');
 
-var cookieParser = require('cookie-parser');
+import  { driver } from './src/services/database';
+import { configFile } from './src/services/spotify';
 
 
 //CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
@@ -41,7 +37,26 @@ Documentación de Código
 El objeto jsonDatosInit es la variable constructor con la cual se define la estructura de datos de los usuarios.
 Este objeto construye el usuario inicial con el cual funciona la plataforma cuando un usuario que no está registrado en el sistema entra a la página principal.
 */
-var jsonDatosInit = {nombre:"", ref:false, email:null, external_urls:null, seguidores:null, imagen_url:null, pais:null, access_token:null, track_uri:[], track_uri_ref:null, num:50, danceability:0, energia:0, fundamental:0, amplitud:0, modo:0, dialogo:0, acustica:0, instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0, pool:[], playlist:[], popularidadAvg:0, usuarios:[], bdEstado:"noGuardado", rango:"short_term", cambioRango:false, refresh_token:null, refreshing:false, refreshingUsers:false, session:[]}
+var jsonDatosInit = {
+  nombre:"", 
+  ref:false, 
+  email:null, 
+  external_urls:null, 
+  seguidores:null, 
+  imagen_url:null, 
+  pais:null, 
+  access_token:null, 
+  
+  track_uri:[], 
+  track_uri_ref:null, 
+  num:50, danceability:0, 
+  energia:0, 
+  fundamental:0, 
+  amplitud:0, 
+  modo:0, 
+  dialogo:0, 
+  acustica:0, 
+  instrumental:0, audiencia:0, positivismo:0, tempo:0, firma_tiempo:0, duracion:0, danceability2:0, energia2:0, fundamental2:0, amplitud2:0, modo2:0, dialogo2:0, acustica2:0, instrumental2:0, audiencia2:0, positivismo2:0, tempo2:0, firma_tiempo2:0, duracion2:0, followers:null, anti_playlist:[], trackid:null ,artist_data:[], track_uri_ref2:[], seedTracks:[], userid:null, seed_shuffled:null, pass:null, pass2:null, mes:null, dia:null, año:null, noticias:null, Userdata:[], mensaje:null, add:null, totalUsers:0, pool:[], playlist:[], popularidadAvg:0, usuarios:[], bdEstado:"noGuardado", rango:"short_term", cambioRango:false, refresh_token:null, refreshing:false, refreshingUsers:false, session:[]}
 
 /*Se asigna position = 0 para que el sistema siempre arranque funcionando con la estructura inicial del objeto Global que contiene a todos los usuarios*/
 var position = 0;
@@ -51,56 +66,10 @@ var objetosGlobales=[];
 
 objetosGlobales[0] = jsonDatosInit;
 
-// Conexión con base de datos remota NO CAMBIAR
-var graphenedbURL = process.env.GRAPHENEDB_BOLT_URL;
-var graphenedbUser = process.env.GRAPHENEDB_BOLT_USER;
-var graphenedbPass = process.env.GRAPHENEDB_BOLT_PASSWORD;
-
-console.log(graphenedbUser)
-
-/*
-Configuración de base de datos
-
-Hay 2 tipos de conexiones posibles:
-    1. Conexion con base de datos local
-    2. Conexion con base de datos del servidor
-    
-Cuando se conecta la base de datos con localhost deben usarse los permisos mencionados en la siguiente estructura IF.
-No se debe cambiar nada de la estructura de configuración de la base de datos.
-*/
-
-if(graphenedbURL == undefined){
-    var driver = neo4j.driver('bolt://hobby-gbcebfemnffigbkefemgfaal.dbs.graphenedb.com:24786', 
-                                neo4j.auth.basic('app91002402-MWprOS', 'b.N1zF4KnI6xoa.Kt5xmDPgVvFuO0CG'), 
-                                {maxTransactionRetryTime: 60 * 1000});
-}else{
-    var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass), 
-                            {maxTransactionRetryTime: 60 * 1000});
-};
-
+// database.js
 objetosGlobales[0].session[0] = driver.session();
 
-/* 
-PROTOCOLO DE SEGURIDAD CON CLAVE SPOTIFY 
-
-El protocolo de seguridad utiliza una llave la cual se encuentre en secret-config.json y por ningun motivo debe ser compartida con ninguna persona que no pertenezca al grupo de programadores de Atmos.
-*/
-
-var fileName = "./secret-config.json";
-var config;
-
-/*la siguiente estructura TRY configura la llave secreta y la manda a llamar en la variable config.*/
-try {
-  config = require(fileName);
-}
-catch (err) {
-  config = {}
-  console.log("unable to read file '" + fileName + "': ", err);
-  console.log("see secret-config-sample.json for an example");
-};
-
-console.log("session secret is:", config.sessionSecret);
-//Finaliza protocolo de seguridad
+var config = configFile
 
 /*
 SETUP DE EXPRESS
@@ -225,76 +194,76 @@ app.set('driver', driver);
 */
 
 /*La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. */
-app.use(require("./routes/heartbeat"));
+app.use(require("./src/routes/heartbeat"));
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
-app.use(require("./routes/inicio"))
+app.use(require("./src/routes/inicio"))
 
 //Login procesa el REQUEST de la API de Spotify para autorizacion
-app.use(require('./routes/login'))
+app.use(require('./src/routes/login'))
 
 /*CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION*/
-app.use(require("./routes/callbackAlgoritmo"));
+app.use(require("./src/routes/callbackAlgoritmo"));
 
 /*Proceso de conexio con la API del algoritmo del pool*/
-app.use(require("./routes/poolAlgoritmo"));
+app.use(require("./src/routes/poolAlgoritmo"));
 
 /*Ruta de proceso para guardar playlist en Spotify*/
-app.use(require("./routes/guardaPlaylist"));
+app.use(require("./src/routes/guardaPlaylist"));
 
 /*Ruta de proceso para guardar TOP 50 en Spotify*/
-app.use(require("./routes/guardarTOP50"));
+app.use(require("./src/routes/guardarTOP50"));
 
 //Proceso para refrescar un token
-app.use(require('./routes/tokenRefreshing'));
+app.use(require('./src/routes/tokenRefreshing'));
 
 /*Ruta a perfil*/
-app.use(require('./routes/perfil'));
+app.use(require('./src/routes/perfil'));
         
 /*PERFIL DE UN TRACK*/
-app.use(require("./routes/perfilTrack"));
+app.use(require("./src/routes/perfilTrack"));
 
 /*Ruta a preferencias*/
-app.use(require("./routes/preferencias"));
+app.use(require("./src/routes/preferencias"));
 
-app.use(require("./routes/chequeoBD"));
+app.use(require("./src/routes/chequeoBD"));
 
 /*Ruta a proceso  para guardar un track*/
-app.use(require('./routes/saveTrack'))
+app.use(require('./src/routes/saveTrack'))
 
 /*Ruta a funcion IDLE, la cual depura los datos de objetoGlobales*/
-app.use(require('./routes/idle'))
+app.use(require('./src/routes/idle'))
 
 /*Proceso para salirse de una sesion*/
-app.use(require('./routes/logOut'))
+app.use(require('./src/routes/logOut'))
 
 /*Rutas no implementadas aun*/
-app.use(require('./routes/otrosProcesos'))
+app.use(require('./src/routes/otrosProcesos'))
 
 /*Ambiente de SUPERCOLLIDER - no utilizada por el momento*/
-app.use(require("./routes/environmentSC"));
+app.use(require("./src/routes/environmentSC"));
 
 /*Ruta de donde se extrae la información del usuario de Spotify hacia nuestra propia BD*/
-app.use(require('./routes/mineriaUsuario'));
+app.use(require('./src/routes/mineriaUsuario'));
 
 
 /*Ruta donde se administra el tipo de minería necesaria dado que se escoge un rango de tiempo para Top 50 diferente*/
-app.use(require('./routes/rangoTiempo'));
+app.use(require('./src/routes/rangoTiempo'));
 
 /*Ruta para procesos con BD que no se usa actualmente*/
-app.use(require('./routes/DatosBD'));
+app.use(require('./src/routes/DatosBD'));
 
 /*Proceso para refrescar token de Spotify (en proceso)*/
-app.use(require('./routes/refreshingToken'));
+app.use(require('./src/routes/refreshingToken'));
 
 /*Ruta para obtener el arreglo con el número de usuarios, sus nombre y fotos, de nuestra BD*/
-app.use(require('./routes/usuarios'));
+app.use(require('./src/routes/usuarios'));
 
 /*Ruta no utilizada*/
-app.use(require('./routes/posicionUsuarios'));
+app.use(require('./src/routes/posicionUsuarios'));
 
 //Revision de usuario para checar si es host
-app.use(require('./routes/esHost'));
+app.use(require('./src/routes/esHost'));
 
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function(req, res, error){
@@ -304,7 +273,7 @@ app.get('/error', function(req, res, error){
 
 /* INICIA SOCKETS*/
 
-var sockets = require("./routes/sockets/sockets");c
+var sockets = require("./src/routes/sockets/sockets");c
 io.on('connection', sockets.call() )
 
 
