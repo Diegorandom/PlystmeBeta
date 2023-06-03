@@ -26,7 +26,6 @@ var io = require('socket.io')(server);
 app.use(logger('dev'));
 app.use(bodyParser.json()); //DECLARACION DE PROTOCOLO DE LECTURA DE LAS VARIABLES INTERNAS "BODY" DE LAS FUNCIONES 
 app.use(bodyParser.urlencoded({ extended: true })); //DECLARACIÓN DE ENCODER DE URL
-// eslint-disable-next-line no-undef
 app.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA PUBLIC BY DEFAULT PARA LOS RECURSOS
 app.use(cookieParser());
 app.use(methodOverride());
@@ -163,9 +162,6 @@ if (app.get('port') == 5000) {
     redirectUri: 'https://www.plystme.com/callback'
   });
   console.log(objetosGlobales[0].redirect_uri);
-}
-//Finaliza setup de puerto
-
 
 var generateRandomString = function (length) {
   var text = '';

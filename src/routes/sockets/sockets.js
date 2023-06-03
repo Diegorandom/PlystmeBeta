@@ -18,6 +18,7 @@ module.exports = {
         io.emit('conexionServidor', { mensaje: 'Mensaje de prueba de servidor a cliente' })
 
         /*Código de creación de Evento*/
+
         socket.on('crearEvento', function (msg, codigoEvento) {
             console.log('Evento creado')
             console.log('Posicion del evento -> ', msg.posicion)
@@ -32,6 +33,7 @@ module.exports = {
                 let eventCreationErrorCounter = 0
                 const createEvent = () => {
                     // eslint-disable-next-line no-undef
+
                     const promesaCrearEvento = objetosGlobales[0].session[0]
                         .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, lat:{lat}, lng:{lng}, status:true}) Return n,m', { codigoEvento: codigoEvento, lat: msg.posicion.lat, lng: msg.posicion.lng, spotifyidUsuario: userId }))
 
@@ -98,6 +100,7 @@ module.exports = {
                 let eventCodeCreationErrorCounter = 0
                 const createCodeEvent = () => {
                     // eslint-disable-next-line no-undef
+
                     const promesaCrearEvento = objetosGlobales[0].session[0]
                         .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, status:true}) Return n,m', { codigoEvento: codigoEvento, spotifyidUsuario: userId }))
 
@@ -207,7 +210,6 @@ module.exports = {
                                                     var usuarios = []
 
                                                     ids.records.forEach(function (item) {
-
                                                         console.log('item -> ', item._fields)
 
                                                         idsEvento.push(item._fields[0].properties.spotifyid)
@@ -279,7 +281,6 @@ module.exports = {
 
                                                     var idsEvento = []
                                                     var usuarios = []
-
                                                     ids.records.forEach(function (item) {
 
                                                         console.log('item -> ', item._fields)
@@ -385,7 +386,6 @@ module.exports = {
                                 if (usuarioId.records[0] == undefined) {
 
                                     console.log('Guardando nuevo invitado en el evento de la BD')
-
                                     // eslint-disable-next-line no-undef
                                     const promesaNuevoUsuario = objetosGlobales[0].session[0]
                                         .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}), (n:Evento {codigoEvento:{codigoEvento}}) CREATE p=(m)-[r:Invitado {status:true}]->(n) Return p', { spotifyidUsuario: userId, codigoEvento: codigoEvento }))
@@ -436,7 +436,6 @@ module.exports = {
 
 
                                                     })
-
                                                     // eslint-disable-next-line no-undef
                                                     objetosGlobales[0].session[0].close();
                                                 })
@@ -484,7 +483,6 @@ module.exports = {
                                                     var usuarios = []
 
                                                     ids.records.forEach(function (item) {
-
                                                         console.log('item -> ', item._fields)
 
                                                         idsEvento.push(item._fields[0].properties.spotifyid)
@@ -538,7 +536,6 @@ module.exports = {
                         //console.log(codigoBD.records[0]._fields)
 
                         var listaEventos = [];
-
                         codigoBD.records.forEach(function (item) {
                             listaEventos.push(item._fields)
 
@@ -638,9 +635,7 @@ module.exports = {
                                             if (ids.records[0] != null) {
                                                 var idsEvento = []
                                                 var usuarios = []
-
                                                 ids.records.forEach(function (item) {
-
                                                     console.log('item -> ', item._fields)
 
                                                     idsEvento.push(item._fields[0].properties.spotifyid)
