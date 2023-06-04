@@ -1,10 +1,10 @@
-const promesaMatchUsuario = (session, spotifyid) => {
+const matchDatabaseUsuario = (session, spotifyid) => {
 
     /*Se consulta si el usuario ya existe en la base de datos*/
-    const promesaMatchUsuario = session
+    const matchDatabaseUsuario = session
         .writeTransaction(tx => tx.run('MATCH (n:usuario) WHERE n.spotifyid={spotifyid} RETURN n', { spotifyid }))
 
-    promesaMatchUsuario.then(function (checkid_result) {
+    matchDatabaseUsuario.then(function (checkid_result) {
         console.log('se realizó la consulta a la base de datos')
 
         console.log('checkid_result.length:');
@@ -12,10 +12,10 @@ const promesaMatchUsuario = (session, spotifyid) => {
         return checkid_result;
     })
 
-    promesaMatchUsuario.catch(function (err) {
+    matchDatabaseUsuario.catch(function (err) {
         console.log(err);
         return undefined
     })
 }
 
-module.exports = promesaMatchUsuario
+module.exports = matchDatabaseUsuario

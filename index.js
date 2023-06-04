@@ -6,6 +6,9 @@ https://stackoverflow.com/questions/30548073/spotify-web-api-rate-limits
 */
 
 var express = require('express')
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 //make sure you keep this order
 
 var cookieParser = require('cookie-parser');
@@ -17,10 +20,6 @@ var path = require('path');
 var neo4j = require('neo4j-driver')
 var sessions = require("client-sessions");
 
-var app = require('express')();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-
 
 //CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
 app.use(logger('dev'));
@@ -29,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true })); //DECLARACIÓN DE ENCODER DE
 app.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA PUBLIC BY DEFAULT PARA LOS RECURSOS
 app.use(cookieParser());
 app.use(methodOverride());
+var mainSocket = require('./src/sockets/mainSocket')
 
 /* 
 Documentación de Código
@@ -251,9 +251,6 @@ app.use(require('./src/https/tokens/refreshingToken'));
 /*Ruta para obtener el arreglo con el número de usuarios, sus nombre y fotos, de nuestra BD*/
 app.use(require('./src/routes/usuarios'));
 
-/*Ruta no utilizada*/
-app.use(require('./src/routes/posicionUsuarios'));
-
 //Revision de usuario para checar si es host
 app.use(require('./src/routes/esHost'));
 
@@ -264,10 +261,14 @@ app.get('/error', function (req, res, error) {
 })
 
 /* INICIA SOCKETS*/
-
-var sockets = require("./src/routes/sockets/sockets");
-io.on('connection', sockets.call())
-
+io.on('connection', (socket) => {
+  mainSocket(
+    socket,
+    session,
+    userId,
+    jsonDatos.usuarios
+  )
+})
 /*TERMINA SOCKETS*/
 
 

@@ -1,6 +1,6 @@
 var querystring = require('querystring');
 
-const createUsuario = (
+const createDatabaseUsuario = (
     session,
     pais,
     nombre,
@@ -47,4 +47,4 @@ const createUsuario = (
     })
 }
 
-module.exports = createUsuario
+module.exports = createDatabaseUsuario

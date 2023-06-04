@@ -1,7 +1,7 @@
 var querystring = require('querystring');
 const https = require('https');
-const promesaMatchUsuario = require('../database/matchUsuario');
-const createUsuario = require('../database/createUsuario');
+const matchDatabaseUsuario = require('../database/matchDatabaseUsuario');
+const createDatabaseUsuario = require('../database/createDatabaseUsuario');
 /*Utilizando el token de acceso de la autorizacion se procede a solicitar los datos del usuario*/
 
 const get = (
@@ -42,7 +42,7 @@ const get = (
         console.log('Comienza proceso de revisión en base de datos para verificar si es un usuario nuevo o ya está regitrado \n');
         console.log('');
 
-        let checkid_result = promesaMatchUsuario(
+        let checkid_result = matchDatabaseUsuario(
             session,
             mensaje,
             access_token,
@@ -56,7 +56,7 @@ const get = (
             console.log('Se creará nuevo record en base de datos');
             mensaje = "nuevo_usuario";
 
-            let response = createUsuario(
+            let response = createDatabaseUsuario(
                 session,
                 pais,
                 nombre,
