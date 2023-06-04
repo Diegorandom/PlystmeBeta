@@ -4,6 +4,7 @@ var io = require('socket.io')(server);
 
 const checkDatabaseEventPosition = require('../../database/checkDatabaseEventPosition');
 const usuarioNuevoUbicacionService = require('../../services/usuarioNuevoUbicacionService')
+const checkEventPositionService = require('../../services/checkEventPositionService');
 
 const usuarioNuevoEnUbicacion = (
     socket,
@@ -22,7 +23,11 @@ const usuarioNuevoEnUbicacion = (
         console.log('Longitud del usuario -> ', lng)
         console.log('radio -> ', radio)
 
-        let partyEvent = checkDatabaseEventPosition();
+        let codigoBD = checkDatabaseEventPosition()
+
+        let partyEvent = checkEventPositionService(codigoBD, userId);
+
+        if (partyEvent.event) io.to(socket.id).emit(partyEvent.event, partyEvent);
 
         // run usuarioNuevoUbicacionService
         let response = usuarioNuevoUbicacionService(

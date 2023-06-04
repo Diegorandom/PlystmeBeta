@@ -25,7 +25,8 @@ const findUserResponseService = (ids, codigoEvento, userId) => {
 
         return {
             codigoEvento: codigoEvento,
-            userId: userId, idsEvento: idsEvento,
+            userId: userId,
+            idsEvento: idsEvento,
             mensaje: 'Nuevo Usuario',
             usuarios
         }
