@@ -6,10 +6,15 @@ const crearEvento = require('./Eventos/crearEvento');
 const crearEventoCodigo = require('./Eventos/crearEventoCodigo');
 const cerrarEvento = require('../https/salirEvento');
 const usuarioNuevoCodigo = require('./Eventos/usuarioNuevoCodigo');
-const usuarioNuevoUbicacion = require('./Eventos/usuarioNuevoUbicacion');
+const usuarioNuevoEnUbicacion = require('./Eventos/usuarioNuevoEnUbicacion');
 const salirSocketEvento = require('./Eventos/salirSocketEvento');
 
-const mainSocket = (socket) => {
+const mainSocket = (
+    socket,
+    session,
+    userId,
+    usuarios
+) => {
 
     console.log('Nueva conexión con id -> ' + socket);
 
@@ -32,9 +37,15 @@ const mainSocket = (socket) => {
 
     usuarioNuevoCodigo(socket);
 
-    usuarioNuevoUbicacion();
+    let response = usuarioNuevoEnUbicacion(
+        socket,
+        session,
+        userId,
+        usuarios
+    );
 
-    // eslint-disable-next-line no-undef
+    io.to(socket.id).emit('multiplesEventos', response);
+
     cerrarEvento().then(() => {
         salirSocketEvento(socket)
     });

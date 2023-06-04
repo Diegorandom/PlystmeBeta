@@ -1,10 +1,10 @@
-const findUserService = (ids, codigoEvento, userId) => {
+const findUserResponseService = (ids, codigoEvento, userId) => {
     console.log('Resultado de busqueda -> ', ids.records)
 
     var idsEvento = []
     var usuarios = []
 
-    ids.records.forEach(function (item, index) {
+    ids.records.forEach(function (item) {
 
         console.log('item -> ', item._fields)
 
@@ -23,10 +23,14 @@ const findUserService = (ids, codigoEvento, userId) => {
             usuarios.push([nombre, imagen])
         }
 
-        return { codigoEvento: codigoEvento, userId: userId, idsEvento: idsEvento, mensaje: 'Nuevo Usuario', usuarios: usuarios }
+        return {
+            codigoEvento: codigoEvento,
+            userId: userId, idsEvento: idsEvento,
+            mensaje: 'Nuevo Usuario',
+            usuarios
+        }
 
     })
-    session.close()
 }
 
-module.exports = findUserService
+module.exports = findUserResponseService

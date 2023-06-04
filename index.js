@@ -262,7 +262,12 @@ app.get('/error', function (req, res, error) {
 
 /* INICIA SOCKETS*/
 io.on('connection', (socket) => {
-  mainSocket(socket)
+  mainSocket(
+    socket,
+    session,
+    userId,
+    jsonDatos.usuarios
+  )
 })
 /*TERMINA SOCKETS*/
 

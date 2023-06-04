@@ -1,12 +1,13 @@
 var findDatabaseEventOfUser = require('../database/findDatabaseEventOfUser')
 var addUserToDatabaseEvent = require('../database/addUserToDatabaseEvent')
+const unirUsuario = require('./unirUsuario')
 
-const checarUsuarioService = (usuarioId, session, codigoEvento, userId) => {
+const checarUsuarioService = (usuarios, session, codigoEvento, userId) => {
 
-    console.log('usarioId -> ', usuarioId)
-    if (usuarioId.records[0] == undefined) {
+    console.log('usarioId -> ', usuarios)
+    if (usuarios.records[0] == undefined) {
 
-        addUserToDatabaseEvent()
+        addUserToDatabaseEvent(session, userId, codigoEvento)
             .then(function () {
                 console.log('unionUsuarioEvento')
                 console.log('Nuevo usuario ', userId, ' -> añadido a evento en BD-> ', codigoEvento)
@@ -26,10 +27,21 @@ const checarUsuarioService = (usuarioId, session, codigoEvento, userId) => {
             userId,
             codigoEvento
         )
-            .then(
 
-        )
+        let response = unirUsuario(session, codigoEvento, userId);
 
+        if (response.ids.records.length == response.usuarios.length) {
+            console.log('Room a actualizar -> ', codigoEvento)
+            console.log('Usuarios en evento -> ', response.usuarios)
+            console.log('Ids en evento -> ', response.idsEvento)
+
+            return {
+                codigoEvento: codigoEvento,
+                userId: userId, idsEvento: response.idsEvento,
+                mensaje: 'Nuevo Usuario',
+                usuarios: response.usuarios
+            }
+        }
     }
 }
 
