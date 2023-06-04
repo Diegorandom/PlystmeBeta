@@ -33,10 +33,6 @@ const logIn = async (
 
     let response = await axios(config)
 
-    // let response = https.request(optionsLogIn).end()
-
-    console.log(response)
-
     /*Se guarda la información del usuario en el objeto global correspondiente*/
     jsonDatos.userid = response.data.id;
     jsonDatos.followers = response.data.followers.total;
@@ -52,14 +48,10 @@ const logIn = async (
     }
 
     console.log('Comienza proceso de revisión en base de datos para verificar si es un usuario nuevo o ya está regitrado \n');
-    console.log('');
 
-    let checkid_result = matchDatabaseUsuario(
+    let checkid_result = await matchDatabaseUsuario(
         session,
-        mensaje,
-        access_token,
-        refresh_token,
-        bdEstado
+        response.data.id
     )
 
     /*En caso de que el usuario nuevo se comienza a guardar su información en la base de datos*/
@@ -120,7 +112,7 @@ const logIn = async (
 
 }
 
-const prepareToLogin = async (
+const getToken = async (
     options,
     jsonDatos,
     session,
@@ -151,8 +143,6 @@ const prepareToLogin = async (
     refresh_token = response.data.refresh_token;
     access_token = response.data.access_token;
 
-    console.log(response)
-
     let logInResponse = logIn(
         jsonDatos,
         session,
@@ -171,8 +161,6 @@ const prepareToLogin = async (
     )
 
     console.log('logIn completed ', logIn);
-
-    //response.on(logInResponse.redirect ? logIn.logInResponse : logIn)
 
     return logInResponse
 
@@ -237,6 +225,6 @@ const getAlgorithmRecommendation = async (options, playlist) => {
 
 module.exports = {
     logIn,
-    prepareToLogin,
+    getToken,
     getAlgorithmRecommendation
 }

@@ -254,7 +254,7 @@ app.get('/error', function (req, res, error) {
 io.on('connection', (socket) => {
   mainSocket(
     socket,
-    session,
+    objetosGlobales[0].session[0],
     userId,
     jsonDatos.usuarios
   )
