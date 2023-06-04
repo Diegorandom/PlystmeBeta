@@ -202,8 +202,8 @@ const getAlgorithmRecommendation = async (options, playlist) => {
         console.log('error en Endpoint de Pool')
         console.log("API dormida? retry!");
         /*Se vuelve a intentar la comunicación con la API después de un tiempo de espera (1 segundo)*/
-        setTimeout(function () {
-            getAlgorithmRecommendation(options)
+        setTimeout(async () => {
+            await getAlgorithmRecommendation(options)
         }, 1000);
         conteoErrores += 1;
 
