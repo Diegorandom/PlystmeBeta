@@ -53,7 +53,8 @@ const preferencias = (
             console.log('Preferencias -> ', preferencias)
 
             return {
-                send: preferencias
+                send: preferencias,
+                response
             }
         }
     });
