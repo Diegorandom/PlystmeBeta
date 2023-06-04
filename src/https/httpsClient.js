@@ -1,4 +1,3 @@
-const https = require('node:https');
 var querystring = require('querystring');
 const matchDatabaseUsuario = require('../database/matchDatabaseUsuario');
 const createDatabaseUsuario = require('../database/createDatabaseUsuario');
@@ -186,47 +185,54 @@ const prepareToLogin = async (
  * 
  * @param {*} options 
  */
-const getAlgorithmRecommendation = (options, playlist) => {
-    https.request(options, function (error, response, body) {
-        let conteoErrores = 0;
+const getAlgorithmRecommendation = async (options, playlist) => {
 
-        /*En caso de que haya errores en el requerimiento se manda el error a la consola*/
-        if (error == true || body == undefined || body.listaCanciones == null) {
-            console.log('error en Endpoint de Pool --> ', error)
-            console.log("API dormida zzzzz");
-            /*Se vuelve a intentar la comunicación con la API después de un tiempo de espera (1 segundo)*/
-            setTimeout(function () {
-                getAlgorithmRecommendation(options)
-            }, 1000);
-            conteoErrores += 1;
+    const config = {
+        method: options.method,
+        url: options.url,
+        headers: options.headers
+    }
 
-            /*Si los errores en la API persisten por más de 30 segundos se manda a la pantalla de error*/
-            if (conteoErrores > 30) {
-                return 'Algorithm down'
-            }
+    let body = await axios(config)
 
+    let conteoErrores = 0;
+
+    /*En caso de que haya errores en el requerimiento se manda el error a la consola*/
+    if (body.data.listaCanciones == null) {
+        console.log('error en Endpoint de Pool')
+        console.log("API dormida? retry!");
+        /*Se vuelve a intentar la comunicación con la API después de un tiempo de espera (1 segundo)*/
+        setTimeout(function () {
+            getAlgorithmRecommendation(options)
+        }, 1000);
+        conteoErrores += 1;
+
+        /*Si los errores en la API persisten por más de 30 segundos se manda a la pantalla de error*/
+        if (conteoErrores > 30) {
+            return 'Algorithm down'
         }
 
-        console.log("API funcionando, GRACIAS A DIOS ALV PRRO!...");
-        console.log(body);
-        console.log(body)
+    }
 
-        /*Se guarda la lista de canciones en el arreglo playlist del objetoGlobal del usuario correspondiente. Esto se hace para después usar este objeto en caso de que sea requerido guardar este playlist en Spotify*/
-        body.listaCanciones.forEach(function (item) {
-            playlist.push(item[1])
-        })
+    console.log("API funcionando, GRACIAS A DIOS ALV PRRO!...");
+    console.log(body.data);
+    console.log(body.data)
 
-        console.log("objetosGlobales[position].playlist")
-        console.log(playlist)
+    /*Se guarda la lista de canciones en el arreglo playlist del objetoGlobal del usuario correspondiente. Esto se hace para después usar este objeto en caso de que sea requerido guardar este playlist en Spotify*/
+    body.data.listaCanciones.forEach(function (item) {
+        playlist.push(item[1])
+    })
 
-        /*La lista de canciones recomendadas es enviada al cliente*/
-        console.log('Despliegue de playlist exitosa')
-        return {
-            send: body.listaCanciones,
-            playlist
-        }
+    console.log("objetosGlobales[position].playlist")
+    console.log(playlist)
 
-    });
+    /*La lista de canciones recomendadas es enviada al cliente*/
+    console.log('Despliegue de playlist exitosa')
+    return {
+        send: body.data.listaCanciones,
+        playlist
+    }
+
 }
 
 module.exports = {

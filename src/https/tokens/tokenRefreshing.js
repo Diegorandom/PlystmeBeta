@@ -1,35 +1,41 @@
 var express = require("express");
 var router = new express.Router();
-/*ESTE SOFTWARE NO ESTÁ EN USO*/
-const https = require('https');
+const axios = require('axios');
 
-router.get('/refresh_token', function (req, res) {
+/*ESTE SOFTWARE NO ESTÁ EN USO*/
+
+router.get('/refresh_token', async function (req, res) {
 
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
-  var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
+  // var authOptions = {
+  //   url: 'https://accounts.spotify.com/api/token',
+  //   headers: {
+  //     // eslint-disable-next-line no-undef
+  //     'Authorization': 'Basic ' + secrets.client_id + ':' + secrets.client_id,
+  //   },
+  //   form: `grant_type=authorization_code&refresh_token=${refresh_token}`,
+  // }
+
+  const config = {
+    method: 'GET',
+    url: `https://accounts.spotify.com/api/token`,
     headers: {
       // eslint-disable-next-line no-undef
-      'Authorization': 'Basic ' + secrets.client_id + ':' + secrets.client_id,
+      'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + secret).toString('base64'))
     },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
-    json: true
+    data: `grant_type=authorization_code&refresh_token=${refresh_token}`
   }
 
+  let body = await axios(config)
 
-  https.request(authOptions, function (error, response, bodyS) {
-    if (!error && response.statusCode === 200) {
-      var access_token = bodyS.access_token;
-      res.send({
-        'access_token': access_token
-      });
-      res.render('pages/author-login');
-    }
-  });
+  if (body.statusCode === 200) {
+    var access_token = body.data.access_token;
+    res.send({
+      'access_token': access_token
+    });
+    res.render('pages/author-login');
+  }
 });
 
 //Finaliza proceso
