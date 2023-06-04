@@ -34,17 +34,11 @@ router.post('/preferencias', function (req, res, error) {
             json: true
         };
 
-
-
-        /*Función de request de perfil de preferencias de usuario*/
-        const getPreferencias = (options) => {
-            console.log('La API de preferencias ha sido llamada')
-            // llamada a API AQUI
-            preferencias(options, objetosGlobales[position] ? true : false, objetosGlobales[position].userid);
-        }
-
         /*Inicio de proceso de obtención de perfil de preferencias del usuario*/
-        objetosGlobales[position].preferencias = getPreferencias(options);
+        objetosGlobales[position].preferencias = preferencias(
+            options, objetosGlobales[position] ? true : false,
+            objetosGlobales[position].userid
+        );
 
     }
 
