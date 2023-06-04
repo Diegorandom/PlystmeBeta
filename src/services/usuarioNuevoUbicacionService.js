@@ -10,7 +10,7 @@ const usuarioNuevoUbicacionService = (codigoBD, userId) => {
         console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
 
         checarDatabaseUsuario()
-            .then(checarDatabaseService())
+            .then(checarUsuarioService())
 
         return codigoEvento
     } else if (codigoBD.records.length > 1) {

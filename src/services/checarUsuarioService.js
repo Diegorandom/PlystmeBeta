@@ -26,7 +26,9 @@ const checarUsuarioService = (usuarioId, session, codigoEvento, userId) => {
             userId,
             codigoEvento
         )
-            .then()
+            .then(
+
+        )
 
     }
 }
