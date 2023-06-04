@@ -1,4 +1,4 @@
-const promesaCrearEvento = (userId, codigoEvento, latitud, longitud, session) => {
+const crearDatabaseEvento = (userId, codigoEvento, latitud, longitud, session) => {
     return session
         .writeTransaction(tx => tx.run(
             'MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, '
@@ -6,4 +6,4 @@ const promesaCrearEvento = (userId, codigoEvento, latitud, longitud, session) =>
             { codigoEvento, lat: latitud, lng: longitud, spotifyidUsuario: userId }))
 }
 
-module.exports = promesaCrearEvento
+module.exports = crearDatabaseEvento

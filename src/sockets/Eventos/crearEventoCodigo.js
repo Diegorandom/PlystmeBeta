@@ -13,10 +13,10 @@ const crearEventoCodigo = (socket) => {
             let eventCodeCreationErrorCounter = 0
             const createCodeEvent = () => {
                 // eslint-disable-next-line no-undef
-                const promesaCrearEvento = objetosGlobales[0].session[0]
+                const crearDatabaseEvento = objetosGlobales[0].session[0]
                     .writeTransaction(tx => tx.run('MATCH (m:usuario {spotifyid:{spotifyidUsuario}}) CREATE (m)-[:Host {status:true}]->(n:Evento {codigoEvento:{codigoEvento}, status:true}) Return n,m', { codigoEvento: codigoEvento, spotifyidUsuario: userId }))
 
-                promesaCrearEvento
+                crearDatabaseEvento
                     .then(function (evento) {
                         console.log('Registro de Evento -> ', evento.records[0]._fields)
 
@@ -46,7 +46,7 @@ const crearEventoCodigo = (socket) => {
 
                     })
 
-                promesaCrearEvento
+                crearDatabaseEvento
                     .catch(function (err) {
                         console.log(err);
                         eventCodeCreationErrorCounter++;

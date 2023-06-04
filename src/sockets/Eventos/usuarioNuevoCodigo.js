@@ -27,10 +27,10 @@ const usuarioNuevoCodigo = (socket) => {
                     socket.join(codigoEvento);
 
                     // eslint-disable-next-line no-undef
-                    const promesaChecarUsuario = objetosGlobales[0].session[0]
+                    const promesachecarDatabaseUsuario = objetosGlobales[0].session[0]
                         .writeTransaction(tx => tx.run('MATCH (n:Evento {codigoEvento:{codigoEvento}})<-[]-(u:usuario)  WHERE u.spotifyid={spotifyidUsuario} RETURN u.spotifyid', { codigoEvento: codigoEvento, spotifyidUsuario: userId }))
 
-                    promesaChecarUsuario
+                    promesachecarDatabaseUsuario
                         .then(function (usuarioId) {
 
                             if (usuarioId.records[0] == undefined) {

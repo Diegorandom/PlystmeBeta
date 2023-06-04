@@ -1,7 +1,7 @@
-var promesaCrearEvento = require('../database/crearEvento')
+var crearDatabaseEvento = require('../database/crearDatabaseEvento')
 
 const createEventService = (userId, codigoEvento, latitud, longitud, socket, session) => {
-    return promesaCrearEvento(
+    return crearDatabaseEvento(
         userId,
         codigoEvento,
         latitud, longitud,
