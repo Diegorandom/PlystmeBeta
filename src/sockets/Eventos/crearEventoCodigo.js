@@ -1,13 +1,11 @@
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-const generateRandomStringCode = require('../../utils/generateRandomStringCode');
 
 const crearEventoCodigo = (socket) => {
     socket.on('crearEventoCodigo', function (msg, codigoEvento) {
         console.log('Evento creado por Código')
         console.log('Id del host -> ', msg.userId)
-        codigoEvento = generateRandomStringCode(5);
         var userId = msg.userId
 
         if (userId != undefined) {
