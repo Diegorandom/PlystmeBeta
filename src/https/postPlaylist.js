@@ -1,7 +1,7 @@
-const https = require('https');
+const https = require('node:https');
 
 const postPlaylist = (options) => {
-    https.post(options, function (error, response, body, status) {
+    https.request(options, function (error, response, body, status) {
         if (error == true) {
             console.log("No se pudo guardar el playlist - status de error-> ", status)
             return {

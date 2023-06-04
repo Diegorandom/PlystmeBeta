@@ -1,6 +1,6 @@
 var express = require("express");
 var router = new express.Router();
-let authOptionsFunction = require('../../utils/auth/authOptions');
+let authOptionsFunction = require('../auth/authOptions');
 
 /*Se ejecuta la ruta del perfil para renderizarlo*/
 router.post('/refreshingToken', function (request, response) {

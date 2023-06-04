@@ -1,4 +1,4 @@
-const https = require('https');
+const https = require('node:https');
 var caracteristicas = require('../services/caracteristicasService')
 
 const mineriaDeUsuario = (
@@ -16,7 +16,7 @@ const mineriaDeUsuario = (
     rango
 ) => {
 
-    https.get(options, function (error, response, body) {
+    https.request(options, function (error, response, body) {
 
         if (error == true || body == undefined || body.items == undefined) {
             console.log('Error SpotifyApi')
