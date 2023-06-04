@@ -28,14 +28,11 @@ router.get('/refresh_token', async function (req, res) {
   }
 
   let body = await axios(config)
-
-  if (body.statusCode === 200) {
-    var access_token = body.data.access_token;
-    res.send({
-      'access_token': access_token
-    });
-    res.render('pages/author-login');
-  }
+  var access_token = body.data.access_token;
+  res.send({
+    'access_token': access_token
+  });
+  res.render('pages/author-login');
 });
 
 //Finaliza proceso
