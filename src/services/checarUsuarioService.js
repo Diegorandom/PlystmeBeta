@@ -1,6 +1,6 @@
 var findDatabaseEventOfUser = require('../database/findDatabaseEventOfUser')
 var addUserToDatabaseEvent = require('../database/addUserToDatabaseEvent')
-const unirUsuario = require('./unirUsuario')
+const unirUsuario = require('./unirUsuarioService')
 
 const checarUsuarioService = (usuarios, session, codigoEvento, userId) => {
 

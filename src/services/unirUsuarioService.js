@@ -1,7 +1,7 @@
 var findDatabaseEvent = require('../database/findDatabaseEvent')
 var findUserResponseService = require('./findUserResponseService')
 
-const unirUsuario = (session, codigoEvento, userId) => {
+const unirUsuarioService = (session, codigoEvento, userId) => {
     findDatabaseEvent(session, codigoEvento, userId)
         .then(function (ids) {
             return findUserResponseService(ids, codigoEvento, userId)
@@ -10,4 +10,4 @@ const unirUsuario = (session, codigoEvento, userId) => {
 }
 
 
-module.exports = unirUsuario
+module.exports = unirUsuarioService
