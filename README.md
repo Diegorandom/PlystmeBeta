@@ -1,6 +1,3 @@
-# Artículo
-[Link.](https://medium.com/@diegoignacioortega/motor-de-recomendación-de-música-basado-en-grafos-f4e02de2884e)
-
 ![alt text](https://github.com/Diegorandom/PlystmeBeta/blob/master/plystmeLogin.png)
 
 # Arquitectura de Plystme
@@ -10,6 +7,22 @@ Actualmente Plystme tiene una arquitectura servidor-cliente conectada con la API
 La comunicación entre el cliente y el backend utiliza HTTP con Ajax para la autenticación con la API de Spotify y para servir datos estáticos como lo son el mapa de características de la música que escucha el usuario así como datos que se obtienen de eventos detonados desde el cliente como los son las listas del Top 50 de música que escucha el usuario. 
 
 Socket.io se utiliza en la comunicación cliente-servidor para la creación y administración en tiempo real de las playlists grupales a las cuales se accede con el uso de un código dado por el anfitrión a los invitados de la fiesta.
+
+## Artículo
+[Link.](https://medium.com/@diegoignacioortega/motor-de-recomendación-de-música-basado-en-grafos-f4e02de2884e)
+
+## Refactor Sucediendo | Ongoing Refactor
+
+Lo que ha sucedido:
+- Se rompió el monolito
+- Mejor separación de responsabilidad
+- Se actualizaron librerías deprecadas
+- Se agregó linter
+- Se agregó sonarcloud
+
+Lo que falta:
+- Tests unitarios
+- Test conexión de base de datos
 
 ## Configuración de base de datos
 
