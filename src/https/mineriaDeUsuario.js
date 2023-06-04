@@ -1,5 +1,5 @@
 const https = require('https');
-var caracteristicas = require('../services/caracteristicas')
+var caracteristicas = require('../services/caracteristicasService')
 
 const mineriaDeUsuario = (
     options,

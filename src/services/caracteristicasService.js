@@ -1,8 +1,8 @@
 /*FUNCIÓN DE CARACTERÍSTICAS*/
 
-const isTrackInDatabse = require("./isTrackInDatabse")
+const isTrackInDatabse = require("./isTrackInDatabseService")
 
-const caracteristicas = (
+const caracteristicasService = (
     driver,
     newIndex,
     index,
@@ -53,4 +53,4 @@ const caracteristicas = (
 
 }
 
-module.exports = caracteristicas
+module.exports = caracteristicasService
