@@ -2,7 +2,7 @@ var express = require("express");
 var router = new express.Router();
 var getAlgorithmRecommendation = require('../https/httpsClient')
 /*Proceso para entrar a un pool*/
-router.get('/pool', function (req, res) {
+router.get('/pool', async (req, res) => {
 
     console.log("Llegamos al pool")
     var objetosGlobales = req.app.get('objetosGlobales');
@@ -51,7 +51,7 @@ router.get('/pool', function (req, res) {
     };
 
     /*Comienza proceso de comunicación con la API de Suriel en el endpoint del POOL*/
-    let response = getAlgorithmRecommendation(options, objetosGlobales[position].playlist ? objetosGlobales[position].playlist : []);
+    let response = await getAlgorithmRecommendation(options, objetosGlobales[position].playlist ? objetosGlobales[position].playlist : []);
     objetosGlobales[position].playlist = response.playlist
     res.send(response.send)
 
