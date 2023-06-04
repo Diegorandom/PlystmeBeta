@@ -25,14 +25,12 @@ const authOptionsFunction = (code, redirect_uri) => {
 
     /*Argumentos que usará el endpoint para establecer comunicación con Spotify*/
     return {
-        url: 'https://accounts.spotify.com/api/token',
-        form: {
-            code: code,
-            redirect_uri: redirect_uri,
-            grant_type: 'authorization_code'
-        },
+        hostname: 'accounts.spotify.com',
+        path: '/api/token',
+        method: 'POST',
+        form: `grant_type=authorization_code&redirect_uri=${redirect_uri}&code=${code}`,
         headers: {
-            'Authorization': 'Basic ' + client_id + ':' + secret
+            'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + secret).toString('base64'))
         },
         json: true
     };

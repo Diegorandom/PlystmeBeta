@@ -5,7 +5,7 @@ var methodOverride = require('method-override')
 var logger = require('morgan');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-let authOptionsModule = require('../utils/auth/authOptions')
+let authOptionsModule = require('../https/auth/authOptions')
 let httpsClient = require('../https/httpsClient');
 
 //CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
