@@ -19,6 +19,7 @@ var logger = require('morgan');
 var path = require('path');
 var neo4j = require('neo4j-driver')
 var sessions = require("client-sessions");
+var generateRandomString = require('./src/utils/generateRandomStringCode')
 
 
 //CONFIGURACIÓN DE MÓDULOS INTERNOS DE EXPRESS
@@ -101,30 +102,29 @@ app.use(express.static(path.join(__dirname, 'public'))); //DECLARA PATH HACIA PU
 app.use(cookieParser());
 app.use(methodOverride());
 
-
 /*
 SETUP DE PUERTO
 con la clase APP y el método SET se configura el puerto a través del cual se comunica el servidor con la interfaz.
-El puerto puede ser el 5000 y el asignado por por la configuración del servidor en la variable process.env.PORT
+El puerto puede ser el 5001 y el asignado por por la configuración del servidor en la variable process.env.PORT
 
 En este misma parte del código se configura con que URL de redireccionamiento trabajará spotify.
 Todas estas configuraciones se guardan en la posición [0] del objeto objetosGlobales.
 */
 // eslint-disable-next-line no-undef
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 5001));
 objetosGlobales[0].client_id = process.env.client_id
 objetosGlobales[0].client_secret = process.env.client_secret
 console.log('objetosGlobales[0].client_id ', process.env.client_id)
 
-if (app.get('port') == 5000) {
+if (app.get('port') == 5001) {
   console.log("Corriendo en servidor local con uri de redireccionamiento: ");
-  objetosGlobales[0].redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
+  objetosGlobales[0].redirect_uri = 'http://localhost:5001/callback'; // Your redirect uri
 
   //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
   objetosGlobales[0].spotifyApi = new SpotifyWebApi({
     clientId: 'b590c1e14afd46a69891549457267135',
     clientSecret: process.env.client_secret,
-    redirectUri: 'http://localhost:5000/callback'
+    redirectUri: 'http://localhost:5001/callback'
   });
   console.log(objetosGlobales[0].redirect_uri);
 
@@ -140,16 +140,6 @@ if (app.get('port') == 5000) {
   });
   console.log(objetosGlobales[0].redirect_uri);
 }
-
-var generateRandomString = function (length) {
-  var text = '';
-  var possible = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
 
 objetosGlobales[0].stateKey = 'spotify_auth_state';
 // Finaliza creacion de llaves
@@ -172,7 +162,7 @@ app.use(sessions({
 app.use(express.static(__dirname + '/public'))
 // views is directory for all template files/Directorio de Templates
 // eslint-disable-next-line no-undef
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/src/views');
 app.set('view engine', 'ejs');
 
 /*Variables globales que son pasadas a las diferentes rutas del sistema*/
@@ -182,7 +172,7 @@ app.set('generateRandomString', generateRandomString);
 app.set('driver', driver);
 
 /*
-            RUTEO DE TODAS LA FUNCIONES DEL SISTEMA - NO MOVER
+  RUTEO DE TODAS LA FUNCIONES DEL SISTEMA - NO MOVER
 */
 
 /*La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. */

@@ -9,26 +9,32 @@ router.get('/login', function (req, res, error) {
   var objetosGlobales = req.app.get('objetosGlobales');
   var generateRandomString = req.app.get('generateRandomString')
 
-  if (error == true || objetosGlobales == undefined || objetosGlobales == null) { res.render('pages/error', { error: error }) } else {
+  if (error == true || objetosGlobales == undefined || objetosGlobales == null) { res.render('pages/error', { error: error }) }
 
-    var state = generateRandomString(16);
-    res.cookie(objetosGlobales[0].stateKey, state);
 
-    // Solicitud de la aplicación sobre la información que se solicitará a Spotify
-    var scope = 'user-read-private user-read-email playlist-read-private user-library-read user-top-read playlist-modify-private user-library-modify';
+  var state = generateRandomString(16);
+  res.cookie(objetosGlobales[0].stateKey, state);
 
-    /*Response con solicitud al server de Spotify*/
-    sanitize(res.redirect('https://accounts.spotify.com/authorize/?' +
-      querystring.stringify({
-        client_id: objetosGlobales[0].client_id,
-        response_type: 'code',
-        redirect_uri: objetosGlobales[0].redirect_uri,
-        scope: scope,
-        state: state
-      })))
+  // Solicitud de la aplicación sobre la información que se solicitará a Spotify
+  var scope = 'user-read-private user-read-email playlist-read-private user-library-read user-top-read playlist-modify-private user-library-modify';
 
-    console.log("se termina la autorización desde cliente!");
-  }
+  console.debug(
+    `objetosGlobales[0].client_id : ${objetosGlobales[0].client_id} ` +
+    ` objetosGlobales[0].redirect_uri  : ${objetosGlobales[0].redirect_uri}`
+  )
+
+  /*Response con solicitud al server de Spotify*/
+  sanitize(res.redirect('https://accounts.spotify.com/authorize/?' +
+    querystring.stringify({
+      client_id: objetosGlobales[0].client_id,
+      response_type: 'code',
+      redirect_uri: objetosGlobales[0].redirect_uri,
+      scope: scope,
+      state: state
+    })))
+
+  console.log("se termina la autorización desde cliente!");
+
 
 });
 

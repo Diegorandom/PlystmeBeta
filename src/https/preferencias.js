@@ -1,4 +1,4 @@
-const https = require('https');
+const https = require('node:https');
 
 const preferencias = (
     options,
@@ -7,7 +7,7 @@ const preferencias = (
 ) => {
     let contadorErroresApi = 0;
 
-    https.post(options, function (error, response, body) {
+    https.request(options, function (error, response, body) {
         console.log('La API de preferencias respondió algo')
         if (error == true || body == undefined || body.profile == undefined || user == null || body == null || body.profile.danceability == null) {
             /**Proceso En caso de que la API esté valiendo verga como casi nunca pasa. Se imprimen errores*/

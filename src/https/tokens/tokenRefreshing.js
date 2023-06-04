@@ -21,7 +21,7 @@ router.get('/refresh_token', function (req, res) {
   }
 
 
-  https.post(authOptions, function (error, response, bodyS) {
+  https.request(authOptions, function (error, response, bodyS) {
     if (!error && response.statusCode === 200) {
       var access_token = bodyS.access_token;
       res.send({
