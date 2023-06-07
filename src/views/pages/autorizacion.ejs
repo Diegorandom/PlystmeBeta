@@ -1,295 +1,297 @@
 <!doctype html>
 <html>
-    	<!-- THE LOADER -->
-	
+<!-- THE LOADER -->
 
-  <head>
-      <% include ../partials/header.ejs  %>
-      <% include ../partials/footerAuto.ejs  %> 
+
+<head>
+  <% include ../partials/header.ejs %>
+    <% include ../partials/footerAuto.ejs %>
       <!-- NO QUITAR FOOTER TIENE FUNCIONES IMPORTANTES DEL CODIGO -->
-      <% include ../partials/footer.ejs  %> 
-      
-      <!--NO PONER MÁS COPIAS DE JQUERY YA HAY UNA IMPLEMENTADA POR DEFAULT-->
-      
-      <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-      <script type="text/javascript" src="/script/animacionfondo.js"></script>
+      <% include ../partials/footer.ejs %>
 
-  </head>
+        <!--NO PONER MÁS COPIAS DE JQUERY YA HAY UNA IMPLEMENTADA POR DEFAULT-->
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+        <script type="text/javascript" src="/script/animacionfondo.js"></script>
+
+</head>
 
 <script>
-$.ajaxSetup({
-  cache: false
-});     
+  $.ajaxSetup({
+    cache: false
+  });     
 </script>
-    
- <style type="text/css">
-        
-        h2, #login, .centro {
-                margin: auto; 
-                width: 50%;
-            }
 
-         .contenedor{
-                    background-color: rgba(255, 255, 255, 0);
-                    border-radius: 15px 50px 30px;
-                    margin-top:50%; 
-                    font-family: 'Quicksand', sans-serif; 
-                    margin-bottom:15%; 
-                    font-weight: 200; 
-                    width: 100%;
-                    color:white;
-                }
-        .text-overflow {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                width: 500px;
-              } 
+<style type="text/css">
+  h2,
+  #login,
+  .centro {
+    margin: auto;
+    width: 50%;
+  }
+
+  .contenedor {
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 15px 50px 30px;
+    margin-top: 50%;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 15%;
+    font-weight: 200;
+    width: 100%;
+    color: white;
+  }
+
+  .text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 500px;
+  }
 
 
-        h1 {
-                font-family: 'Quicksand', sans-serif;
-                text-align: center;
-                color: black;
-                font-size: 50px;
-            } 
-     
-        p, h4, h3 {
-                text-align: center;
-                color:black;
-            }
-        
-         hr {
-                display:block;
-                height: 3px;
-                border: 0;
-                border-top: 3px solid;
-                border-color:#c8553d;
-                margin: 1em 0;
-                padding: 0;
+  h1 {
+    font-family: 'Quicksand', sans-serif;
+    text-align: center;
+    color: black;
+    font-size: 50px;
+  }
 
-         }
-        
-    /**** Imagen de fondo de escritorio */
-     
-    body {
-        background-image: url("/img/backgroundNew.jpg");
-        background-size: 100%;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        }    
-     
-     /**** Fondo de sección de TEAM */
-     
-     #team {
-         background-image: url("/img/3133.jpg"); 
-         background-size: cover; 
-         background-attachment: fixed; 
-         padding-bottom: 30px; 
-         padding-left: 10%; 
-         padding-right: 10%; 
-         font-family: 'Quicksand', sans-serif;
-     }
-     
-     /**** Fonde gradiente */
-     
-     #gradient
-        {
-          width: 100%;
-          height: cover;
-          padding: 0px;
-          margin: 0px;
-         position:fixed;
-         height: 60px;
-        }
-     
-     /***** Hover del botón de inicio ***/
-     
-     #btnho: hover{
-         background-color:white;
-     }
-     
-      #login, #loggedin {
-        display: none;
-      }
-      
-        .popup {
-	-moz-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
-	box-shadow:inset 0px 1px 0px 0px #7a8eb9;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #637aad), color-stop(1, #5972a7));
-	background:-moz-linear-gradient(top, #637aad 5%, #5972a7 100%);
-	background:-webkit-linear-gradient(top, #637aad 5%, #5972a7 100%);
-	background:-o-linear-gradient(top, #637aad 5%, #5972a7 100%);
-	background:-ms-linear-gradient(top, #637aad 5%, #5972a7 100%);
-	background:linear-gradient(to bottom, #637aad 5%, #5972a7 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#637aad', endColorstr='#5972a7',GradientType=0);
-	background-color:#637aad;
-	border:1px solid #314179;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
-	font-weight:bold;
-	padding:12px 28px;
-	text-decoration:none;
-            
-}
-.popup:hover {
-	-moz-box-shadow:inset 0px 1px 0px 0px #3dc21b;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #3dc21b;
-	box-shadow:inset 0px 1px 0px 0px #3dc21b;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #44c767), color-stop(1, #5cbf2a));
-	background:-moz-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
-	background:-webkit-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
-	background:-o-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
-	background:-ms-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
-	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#44c767', endColorstr='#5cbf2a',GradientType=0);
-	background-color:#44c767;
-	border:1px solid #18ab29;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
-	font-weight:bold;
-	padding:12px 28px;
-	text-decoration:none;
-}
-.popup:active {
-	position:relative;
-	top:1px;
-}
-     
-     .navboton1{
-         background-color: #FC8721;
-         height: 60px;
-     } 
-       
-     
-     /*************  Color de la barra de navegación *********/
-     
-    /** .navboton2{
+  p,
+  h4,
+  h3 {
+    text-align: center;
+    color: black;
+  }
+
+  hr {
+    display: block;
+    height: 3px;
+    border: 0;
+    border-top: 3px solid;
+    border-color: #c8553d;
+    margin: 1em 0;
+    padding: 0;
+
+  }
+
+  /**** Imagen de fondo de escritorio */
+
+  body {
+    background-image: url("/img/backgroundNew.jpg");
+    background-size: 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+  /**** Fondo de sección de TEAM */
+
+  #team {
+    background-image: url("/img/3133.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    padding-bottom: 30px;
+    padding-left: 10%;
+    padding-right: 10%;
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  /**** Fonde gradiente */
+
+  #gradient {
+    width: 100%;
+    height: cover;
+    padding: 0px;
+    margin: 0px;
+    position: fixed;
+    height: 60px;
+  }
+
+  /***** Hover del botón de inicio ***/
+
+  /* #btnho: hover {
+    background-color: white;
+  } */
+
+  #login,
+  #loggedin {
+    display: none;
+  }
+
+  .popup {
+    -moz-box-shadow: inset 0px 1px 0px 0px #7a8eb9;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #7a8eb9;
+    box-shadow: inset 0px 1px 0px 0px #7a8eb9;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #637aad), color-stop(1, #5972a7));
+    background: -moz-linear-gradient(top, #637aad 5%, #5972a7 100%);
+    background: -webkit-linear-gradient(top, #637aad 5%, #5972a7 100%);
+    background: -o-linear-gradient(top, #637aad 5%, #5972a7 100%);
+    background: -ms-linear-gradient(top, #637aad 5%, #5972a7 100%);
+    background: linear-gradient(to bottom, #637aad 5%, #5972a7 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#637aad', endColorstr='#5972a7', GradientType=0);
+    background-color: #637aad;
+    border: 1px solid #314179;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 12px 28px;
+    text-decoration: none;
+
+  }
+
+  .popup:hover {
+    -moz-box-shadow: inset 0px 1px 0px 0px #3dc21b;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #3dc21b;
+    box-shadow: inset 0px 1px 0px 0px #3dc21b;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #44c767), color-stop(1, #5cbf2a));
+    background: -moz-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+    background: -webkit-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+    background: -o-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+    background: -ms-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+    background: linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#44c767', endColorstr='#5cbf2a', GradientType=0);
+    background-color: #44c767;
+    border: 1px solid #18ab29;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 12px 28px;
+    text-decoration: none;
+  }
+
+  .popup:active {
+    position: relative;
+    top: 1px;
+  }
+
+  .navboton1 {
+    background-color: #FC8721;
+    height: 60px;
+  }
+
+
+  /*************  Color de la barra de navegación *********/
+
+  /** .navboton2{
          position:fixed;
          background-color:rgba(200,85,61,1);
          height: 60px;
          
      } */
-     
-     
-     
-     .footer{
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: black;
-        color: white;
-        text-align: center; 
-        height: 50px;
-     }
-     
-     .tag {
-       float: left;
-       position: relative;
-       z-index: 0;
-       color: #FFFFFF;
-         font-family:'Quicksand',sans-serif;
-         font-weight: bold;
-         margin: -170px auto 0 auto;
-    }
-     
-     .tag2 {
-       float: left;
-       position: relative;
-       z-index: 0;
-       color: #FFFFFF;
-         font-family:'Quicksand',sans-serif;
-         margin: -100px auto 0 auto;
+
+
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: center;
+    height: 50px;
+  }
+
+  .tag {
+    float: left;
+    position: relative;
+    z-index: 0;
+    color: #FFFFFF;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    margin: -170px auto 0 auto;
+  }
+
+  .tag2 {
+    float: left;
+    position: relative;
+    z-index: 0;
+    color: #FFFFFF;
+    font-family: 'Quicksand', sans-serif;
+    margin: -100px auto 0 auto;
+  }
+
+
+
+  @media screen and (max-width:767px) {
+    body {
+      background: none;
     }
 
 
-     
-     @media screen and (max-width:767px){
-         body{
-             background: none;
-         }
-         
+  }
 
-     }
-     
-      .youtube-player {
-        position: relative;
-        padding-bottom: 26.23%;
-        /* Use 75% for 4:3 videos */
-        height: 0;
-        overflow: hidden;
-        max-width: 100%;
-        background: #000;
-        margin: 5px;
-        width= 45%;
-        height= 315px;
-    }
-    
-    .youtube-player iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 100;
-        background: transparent;
-    }
-    
-    .youtube-player img {
-        bottom: 0;
-        display: block;
-        left: 0;
-        margin: auto;
-        max-width: 100%;
-        width: 100%;
-        position: absolute;
-        right: 0;
-        top: 0;
-        border: none;
-        height: auto;
-        cursor: pointer;
-        -webkit-transition: .4s all;
-        -moz-transition: .4s all;
-        transition: .4s all;
-    }
-    
-    .youtube-player img:hover {
-        -webkit-filter: brightness(75%);
-    }
-    
-    .youtube-player .play {
-        height: 72px;
-        width: 72px;
-        left: 50%;
-        top: 50%;
-        margin-left: -36px;
-        margin-top: -36px;
-        position: absolute;
-        background: url("//i.imgur.com/TxzC70f.png") no-repeat;
-        cursor: pointer;
-    }
-     
-     #fbLikeShare{
-         margin-top:80px;
-     }
-    
-     
-     
-     
-    </style>    
-    
-  <body class="page-login">
-      
-      <!-- Facebook plugin -->
+  .youtube-player {
+    position: relative;
+    padding-bottom: 26.23%;
+    /* Use 75% for 4:3 videos */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+    margin: 5px;
+    width: 45%;
+    height: 315px;
+  }
+
+  .youtube-player iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: transparent;
+  }
+
+  .youtube-player img {
+    bottom: 0;
+    display: block;
+    left: 0;
+    margin: auto;
+    max-width: 100%;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    height: auto;
+    cursor: pointer;
+    -webkit-transition: .4s all;
+    -moz-transition: .4s all;
+    transition: .4s all;
+  }
+
+  .youtube-player img:hover {
+    -webkit-filter: brightness(75%);
+  }
+
+  .youtube-player .play {
+    height: 72px;
+    width: 72px;
+    left: 50%;
+    top: 50%;
+    margin-left: -36px;
+    margin-top: -36px;
+    position: absolute;
+    background: url("//i.imgur.com/TxzC70f.png") no-repeat;
+    cursor: pointer;
+  }
+
+  #fbLikeShare {
+    margin-top: 80px;
+  }
+</style>
+
+<body class="page-login">
+
+  <!-- Facebook plugin 
       <div id="fb-root"></div>
         <script>(function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
@@ -299,39 +301,40 @@ $.ajaxSetup({
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
       
-      <!-- Facebook plugin -->
-    
-    <section id="one">
-      
-      <!-- Heaader de la página principal-->
-      
-     <header id="gradient" style=" height:60px;">
-		<div class="container-fluid custom-container" style="height:60px; width:cover">
-			<div class="row" style="height:60px;">
+       Facebook plugin -->
 
-                                 
-    <% if(nombre != undefined){ %>   
-                
-          
-        <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs" id="gradient" style="text-align: center;">
-                <a href="#one">
-                    <img src="img/PlystNameWhite.png" align="middle" style="height:80%; margin-top:5px;" alt="Plyst Me StartUp Logo">
-                </a>    
+  <section id="one">
+
+    <!-- Heaader de la página principal-->
+
+    <header id="gradient" style=" height:60px;">
+      <div class="container-fluid custom-container" style="height:60px; width:cover">
+        <div class="row" style="height:60px;">
+
+
+          <% if(nombre !=undefined){ %>
+
+
+            <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs" id="gradient" style="text-align: center;">
+              <a href="#one">
+                <img src="img/PlystNameWhite.png" align="middle" style="height:80%; margin-top:5px;"
+                  alt="Plyst Me StartUp Logo">
+              </a>
 
             </div>
-                
-    <!-- Barra de header en tamaño XS --->
-                
+
+            <!-- Barra de header en tamaño XS --->
+
             <div class="col-xs-12 hidden-sm hidden-md hidden-lg" style=" text-align: center;">
-                
-               <div style="margin: 5px auto 0 auto; text-align:center;">
-                    <img src="img/AtmosLogoWhite.png" style="width:50px;" alt="Plyst Me StartUp Logo">
-                </div>
+
+              <div style="margin: 5px auto 0 auto; text-align:center;">
+                <img src="img/AtmosLogoWhite.png" style="width:50px;" alt="Plyst Me StartUp Logo">
+              </div>
             </div>
-                
-                
-                
-        <!--<div class="col-lg-2 col-md-2 col-sm-2 hidden-xs navboton1" style=" text-align: left;">
+
+
+
+            <!--<div class="col-lg-2 col-md-2 col-sm-2 hidden-xs navboton1" style=" text-align: left;">
                 <a href="/nosotros">
                     <p   style="margin: 28px auto 0 auto; color:white; text-align: center; font-family: 'Lato', sans-serif; font-size:20px;">Nosotros</p>
                 </a>
@@ -358,37 +361,39 @@ $.ajaxSetup({
                     <h3   style=" margin-top:17px; color:white; text-align: center; font-family: 'Lato', sans-serif; font-size:20px;">Contacto</h3>
                 </a>
 
-            </div> -->       
-               
-    <% } %>           
-                
-<% if(ref){ %>
-                
-<a class="btn color-1 size-2 hover-2 hidden-lg hidden-md hidden-sm visble-xs" href="/login" style="color:white;  margin-left: 20px; margin-top:22px; color:silver; text-align: left; "><i class="fa fa-info-circle"></i>
-Pruébalo</a>  
- 
-                
-<% }else{ %>
-                
+            </div> -->
 
-                    
-<% } %>
-				
-                        <% if(nombre != undefined && nombre != ''){ %>
-                    
-               
-                    
-                        <% }else{ %><!--
+            <% } %>
+
+              <% if(ref){ %>
+
+                <a class="btn color-1 size-2 hover-2 hidden-lg hidden-md hidden-sm visble-xs" href="/login"
+                  style="color:white;  margin-left: 20px; margin-top:22px; color:silver; text-align: left; "><i
+                    class="fa fa-info-circle"></i>
+                  Pruébalo</a>
+
+
+                <% }else{ %>
+
+
+
+                  <% } %>
+
+                    <% if(nombre !=undefined && nombre !='' ){ %>
+
+
+
+                      <% }else{ %><!--
                            <div class="login-header-block" style="margin-right:10px;">
                                 <div class="login_block" style="margin-top:9px;">
                                     <a class="be-register btn color-1 size-2 hover-2" style="color:white;"><i class="fa fa-lock"></i>sign up now</a>
                                 </div>	
                             </div> -->
                         <%}%>
-                        
-                  
-                        
-                <!--<div class="login-header-block" style="margin-left: 20px; margin-top:22px; color:silver; text-align: right;">
+
+
+
+                          <!--<div class="login-header-block" style="margin-left: 20px; margin-top:22px; color:silver; text-align: right;">
 					<div class="login_block" >
                         <% if(ref){ %> 
                              <a class="btn color-1 size-2 hover-2 hidden-xs" href="/login"  style="color:white;"><i class="fa fa-info-circle"></i>
@@ -402,227 +407,254 @@ Pruébalo</a>
                        <%  } %>
                     </div>
                 </div>-->
-                        
-						  
-					
-			</div>
-		</div>
-	</header> 
-      
-      
-      <!----------------- Imagen en pequeño------------------------>
-    
-        
-        <div style="position:fixed;">
-            
-       <div class="col-xs-12 hidden-sm hidden-md hidden-lg" style="width:100%; padding: 0; margin-top:60px; max-height: 300px;">
-          <img src="img/backgroundNew.jpg" style="width:100%; background-size:100%;" alt="Plyst Me StartUp Fiesta">
+
+
+
+        </div>
       </div>
-        
+    </header>
+
+
+    <!----------------- Imagen en pequeño------------------------>
+
+
+    <div style="position:fixed;">
+
+      <div class="col-xs-12 hidden-sm hidden-md hidden-lg"
+        style="width:100%; padding: 0; margin-top:60px; max-height: 300px;">
+        <img src="img/backgroundNew.jpg" style="width:100%; background-size:100%;" alt="Plyst Me StartUp Fiesta">
+      </div>
+
       <!----------------- Cuadro de acceso------------------------>
 
-      <div class="tag col-xs-12 hidden-md hidden-lg hidden-sm" style="font-size:40px; text-align:center; text-shadow: 1px 1px 1px black;">
-          <img src="img/AtmosName.png" style="height:65px;" alt="Plyst Me StartUp Logo">
+      <div class="tag col-xs-12 hidden-md hidden-lg hidden-sm"
+        style="font-size:40px; text-align:center; text-shadow: 1px 1px 1px black;">
+        <img src="img/AtmosName.png" style="height:65px;" alt="Plyst Me StartUp Logo">
       </div>
-      
-      <div class="tag2 col-xs-12 hidden-md hidden-lg hidden-sm" style="font-size:15px; text-align:center; text-shadow: 1px 1px 1px black;">¡Playlists prefectas para todos!</div>
-        
-        </div>
-    
-      <div class="col-xs-12 hidden-sm hidden-md hidden-lg" style="background-color:white;font-family: 'Quicksand', sans-serif; margin-top:90%;">
-          
-        <div class="col-6" style="margin-top:25px;">
-            <h3>¡Obtén la música perfecta para tus reuniones sociales!</h3> 
-        </div>
-          
-          <div class="col-8" style="margin-top:20px;">
-            <p>Creamos una playlist automáticamente para tu evento tomando en cuenta los gustos de todos tus invitados.</p>
-          </div>
-          
-        <div class="centro" style="text-align:center;margin-bottom:50px;">
-            <div class=" hidden-lg hidden-md hidden-sm col-xs-12" style="margin-top:35px; margin-bottom:10px;">
-                    <a href="/login" >
-                      <div class="centro btn size-2 btnHover" style="text-align: center;  width: 100%; padding-left:0; padding-right:0; background-color:#c8553d; border-radius:100px;">
-                          <span style="color:white; font-family: 'Lato', sans-serif; text-align: center; font-size:120%;">
-                              Entrar
-                          </span>
-                      </div>
-                    </a>
-              </div>
-            
-            <div class="  hidden-lg hidden-md hidden-sm col-xs-12" style="text-align: center; margin:0 auto 30px auto;">
-                <a  href="https://www.spotify.com/mx/account/apps/" target="_blank" >
-                      <span style="color:#888; font-family: 'Quicksand', sans-serif; text-align: center; margin:0 auto; font-size:75%;">
-                          Revocar permisos para entrar con otro usuario
-                      </span> 
-                </a>
-              </div>
-            
-            <div class="fb-like" data-href="https://www.facebook.com/plystme/" data-width="150px" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true" id="fbLikeShare2"></div>
-        </div>
-      
+
+      <div class="tag2 col-xs-12 hidden-md hidden-lg hidden-sm"
+        style="font-size:15px; text-align:center; text-shadow: 1px 1px 1px black;">¡Playlists prefectas para todos!
       </div>
- 
-      <!--LOGIN BOX
+
+    </div>
+
+    <div class="col-xs-12 hidden-sm hidden-md hidden-lg"
+      style="background-color:white;font-family: 'Quicksand', sans-serif; margin-top:90%;">
+
+      <div class="col-6" style="margin-top:25px;">
+        <h3>¡Obtén la música perfecta para tus reuniones sociales!</h3>
+      </div>
+
+      <div class="col-8" style="margin-top:20px;">
+        <p>Creamos una playlist automáticamente para tu evento tomando en cuenta los gustos de todos tus invitados.</p>
+      </div>
+
+      <div class="centro" style="text-align:center;margin-bottom:50px;">
+        <div class=" hidden-lg hidden-md hidden-sm col-xs-12" style="margin-top:35px; margin-bottom:10px;">
+          <a href="/login">
+            <div class="centro btn size-2 btnHover"
+              style="text-align: center;  width: 100%; padding-left:0; padding-right:0; background-color:#c8553d; border-radius:100px;">
+              <span style="color:white; font-family: 'Lato', sans-serif; text-align: center; font-size:120%;">
+                Entrar
+              </span>
+            </div>
+          </a>
+        </div>
+
+        <div class="  hidden-lg hidden-md hidden-sm col-xs-12" style="text-align: center; margin:0 auto 30px auto;">
+          <a href="https://www.spotify.com/mx/account/apps/" target="_blank">
+            <span
+              style="color:#888; font-family: 'Quicksand', sans-serif; text-align: center; margin:0 auto; font-size:75%;">
+              Revocar permisos para entrar con otro usuario
+            </span>
+          </a>
+        </div>
+
+        <div class="fb-like" data-href="https://www.facebook.com/plystme/" data-width="150px" data-layout="button_count"
+          data-action="like" data-size="small" data-show-faces="true" data-share="true" id="fbLikeShare2"></div>
+      </div>
+
+    </div>
+
+    <!--LOGIN BOX
       Aquí está la división para la caja de inicio, para todos los tamaños excepto XS-->
-    
-      <div id="login" class="contenedor row hidden-xs" style="margin-top:15%; font-family: 'Quicksand', sans-serif; margin-bottom:6%; font-weight: bold; width:100%;">
-          <br>
-          <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
-                <h1 style="color:white; font-size:5em;">¡Playlists perfectas para todos!</h1>
-          </div>           
-          <div class="col-lg-12 col-md-12 hidden-sm hidden-xs" style="margin-bottom:5px;">
-                <h3 style="color:white; font-size:1.5em;">Creamos una playlist automáticamente para tu evento tomando en cuenta los gustos de todos tus invitados.</h3>
-          </div>
-          <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="margin-bottom:10px;">
-                <h1 style="color:white; font-size:3.5em;">¡Playlists prefectas para todos!</h1>
-          </div> 
-          <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="margin-bottom:5px;">
-                <h3 style="color:white; font-size:1.5em;">Creamos una playlist automáticamente para tu evento tomando en cuenta los gustos de todos tus invitados.</h3>
-          </div>
-          <br>
-          <!-- <h4> 
+
+    <div id="login" class="contenedor row hidden-xs"
+      style="margin-top:15%; font-family: 'Quicksand', sans-serif; margin-bottom:6%; font-weight: bold; width:100%;">
+      <br>
+      <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
+        <h1 style="color:white; font-size:5em;">¡Playlists perfectas para todos!</h1>
+      </div>
+      <div class="col-lg-12 col-md-12 hidden-sm hidden-xs" style="margin-bottom:5px;">
+        <h3 style="color:white; font-size:1.5em;">Creamos una playlist automáticamente para tu evento tomando en cuenta
+          los gustos de todos tus invitados.</h3>
+      </div>
+      <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="margin-bottom:10px;">
+        <h1 style="color:white; font-size:3.5em;">¡Playlists prefectas para todos!</h1>
+      </div>
+      <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="margin-bottom:5px;">
+        <h3 style="color:white; font-size:1.5em;">Creamos una playlist automáticamente para tu evento tomando en cuenta
+          los gustos de todos tus invitados.</h3>
+      </div>
+      <br>
+      <!-- <h4> 
             Social media feeds you. 
             And you feed them. 
             You give them what they want.
             They give you what you want. 
           <br>    
           </h4> -->
-          
-         
-          
-          
-          <div style="margin-left:25%; width:50%; text-align:center;">
-               <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="margin-top:40px; margin-bottom:20px; text-align: center;">
-                    <a href="/login" >
-                      <div class="centro btn size-2 hover-3" style="width: 40%; background-color:#c8553d; border-radius: 10px;" onmouseover="this.style.background='rgba(0,0,0,0.5)';" onmouseout = "this.style.background='rgba(200,85,61)';">
-                          <span style="color:white; font-family: 'Quicksand', sans-serif; text-align: center; font-size:2em;">
-                              ENTRAR 
-                          </span> 
-                      </div>
-                    </a>
-              </div>
-              <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="text-align: center; padding:10px;">
-                <a href="https://www.spotify.com/mx/account/apps/" target="_blank" >
-                      <span style="color:#777; font-family: 'Quicksand', sans-serif; text-align: center;">
-                          Revocar permisos para entrar con otro usuario
-                      </span> 
-                </a>
-              </div>
-              
-              
-              
-              <!-- Tamaño mediano -->
-              
-              <div class=" hidden-lg col-md-12 hidden-xs" style="text-align: center;">
-                    <a href="/login" >
-                      <div class="centro btn size-2 hover-3" style="margin-top:25px; margin-bottom:20px; width: 40%; background-color:#c8553d; border-radius:10px;">
-                          <span style="color:white; font-family: 'Quicksand', sans-serif; text-align: center; font-size:2em;">
-                              ENTRAR
-                          </span>
-                      </div>
-                    </a>
-              </div>
-              <div class="hidden-lg col-md-12 hidden-xs" style="text-align: center;">
-                <a href="https://www.spotify.com/mx/account/apps/" target="_blank" >
-                      <span style="color:#777; font-family: 'Quicksand', sans-serif; text-align: center;">
-                          Revocar permisos para entrar con otro usuario
-                      </span> 
-                </a>
-              </div>
-              
-              <!-- Tamaño pequeño -->
-              
-               <div class=" hidden-lg hidden-md hidden-sm col-xs-12" style="margin-bottom:25px;">
-                    <a href="/login" >
-                      <div class="centro btn size-2 hover-3" style="text-align: center;  width: 50%; padding-left:0; padding-right:0; background-color:#c8553d; border-radius:100px;">
-                          <span style="color:white; font-family: 'Quicksand', sans-serif; text-align: center; font-size:2em;">
-                              ENTRAR
-                          </span>
-                      </div>
-                    </a>
-              </div>
-              <div class="  hidden-lg hidden-md hidden-sm col-xs-12" style="text-align: center; margin:0 auto;">
-                <a  href="https://www.spotify.com/mx/account/apps/" target="_blank" >
-                      <span style="color:#777; font-family: 'Quicksand', sans-serif; text-align: center; margin:0 auto; font-size:75%;">
-                          Revocar permisos para entrar con otro usuario
-                      </span> 
-                </a>
-              </div>
-              
-              <div class="fb-like" data-href="https://www.facebook.com/plystme/" data-width="150px" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true" id="fbLikeShare"></div>
-          </div>
-      
-      </div>    
-        
-      <div id="loggedin">
-        <div id="user-profile">
+
+
+
+
+      <div style="margin-left:25%; width:50%; text-align:center;">
+        <div class="col-lg-12 hidden-md hidden-sm hidden-xs"
+          style="margin-top:40px; margin-bottom:20px; text-align: center;">
+          <a href="/login">
+            <div class="centro btn size-2 hover-3" style="width: 40%; background-color:#c8553d; border-radius: 10px;"
+              onmouseover="this.style.background='rgba(0,0,0,0.5)';"
+              onmouseout="this.style.background='rgba(200,85,61)';">
+              <span style="color:white; font-family: 'Quicksand', sans-serif; text-align: center; font-size:2em;">
+                ENTRAR
+              </span>
+            </div>
+          </a>
         </div>
-        <div id="oauth">
+        <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="text-align: center; padding:10px;">
+          <a href="https://www.spotify.com/mx/account/apps/" target="_blank">
+            <span style="color:#777; font-family: 'Quicksand', sans-serif; text-align: center;">
+              Revocar permisos para entrar con otro usuario
+            </span>
+          </a>
         </div>
-        <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+
+
+
+        <!-- Tamaño mediano -->
+
+        <div class=" hidden-lg col-md-12 hidden-xs" style="text-align: center;">
+          <a href="/login">
+            <div class="centro btn size-2 hover-3"
+              style="margin-top:25px; margin-bottom:20px; width: 40%; background-color:#c8553d; border-radius:10px;">
+              <span style="color:white; font-family: 'Quicksand', sans-serif; text-align: center; font-size:2em;">
+                ENTRAR
+              </span>
+            </div>
+          </a>
+        </div>
+        <div class="hidden-lg col-md-12 hidden-xs" style="text-align: center;">
+          <a href="https://www.spotify.com/mx/account/apps/" target="_blank">
+            <span style="color:#777; font-family: 'Quicksand', sans-serif; text-align: center;">
+              Revocar permisos para entrar con otro usuario
+            </span>
+          </a>
+        </div>
+
+        <!-- Tamaño pequeño -->
+
+        <div class=" hidden-lg hidden-md hidden-sm col-xs-12" style="margin-bottom:25px;">
+          <a href="/login">
+            <div class="centro btn size-2 hover-3"
+              style="text-align: center;  width: 50%; padding-left:0; padding-right:0; background-color:#c8553d; border-radius:100px;">
+              <span style="color:white; font-family: 'Quicksand', sans-serif; text-align: center; font-size:2em;">
+                ENTRAR
+              </span>
+            </div>
+          </a>
+        </div>
+        <div class="  hidden-lg hidden-md hidden-sm col-xs-12" style="text-align: center; margin:0 auto;">
+          <a href="https://www.spotify.com/mx/account/apps/" target="_blank">
+            <span
+              style="color:#777; font-family: 'Quicksand', sans-serif; text-align: center; margin:0 auto; font-size:75%;">
+              Revocar permisos para entrar con otro usuario
+            </span>
+          </a>
+        </div>
+
+        <div class="fb-like" data-href="https://www.facebook.com/plystme/" data-width="150px" data-layout="button_count"
+          data-action="like" data-size="small" data-show-faces="true" data-share="true" id="fbLikeShare"></div>
       </div>
-    
-        </section>
-      
-      <!-- About us -->
-      
-        <!-- Quienes somos --->
-      
-      <!--Tamaño grande -->
-      
-      <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs" style="background-color:rgba(255,255,255,1); padding-bottom: 10px; padding-left: 10%; padding-right: 10%;">
-      
-        <h1 class="text-center" style="color:#c8553d; font-family: 'Quicksand', sans-serif; font-size:50px;">Sobre nosotros</h1>
-          <hr align="center">
-          <h2 class="text-center" style="color: black; font-size: 20px; padding-top:20px; font-family: 'Quicksand', sans-serif; line-height: 1.6;">Somos una start-up mexicana de tecnología que busca innovar la forma en que las personas escuchan música en espacios sociales.</h2><br>
-          
-            
-          <br>
-       
-      </section>
-  
-      <!-- TEAM --->
-      
-      <!--Tamaño grande -->
-      
-      <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs" id="team">
-      
-        <h1 class="text-center" style="color:black; font-size:50px;">TEAM</h1>
-          <hr align="center">
-          
-          <div>
-                <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Diego Ignacio Ortega.</h2>
-                <p style="color:black;text-align:right;">Web development.</p>
-          </div>
-          <div>
-                <h2 class="text-left" style="color: black; font-size: 30px; padding-top:10px; width:100%;">David Suriel García.</h2>
-                <p style="color:black;text-align:left;">Web development.</p>
-          </div>
-          <div>
-                <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Alexis Guerrero.</h2>
-                <p style="color:black;text-align:right;">Web development.</p>
-          </div>
-          <div>
-                <h2 class="text-left" style="color: black; font-size: 30px; padding-top:10px; width:100%;">David Barrientos.</h2>
-                <p style="color:black;text-align:left;">Web development.</p>
-          </div>
-          <div>
-                <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Gerardo Vignau.</h2>
-                <p style="color:black;text-align:right;">Business intelligence.</p>
-          </div>       
-      </section>
-      
-        <!-- YouTube Videos --->
-      
-      <!--Tamaño grande -->
-      
-      <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs" style="background-color:rgba(255,255,255,1); padding-bottom: 30px; padding-left: 10%; padding-right: 10%;">
-      
-        <h1 class="text-center" style="color:black; font-family: 'Quicksand', sans-serif; font-size:50px;">VIDEOS</h1>
-          <hr align="center">
-          <h2 class="text-center" style="color: rgba(51,51,51,0.5); font-size: 20px;">Descubre como funciona PlystMe.</h2><br>
-            <!--<ol text-align="center">
+
+    </div>
+
+    <div id="loggedin">
+      <div id="user-profile">
+      </div>
+      <div id="oauth">
+      </div>
+      <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+    </div>
+
+  </section>
+
+  <!-- About us -->
+
+  <!-- Quienes somos --->
+
+  <!--Tamaño grande -->
+
+  <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs"
+    style="background-color:rgba(255,255,255,1); padding-bottom: 10px; padding-left: 10%; padding-right: 10%;">
+
+    <h1 class="text-center" style="color:#c8553d; font-family: 'Quicksand', sans-serif; font-size:50px;">Sobre nosotros
+    </h1>
+    <hr align="center">
+    <h2 class="text-center"
+      style="color: black; font-size: 20px; padding-top:20px; font-family: 'Quicksand', sans-serif; line-height: 1.6;">
+      Somos una start-up mexicana de tecnología que busca innovar la forma en que las personas escuchan música en
+      espacios sociales.</h2><br>
+
+
+    <br>
+
+  </section>
+
+  <!-- TEAM --->
+
+  <!--Tamaño grande -->
+
+  <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs" id="team">
+
+    <h1 class="text-center" style="color:black; font-size:50px;">TEAM</h1>
+    <hr align="center">
+
+    <div>
+      <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Diego Ignacio
+        Ortega.</h2>
+      <p style="color:black;text-align:right;">Web development.</p>
+    </div>
+    <div>
+      <h2 class="text-left" style="color: black; font-size: 30px; padding-top:10px; width:100%;">David Suriel García.
+      </h2>
+      <p style="color:black;text-align:left;">Web development.</p>
+    </div>
+    <div>
+      <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Alexis Guerrero.
+      </h2>
+      <p style="color:black;text-align:right;">Web development.</p>
+    </div>
+    <div>
+      <h2 class="text-left" style="color: black; font-size: 30px; padding-top:10px; width:100%;">David Barrientos.</h2>
+      <p style="color:black;text-align:left;">Web development.</p>
+    </div>
+    <div>
+      <h2 class="text-right" style="color: #c8553d; font-size: 30px; padding-top:10px; width:100%;">Gerardo Vignau.</h2>
+      <p style="color:black;text-align:right;">Business intelligence.</p>
+    </div>
+  </section>
+
+  <!-- YouTube Videos --->
+
+  <!--Tamaño grande -->
+
+  <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs"
+    style="background-color:rgba(255,255,255,1); padding-bottom: 30px; padding-left: 10%; padding-right: 10%;">
+
+    <h1 class="text-center" style="color:black; font-family: 'Quicksand', sans-serif; font-size:50px;">VIDEOS</h1>
+    <hr align="center">
+    <h2 class="text-center" style="color: rgba(51,51,51,0.5); font-size: 20px;">Descubre como funciona PlystMe.</h2><br>
+    <!--<ol text-align="center">
                 <li>
                      <iframe align="left"  width="45%" height="315" src="https://www.youtube.com/embed/1RAY8xf6elg?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </li>
@@ -630,16 +662,16 @@ Pruébalo</a>
                     <iframe align="right" width="45%" height="315" src="https://www.youtube.com/embed/bruksbn9LTc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>  
                 </li>          
           </ol>-->
-          <div class="youtube-player" data-id="1RAY8xf6elg"></div>
-          
-          <div class="youtube-player" data-id="bruksbn9LTc"></div>
-          
-          <br>
-       
-      </section>
-      
-  
-    <script id="user-profile-template" type="text/x-handlebars-template">
+    <div class="youtube-player" data-id="1RAY8xf6elg"></div>
+
+    <div class="youtube-player" data-id="bruksbn9LTc"></div>
+
+    <br>
+
+  </section>
+
+
+  <script id="user-profile-template" type="text/x-handlebars-template">
       <h1>Logged in as {{display_name}}</h1>
       <div class="media">
         <div class="pull-left">
@@ -659,7 +691,7 @@ Pruébalo</a>
       </div>
     </script>
 
-    <script id="oauth-template" type="text/x-handlebars-template">
+  <script id="oauth-template" type="text/x-handlebars-template">
       <h2>oAuth info</h2>
       <dl class="dl-horizontal">
         <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
@@ -667,87 +699,86 @@ Pruébalo</a>
       </dl>
     </script>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
-    <script>
-      (function() {
+  <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+  <script>
+    (function () {
 
-        /**
-         * Obtains parameters from the hash of the URL
-         * @return Object
-         */
-        function getHashParams() {
-          var hashParams = {};
-          var e, r = /([^&;=]+)=?([^&;]*)/g,
-              q = window.location.hash.substring(1);
-          while ( e = r.exec(q)) {
-             hashParams[e[1]] = decodeURIComponent(e[2]);
-          }
-          return hashParams;
+      /**
+       * Obtains parameters from the hash of the URL
+       * @return Object
+       */
+      function getHashParams() {
+        var hashParams = {};
+        var e, r = /([^&;=]+)=?([^&;]*)/g,
+          q = window.location.hash.substring(1);
+        while (e = r.exec(q)) {
+          hashParams[e[1]] = decodeURIComponent(e[2]);
+        }
+        return hashParams;
+      }
+
+      var userProfileSource = document.getElementById('user-profile-template').innerHTML,
+        userProfileTemplate = Handlebars.compile(userProfileSource),
+        userProfilePlaceholder = document.getElementById('user-profile');
+
+      var oauthSource = document.getElementById('oauth-template').innerHTML,
+        oauthTemplate = Handlebars.compile(oauthSource),
+        oauthPlaceholder = document.getElementById('oauth');
+
+      var params = getHashParams();
+
+      var access_token = params.access_token,
+        refresh_token = params.refresh_token,
+        error = params.error;
+
+      if (error) {
+        alert('There was an error during the authentication');
+      } else {
+        if (access_token) {
+          // render oauth info
+          oauthPlaceholder.innerHTML = oauthTemplate({
+            access_token: access_token,
+            refresh_token: refresh_token
+          });
+
+          $.ajax({
+            url: 'https://api.spotify.com/v1/me',
+            headers: {
+              'Authorization': 'Bearer ' + access_token
+            },
+            success: function (response) {
+              userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+
+              $('#login').hide();
+              $('#loggedin').show();
+            }
+          });
+        } else {
+          // render initial screen
+          $('#login').show();
+          $('#loggedin').hide();
         }
 
-        var userProfileSource = document.getElementById('user-profile-template').innerHTML,
-            userProfileTemplate = Handlebars.compile(userProfileSource),
-            userProfilePlaceholder = document.getElementById('user-profile');
-
-        var oauthSource = document.getElementById('oauth-template').innerHTML,
-            oauthTemplate = Handlebars.compile(oauthSource),
-            oauthPlaceholder = document.getElementById('oauth');
-
-        var params = getHashParams();
-
-        var access_token = params.access_token,
-            refresh_token = params.refresh_token,
-            error = params.error;
-
-        if (error) {
-          alert('There was an error during the authentication');
-        } else {
-          if (access_token) {
-            // render oauth info
+        document.getElementById('obtain-new-token').addEventListener('click', function () {
+          $.ajax({
+            url: '/refresh_token',
+            data: {
+              'refresh_token': refresh_token
+            }
+          }).done(function (data) {
+            access_token = data.access_token;
             oauthPlaceholder.innerHTML = oauthTemplate({
               access_token: access_token,
               refresh_token: refresh_token
             });
+          });
+        }, false);
+      }
+    })();
+  </script>
 
-            $.ajax({
-                url: 'https://api.spotify.com/v1/me',
-                headers: {
-                  'Authorization': 'Bearer ' + access_token
-                },
-                success: function(response) {
-                  userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+</body>
 
-                  $('#login').hide();
-                  $('#loggedin').show();
-                }
-            });
-          } else {
-              // render initial screen
-              $('#login').show();
-              $('#loggedin').hide();
-          }
-
-          document.getElementById('obtain-new-token').addEventListener('click', function() {
-            $.ajax({
-              url: '/refresh_token',
-              data: {
-                'refresh_token': refresh_token
-              }
-            }).done(function(data) {
-              access_token = data.access_token;
-              oauthPlaceholder.innerHTML = oauthTemplate({
-                access_token: access_token,
-                refresh_token: refresh_token
-              });
-            });
-          }, false);
-        }
-      })();
-    </script>
-      
-  </body>
-    
-      <% include ../partials/foot.ejs %>
+<% include ../partials/foot.ejs %>
 
 </html>
-

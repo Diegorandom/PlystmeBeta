@@ -1,7 +1,7 @@
-var crearDatabaseEvento = require('../database/crearDatabaseEvento')
+var createEvent = require('../database/queries/createEvent')
 
-const createEventService = (userId, codigoEvento, latitud, longitud, socket, session) => {
-    return crearDatabaseEvento(
+const createEventService = (userId, codigoEvento, latitud, longitud, session) => {
+    return createEvent(
         userId,
         codigoEvento,
         latitud, longitud,

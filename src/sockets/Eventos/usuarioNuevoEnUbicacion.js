@@ -2,7 +2,7 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-const checkDatabaseEventPosition = require('../../database/checkDatabaseEventPosition');
+const checkIfEventInUserPosition = require('../../database/queries/checkIfEventInUserPosition');
 const usuarioNuevoUbicacionService = require('../../services/usuarioNuevoUbicacionService')
 const checkEventPositionService = require('../../services/checkEventPositionService');
 
@@ -23,7 +23,7 @@ const usuarioNuevoEnUbicacion = (
         console.log('Longitud del usuario -> ', lng)
         console.log('radio -> ', radio)
 
-        let codigoBD = checkDatabaseEventPosition()
+        let codigoBD = checkIfEventInUserPosition()
 
         let partyEvent = checkEventPositionService(codigoBD, userId);
 
