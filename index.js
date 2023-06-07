@@ -30,6 +30,7 @@ app.use(cookieParser());
 app.use(methodOverride());
 var mainSocket = require('./src/sockets/mainSocket')
 const neo4jConnection = require('./src/database/connection')
+const rateLimit = require('express-rate-limit')
 
 /* 
 Documentación de Código
@@ -152,8 +153,17 @@ app.use(require("./src/routes/inicio"))
 //Login procesa el REQUEST de la API de Spotify para autorizacion
 app.use(require('./src/routes/login'))
 
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+// Apply the rate limiting middleware to API calls only
+app.use('/api', apiLimiter)
 /*CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION*/
-app.use(require("./src/routes/callbackAlgoritmo"));
+app.use(require("./src/routes/callbackAlgoritmo"), apiLimiter);
 
 /*Proceso de conexio con la API del algoritmo del pool*/
 app.use(require("./src/routes/poolAlgoritmo"));

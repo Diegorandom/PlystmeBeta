@@ -3,7 +3,7 @@
   "version": "0.2.5",
   "description": "Plataforma web para la creación de playlists dinámicos en grupos sociales",
   "engines": {
-    "node": "5.9.1"
+    "node": "18.16"
   },
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,7 @@
     "cookie-parser": "*",
     "ejs": "3.1.9",
     "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
     "fs": "*",
     "http-delayed-response": "0.0.4",
     "idle-timer": "^1.2.0",
