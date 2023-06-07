@@ -1,5 +1,5 @@
-var findDatabaseEventOfUser = require('../database/findDatabaseEventOfUser')
-var addUserToDatabaseEvent = require('../database/addUserToDatabaseEvent')
+var findEvent = require('../database/queries/findEvent')
+var addUserToEvent = require('../database/queries/addUserToEvent')
 const unirUsuario = require('./unirUsuarioService')
 
 const checarUsuarioService = (usuarios, session, codigoEvento, userId) => {
@@ -7,12 +7,12 @@ const checarUsuarioService = (usuarios, session, codigoEvento, userId) => {
     console.log('usarioId -> ', usuarios)
     if (usuarios.records[0] == undefined) {
 
-        addUserToDatabaseEvent(session, userId, codigoEvento)
+        addUserToEvent(session, userId, codigoEvento)
             .then(function () {
                 console.log('unionUsuarioEvento')
                 console.log('Nuevo usuario ', userId, ' -> añadido a evento en BD-> ', codigoEvento)
 
-                findDatabaseEventOfUser(session, codigoEvento)
+                findEvent(session, codigoEvento)
                     .then().catch(function (err) {
                         return new Error(err)
                     })
@@ -22,7 +22,7 @@ const checarUsuarioService = (usuarios, session, codigoEvento, userId) => {
         console.log('El usuario ya está registrado en el evento de la BD')
 
         // eslint-disable-next-line no-undef
-        addUserToDatabaseEvent(
+        addUserToEvent(
             session,
             userId,
             codigoEvento

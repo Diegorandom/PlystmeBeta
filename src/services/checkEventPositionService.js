@@ -1,8 +1,8 @@
 const unirUsuarioService = require('./unirUsuarioService')
 const multiplesEvents = require('./multipleEventsService')
-const checarDatabaseUsuario = require('./../database/checarDatabaseUsuario')
-const addUserToDatabaseEvent = require('./../database/addUserToDatabaseEvent')
-const findDatabaseEvent = require('./../database/findDatabaseEvent')
+const findUserInEvent = require('./../database/queries/findUserInEvent')
+const addUserToEvent = require('../database/queries/addUserToEvent')
+const findEvent = require('./../database/queries/findEvent')
 const findUserResponseService = require('./findUserResponseService')
 
 const checkEventPositionService = (codigoBD, userId, session) => {
@@ -13,19 +13,19 @@ const checkEventPositionService = (codigoBD, userId, session) => {
 
         console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
 
-        checarDatabaseUsuario(session, codigoEvento, userId)
+        findUserInEvent(session, codigoEvento, userId)
             .then(function (usuarioId) {
 
                 console.log('usarioId -> ', usuarioId)
                 if (usuarioId.records[0] == undefined) {
                     console.log('Guardando nuevo invitado en el evento de la BD')
 
-                    addUserToDatabaseEvent()
+                    addUserToEvent()
                         .then(function () {
                             console.log('unionUsuarioEvento')
                             console.log('Nuevo usuario ', userId, ' -> añadido a evento en BD-> ', codigoEvento)
 
-                            let ids = findDatabaseEvent(session, codigoEvento)
+                            let ids = findEvent(session, codigoEvento)
 
                             return findUserResponseService(ids, codigoEvento, userId)
                         })

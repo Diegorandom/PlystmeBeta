@@ -1,6 +1,6 @@
 var querystring = require('querystring');
-const matchDatabaseUsuario = require('../database/matchDatabaseUsuario');
-const createDatabaseUsuario = require('../database/createDatabaseUsuario');
+const findUser = require('../database/queries/findUser');
+const createUser = require('../database/queries/createUser');
 const axios = require('axios');
 
 /*Utilizando el token de acceso de la autorizacion se procede a solicitar los datos del usuario*/
@@ -49,7 +49,7 @@ const logIn = async (
 
     console.log('Comienza proceso de revisión en base de datos para verificar si es un usuario nuevo o ya está regitrado \n');
 
-    let checkid_result = await matchDatabaseUsuario(
+    let checkid_result = await findUser(
         session,
         response.data.id
     )
@@ -60,7 +60,7 @@ const logIn = async (
         console.log('Se creará nuevo record en base de datos');
         mensaje = "nuevo_usuario";
 
-        let response = createDatabaseUsuario(
+        let response = await createUser(
             session,
             pais,
             nombre,
@@ -143,7 +143,7 @@ const getToken = async (
     refresh_token = response.data.refresh_token;
     access_token = response.data.access_token;
 
-    let logInResponse = logIn(
+    let logInResponse = await logIn(
         jsonDatos,
         session,
         pais,
@@ -160,7 +160,7 @@ const getToken = async (
         spotifyid
     )
 
-    console.log('logIn completed ', logIn);
+    console.log('logIn completed ', logInResponse);
 
     return logInResponse
 

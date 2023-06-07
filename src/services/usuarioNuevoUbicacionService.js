@@ -1,4 +1,4 @@
-var checarDatabaseUsuario = require('../database/checarDatabaseUsuario')
+var findUserInEvent = require('../database/queries/findUserInEvent')
 var checarUsuarioService = require('../services/checarUsuarioService')
 
 const usuarioNuevoUbicacionService = (partyEvent, userId, session, usuarios) => {
@@ -10,7 +10,7 @@ const usuarioNuevoUbicacionService = (partyEvent, userId, session, usuarios) => 
 
         console.log('Usuario -> ', userId, ' entró a evento -> ', codigoEvento)
 
-        checarDatabaseUsuario(session, codigoEvento, userId)
+        findUserInEvent(session, codigoEvento, userId)
 
         return {
             event: 'UsuarioSeUneEventoPorUbicacion',
