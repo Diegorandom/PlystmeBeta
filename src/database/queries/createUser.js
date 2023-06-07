@@ -31,8 +31,6 @@ const createUser = async (
                 imagen_url: imagen_url
             }))
 
-    session.close();
-
     console.log('Se creó con éxito el nodo del usuario');
 
     /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/

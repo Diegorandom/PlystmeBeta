@@ -1,104 +1,106 @@
 <!DOCTYPE html>
 <!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
 <!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+
 <head>
-     <% include ../partials/header.ejs  %>
-     <% include ../partials/footer.ejs  %>
-   <!-- mobile specific metas
+  <% include('../partials/header.ejs') %>
+    <% include('../partials/footer.ejs') %>
+      <!-- mobile specific metas
    ================================================== -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="/style/main.css">    
-    <!-- CSS
+      <link rel="stylesheet" href="/style/main.css">
+      <!-- CSS
    ================================================== -->
-   <link rel="stylesheet" href="/style/base.css">  
-   <link rel="stylesheet" href="/style/main.css">
-   <link rel="stylesheet" href="/style/vendor.css"> 
+      <link rel="stylesheet" href="/style/base.css">
+      <link rel="stylesheet" href="/style/main.css">
+      <link rel="stylesheet" href="/style/vendor.css">
 
-  <!-- script error 404
+      <!-- script error 404
    ================================================== -->
-	<script src="/script/modernizr.js"></script>
-    
-   
-  
+      <script src="/script/modernizr.js"></script>
+
+
+
 </head>
 
 <body>
-     
-	<!-- main content
+
+  <!-- main content
    ================================================== -->
-   <main id="main-404-content" class="main-content-particle-js">
+  <main id="main-404-content" class="main-content-particle-js">
 
-   	<div class="content-wrap">
+    <div class="content-wrap">
 
-		   <div class="shadow-overlay"></div>
+      <div class="shadow-overlay"></div>
 
-		   <div class="main-content">
-		   	<div class="row">
-		   		<div class="col-lg-12">
-			  		
-			  			<h1 class="kern-this">Error</h1>
-			  			<p>
-						Parece que ocurrio un error pero no te preocupes, Entra de nuevo a tu perfil
-			  			</p>
+      <div class="main-content">
+        <div class="row">
+          <div class="col-lg-12">
 
-			  			<div class="centro" style="width:300px;" >
-               <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="margin-bottom:25px;">
-                    <a href="/login" >
-                      <div class="centro btn color-3 size-2" style="text-align: center;  width: 100%;">
-                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:200%;">
-                              Entrar 
-                          </span> 
-                      </div>
-                    </a>
+            <h1 class="kern-this">Error</h1>
+            <p>
+              Parece que ocurrio un error pero no te preocupes, Entra de nuevo a tu perfil
+            </p>
+
+            <div class="centro" style="width:300px;">
+              <div class="col-lg-12 hidden-md hidden-sm hidden-xs" style="margin-bottom:25px;">
+                <a href="/login">
+                  <div class="centro btn color-3 size-2" style="text-align: center;  width: 100%;">
+                    <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:200%;">
+                      Entrar
+                    </span>
+                  </div>
+                </a>
               </div>
               <div class=" hidden-lg col-md-12 hidden-xs" style="margin-bottom:25px;">
-                    <a href="/login" >
-                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
-                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:150%;">
-                              Entrar
-                          </span>
-                      </div>
-                    </a>
+                <a href="/login">
+                  <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
+                    <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:150%;">
+                      Entrar
+                    </span>
+                  </div>
+                </a>
               </div>
-               <div class=" hidden-lg hidden-md hidden-sm col-xs-12" style="margin-bottom:25px;">
-                    <a href="/login" >
-                      <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
-                          <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:100%;">
-                             Entrar
-                          </span>
-                      </div>
-                    </a>
+              <div class=" hidden-lg hidden-md hidden-sm col-xs-12" style="margin-bottom:25px;">
+                <a href="/login">
+                  <div class="centro btn color-1 size-2 hover-3" style="text-align: center;  width: 100%;">
+                    <span style="color:black; font-family: 'Orbitron', sans-serif; text-align: center; font-size:100%;">
+                      Entrar
+                    </span>
+                  </div>
+                </a>
               </div>
-          </div>	   		
-                
-                    <br>
-                    <br>
-                    <br>
+            </div>
 
-                    <p>
-                    El error es --> <%=error%>
-                    </p>
-			   	</div> <!-- /twelve --> 		   			
-		   	</div> <!-- /row -->    		 		
-		   </div> <!-- /main-content --> 
+            <br>
+            <br>
+            <br>
+
+            <p>
+              El error es --> <%=error%>
+            </p>
+          </div> <!-- /twelve -->
+        </div> <!-- /row -->
+      </div> <!-- /main-content -->
 
 
-		</div> <!-- /content-wrap -->
-   
-   </main> <!-- /main-404-content -->
+    </div> <!-- /content-wrap -->
 
-   <div id="preloader"> 
-    	<div id="loader"></div>
-   </div> 
+  </main> <!-- /main-404-content -->
 
-    <!-- Java Script
-   ================================================== --> 
-   <script src="/script/plugins.js"></script>
-   <script src="/script/main.js"></script>
-   
-<% include ../partials/foot.ejs %>
+  <div id="preloader">
+    <div id="loader"></div>
+  </div>
+
+  <!-- Java Script
+   ================================================== -->
+  <script src="/script/plugins.js"></script>
+  <script src="/script/main.js"></script>
+
+  <% include('../partials/foot.ejs') %>
 </body>
 
 </html>
