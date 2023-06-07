@@ -154,14 +154,14 @@ app.use(require("./src/routes/inicio"))
 app.use(require('./src/routes/login'))
 
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  windowMs: 1 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
 
 // Apply the rate limiting middleware to API calls only
-app.use('/api', apiLimiter)
+
 /*CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION*/
 app.use(require("./src/routes/callbackAlgoritmo"), apiLimiter);
 
