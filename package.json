@@ -3,11 +3,11 @@
   "version": "0.2.5",
   "description": "Plataforma web para la creación de playlists dinámicos en grupos sociales",
   "engines": {
-    "node": "18.16"
+    "node": "v20.2.0"
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "lint": "npx eslint --ext .js src --fix"
   },
   "dependencies": {

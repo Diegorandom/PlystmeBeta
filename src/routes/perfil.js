@@ -13,40 +13,52 @@ router.get('/perfil', function (request, response, error) {
     response.setHeader("Cache-Control", "no-store");
 
     /*Si hay error se renderiza*/
-    if (error == true || objetosGlobales[position] == undefined) {
+    if (error || objetosGlobales[position] == undefined) {
         response.render('pages/error', { error: error })
-    } else {
-        /*Algunas configuraciones*/
-        objetosGlobales[position].ref = false;
+    }
 
-        console.log('apuntador del arreglo', position)
+    /*Algunas configuraciones*/
+    objetosGlobales[position].ref = false;
 
-        objetosGlobales[position].usuarios = [];
-        /*Esta parte guarda a los usuarios dentro del pool en la variable usuarios para que sean desplegados en la interfaz*/
+    console.log('apuntador del arreglo', position)
 
-        objetosGlobales.forEach(function (item, index) {
-            if (index != 0 && objetosGlobales[index] != null) {
+    objetosGlobales[position].usuarios = [];
+    /*Esta parte guarda a los usuarios dentro del pool en la variable usuarios para que sean desplegados en la interfaz*/
 
-                /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/
+    objetosGlobales.forEach(function (item, index) {
+        if (index != 0 && objetosGlobales[index] != null) {
 
-                /*Filtrado de usuarios repetidos*/
-                var repetido = false
+            /*Esta parte filtra a los usuarios repetidos en el sistema de perfil. Ya sea porque están adentro de diferentes perfiles o por cualquier otra razón que dupliqué un usuario*/
 
-                if (objetosGlobales[position].usuarios.length == 0) {
-                    console.log('El primer usuario se guarda solo')
-                    if (item.nombre == undefined && item.userid != undefined) {
-                        item.nombre = item.userid
-                        objetosGlobales[position].usuarios[index - 1] = [item.nombre, item.imagen_url]
-                    } else if (item.nombre != undefined) {
-                        objetosGlobales[position].usuarios[index - 1] = [item.nombre, item.imagen_url]
-                    }
+            /*Filtrado de usuarios repetidos*/
+            var repetido = false
 
-                } else {
-                    console.log("usuarios ->", objetosGlobales[position].usuarios)
-                    objetosGlobales[position].usuarios.forEach(function (valorComparador, indice) {
-                        console.log('Ejecutando funcion OnlyUnique')
-                        if (item.nombre != undefined && valorComparador[0] != undefined) {
-                            console.log('Los valores NO son Nulos')
+            if (objetosGlobales[position].usuarios.length == 0) {
+                console.log('El primer usuario se guarda solo')
+                if (item.nombre == undefined && item.userid != undefined) {
+                    item.nombre = item.userid
+                    objetosGlobales[position].usuarios[index - 1] = [item.nombre, item.imagen_url]
+                } else if (item.nombre != undefined) {
+                    objetosGlobales[position].usuarios[index - 1] = [item.nombre, item.imagen_url]
+                }
+
+            } else {
+                console.log("usuarios ->", objetosGlobales[position].usuarios)
+                objetosGlobales[position].usuarios.forEach(function (valorComparador, indice) {
+                    console.log('Ejecutando funcion OnlyUnique')
+                    if (item.nombre != undefined && valorComparador[0] != undefined) {
+                        console.log('Los valores NO son Nulos')
+                        if (item.nombre.toString() == valorComparador[0].toString()) {
+                            console.log('valor Repetido')
+                            repetido = true
+                        } else if ((indice + 1 == objetosGlobales[position].usuarios.length) && repetido == false) {
+                            console.log('valor nuevo -> ', item.nombre)
+                            objetosGlobales[position].usuarios[index - 1] = [item.nombre, item.imagen_url]
+                        }
+                    } else {
+                        console.log('Los valores son Nulos')
+                        if (item.nombre == undefined) {
+                            item.nombre = item.userid
                             if (item.nombre.toString() == valorComparador[0].toString()) {
                                 console.log('valor Repetido')
                                 repetido = true
@@ -54,63 +66,52 @@ router.get('/perfil', function (request, response, error) {
                                 console.log('valor nuevo -> ', item.nombre)
                                 objetosGlobales[position].usuarios[index - 1] = [item.nombre, item.imagen_url]
                             }
-                        } else {
-                            console.log('Los valores son Nulos')
-                            if (item.nombre == undefined) {
-                                item.nombre = item.userid
-                                if (item.nombre.toString() == valorComparador[0].toString()) {
-                                    console.log('valor Repetido')
-                                    repetido = true
-                                } else if ((indice + 1 == objetosGlobales[position].usuarios.length) && repetido == false) {
-                                    console.log('valor nuevo -> ', item.nombre)
-                                    objetosGlobales[position].usuarios[index - 1] = [item.nombre, item.imagen_url]
-                                }
-                            }
-                        }
-                    })
-                }
-
-                if (objetosGlobales.length == index + 1) {
-                    const valorNulo = (usuario) => {
-                        if (usuario == undefined) {
-                            return false
-                        } else {
-                            return true
                         }
                     }
-                    objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter(valorNulo)
-                    console.log('USUARIOS EN EL POOL GLOBAL')
-                    console.log(objetosGlobales[position].usuarios)
-
-                    if (objetosGlobales[position].cambioRango == true) {
-                        //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
-                        console.log('Cambio de rango')
-                        objetosGlobales[position].cambioRango = false;
-                        console.log('Regreso a estado original de cambioRango -> ', objetosGlobales[position].cambioRango)
-
-                        response.send(objetosGlobales[position].seedTracks)
-                    } else if (objetosGlobales[position].refreshing == true) {
-                        console.log('Refrescando Tokens')
-                        objetosGlobales[position].refreshing = false;
-                        response.send("TOKEN REFRESCADO")
-                        //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
-                    } else if (objetosGlobales[position].refreshingUsers == true) {
-                        console.log('Refrescando usuarios en el pool')
-                        console.log(objetosGlobales[position].usuarios)
-                        objetosGlobales[position].refreshingUsers = false
-                        response.send(objetosGlobales[position].usuarios)
-                        //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
-                    } else {
-                        console.log('Cargando perfil')
-                        response.render('pages/perfilUI.ejs', objetosGlobales[position]);
-                        //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
-                    }
-
-                }
+                })
             }
-        })
 
-    }
+            if (objetosGlobales.length == index + 1) {
+                const valorNulo = (usuario) => {
+                    if (usuario == undefined) {
+                        return false
+                    } else {
+                        return true
+                    }
+                }
+                objetosGlobales[position].usuarios = objetosGlobales[position].usuarios.filter(valorNulo)
+                console.log('USUARIOS EN EL POOL GLOBAL')
+                console.log(objetosGlobales[position].usuarios)
+
+                if (objetosGlobales[position].cambioRango == true) {
+                    //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
+                    console.log('Cambio de rango')
+                    objetosGlobales[position].cambioRango = false;
+                    console.log('Regreso a estado original de cambioRango -> ', objetosGlobales[position].cambioRango)
+
+                    response.send(objetosGlobales[position].seedTracks)
+                } else if (objetosGlobales[position].refreshing == true) {
+                    console.log('Refrescando Tokens')
+                    objetosGlobales[position].refreshing = false;
+                    response.send("TOKEN REFRESCADO")
+                    //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
+                } else if (objetosGlobales[position].refreshingUsers == true) {
+                    console.log('Refrescando usuarios en el pool')
+                    console.log(objetosGlobales[position].usuarios)
+                    objetosGlobales[position].refreshingUsers = false
+                    response.send(objetosGlobales[position].usuarios)
+                    //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
+                } else {
+                    console.log('Cargando perfil')
+                    response.render('pages/perfilUI.ejs', objetosGlobales[position]);
+                    //console.log("Objetos Globales del Usuario -> ",  objetosGlobales[position] )
+                }
+
+            }
+        }
+    })
+
+
 });
 
 //Finaliza proceso
