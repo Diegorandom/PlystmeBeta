@@ -2,23 +2,15 @@ var querystring = require('querystring');
 const findUser = require('../database/queries/findUser');
 const createUser = require('../database/queries/createUser');
 const axios = require('axios');
+const updateObjetosGlobales = require('../utils/updateGlobalObject')
 
 /*Utilizando el token de acceso de la autorizacion se procede a solicitar los datos del usuario*/
 const logIn = async (
-    jsonDatos,
     session,
-    pais,
-    nombre,
-    email,
-    external_urls,
-    userid,
-    followers,
-    imagen_url,
     access_token,
     refresh_token,
-    mensaje,
-    bdEstado,
-    spotifyid
+    position,
+    objetosGlobales
 ) => {
 
     console.log('access token ', access_token)
@@ -31,50 +23,56 @@ const logIn = async (
         },
     }
 
-    let response = await axios(config)
+    let profile = await axios(config)
+
+    console.log('profile ', profile)
 
     /*Se guarda la información del usuario en el objeto global correspondiente*/
-    jsonDatos.userid = response.data.id;
-    jsonDatos.followers = response.data.followers.total;
-    console.log("userid:" + jsonDatos.userid + '\n');
+    let userid = profile.data.id;
+    let followers = profile.data.followers.total;
+
+    console.log("userid:" + userid + '\n');
 
     //EN CASO DE QUE EL USUARIO NO TENGA FOTORGRAÍA DEFINIDA #BUG de jona
-    if (response.data.images[0] != undefined) {
-        console.log('imagen_url');
-        console.log(imagen_url);
-        imagen_url = response.data.images[0].url;
-        console.log('imagen_url');
-        console.log(imagen_url);
-    }
+    let imagen_url;
+    profile.data.images[0] == undefined ? imagen_url = [] : imagen_url = profile.data.images[0].url
 
     console.log('Comienza proceso de revisión en base de datos para verificar si es un usuario nuevo o ya está regitrado \n');
 
     let checkid_result = await findUser(
         session,
-        response.data.id
+        profile.data.id
     )
 
     /*En caso de que el usuario nuevo se comienza a guardar su información en la base de datos*/
     if (checkid_result.records.length < 1) {
         console.log(' \n el usuario es nuevo \n');
         console.log('Se creará nuevo record en base de datos');
-        mensaje = "nuevo_usuario";
+        objetosGlobales = updateObjetosGlobales(objetosGlobales[position], [{
+            key: 'mensaje',
+            value: 'nuevo_usuario'
+        }])
 
-        let response = await createUser(
+        let user = await createUser(
             session,
-            pais,
-            nombre,
-            email,
-            external_urls,
+            profile.data.country,
+            profile.data.display_name,
+            profile.data.email,
+            profile.data.external_urls,
             userid,
             followers,
-            imagen_url,
-            access_token,
-            refresh_token,
+            imagen_url
         )
 
+        console.log('user created ', user)
+
         return {
-            redirect: response
+            redirect: '/perfil#' + querystring.stringify({
+                access_token,
+                refresh_token,
+                preventCache: preventCache
+            }),
+            objetosGlobales
         }
 
     } else if (checkid_result.records.length >= 1) {
@@ -83,13 +81,46 @@ const logIn = async (
         /*cambia el estado de la BD A GUARDADO cuando se han analizado todos los tracks del usuario. 
         la ruta /chequeoDB está constantemente checando el estado para decidir el momento adecuado para detonar
          la API que procesa las preferencias del usuario para mostrarlas en la pantalla principal de la interfaz*/
-        bdEstado = "guardado"
+        let bdEstado = "guardado"
 
-        mensaje = "nuevo_login";
+        let mensaje = "nuevo_login";
 
         /*Una vez terminados los procesos necesarios para renderizar la página web se redirje el proceso al perfil*/
         var preventCache = Date.now()
         console.log(preventCache)
+
+        objetosGlobales = updateObjetosGlobales(position, [
+            {
+                key: 'bdEstado',
+                value: bdEstado,
+            },
+            {
+                key: 'spotifyid',
+                value: userid,
+            },
+            {
+                key: 'mensaje',
+                value: mensaje,
+            },
+            {
+                key: 'access_token',
+                value: access_token,
+            },
+            {
+
+                key: 'refresh_token',
+                value: refresh_token,
+            },
+            {
+                key: 'userid',
+                value: userid
+            },
+            {
+                key: 'followers',
+                value: followers
+            }
+        ])
+
         return {
             redirect: '/perfil#' +
                 querystring.stringify({
@@ -97,12 +128,7 @@ const logIn = async (
                     refresh_token: refresh_token,
                     preventCache: preventCache
                 }),
-            session,
-            spotifyid,
-            mensaje,
-            access_token,
-            refresh_token,
-            bdEstado
+            objetosGlobales
         }
 
     } else {
@@ -113,21 +139,7 @@ const logIn = async (
 }
 
 const getToken = async (
-    options,
-    jsonDatos,
-    session,
-    pais,
-    nombre,
-    email,
-    external_urls,
-    userid,
-    followers,
-    imagen_url,
-    access_token,
-    refresh_token,
-    mensaje,
-    bdEstado,
-    spotifyid,
+    options
 ) => {
     console.log('LogIn to Spotify')
 
@@ -140,29 +152,13 @@ const getToken = async (
 
     let response = await axios(config)
 
-    refresh_token = response.data.refresh_token;
-    access_token = response.data.access_token;
+    let refresh_token = response.data.refresh_token;
+    let access_token = response.data.access_token;
 
-    let logInResponse = await logIn(
-        jsonDatos,
-        session,
-        pais,
-        nombre,
-        email,
-        external_urls,
-        userid,
-        followers,
-        imagen_url,
-        access_token,
+    return {
         refresh_token,
-        mensaje,
-        bdEstado,
-        spotifyid
-    )
-
-    console.log('logIn completed ', logInResponse);
-
-    return logInResponse
+        access_token,
+    }
 
 }
 

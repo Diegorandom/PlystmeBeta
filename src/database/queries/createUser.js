@@ -1,5 +1,3 @@
-var querystring = require('querystring');
-
 const createUser = async (
     session,
     pais,
@@ -8,13 +6,11 @@ const createUser = async (
     external_urls,
     userid,
     followers,
-    imagen_url,
-    access_token,
-    refresh_token,
+    imagen_url
 ) => {
 
     /*Se crea el nodo del usuario en la BD*/
-    await session
+    const user = await session
         .writeTransaction(tx => tx.run(
             'CREATE (n:usuario {pais:$pais, '
             + 'nombre: $nombre, email: $email, '
@@ -37,11 +33,7 @@ const createUser = async (
     var preventCache = Date.now()
     console.log(preventCache)
 
-    return '/perfil#' + querystring.stringify({
-        access_token,
-        refresh_token,
-        preventCache: preventCache
-    })
+    return user
 
 }
 
