@@ -2,8 +2,9 @@
 <html>
 
 <head>
-    <% include ../partials/header.ejs %>
-        <% include ../partials/footer.ejs %>
+    <%- include('../partials/header.ejs') %>
+        <!-- NO QUITAR FOOTER TIENE FUNCIONES IMPORTANTES DEL CODIGO -->
+        <%- include('../partials/footer.ejs') %>
             <!--[if lt IE 10]>
 			<link rel="stylesheet" type="text/css" href="../../public/style/ie-9.css" />
 		<![endif]-->
@@ -218,7 +219,7 @@
 
     <!-- THE HEADER -->
     <header>
-        <% include ../pages/navbar.ejs %>
+        <% include('../pages/navbar.ejs') %>
     </header>
 
 
