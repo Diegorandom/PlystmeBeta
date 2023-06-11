@@ -42,7 +42,7 @@ router.get('/callback', async (req, res, error) => {
   if (error == true) { res.render('pages/error', { error: error }) }
 
   /*Headers necesarios para comunicacion con API de Spotify*/
-  res.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
+  //res.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
 
   console.log("Llegamos al callback!! \n");
 

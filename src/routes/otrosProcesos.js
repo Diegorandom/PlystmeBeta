@@ -61,9 +61,9 @@ router.get('/gallery', function (request, response) {
   response.render('pages/gallery');
 });
 
-router.get('/login.ejs', function (request, response) {
-  response.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
-});
+// router.get('/login.ejs', function (request, response) {
+//   response.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
+// });
 
 router.get('/messages-2.ejs', function (request, response) {
   response.render('pages/messages-2');
