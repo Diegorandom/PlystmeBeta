@@ -19,10 +19,15 @@ Lo que ha sucedido:
 - Se actualizaron librerías deprecadas
 - Se agregó linter
 - Se agregó sonarcloud
+- Log In con Spotify actualizada
+- Fingerprint Signal/Data Collection via Spotify actualizada
+- Test conexión de base de datos actualizada
+- Servidor corriendo en local
 
 Lo que falta:
 - Tests unitarios
-- Test conexión de base de datos
+- Actualizar la interfaz de usuario
+- Servidor corriendo en un ambiente de producción
 
 ## Configuración de base de datos
 
