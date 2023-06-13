@@ -32,8 +32,8 @@ Lo que falta:
 ## Configuración de base de datos
 
 Hay 2 tipos de conexiones posibles:
-    1. Conexion con base de datos local
-    2. Conexion con base de datos del servidor
+- 1. Conexion con base de datos local
+- 2. Conexion con base de datos del servidor
 
 Cuando se conecta la base de datos con localhost deben usarse los permisos mencionados en la siguiente estructura IF.
 No se debe cambiar nada de la estructura de configuración de la base de datos.
