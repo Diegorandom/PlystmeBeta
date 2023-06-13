@@ -9,7 +9,7 @@ La comunicación entre el cliente y el backend utiliza HTTP con Ajax para la aut
 Socket.io se utiliza en la comunicación cliente-servidor para la creación y administración en tiempo real de las playlists grupales a las cuales se accede con el uso de un código dado por el anfitrión a los invitados de la fiesta.
 
 ## Artículo
-[Link.](https://medium.com/@diegoignacioortega/motor-de-recomendación-de-música-basado-en-grafos-f4e02de2884e)
+[Medium Article](https://medium.com/@diegoignacioortega/motor-de-recomendación-de-música-basado-en-grafos-f4e02de2884e)
 
 ## Refactor Sucediendo | Ongoing Refactor
 
