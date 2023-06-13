@@ -58,6 +58,6 @@ La base de datos está siendo implementada con Neo4j, una tecnología de bases d
 
 - Se pueden identificar grupos de usuarios que generan varios eventos entre ellos mismos. 
 - Usuarios que han generado varios eventos con diferentes personas
-- Las redes sociales que pueden relaciones diferentes grupos de personas.
+- Las redes sociales que pueden relacionar diferentes grupos de personas.
 
 POR SURIEL DAVID GARCÍA, DIEGO IGNACIO ORTEGA, ALEXIS DESTRUÍDO Y DAVID BARRIENTOS
