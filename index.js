@@ -86,28 +86,28 @@ objetosGlobales[0].client_secret = process.env.client_secret
 console.log('objetosGlobales[0].client_id ', process.env.client_id)
 
 if (app.get('port') == 5001) {
-  console.log("Corriendo en servidor local con uri de redireccionamiento: ");
-  objetosGlobales[0].redirect_uri = 'http://localhost:5001/callback'; // Your redirect uri
+    console.log("Corriendo en servidor local con uri de redireccionamiento: ");
+    objetosGlobales[0].redirect_uri = 'http://localhost:5001/callback'; // Your redirect uri
 
-  //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
-  objetosGlobales[0].spotifyApi = new SpotifyWebApi({
-    clientId: 'b590c1e14afd46a69891549457267135',
-    clientSecret: process.env.client_secret,
-    redirectUri: 'http://localhost:5001/callback'
-  });
-  console.log(objetosGlobales[0].redirect_uri);
+    //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
+    objetosGlobales[0].spotifyApi = new SpotifyWebApi({
+        clientId: 'b590c1e14afd46a69891549457267135',
+        clientSecret: process.env.client_secret,
+        redirectUri: 'http://localhost:5001/callback'
+    });
+    console.log(objetosGlobales[0].redirect_uri);
 
 } else {
-  console.log("Corriendo en servidor web con uri de redireccionamiento: ");
-  objetosGlobales[0].redirect_uri = 'https://www.plystme.com/callback'; // Your redirect uri
+    console.log("Corriendo en servidor web con uri de redireccionamiento: ");
+    objetosGlobales[0].redirect_uri = 'https://www.plystme.com/callback'; // Your redirect uri
 
-  //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
-  objetosGlobales[0].spotifyApi = new SpotifyWebApi({
-    clientId: 'b590c1e14afd46a69891549457267135',
-    clientSecret: config.sessionSecret,
-    redirectUri: 'https://www.plystme.com/callback'
-  });
-  console.log(objetosGlobales[0].redirect_uri);
+    //SETUP DE CONFIGURACIÓN PARA COMUNICARSE CON SPOTIFY DESDE UN SERVIDOR LOCAL Y DESDE LA NUBE
+    objetosGlobales[0].spotifyApi = new SpotifyWebApi({
+        clientId: 'b590c1e14afd46a69891549457267135',
+        clientSecret: config.sessionSecret,
+        redirectUri: 'https://www.plystme.com/callback'
+    });
+    console.log(objetosGlobales[0].redirect_uri);
 }
 
 objetosGlobales[0].stateKey = 'spotify_auth_state';
@@ -117,11 +117,11 @@ objetosGlobales[0].stateKey = 'spotify_auth_state';
 var sessionSecreto = generateRandomString(16);
 
 app.use(sessions({
-  cookieName: 'sessions',
-  secret: sessionSecreto,
-  duration: 24 * 60 * 60 * 1000,
-  activeDuration: 5 * 60 * 1000,
-  ephemeral: true
+    cookieName: 'sessions',
+    secret: sessionSecreto,
+    duration: 24 * 60 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+    ephemeral: true
 }));
 //Termina configuracion de cookies
 
@@ -145,118 +145,118 @@ app.set('driver', driver);
 */
 
 /*La ruta /heartbeat mantiene control sobre las sesiones. Mas info en la ruta. */
-app.use(require("./src/routes/heartbeat"));
+app.use(require("./src/controllers/heartbeat"));
 
 //PAGINA DE INICIO HACIA LA AUTORIZACIÓN
-app.use(require("./src/routes/inicio"))
+app.use(require("./src/controllers/inicio"))
 
 //Login procesa el REQUEST de la API de Spotify para autorizacion
-app.use(require('./src/routes/login'))
+app.use(require('./src/controllers/login'))
 
 const apiLimiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    windowMs: 1 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
 
 // Apply the rate limiting middleware to API calls only
 
 /*CALLBACK DE SPOTIFY DESPUÉS DE AUTORIZACION*/
-app.use(require("./src/routes/callbackAlgoritmo"), apiLimiter);
+app.use(require("./src/controllers/callbackAlgoritmo"), apiLimiter);
 
 /*Proceso de conexio con la API del algoritmo del pool*/
-app.use(require("./src/routes/poolAlgoritmo"));
+app.use(require("./src/controllers/poolAlgoritmo"));
 
 /*Ruta de proceso para guardar playlist en Spotify*/
-app.use(require("./src/routes/guardaPlaylist"));
+app.use(require("./src/controllers/guardaPlaylist"));
 
 /*Ruta de proceso para guardar TOP 50 en Spotify*/
-app.use(require("./src/routes/guardarTOP50"));
+app.use(require("./src/controllers/guardarTOP50"));
 
 //Proceso para refrescar un token
 app.use(require('./src/https/tokens/tokenRefreshing'));
 
 /*Ruta a perfil*/
-app.use(require('./src/routes/perfil'));
+app.use(require('./src/controllers/perfil'));
 
 /*PERFIL DE UN TRACK*/
-app.use(require("./src/routes/perfilTrack"));
+app.use(require("./src/controllers/perfilTrack"));
 
 /*Ruta a preferencias*/
-app.use(require("./src/routes/preferencias"));
+app.use(require("./src/controllers/preferencias"));
 
-app.use(require("./src/routes/chequeoBD"));
+app.use(require("./src/controllers/chequeoBD"));
 
 /*Ruta a proceso  para guardar un track*/
-app.use(require('./src/routes/saveTrack'))
+app.use(require('./src/controllers/saveTrack'))
 
 /*Ruta a funcion IDLE, la cual depura los datos de objetoGlobales*/
-app.use(require('./src/routes/idle'))
+app.use(require('./src/controllers/idle'))
 
 /*Proceso para salirse de una sesion*/
-app.use(require('./src/routes/logOut'))
+app.use(require('./src/controllers/logOut'))
 
 /*Rutas no implementadas aun*/
-app.use(require('./src/routes/otrosProcesos'))
+app.use(require('./src/controllers/otrosProcesos'))
 
 /*Ambiente de SUPERCOLLIDER - no utilizada por el momento*/
-app.use(require("./src/routes/environmentSC"));
+app.use(require("./src/controllers/environmentSC"));
 
 /*Ruta de donde se extrae la información del usuario de Spotify hacia nuestra propia BD*/
-app.use(require('./src/routes/mineriaUsuario'));
+app.use(require('./src/controllers/mineriaUsuario'));
 
 
 /*Ruta donde se administra el tipo de minería necesaria dado que se escoge un rango de tiempo para Top 50 diferente*/
-app.use(require('./src/routes/rangoTiempo'));
+app.use(require('./src/controllers/rangoTiempo'));
 
 /*Ruta para procesos con BD que no se usa actualmente*/
-app.use(require('./src/routes/DatosBD'));
+app.use(require('./src/controllers/DatosBD'));
 
 /*Proceso para refrescar token de Spotify (en proceso)*/
 app.use(require('./src/https/tokens/refreshingToken'));
 
 /*Ruta para obtener el arreglo con el número de usuarios, sus nombre y fotos, de nuestra BD*/
-app.use(require('./src/routes/usuarios'));
+app.use(require('./src/controllers/usuarios'));
 
 //Revision de usuario para checar si es host
-app.use(require('./src/routes/esHost'));
+app.use(require('./src/controllers/esHost'));
 
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function (req, res, error) {
-  console.log('ERROR EN LA PLATAFORMA')
-  res.render('./src/views/pages/error', { error: error })
+    console.log('ERROR EN LA PLATAFORMA')
+    res.render('./src/views/pages/error', { error: error })
 })
 
 /* INICIA SOCKETS*/
 io.on('connection', (socket) => {
-  mainSocket(
-    socket,
-    objetosGlobales[0].session[0],
-    userId,
-    jsonDatos.usuarios
-  )
+    mainSocket(
+        socket,
+        objetosGlobales[0].session[0],
+        userId,
+        jsonDatos.usuarios
+    )
 })
 /*TERMINA SOCKETS*/
 
 
 /*Ruta para errores con 404*/
 app.get('*', function (req, res, error) {
-  if (error == true) {
-    console.log('error -> ', error)
-    res.redirect('/error');
-  } else {
-    res.redirect('/');
-  }
+    if (error == true) {
+        console.log('error -> ', error)
+        res.redirect('/error');
+    } else {
+        res.redirect('/');
+    }
 
 });
 
 /*Configuración de puerto de la app*/
 server.listen(app.get('port'), function (error) {
-  if (error == true) {
-    console.log(error)
-  }
+    if (error == true) {
+        console.log(error)
+    }
 
-  console.log('Node app is running on port', app.get('port'));
+    console.log('Node app is running on port', app.get('port'));
 });
 
