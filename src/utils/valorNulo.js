@@ -1,9 +1,5 @@
 const valorNulo = (usuario) => {
-    if (usuario == undefined) {
-        return false
-    } else {
-        return true
-    }
+    return usuario == undefined ? false : true
 }
 
 module.exports = valorNulo

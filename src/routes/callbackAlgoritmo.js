@@ -27,61 +27,58 @@ router.use(methodOverride());
 */
 
 router.get('/callback', async (req, res, error) => {
-  /*Configuracion de variables globales y position desde cookies*/
-  var objetosGlobales = req.app.get('objetosGlobales');
-  var position = req.app.get('position');
-  position = objetosGlobales.length;
-  console.log('apuntador del objeto', position);
-  req.sessions.position = position;
+    /*Configuracion de variables globales y position desde cookies*/
+    var objetosGlobales = req.app.get('objetosGlobales');
+    var position = req.app.get('position');
+    position = objetosGlobales.length;
+    console.log('apuntador del objeto', position);
+    req.sessions.position = position;
 
-  /*Pieza de middleware que dirije los links a la carpeta donde se alojan los recursos*/
-  // eslint-disable-next-line no-undef
-  router.use(express.static(__dirname + '/public'))
+    /*Pieza de middleware que dirije los links a la carpeta donde se alojan los recursos*/
+    // eslint-disable-next-line no-undef
+    router.use(express.static(__dirname + '/public'))
 
-  /*Dado un error en la ruta se llama la pagina de error*/
-  if (error == true) { res.render('pages/error', { error: error }) }
+    /*Dado un error en la ruta se llama la pagina de error*/
+    if (error == true) { res.render('pages/error', { error: error }) }
 
-  /*Headers necesarios para comunicacion con API de Spotify*/
-  //res.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
-
-  console.log("Llegamos al callback!! \n");
+    console.log("Llegamos al callback!! \n");
 
 
-  /*La plataforma hace el request de los queries necesarios para comprobar que la conexion es legítima*/
-  var code = req.query.code || null;
-  var state = req.query.state || null;
-  var storedState = req.cookies ? req.cookies[objetosGlobales[0].stateKey] : null;
+    /*La plataforma hace el request de los queries necesarios para comprobar que la conexion es legítima*/
+    var code = req.query.code || null;
+    var state = req.query.state || null;
+    var storedState = req.cookies ? req.cookies[objetosGlobales[0].stateKey] : null;
 
-  if (state === null || state !== storedState) {
-    /*En caso de que haya un error de autenticación se lanza el mensaje y se envía a la pággina de error*/
-    res.render('pages/error', { error: "Error de autentizacion state_mismatch" });
-    console.log('Error de autentizacion state_mismatch', error);
-    console.log('State from Spotify -> ', state)
-  }
+    if (state === null || state !== storedState) {
+        /*En caso de que haya un error de autenticación se lanza el mensaje y se envía a la pággina de error*/
+        res.render('pages/error', { error: "Error de autentizacion state_mismatch" });
+        console.log('Error de autentizacion state_mismatch', error);
+        console.log('State from Spotify -> ', state)
+    }
 
-  /*En caso de que la conexión sea legítima se procede con el proceso*/
-  res.clearCookie(objetosGlobales[0].stateKey);
+    /*En caso de que la conexión sea legítima se procede con el proceso*/
+    res.clearCookie(objetosGlobales[0].stateKey);
 
-  /*Argumentos que usará el endpoint para establecer comunicación con Spotify*/
-  let authOptions = authOptionsModule.authOptionsFunction(code, objetosGlobales[0].redirect_uri);
+    /*Argumentos que usará el endpoint para establecer comunicación con Spotify*/
+    let authOptions = authOptionsModule.authOptionsFunction(code, objetosGlobales[0].redirect_uri);
 
-  let token = await httpsClient.getToken(
-    authOptions,
-  )
+    let token = await httpsClient.getToken(
+        authOptions,
+    )
 
-  objetosGlobales[position] = jsonDatos;
+    objetosGlobales[position] = jsonDatos;
 
-  let logInResponse = await httpsClient.logIn(
-    objetosGlobales[0].session[0],
-    token.access_token,
-    token.refresh_token,
-    position,
-    objetosGlobales
-  )
+    let logInResponse = await httpsClient.logIn(
+        objetosGlobales[0].session[0],
+        token.access_token,
+        token.refresh_token,
+        position,
+        objetosGlobales
+    )
 
-  console.log('logIn completed ', logInResponse);
+    console.log('logIn completed ', logInResponse);
 
-  res.redirect(logInResponse.redirect)
+    res.redirect(logInResponse.redirect)
 
 });
 

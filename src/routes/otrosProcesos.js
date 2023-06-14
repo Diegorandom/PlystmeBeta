@@ -4,101 +4,97 @@ var router = new express.Router();
 
 //Otros PROCESOS 
 router.get('/index.ejs', function (request, response) {
-  response.render('pages/index');
+    response.render('pages/index');
 });
 
 router.get('/about-us.ejs', function (request, response) {
 
-  objetosGlobales[0].ref = true;
-  response.render('pages/about-us', objetosGlobales[0]);
+    objetosGlobales[0].ref = true;
+    response.render('pages/about-us', objetosGlobales[0]);
 });
 
 router.get('/activity.ejs', function (request, response) {
-  response.render('pages/activity.ejs');
+    response.render('pages/activity.ejs');
 });
 
 router.get('/ajax_for_index.ejs', function (request, response) {
-  response.render('pages/ajax_for_index');
+    response.render('pages/ajax_for_index');
 });
 
 router.get('/author-edit.ejs', function (request, response) {
-  response.render('pages/author-edit');
+    response.render('pages/author-edit');
 });
 
 router.get('/author.ejs', function (request, response) {
-  response.render('pages/author');
+    response.render('pages/author');
 });
 
 router.get('/blog-2.ejs', function (request, response) {
-  response.render('pages/blog-2');
+    response.render('pages/blog-2');
 });
 
 router.get('/blog-3.ejs', function (request, response) {
-  response.render('pages/blog-3');
+    response.render('pages/blog-3');
 });
 
 router.get('/blog-detail-2.ejs', function (request, response) {
-  response.render('pages/blog-detail-2');
+    response.render('pages/blog-detail-2');
 });
 
 router.get('/blog-detail.ejs', function (request, response) {
-  response.render('pages/blog-detail');
+    response.render('pages/blog-detail');
 });
 
 router.get('/blog.ejs', function (request, response) {
-  response.render('pages/blog');
+    response.render('pages/blog');
 });
 
 router.get('/contact-us.ejs', function (request, response) {
-  response.render('pages/contact-us');
+    response.render('pages/contact-us');
 });
 
 router.get('/faq.ejs', function (request, response) {
-  response.render('pages/faq');
+    response.render('pages/faq');
 });
 
 router.get('/gallery', function (request, response) {
-  response.render('pages/gallery');
+    response.render('pages/gallery');
 });
 
-// router.get('/login.ejs', function (request, response) {
-//   response.setHeader('Content-Security-Policy', " child-src accounts.spotify.com api.spotify.com google.com; img-src *;");
-// });
-
 router.get('/messages-2.ejs', function (request, response) {
-  response.render('pages/messages-2');
+    response.render('pages/messages-2');
 });
 
 router.get('/messages.ejs', function (request, response) {
-  response.render('pages/messages');
+    response.render('pages/messages');
 });
 
 router.get('/track', function (request, response) {
-  response.render('pages/page3', objetosGlobales);
+    response.render('pages/page3', objetosGlobales);
 });
 
 router.get('/people.ejs', function (request, response) {
-  response.render('pages/people');
+    response.render('pages/people');
 });
 
 router.get('/search.ejs', function (request, response) {
-  response.render('pages/search');
+    response.render('pages/search');
 });
 
 router.get('/shortcodes.ejs', function (request, response) {
-  response.render('pages/shortcodes');
+    response.render('pages/shortcodes');
 });
 
 router.get('/site-map.ejs', function (request, response) {
-  response.render('pages/site-map');
+    response.render('pages/site-map');
 });
 
 router.get('/statictics.ejs', function (request, response) {
-  response.render('pages/statictics');
+    response.render('pages/statictics');
 });
 
 router.get('/work.ejs', function (request, response) {
-  response.render('pages/work');
+    response.render('pages/work');
 });
 
 //Finaliza proceso

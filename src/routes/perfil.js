@@ -3,7 +3,7 @@ var router = new express.Router();
 const valorNulo = require('../utils/valorNulo')
 
 /*Se ejecuta la ruta del perfil para renderizarlo*/
-router.get('/perfil', function (request, response, error) {
+router.get('/perfil', function (request, response) {
     var objetosGlobales = request.app.get('objetosGlobales');
     var position = request.app.get('position');
     position = request.sessions.position;
@@ -11,9 +11,6 @@ router.get('/perfil', function (request, response, error) {
     console.log('Entró a perfil')
 
     console.log('objetosGlobales ', objetosGlobales);
-
-    // response.setHeader("Pragma", "no-cache");
-    // response.setHeader("Cache-Control", "no-store");
 
     /*Algunas configuraciones*/
     objetosGlobales[position].ref = false;
