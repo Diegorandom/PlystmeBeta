@@ -225,7 +225,7 @@ app.use(require('./src/routes/esHost'));
 /*Ruta para llamar la pagina de error para tests*/
 app.get('/error', function (req, res, error) {
   console.log('ERROR EN LA PLATAFORMA')
-  res.render('pages/error', { error: error })
+  res.render('./src/views/pages/error', { error: error })
 })
 
 /* INICIA SOCKETS*/
