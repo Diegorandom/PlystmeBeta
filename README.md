@@ -23,7 +23,7 @@ Lo que ha sucedido:
 
 Lo que falta:
 - Tests unitarios
-- Actualizar la interfaz de usuario
+- Separar la interfaz de usuario del API
 - Servidor corriendo en un ambiente de producción
 
 ## Configuración de base de datos
