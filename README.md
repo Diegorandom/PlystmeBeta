@@ -21,11 +21,12 @@ Lo que ha sucedido:
 - Fingerprint Signal/Data Collection via Spotify actualizada
 - Test conexión de base de datos actualizada
 - Servidor corriendo en local
+- Separar la interfaz de usuario del API
 
 Lo que falta:
 - Tests unitarios
-- Separar la interfaz de usuario del API
 - Servidor corriendo en un ambiente de producción
+- Documentación
 
 ## Configuración de base de datos
 
