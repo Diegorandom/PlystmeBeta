@@ -2,7 +2,8 @@
 
 # Arquitectura de Plystme
 
-Actualmente Plystme tiene una arquitectura servidor-cliente conectada con la API de Spotify, la API del algoritmo de recomendaciones y la base de datos Neo4j. El frontEnd fue construído en su totalidad sobre JavaScript con un templating language de Node.js llamado EJS. 
+Actualmente éste repo de plystme contiene la API que orquestra el sistema. La interfaz tendrá lugar en otro repositorio si se llega a crear de nuevo.
+En el pasado Plystme tuvo una arquitectura servidor-cliente conectada con la API de Spotify, la API del algoritmo de recomendaciones y la base de datos Neo4j. El frontEnd fue construído en su totalidad sobre JavaScript con un templating language de Node.js llamado EJS. 
 
 La comunicación entre el cliente y el backend utiliza HTTP con Ajax para la autenticación con la API de Spotify y para servir datos estáticos como lo son el mapa de características de la música que escucha el usuario así como datos que se obtienen de eventos detonados desde el cliente como los son las listas del Top 50 de música que escucha el usuario. 
 
