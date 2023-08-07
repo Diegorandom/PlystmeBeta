@@ -28,7 +28,7 @@
     "newrelic": "^10.3.0",
     "sanitize-html": "^2.10.0",
     "shuffle-array": "^1.0.1",
-    "socket.io": "^4.6.2",
+    "socket.io": "^4.7.2",
     "spotify-web-api-node": "^5.0.2",
     "supercolliderjs": "*"
   },
